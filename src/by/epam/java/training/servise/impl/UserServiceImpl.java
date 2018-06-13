@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByLogin(String login) {
         //        if (Validator.isValid(authorizationUser)){
-//            return false;
+//            return null;
 //        }
         return userDAO.getUserByLogin(login);
     }
@@ -31,8 +31,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User addUser(RegistrationUser registrationUser) {
         //        if (Validator.isValid(authorizationUser)){
-//            return false;
+//            return null;
 //        }
         return userDAO.addUser(registrationUser);
+    }
+
+    @Override
+    public boolean isFreeLogin(String login) {
+        //        if (Validator.isValid(login)){
+//            return false;
+//        }
+        return userDAO.isFreeLogin(login);
     }
 }

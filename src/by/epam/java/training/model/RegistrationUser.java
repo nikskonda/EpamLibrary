@@ -95,4 +95,8 @@ public class RegistrationUser implements Serializable {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+
+    public boolean comparePasswords(){
+        return this.password.equals(this.confirmPassword);
+    }
 }

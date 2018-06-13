@@ -11,6 +11,6 @@
     <title>News</title>
 </head>
 <body>
-
+    News
 </body>
 </html>

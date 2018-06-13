@@ -10,4 +10,6 @@ public interface UserService {
     User getUserByLogin(String login);
 
     User addUser(RegistrationUser registrationUser);
+
+    boolean isFreeLogin(String login);
 }

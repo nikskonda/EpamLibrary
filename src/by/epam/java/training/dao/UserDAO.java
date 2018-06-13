@@ -12,4 +12,6 @@ public interface UserDAO {
 
     User addUser(RegistrationUser registrationUser);
 
+    boolean isFreeLogin(String login);
+
 }

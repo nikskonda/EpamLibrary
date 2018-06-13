@@ -2,20 +2,22 @@ package by.epam.java.training.dao.impl;
 
 import by.epam.java.training.dao.UserDAO;
 import by.epam.java.training.model.*;
+import by.epam.java.training.printer.LogPrinter;
+import org.apache.log4j.Logger;
 
 
 import java.sql.*;
 
 public class UserDAOImpl implements UserDAO {
 
+    private static final Logger LOGGER = Logger.getLogger(UserDAOImpl.class);
 
-    private Connection connection = null;
     private final String LOGIN = "root";
     private final String PASSWORD = "password";
-    private final String URL = "jdbc:mysql://localhost:3306/cinema";
+    private final String URL = "jdbc:mysql://localhost:3306/library";
 
     private final static String FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT user_id FROM users WHERE users.login='placeForLogin' AND users.password='placeForPassword';";
-    private final static String FIND_USER_BY_LOGIN = "SELECT user_id FROM users WHERE users.login='placeForLogin';";
+    private final static String FIND_USER_BY_LOGIN = "SELECT * FROM users WHERE users.login='placeForLogin';";
     private final static String ADD_USER = "INSERT INTO `library`.`users` (`login`, `password`, `first_name`, `last_name`, `email`, `adresses_address_id`, `roles_role_id`) VALUES ('placeForLogin', 'placeForPassword', 'placeForFirstName', 'placeForSecondName', 'placeForEmail', '1', '4');";
     private final static String PLACE_FOR_LOGIN = "placeForLogin";
     private final static String PLACE_FOR_PASSWORD = "placeForPassword";
@@ -29,8 +31,11 @@ public class UserDAOImpl implements UserDAO {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(URL, LOGIN, PASSWORD);
-        } catch (Exception ex) {
-            System.out.println(ex);
+        } catch (ClassNotFoundException ex){
+            LogPrinter.printLogError(ex.getMessage(), LOGGER);
+        }
+        catch (SQLException ex) {
+            LogPrinter.printLogError(ex.getMessage(), LOGGER);
         }
         return connection;
     }
@@ -54,27 +59,29 @@ public class UserDAOImpl implements UserDAO {
                 result = true;
             }
 
+
         } catch (SQLException ex) {
-
+            LogPrinter.printLogError(ex.getMessage(), LOGGER);
         } finally {
-            try{
-                resultSet.close();
-            }
-            catch (SQLException ex){
-
-            }
-            try{
-                statement.close();
-            }
-            catch (SQLException ex){
-
-            }
-            try{
-                connection.close();
-            }
-            catch (SQLException ex){
-
-            }
+//            try{
+//                resultSet.close();
+//            }
+//            catch (SQLException ex){
+//                LogPrinter.printLogError(ex.getMessage(), LOGGER);
+//            }
+//
+//            try{
+//                statement.close();
+//            }
+//            catch (SQLException ex){
+//                LogPrinter.printLogError(ex.getMessage(), LOGGER);
+//            }
+//            try{
+//                connection.close();
+//            }
+//            catch (SQLException ex){
+//                LogPrinter.printLogError(ex.getMessage(), LOGGER);
+//            }
         }
         return result;
     }
@@ -177,5 +184,48 @@ public class UserDAOImpl implements UserDAO {
             }
         }
         return user;
+    }
+
+    @Override
+    public boolean isFreeLogin(String login) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        boolean result = false;
+        try {
+            connection = getConnection();
+            statement = connection.createStatement();
+            String query = FIND_USER_BY_LOGIN.replaceFirst(PLACE_FOR_LOGIN, login);
+
+            resultSet = statement.executeQuery(query);
+
+            if (!resultSet.next()) {
+                result = true;
+            }
+
+        } catch (SQLException ex) {
+
+        } finally {
+            try{
+                resultSet.close();
+            }
+            catch (SQLException ex){
+
+            }
+            try{
+                statement.close();
+            }
+            catch (SQLException ex){
+
+            }
+            try{
+                connection.close();
+            }
+            catch (SQLException ex){
+
+            }
+        }
+        return result;
     }
 }
