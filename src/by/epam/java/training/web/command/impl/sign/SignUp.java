@@ -23,6 +23,7 @@ public class SignUp implements Command {
 
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("singUp");
         RegistrationUser regUser = new RegistrationUser();
         regUser.setLogin(request.getParameter(LOGIN));
         regUser.setPassword(request.getParameter(PASSWORD));

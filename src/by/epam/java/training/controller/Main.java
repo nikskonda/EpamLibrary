@@ -16,8 +16,14 @@ public class Main {
 //
 //        System.out.println(us.isExistLoginAndPassword(au));
 
-        String str = "%u041F%u0440%u0438%u0432%u0435%u0442%20%u043C%u0438%u0440";
-        String res = str.replaceAll("%","\\");
-        System.out.println(res);
+        String str = "[a-zA-Z][a-zA-Z0-9_-]+[a-zA-Z0-9]";
+        System.out.println("qwe".matches(str));
+        System.out.println("1qwe".matches(str));
+        System.out.println("qwe-".matches(str));
+        System.out.println("qwe_".matches(str));
+        System.out.println("q-e".matches(str));
+        System.out.println("q_-e".matches(str));
+        System.out.println("-qwe".matches(str));
+
     }
 }

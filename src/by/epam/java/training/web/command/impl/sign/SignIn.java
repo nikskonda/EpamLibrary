@@ -20,7 +20,7 @@ public class SignIn implements Command {
 
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
+        System.out.println("sing IN");
         AuthorizationUser authUser = new AuthorizationUser();
 
         authUser.setLogin(request.getParameter(LOGIN));

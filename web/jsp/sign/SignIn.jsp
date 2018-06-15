@@ -8,26 +8,91 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="l10n.local" var="loc" />
+<fmt:message bundle="${loc}" key="local.header.sign" var="headerTitle" />
+<fmt:message bundle="${loc}" key="local.button.signin.name" var="signin" />
+<fmt:message bundle="${loc}" key="local.lable.login.value" var="login" />
+<fmt:message bundle="${loc}" key="local.lable.password.value" var="password" />
+<fmt:message bundle="${loc}" key="local.input.login.value" var="ilogin" />
+<fmt:message bundle="${loc}" key="local.input.password.value" var="ipassword" />
 <html>
 <head>
     <title>SignIn</title>
-    <fmt:setLocale value="${sessionScope.local}" />
-    <fmt:setBundle basename="l10n.local" var="loc" />
-    <fmt:message bundle="${loc}" key="local.button.signin.name" var="signin" />
-    <fmt:message bundle="${loc}" key="local.lable.login.value" var="login" />
-    <fmt:message bundle="${loc}" key="local.lable.password.value" var="password" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/sign.css">
+
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 </head>
     <body>
-    <form form id="sign_up" action="/sign_in" method="POST">
-        <input type="hidden" name="command" value="sign_in">
-        <label for="login">${login}</label>
-        <input type="text" id="login" name="login" required><br>
 
-        <label for="password">${password}</label>
-        <input type="password" id="password" name="password" required><br>
+        <section id="signup">
+            <div class="container">
+                <div class="row main">
+                    <div class="panel-heading">
+                        <div class="panel-title text-center">
+                            <h1 class="title">${headerTitle}</h1>
+                            <hr/>
+                        </div>
+                    </div>
+                    <div class="main-login main-center">
+                        <form class="form-horizontal" method="post" action="/sign_in" onsubmit="return isValidLoginForm()">
+                            <input type="hidden" name="command" value="sign_in">
+                            <div class="form-group">
+                                <label for="login" class="cols-sm-2 control-label">${login}</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" name="login" id="login"  placeholder="${ilogin}"/>
+                                    </div>
+                                </div>
+                                <p class="error-input" id="loginError"></p>
+                            </div>
 
-        <input type="submit" value="${signin}">
-    </form>
+
+                            <div class="form-group">
+                                <label for="password" class="cols-sm-2 control-label">${password}</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                        <input type="password" class="form-control" name="password" id="password"  placeholder="${ipassword}"/>
+                                    </div>
+                                </div>
+                                <p class="error-input" id="passwordError"></p>
+                            </div>
+
+                            <div class="form-group ">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block login-button">${signin}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script type="text/javascript">
+            var validationErrorMessages =
+                {
+                    "loginLengthError":"login Length Error",
+                    "loginContentError":"login Content Error",
+                    "passwordLengthError":"password Length Error"
+                }
+            ;
+        </script>
+        <script src="js/validator.js"></script>
+
     </body>
 </html>
