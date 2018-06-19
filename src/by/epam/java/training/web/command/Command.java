@@ -7,6 +7,13 @@ import java.io.IOException;
 
 public interface Command {
 
-    void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
+    void execute(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException;
+
+    void forward(HttpServletRequest request, HttpServletResponse response, String jspFileName)
+            throws ServletException, IOException;
+
+    void redirect(HttpServletResponse response, String destination)
+            throws ServletException, IOException;
 
 }

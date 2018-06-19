@@ -1,93 +1,75 @@
 package by.epam.java.training.dao.impl;
 
+import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.UserDAO;
+import by.epam.java.training.dao.util.ConnectionPool;
+import by.epam.java.training.dao.util.EncriptionMD5;
 import by.epam.java.training.model.*;
-import by.epam.java.training.printer.LogPrinter;
 import org.apache.log4j.Logger;
-
+import static by.epam.java.training.dao.util.SQLRequest.*;
 
 import java.sql.*;
 
 public class UserDAOImpl implements UserDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(UserDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
 
-    private final String LOGIN = "root";
-    private final String PASSWORD = "password";
-    private final String URL = "jdbc:mysql://localhost:3306/library";
-
-    private final static String FIND_USER_BY_LOGIN_AND_PASSWORD = "SELECT user_id FROM users WHERE users.login='placeForLogin' AND users.password='placeForPassword';";
-    private final static String FIND_USER_BY_LOGIN = "SELECT * FROM users WHERE users.login='placeForLogin';";
-    private final static String ADD_USER = "INSERT INTO `library`.`users` (`login`, `password`, `first_name`, `last_name`, `email`, `adresses_address_id`, `roles_role_id`) VALUES ('placeForLogin', 'placeForPassword', 'placeForFirstName', 'placeForSecondName', 'placeForEmail', '1', '4');";
-    private final static String PLACE_FOR_LOGIN = "placeForLogin";
-    private final static String PLACE_FOR_PASSWORD = "placeForPassword";
-    private final static String PLACE_FOR_FIRSTNAME = "placeForFirstName";
-    private final static String PLACE_FOR_SECONDNAME = "placeForSecondName";
-    private final static String PLACE_FOR_EMAIL = "placeForEmail";
-
-
-    private Connection getConnection() {
-        Connection connection = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(URL, LOGIN, PASSWORD);
-        } catch (ClassNotFoundException ex){
-            LogPrinter.printLogError(ex.getMessage(), LOGGER);
+    private void closeResultSetAndStatement(ResultSet resultSet, Statement statement){
+        try{
+            if (resultSet!=null){
+                resultSet.close();
+            }
         }
-        catch (SQLException ex) {
-            LogPrinter.printLogError(ex.getMessage(), LOGGER);
+        catch (SQLException ex){
+            logger.warn("I can not close ResultSet",ex);
         }
-        return connection;
+
+        try{
+            if (statement!=null){
+                statement.close();
+            }
+        }
+        catch (SQLException ex){
+            logger.warn("I can not close Statement",ex);
+        }
     }
 
 
+
+
+
     @Override
-    public boolean isExistLoginAndPassword(AuthorizationUser authorizationUser) {
+    public boolean isExistLoginAndPassword(AuthorizationForm authorizationForm) {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-
+        ConnectionPool connectionPool = DAOFactory.getInstance().getConnectionPool();
         boolean result = false;
         try {
-            connection = getConnection();
+            connection = connectionPool.retrieve();
             statement = connection.createStatement();
-            String query = FIND_USER_BY_LOGIN_AND_PASSWORD.replaceFirst(PLACE_FOR_LOGIN, authorizationUser.getLogin())
-                    .replaceFirst(PLACE_FOR_PASSWORD, authorizationUser.getPassword());
+            String query = FIND_USER_BY_LOGIN_AND_PASSWORD.replaceFirst(PLACE_FOR_LOGIN, authorizationForm.getLogin())
+                    .replaceFirst(PLACE_FOR_PASSWORD, EncriptionMD5.encrypt(authorizationForm.getPassword()));
             resultSet = statement.executeQuery(query);
 
             if (resultSet.next()) {
                 result = true;
             }
-
-
         } catch (SQLException ex) {
-            LogPrinter.printLogError(ex.getMessage(), LOGGER);
+            logger.warn("Вatabase query error",ex);
         } finally {
-//            try{
-//                resultSet.close();
-//            }
-//            catch (SQLException ex){
-//                LogPrinter.printLogError(ex.getMessage(), LOGGER);
-//            }
-//
-//            try{
-//                statement.close();
-//            }
-//            catch (SQLException ex){
-//                LogPrinter.printLogError(ex.getMessage(), LOGGER);
-//            }
-//            try{
-//                connection.close();
-//            }
-//            catch (SQLException ex){
-//                LogPrinter.printLogError(ex.getMessage(), LOGGER);
-//            }
+            closeResultSetAndStatement(resultSet, statement);
+            try{
+                connectionPool.putback(connection);
+            } catch (NullPointerException ex){
+                logger.warn("Connection was not received", ex);
+            }
         }
         return result;
     }
 
     private Role getRoleById(Integer id){
-//
+
         return new Role(id,"ADMIN");
     }
 
@@ -98,92 +80,104 @@ public class UserDAOImpl implements UserDAO {
         Connection connection = null;
         Statement statement = null;
         ResultSet rs = null;
-
+        ConnectionPool connectionPool = DAOFactory.getInstance().getConnectionPool();
         try {
-            connection = getConnection();
+            connection = connectionPool.retrieve();
             statement = connection.createStatement();
             String query = FIND_USER_BY_LOGIN.replaceFirst(PLACE_FOR_LOGIN, login);
             rs = statement.executeQuery(query);
 
             while (rs.next()) {
                 user = new User();
-                user.setId(rs.getInt("idUsers"));
-                user.setLogin(rs.getString("login"));
-                user.setEmail(rs.getString("email"));
-                user.setFirstName(rs.getString("first_name"));
-                user.setLastName(rs.getString("last_name"));
-                user.setRegistrationDate(rs.getDate("registration_date"));
+                user.setId(rs.getInt(ID_USER));
+                user.setLogin(rs.getString(LOGIN));
+                user.setEmail(rs.getString(EMAIL));
+                user.setFirstName(rs.getString(FIRST_NAME));
+                user.setLastName(rs.getString(LAST_NAME));
+                user.setRegistrationDate(rs.getDate(REGISTRATION_DATE));
                 user.setAddress(new Address());
                 user.setRole(getRoleById(1));
             }
 
         } catch (SQLException ex) {
-
+            logger.warn("Вatabase query error",ex);
         } finally {
+            closeResultSetAndStatement(rs, statement);
             try{
-                rs.close();
-            }
-            catch (SQLException ex){
-
-            }
-            try{
-                statement.close();
-            }
-            catch (SQLException ex){
-
-            }
-            try{
-                connection.close();
-            }
-            catch (SQLException ex){
-
+                connectionPool.putback(connection);
+            } catch (NullPointerException ex){
+                logger.warn("Connection was not received", ex);
             }
         }
         return user;
     }
 
     @Override
-    public User addUser(RegistrationUser registrationUser) {
-        User user = null;
+    public ActiveUser getActiveUser(String login) {
         Connection connection = null;
         Statement statement = null;
-        ResultSet rs = null;
-
+        ResultSet resultSet = null;
+        ConnectionPool connectionPool = DAOFactory.getInstance().getConnectionPool();
+        ActiveUser activeUser = null;
         try {
-            connection = getConnection();
+            connection = connectionPool.retrieve();
             statement = connection.createStatement();
-            String query = ADD_USER.replaceFirst(PLACE_FOR_LOGIN, registrationUser.getLogin())
-                    .replaceFirst(PLACE_FOR_PASSWORD, registrationUser.getPassword())
-                    .replaceFirst(PLACE_FOR_EMAIL, registrationUser.getEmail())
-                    .replaceFirst(PLACE_FOR_FIRSTNAME, registrationUser.getFirstName())
-                    .replaceFirst(PLACE_FOR_SECONDNAME, registrationUser.getLastName());
-            rs = statement.executeQuery(query);
+            String query = FIND_ACTIVE_USER_BY_LOGIN.replaceFirst(PLACE_FOR_LOGIN, login);
+            resultSet = statement.executeQuery(query);
 
-            user = getUserByLogin(registrationUser.getLogin());
+            if (resultSet.next()) {
+                activeUser = new ActiveUser();
+                activeUser.setId(resultSet.getInt(ID_USER));
+                activeUser.setLogin(resultSet.getString(LOGIN));
+            }
 
         } catch (SQLException ex) {
-
+            logger.warn("Вatabase query error",ex);
         } finally {
+            closeResultSetAndStatement(resultSet, statement);
             try{
-                rs.close();
-            }
-            catch (SQLException ex){
-
-            }
-            try{
-                statement.close();
-            }
-            catch (SQLException ex){
-
-            }
-            try{
-                connection.close();
-            }
-            catch (SQLException ex){
-
+                connectionPool.putback(connection);
+            } catch (NullPointerException ex){
+                logger.warn("Connection was not received", ex);
             }
         }
-        return user;
+        return activeUser;
+    }
+
+    @Override
+    public ActiveUser addUser(RegistrationForm registrationForm) {
+        ActiveUser activeUser = null;
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        ConnectionPool connectionPool = DAOFactory.getInstance().getConnectionPool();
+        try {
+            connection = connectionPool.retrieve();
+            statement = connection.createStatement();
+            String query = ADD_USER.replaceFirst(PLACE_FOR_LOGIN, registrationForm.getLogin())
+                    .replaceFirst(PLACE_FOR_PASSWORD, EncriptionMD5.encrypt(registrationForm.getPassword()))
+                    .replaceFirst(PLACE_FOR_EMAIL, registrationForm.getEmail())
+                    .replaceFirst(PLACE_FOR_FIRST_NAME, registrationForm.getFirstName())
+                    .replaceFirst(PLACE_FOR_SECOND_NAME, registrationForm.getLastName());
+
+            int result = statement.executeUpdate(query);
+
+            if (result>0){
+                activeUser =getActiveUser(registrationForm.getLogin());
+            }
+
+        } catch (SQLException ex) {
+            logger.warn("Вatabase query error",ex);
+        } finally {
+            closeResultSetAndStatement(resultSet, statement);
+            try{
+                connectionPool.putback(connection);
+            } catch (NullPointerException ex){
+                logger.warn("Connection was not received", ex);
+            }
+        }
+        return activeUser;
     }
 
     @Override
@@ -191,10 +185,10 @@ public class UserDAOImpl implements UserDAO {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-
+        ConnectionPool connectionPool = DAOFactory.getInstance().getConnectionPool();
         boolean result = false;
         try {
-            connection = getConnection();
+            connection = connectionPool.retrieve();
             statement = connection.createStatement();
             String query = FIND_USER_BY_LOGIN.replaceFirst(PLACE_FOR_LOGIN, login);
 
@@ -204,26 +198,16 @@ public class UserDAOImpl implements UserDAO {
                 result = true;
             }
 
+            connectionPool.putback(connection);
+
         } catch (SQLException ex) {
-
+            logger.warn("Вatabase query error",ex);
         } finally {
+            closeResultSetAndStatement(resultSet, statement);
             try{
-                resultSet.close();
-            }
-            catch (SQLException ex){
-
-            }
-            try{
-                statement.close();
-            }
-            catch (SQLException ex){
-
-            }
-            try{
-                connection.close();
-            }
-            catch (SQLException ex){
-
+                connectionPool.putback(connection);
+            } catch (NullPointerException ex){
+                logger.warn("Connection was not received", ex);
             }
         }
         return result;

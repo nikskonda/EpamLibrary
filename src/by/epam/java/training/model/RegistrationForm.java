@@ -3,7 +3,7 @@ package by.epam.java.training.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class RegistrationUser implements Serializable {
+public class RegistrationForm implements Serializable {
     private static final long serialVersionUID = 1239618902290L;
 
     private String login;
@@ -12,22 +12,20 @@ public class RegistrationUser implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private Address address;
     private Role role;
 
-    public RegistrationUser() {
+    public RegistrationForm() {
 
     }
 
-    public RegistrationUser(String login, String password, String confirmPassword, String firstName, String lastName, String email, Address address, Role role) {
+    public RegistrationForm(String login, String password, String confirmPassword, String firstName, String lastName, String email, Address address, Role role) {
         this.login = login;
         this.password = password;
         this.confirmPassword = confirmPassword;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.address = address;
-        this.role = role;
+        this.role = new Role("User");
 
     }
 
@@ -63,20 +61,9 @@ public class RegistrationUser implements Serializable {
         this.email = email;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 
     public Role getRole() {
         return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
 

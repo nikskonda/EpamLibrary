@@ -26,6 +26,26 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>RU</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RU</servlet-name>
+        <url-pattern>/ru</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EN</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EN</servlet-name>
+        <url-pattern>/en</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
     </servlet>

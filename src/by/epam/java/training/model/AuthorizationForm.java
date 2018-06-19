@@ -2,16 +2,16 @@ package by.epam.java.training.model;
 
 import java.io.Serializable;
 
-public class AuthorizationUser implements Serializable {
+public class AuthorizationForm implements Serializable {
     private static final long serialVersionUID = 3846457549196098786L;
 
     private String login;
     private String password;
 
-    public AuthorizationUser() {
+    public AuthorizationForm() {
     }
 
-    public AuthorizationUser(String login, String password) {
+    public AuthorizationForm(String login, String password) {
         this.login = login;
         this.password = password;
     }

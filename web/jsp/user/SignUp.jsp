@@ -44,6 +44,8 @@
 
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="../../css/sign.css">
+
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
@@ -59,7 +61,7 @@
                         </div>
                     </div>
                     <div class="main-login main-center">
-                        <form class="form-horizontal" method="post" action="/sign_up" onsubmit="false">
+                        <form class="form-horizontal" method="post" action="/sign_up" onsubmit="return isValidSignUpForm()">
                             <input type="hidden" name="command" value="sign_up">
                             <div class="form-group">
                                 <label for="login" class="cols-sm-2 control-label">${login}</label>
@@ -69,26 +71,33 @@
                                         <input type="text" class="form-control" name="login" id="login"  placeholder="${ilogin}"/>
                                     </div>
                                 </div>
+                                <p class="error-input" id="loginError">
+                                    <c:if test="${error_exist == true}">
+                                        ${userExistsErrorMessage}
+                                    </c:if>
+                                </p>
                             </div>
 
                             <div class="form-group">
-                                <label for="password" class="cols-sm-2 control-label">${login}</label>
+                                <label for="password" class="cols-sm-2 control-label">${password}</label>
                                 <div class="cols-sm-10">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                                         <input type="password" class="form-control" name="password" id="password"  placeholder="${ipassword}"/>
                                     </div>
                                 </div>
+                                <p class="error-input" id="passwordError"></p>
                             </div>
 
                             <div class="form-group">
-                                <label for="confirm" class="cols-sm-2 control-label">${confirmPassword}</label>
+                                <label for="confirmPassword" class="cols-sm-2 control-label">${confirmPassword}</label>
                                 <div class="cols-sm-10">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                        <input type="password" class="form-control" name="confirmPassword" id="confirm"  placeholder="${iconfirmPassword}"/>
+                                        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"  placeholder="${iconfirmPassword}"/>
                                     </div>
                                 </div>
+                                <p class="error-input" id="confirmPasswordError"></p>
                             </div>
 
                             <div class="form-group">
@@ -99,6 +108,7 @@
                                         <input type="text" class="form-control" name="firstName" id="firstName"  placeholder="${ifirstName}"/>
                                     </div>
                                 </div>
+                                <p class="error-input" id="firstNameError"></p>
                             </div>
 
                             <div class="form-group">
@@ -109,6 +119,7 @@
                                         <input type="text" class="form-control" name="lastName" id="lastName"  placeholder="${ilastName}"/>
                                     </div>
                                 </div>
+                                <p class="error-input" id="lastNameError"></p>
                             </div>
 
                             <div class="form-group">
@@ -119,9 +130,8 @@
                                         <input type="text" class="form-control" name="email" id="email"  placeholder="${iemail}"/>
                                     </div>
                                 </div>
+                                <p class="error-input" id="emailError"></p>
                             </div>
-
-
 
 
                             <div class="form-group ">
@@ -133,6 +143,22 @@
             </div>
         </section>
 
+        <script type="text/javascript">
+            var validationErrorMessages =
+                {
+                    "loginLengthError":"login Length Error",
+                    "loginContentError":"login Content Error",
+                    "passwordLengthError":"password Length Error",
+                    "confirmPasswordError":"confirm Password Error",
+                    "firstNameContentError":"firstName Content Error",
+                    "firstNameLengthError":"firstName Length Error",
+                    "lastNameContentError":"lastName Content Error",
+                    "lastNameLengthError":"lastName Length Error",
+                    "emailError":"email Error"
+                }
+            ;
+        </script>
+        <script src="js/validator.js"></script>
 
     </body>
 </html>

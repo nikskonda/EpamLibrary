@@ -17,12 +17,13 @@
 <fmt:message bundle="${loc}" key="local.lable.password.value" var="password" />
 <fmt:message bundle="${loc}" key="local.input.login.value" var="ilogin" />
 <fmt:message bundle="${loc}" key="local.input.password.value" var="ipassword" />
+<fmt:message bundle="${loc}" key="local.input.password.value" var="userExistsErrorMessage" />
 <html>
 <head>
     <title>SignIn</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="css/sign.css">
+
 
     <!-- Website Font style -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
@@ -33,6 +34,8 @@
 
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="../../css/sign.css">
+
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
@@ -49,7 +52,7 @@
                         </div>
                     </div>
                     <div class="main-login main-center">
-                        <form class="form-horizontal" method="post" action="/sign_in" onsubmit="return isValidLoginForm()">
+                        <form class="form-horizontal" method="post" action="/sign_in" onsubmit="return isValidSignInForm()">
                             <input type="hidden" name="command" value="sign_in">
                             <div class="form-group">
                                 <label for="login" class="cols-sm-2 control-label">${login}</label>
@@ -59,9 +62,12 @@
                                         <input type="text" class="form-control" name="login" id="login"  placeholder="${ilogin}"/>
                                     </div>
                                 </div>
-                                <p class="error-input" id="loginError"></p>
+                                <p class="error-input" id="loginError">
+                                    <c:if test="${error_exist == true}">
+                                        ${userExistsErrorMessage}
+                                    </c:if>
+                                </p>
                             </div>
-
 
                             <div class="form-group">
                                 <label for="password" class="cols-sm-2 control-label">${password}</label>
@@ -92,7 +98,7 @@
                 }
             ;
         </script>
-        <script src="js/validator.js"></script>
+        <script src="../../js/validator.js"></script>
 
     </body>
 </html>
