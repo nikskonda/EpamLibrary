@@ -1,7 +1,6 @@
 package by.epam.java.training.servise.validation.util;
 
-import by.epam.java.training.model.AuthorizationForm;
-import by.epam.java.training.model.RegistrationForm;
+import by.epam.java.training.model.user.RegistrationForm;
 import by.epam.java.training.servise.validation.Validator;
 
 public class RegistrationFormValidator implements Validator {

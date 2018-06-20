@@ -27,6 +27,18 @@
     <fmt:message bundle="${loc}" key="local.input.firstName.value" var="ifirstName" />
     <fmt:message bundle="${loc}" key="local.input.lastName.value" var="ilastName" />
     <fmt:message bundle="${loc}" key="local.input.email.value" var="iemail" />
+
+    <fmt:message bundle="${loc}" key="local.message.error.login.busy" var="loginBusy" />
+    <fmt:message bundle="${loc}" key="local.message.error.login.content" var="loginCont" />
+    <fmt:message bundle="${loc}" key="local.message.error.login.length" var="loginLen" />
+    <fmt:message bundle="${loc}" key="local.message.error.password.length" var="pwLen" />
+    <fmt:message bundle="${loc}" key="local.message.error.confirm_password.content" var="comfPwCont" />
+    <fmt:message bundle="${loc}" key="local.message.error.first_name.content" var="fnCont" />
+    <fmt:message bundle="${loc}" key="local.message.error.first_name.length" var="fnLen" />
+    <fmt:message bundle="${loc}" key="local.message.error.last_name.content" var="lnCont" />
+    <fmt:message bundle="${loc}" key="local.message.error.last_name.length" var="lnLen" />
+    <fmt:message bundle="${loc}" key="local.message.error.email.content" var="emailCont" />
+
 <html>
 <html>
 <head>
@@ -68,12 +80,13 @@
                                 <div class="cols-sm-10">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="login" id="login"  placeholder="${ilogin}"/>
+                                        <input type="text" class="form-control" name="login" id="login"  placeholder="${ilogin}"
+                                               value="<c:out value="${requestScope.signUpForm.login}"/>"/>
                                     </div>
                                 </div>
                                 <p class="error-input" id="loginError">
                                     <c:if test="${error_exist == true}">
-                                        ${userExistsErrorMessage}
+                                        ${loginBusy}
                                     </c:if>
                                 </p>
                             </div>
@@ -105,7 +118,8 @@
                                 <div class="cols-sm-10">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="firstName" id="firstName"  placeholder="${ifirstName}"/>
+                                        <input type="text" class="form-control" name="firstName" id="firstName"  placeholder="${ifirstName}"
+                                               value="<c:out value="${requestScope.signUpForm.firstName}"/>"/>
                                     </div>
                                 </div>
                                 <p class="error-input" id="firstNameError"></p>
@@ -116,7 +130,8 @@
                                 <div class="cols-sm-10">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="lastName" id="lastName"  placeholder="${ilastName}"/>
+                                        <input type="text" class="form-control" name="lastName" id="lastName"  placeholder="${ilastName}"
+                                               value="<c:out value="${requestScope.signUpForm.lastName}"/>"/>
                                     </div>
                                 </div>
                                 <p class="error-input" id="lastNameError"></p>
@@ -127,7 +142,8 @@
                                 <div class="cols-sm-10">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="email" id="email"  placeholder="${iemail}"/>
+                                        <input type="text" class="form-control" name="email" id="email"  placeholder="${iemail}"
+                                               value="<c:out value="${requestScope.signUpForm.email}"/>"/>
                                     </div>
                                 </div>
                                 <p class="error-input" id="emailError"></p>
@@ -146,15 +162,15 @@
         <script type="text/javascript">
             var validationErrorMessages =
                 {
-                    "loginLengthError":"login Length Error",
-                    "loginContentError":"login Content Error",
-                    "passwordLengthError":"password Length Error",
-                    "confirmPasswordError":"confirm Password Error",
-                    "firstNameContentError":"firstName Content Error",
-                    "firstNameLengthError":"firstName Length Error",
-                    "lastNameContentError":"lastName Content Error",
-                    "lastNameLengthError":"lastName Length Error",
-                    "emailError":"email Error"
+                    "loginLengthError":"${loginLen}",
+                    "loginContentError":"${loginCont}",
+                    "passwordLengthError":"${pwLen}",
+                    "confirmPasswordError":"${comfPwCont}",
+                    "firstNameContentError":"${fnCont}",
+                    "firstNameLengthError":"${fnLen}",
+                    "lastNameContentError":"${lnCont}",
+                    "lastNameLengthError":"${lnLen}",
+                    "emailError":"${emailCont}"
                 }
             ;
         </script>

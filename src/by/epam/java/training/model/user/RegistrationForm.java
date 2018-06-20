@@ -1,7 +1,6 @@
-package by.epam.java.training.model;
+package by.epam.java.training.model.user;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class RegistrationForm implements Serializable {
     private static final long serialVersionUID = 1239618902290L;

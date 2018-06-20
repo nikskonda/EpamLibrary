@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class FrontController extends HttpServlet {
 
+    private static final String COMMAND = "command";
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         process(req, resp);
@@ -21,7 +23,7 @@ public class FrontController extends HttpServlet {
     }
 
     private void process(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
-        String command = request.getParameter("command");
+        String command = request.getParameter(COMMAND);
         CommandFactory.getInstance().getCommand(command).execute(request, response);
     }
 }

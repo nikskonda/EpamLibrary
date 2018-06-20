@@ -4,7 +4,7 @@ import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.UserDAO;
 import by.epam.java.training.dao.util.ConnectionPool;
 import by.epam.java.training.dao.util.EncriptionMD5;
-import by.epam.java.training.model.*;
+import by.epam.java.training.model.user.*;
 import org.apache.log4j.Logger;
 import static by.epam.java.training.dao.util.SQLRequest.*;
 

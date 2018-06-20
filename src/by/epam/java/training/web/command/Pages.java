@@ -4,8 +4,8 @@ public enum Pages {
     START_PAGE("index.jsp"),
     SIGN_IN("jsp/user/SignIn.jsp"),
     SIGN_UP("jsp/user/SignUp.jsp"),
-    PROFILE("jsp/user/Profile.jsp")
-
+    PROFILE("jsp/user/Profile.jsp"),
+    CATALOG("jsp/Catalog.jsp")
     ;
 
     private String page;

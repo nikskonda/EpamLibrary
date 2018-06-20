@@ -1,11 +1,8 @@
 package by.epam.java.training.controller;
 
-import by.epam.java.training.model.ActiveUser;
-import by.epam.java.training.model.AuthorizationForm;
-import by.epam.java.training.model.RegistrationForm;
-import by.epam.java.training.model.User;
+import by.epam.java.training.model.user.ActiveUser;
+import by.epam.java.training.model.user.AuthorizationForm;
 import by.epam.java.training.servise.ServiceFactory;
-import by.epam.java.training.servise.UserService;
 
 import static java.lang.Thread.sleep;
 

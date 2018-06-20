@@ -1,5 +1,6 @@
 package by.epam.java.training.dao;
 
+import by.epam.java.training.dao.impl.BookDAOImpl;
 import by.epam.java.training.dao.impl.UserDAOImpl;
 import by.epam.java.training.dao.util.ConnectionPool;
 import org.apache.log4j.Logger;
@@ -15,13 +16,19 @@ public class DAOFactory {
 
 
     private final ConnectionPool connectionPool = new ConnectionPool();
+
     private final UserDAO userDAO = new UserDAOImpl();
+    private final BookDAO bookDAO = new BookDAOImpl();
 
     private DAOFactory() {}
 
     public UserDAO getUserDAO() {
-        return userDAO;
+        return this.userDAO;
     }
+    public BookDAO getBookDAO(){
+        return this.bookDAO;
+    }
+
 
     public ConnectionPool getConnectionPool(){
         return this.connectionPool;

@@ -1,6 +1,7 @@
 package by.epam.java.training.servise;
 
 import by.epam.java.training.dao.DAOFactory;
+import by.epam.java.training.servise.impl.BookServiceImpl;
 import by.epam.java.training.servise.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
 
@@ -16,11 +17,15 @@ public class ServiceFactory {
 
 
     private final UserService userService = new UserServiceImpl();
+    private final BookService bookService = new BookServiceImpl();
 
     private ServiceFactory() {}
 
     public UserService getUserService() {
         return userService;
+    }
+    public BookService getBookService() {
+        return bookService;
     }
 
 

@@ -2,11 +2,10 @@ package by.epam.java.training.servise.impl;
 
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.UserDAO;
-import by.epam.java.training.dao.impl.UserDAOImpl;
-import by.epam.java.training.model.ActiveUser;
-import by.epam.java.training.model.AuthorizationForm;
-import by.epam.java.training.model.RegistrationForm;
-import by.epam.java.training.model.User;
+import by.epam.java.training.model.user.ActiveUser;
+import by.epam.java.training.model.user.AuthorizationForm;
+import by.epam.java.training.model.user.RegistrationForm;
+import by.epam.java.training.model.user.User;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;

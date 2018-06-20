@@ -1,6 +1,7 @@
 package by.epam.java.training.web.command.impl.user;
 
-import by.epam.java.training.model.*;
+import by.epam.java.training.model.user.ActiveUser;
+import by.epam.java.training.model.user.RegistrationForm;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.servise.impl.UserServiceImpl;
 import by.epam.java.training.web.command.AbstractCommand;
@@ -22,7 +23,9 @@ public class SignUp extends AbstractCommand {
     private static final String FIRST_NAME = "firstName";
     private static final String LAST_NAME = "lastName";
     private static final String EMAIL = "email";
-    private static final String ERROR_MSG = "errorMsg";
+
+    private static final String ERROR_EXIST = "error_exist";
+    private static final String SIGN_UP_FORM = "signUpForm";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,11 +42,12 @@ public class SignUp extends AbstractCommand {
         UserService userService = new UserServiceImpl();
 
         if (!userService.isFreeLogin(regForm.getLogin()) || !regForm.comparePasswords()){
-            request.setAttribute(ERROR_MSG, "zanyt login");
+            request.setAttribute(SIGN_UP_FORM, regForm);
+            request.setAttribute(ERROR_EXIST, true);
             forward(request, response, SIGN_UP.getPage());
             return;
         }
-
+        request.setAttribute(ERROR_EXIST, false);
         ActiveUser user = userService.getActiveUser(regForm.getLogin());
         HttpSession session = request.getSession(true);
         session.setAttribute(USER, user);

@@ -8,13 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-<head>
-    <title>Index</title>
+
     <fmt:setLocale value="${sessionScope.local}" />
     <fmt:setBundle basename="l10n.local" var="loc" />
     <fmt:message bundle="${loc}" key="local.button.signin.name" var="signin" />
     <fmt:message bundle="${loc}" key="local.button.signup.name" var="signup" />
+    <fmt:message bundle="${loc}" key="local.button.catalog.name" var="catalog" />
 
 <section class="s-pageheader s-pageheader--home">
 
@@ -93,7 +92,7 @@
                                 <li><a href="index.jsp">Index</a></li>
                                 <li><a href="jsp/user/SignIn.jsp">${signin}</a></li>
                                 <li><a href="jsp/user/SignUp.jsp">${signup}</a></li>
-                                <li><a href="jsp/Catalog.jsp">Catalog</a></li>
+                                <li><a href="/catalog?command=open_catalog">${catalog}</a></li>
                                 <li><a href="jsp/Test.jsp">Test Page</a></li>
 
                             </ul>

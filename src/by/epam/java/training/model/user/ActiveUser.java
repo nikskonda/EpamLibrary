@@ -1,4 +1,4 @@
-package by.epam.java.training.model;
+package by.epam.java.training.model.user;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -17,7 +17,13 @@
 <fmt:message bundle="${loc}" key="local.lable.password.value" var="password" />
 <fmt:message bundle="${loc}" key="local.input.login.value" var="ilogin" />
 <fmt:message bundle="${loc}" key="local.input.password.value" var="ipassword" />
-<fmt:message bundle="${loc}" key="local.input.password.value" var="userExistsErrorMessage" />
+
+<fmt:message bundle="${loc}" key="local.message.error.login.not_found" var="notFound" />
+<fmt:message bundle="${loc}" key="local.message.error.login.content" var="loginContent" />
+<fmt:message bundle="${loc}" key="local.message.error.login.length" var="loginLen" />
+<fmt:message bundle="${loc}" key="local.message.error.password.length" var="pwLen" />
+
+
 <html>
 <head>
     <title>SignIn</title>
@@ -59,12 +65,13 @@
                                 <div class="cols-sm-10">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="login" id="login"  placeholder="${ilogin}"/>
+                                        <input type="text" class="form-control" name="login" id="login"  placeholder="${ilogin}"
+                                               value="<c:out value="${requestScope.signInForm.login}"/>"/>
                                     </div>
                                 </div>
                                 <p class="error-input" id="loginError">
                                     <c:if test="${error_exist == true}">
-                                        ${userExistsErrorMessage}
+                                        ${notFound}
                                     </c:if>
                                 </p>
                             </div>
@@ -92,9 +99,9 @@
         <script type="text/javascript">
             var validationErrorMessages =
                 {
-                    "loginLengthError":"login Length Error",
-                    "loginContentError":"login Content Error",
-                    "passwordLengthError":"password Length Error"
+                    "loginLengthError":"${loginLen}",
+                    "loginContentError":"${loginContent}",
+                    "passwordLengthError":"${pwLen}"
                 }
             ;
         </script>
