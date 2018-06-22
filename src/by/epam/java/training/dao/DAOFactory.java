@@ -1,6 +1,7 @@
 package by.epam.java.training.dao;
 
 import by.epam.java.training.dao.impl.BookDAOImpl;
+import by.epam.java.training.dao.impl.NewsDAOImpl;
 import by.epam.java.training.dao.impl.UserDAOImpl;
 import by.epam.java.training.dao.util.ConnectionPool;
 import org.apache.log4j.Logger;
@@ -14,11 +15,11 @@ public class DAOFactory {
     private static DAOFactory instance = new DAOFactory();
     private static Lock lock = new ReentrantLock();
 
-
     private final ConnectionPool connectionPool = new ConnectionPool();
 
     private final UserDAO userDAO = new UserDAOImpl();
     private final BookDAO bookDAO = new BookDAOImpl();
+    private final NewsDAO newsDAO = new NewsDAOImpl();
 
     private DAOFactory() {}
 
@@ -28,7 +29,9 @@ public class DAOFactory {
     public BookDAO getBookDAO(){
         return this.bookDAO;
     }
-
+    public NewsDAO getNewsDAO(){
+        return this.newsDAO;
+    }
 
     public ConnectionPool getConnectionPool(){
         return this.connectionPool;

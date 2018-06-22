@@ -1,6 +1,8 @@
 package by.epam.java.training.web.command;
 
 import by.epam.java.training.web.command.impl.BookCatalog;
+import by.epam.java.training.web.command.impl.News;
+import by.epam.java.training.web.command.impl.NewsConstructor;
 import by.epam.java.training.web.command.impl.l10n.Localization;
 import by.epam.java.training.web.command.impl.user.SignIn;
 import by.epam.java.training.web.command.impl.user.SignUp;
@@ -21,6 +23,8 @@ public class CommandManager {
         commands.put(RU.getValue(), new Localization());
         commands.put(EN.getValue(), new Localization());
         commands.put(OPEN_CATALOG.getValue(), new BookCatalog());
+        commands.put(OPEN_NEWS.getValue(), new News());
+        commands.put(ADD_NEWS.getValue(), new NewsConstructor());
     }
 
     public Command getCommand(String command){

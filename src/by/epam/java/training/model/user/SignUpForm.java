@@ -2,7 +2,7 @@ package by.epam.java.training.model.user;
 
 import java.io.Serializable;
 
-public class RegistrationForm implements Serializable {
+public class SignUpForm implements Serializable {
     private static final long serialVersionUID = 1239618902290L;
 
     private String login;
@@ -13,11 +13,11 @@ public class RegistrationForm implements Serializable {
     private String email;
     private Role role;
 
-    public RegistrationForm() {
+    public SignUpForm() {
 
     }
 
-    public RegistrationForm(String login, String password, String confirmPassword, String firstName, String lastName, String email, Address address, Role role) {
+    public SignUpForm(String login, String password, String confirmPassword, String firstName, String lastName, String email, Address address, Role role) {
         this.login = login;
         this.password = password;
         this.confirmPassword = confirmPassword;

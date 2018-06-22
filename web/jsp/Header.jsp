@@ -94,6 +94,7 @@
                                 <li><a href="jsp/user/SignUp.jsp">${signup}</a></li>
                                 <li><a href="/catalog?command=open_catalog">${catalog}</a></li>
                                 <li><a href="jsp/Test.jsp">Test Page</a></li>
+                                <li><a href="jsp/AddNews.jsp">Add news</a></li>
 
                             </ul>
                         </li>

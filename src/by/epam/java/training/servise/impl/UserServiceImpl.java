@@ -3,8 +3,8 @@ package by.epam.java.training.servise.impl;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.UserDAO;
 import by.epam.java.training.model.user.ActiveUser;
-import by.epam.java.training.model.user.AuthorizationForm;
-import by.epam.java.training.model.user.RegistrationForm;
+import by.epam.java.training.model.user.SignInForm;
+import by.epam.java.training.model.user.SignUpForm;
 import by.epam.java.training.model.user.User;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.servise.validation.ValidatorManager;
@@ -18,11 +18,11 @@ public class UserServiceImpl implements UserService {
     private final ValidatorManager validator = new ValidatorManager();
 
     @Override
-    public boolean isExistLoginAndPassword(AuthorizationForm authorizationForm) {
-        if (!validator.isValid(ValidatorType.AUTHORIZATION_FORM_VALIDATOR, authorizationForm)){
+    public boolean isExistLoginAndPassword(SignInForm signInForm) {
+        if (!validator.isValid(ValidatorType.AUTHORIZATION_FORM_VALIDATOR, signInForm)){
             return false;
         }
-        return userDAO.isExistLoginAndPassword(authorizationForm);
+        return userDAO.isExistLoginAndPassword(signInForm);
 
     }
 
@@ -35,12 +35,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ActiveUser addUser(RegistrationForm registrationForm) {
-        if (!validator.isValid(ValidatorType.REGISTRATION_FORM_VALIDATOR, registrationForm)){
+    public ActiveUser addUser(SignUpForm signUpForm) {
+        if (!validator.isValid(ValidatorType.REGISTRATION_FORM_VALIDATOR, signUpForm)){
             logger.warn("Unvalid Registration Form");
             return null;
         }
-        return userDAO.addUser(registrationForm);
+        return userDAO.addUser(signUpForm);
     }
 
     @Override

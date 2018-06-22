@@ -41,13 +41,6 @@
 
   <jsp:include page="jsp/Header.jsp"/>
 
-  <div class="row">
-    <form method="post" action="/catalog">
-      <input type="hidden" name="command" value="open_catalog">
-      <button type="submit">${catalog}</button>
-    </form>
-  </div>
-
   <section class="s-content">
 
     <div class="row masonry-wrap">
@@ -55,405 +48,44 @@
 
         <div class="grid-sizer"></div>
 
-        <article class="masonry__brick entry format-standard" data-aos="fade-up">
+        <c:choose>
+          <c:when test="${requestScope.news.size()-1 > 0}">
+            <c:forEach var="news" items="${requestScope.news}">
+              <article class="masonry__brick entry format-standard" data-aos="fade-up">
+
+                <div class="entry__thumb">
+                  <a href="page/single-standard.html" class="entry__thumb-link">
+                    <img src="<c:out value="${news.getPhotoUrl()}"/>"
+                         srcset="<c:out value="${news.getPhotoUrl()}"/> 1x, <c:out value="${news.getPhotoUrl()}"/> 2x" alt="">
+                  </a>
+                </div>
+
+                <div class="entry__text">
+                  <div class="entry__header">
+
+                    <div class="entry__date">
+                      <c:out value="${news.getPublishDate()}"/>
+                    </div>
+                    <div class="entry__date">
+                      <p><c:out value="${news.getUserFirstName()}"/>, <c:out value="${news.getUserLastName()}"/></p>
+                    </div>
+                    <h1 class="entry__title"><c:out value="${news.getTitle()}"/></h1>
+                  </div>
+
+
+                  <a href="#">Read</a>
+
+                </div>
+
+              </article> <!-- end article -->
+
+            </c:forEach>
+          </c:when>
+          <c:otherwise>
+            <p>Ничего нового )</p>
+          </c:otherwise>
+        </c:choose>
 
-          <div class="entry__thumb">
-            <a href="page/single-standard.html" class="entry__thumb-link">
-              <img src="images/thumbs/masonry/lamp-400.jpg"
-                   srcset="images/thumbs/masonry/lamp-400.jpg 1x, images/thumbs/masonry/lamp-800.jpg 2x" alt="">
-            </a>
-          </div>
-
-          <div class="entry__text">
-            <div class="entry__header">
-
-              <div class="entry__date">
-                <a href="page/single-standard.html">December 15, 2017</a>
-              </div>
-              <h1 class="entry__title"><a href="page/single-standard.html">Just a Standard Format Post.</a></h1>
-
-            </div>
-            <div class="entry__excerpt">
-              <p>
-                Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua...
-              </p>
-            </div>
-            <div class="entry__meta">
-                            <span class="entry__meta-links">
-                                <a href="page/category.html">Design</a>
-                                <a href="page/category.html">Photography</a>
-                            </span>
-            </div>
-          </div>
-
-        </article> <!-- end article -->
-
-        <article class="masonry__brick entry format-quote" data-aos="fade-up">
-
-          <div class="entry__thumb">
-            <blockquote>
-              <p>Good design is making something intelligible and memorable. Great design is making something memorable and meaningful.</p>
-
-              <cite>Dieter Rams</cite>
-            </blockquote>
-          </div>
-
-        </article> <!-- end article -->
-
-        <article class="masonry__brick entry format-standard" data-aos="fade-up">
-
-          <div class="entry__thumb">
-            <a href="page/single-standard.html" class="entry__thumb-link">
-              <img src="images/thumbs/masonry/tulips-400.jpg"
-                   srcset="images/thumbs/masonry/tulips-400.jpg 1x, images/thumbs/masonry/tulips-800.jpg 2x" alt="">
-            </a>
-          </div>
-
-          <div class="entry__text">
-            <div class="entry__header">
-
-              <div class="entry__date">
-                <a href="page/single-standard.html">December 15, 2017</a>
-              </div>
-              <h1 class="entry__title"><a href="page/single-standard.html">10 Interesting Facts About Caffeine.</a></h1>
-
-            </div>
-            <div class="entry__excerpt">
-              <p>
-                Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua...
-              </p>
-            </div>
-            <div class="entry__meta">
-                            <span class="entry__meta-links">
-                                <a href="page/category.html">Health</a>
-                            </span>
-            </div>
-          </div>
-
-        </article> <!-- end article -->
-
-        <article class="masonry__brick entry format-standard" data-aos="fade-up">
-
-          <div class="entry__thumb">
-            <a href="page/single-standard.html" class="entry__thumb-link">
-              <img src="images/thumbs/masonry/cookies-400.jpg"
-                   srcset="images/thumbs/masonry/cookies-400.jpg 1x, images/thumbs/masonry/cookies-800.jpg 2x" alt="">
-            </a>
-          </div>
-
-          <div class="entry__text">
-            <div class="entry__header">
-
-              <div class="entry__date">
-                <a href="page/single-standard.html">December 10, 2017</a>
-              </div>
-              <h1 class="entry__title"><a href="page/single-standard.html">No Sugar Oatmeal Cookies.</a></h1>
-
-            </div>
-            <div class="entry__excerpt">
-              <p>
-                Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua...
-              </p>
-            </div>
-            <div class="entry__meta">
-                            <span class="entry__meta-links">
-                                <a href="page/category.html">Cooking</a>
-                                <a href="page/category.html">Health</a>
-                            </span>
-            </div>
-          </div>
-
-        </article> <!-- end article -->
-
-        <article class="masonry__brick entry format-standard" data-aos="fade-up">
-
-          <div class="entry__thumb">
-            <a href="page/single-standard.html" class="entry__thumb-link">
-              <img src="images/thumbs/masonry/wheel-400.jpg"
-                   srcset="images/thumbs/masonry/wheel-400.jpg 1x, images/thumbs/masonry/wheel-800.jpg 2x" alt="">
-            </a>
-          </div>
-
-          <div class="entry__text">
-            <div class="entry__header">
-
-              <div class="entry__date">
-                <a href="page/single-standard.html">December 10, 2017</a>
-              </div>
-              <h1 class="entry__title"><a href="page/single-standard.html">Visiting Theme Parks Improves Your Health.</a></h1>
-
-            </div>
-            <div class="entry__excerpt">
-              <p>
-                Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua...
-              </p>
-            </div>
-            <div class="entry__meta">
-                            <span class="entry__meta-links">
-                                <a href="#">Health</a>
-                                <a href="#">Lifestyle</a>
-                            </span>
-            </div>
-          </div>
-
-        </article> <!-- end article -->
-
-        <article class="masonry__brick entry format-video" data-aos="fade-up">
-
-          <div class="entry__thumb video-image">
-            <a href="https://player.vimeo.com/video/117310401?color=01aef0&title=0&byline=0&portrait=0" data-lity>
-              <img src="images/thumbs/masonry/shutterbug-400.jpg"
-                   srcset="images/thumbs/masonry/shutterbug-400.jpg 1x, images/thumbs/masonry/shutterbug-800.jpg 2x" alt="">
-            </a>
-          </div>
-
-          <div class="entry__text">
-            <div class="entry__header">
-
-              <div class="entry__date">
-                <a href="page/single-video.html">December 10, 2017</a>
-              </div>
-              <h1 class="entry__title"><a href="page/single-video.html">Key Benefits Of Family Photography.</a></h1>
-
-            </div>
-            <div class="entry__excerpt">
-              <p>
-                Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua...
-              </p>
-            </div>
-            <div class="entry__meta">
-                            <span class="entry__meta-links">
-                                <a href="page/category.html">Family</a>
-                                <a href="page/category.html">Photography</a>
-                            </span>
-            </div>
-          </div>
-
-        </article> <!-- end article -->
-
-
-        <article class="masonry__brick entry format-gallery" data-aos="fade-up">
-
-          <div class="entry__thumb slider">
-            <div class="slider__slides">
-              <div class="slider__slide">
-                <img src="images/thumbs/masonry/gallery/gallery-1-400.jpg"
-                     srcset="images/thumbs/masonry/gallery/gallery-1-400.jpg 1x, images/thumbs/masonry/gallery/gallery-1-800.jpg 2x" alt="">
-              </div>
-              <div class="slider__slide">
-                <img src="images/thumbs/masonry/gallery/gallery-2-400.jpg"
-                     srcset="images/thumbs/masonry/gallery/gallery-2-400.jpg 1x, images/thumbs/masonry/gallery/gallery-2-800.jpg 2x" alt="">
-              </div>
-              <div class="slider__slide">
-                <img src="images/thumbs/masonry/gallery/gallery-3-400.jpg"
-                     srcset="images/thumbs/masonry/gallery/gallery-3-400.jpg 1x, images/thumbs/masonry/gallery/gallery-3-800.jpg 2x" alt="">
-              </div>
-            </div>
-          </div>
-
-          <div class="entry__text">
-            <div class="entry__header">
-
-              <div class="entry__date">
-                <a href="page/single-gallery.html">December 10, 2017</a>
-              </div>
-              <h1 class="entry__title"><a href="page/single-gallery.html">Workspace Design Trends and Ideas.</a></h1>
-
-            </div>
-            <div class="entry__excerpt">
-              <p>
-                Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua...
-              </p>
-            </div>
-            <div class="entry__meta">
-                            <span class="entry__meta-links">
-                                <a href="page/category.html">Work</a>
-                                <a href="page/category.html">Management</a>
-                            </span>
-            </div>
-          </div>
-
-        </article> <!-- end article -->
-
-        <article class="masonry__brick entry format-audio" data-aos="fade-up">
-
-          <div class="entry__thumb">
-            <a href="page/single-audio.html" class="entry__thumb-link">
-              <img src="images/thumbs/masonry/guitarman-400.jpg"
-                   srcset="images/thumbs/masonry/guitarman-400.jpg 1x, images/thumbs/masonry/guitarman-800.jpg 2x" alt="">
-            </a>
-            <div class="audio-wrap">
-              <audio id="player" src="media/AirReview-Landmarks-02-ChasingCorporate.mp3" width="100%" height="42" controls="controls"></audio>
-            </div>
-          </div>
-
-          <div class="entry__text">
-            <div class="entry__header">
-
-              <div class="entry__date">
-                <a href="page/single-audio.html">December 10, 2017</a>
-              </div>
-              <h1 class="entry__title"><a href="page/single-audio.html">What Your Music Preference Says About You and Your Personality.</a></h1>
-
-            </div>
-            <div class="entry__excerpt">
-              <p>
-                Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua...
-              </p>
-            </div>
-            <div class="entry__meta">
-                            <span class="entry__meta-links">
-                                <a href="page/category.html">Music</a>
-                                <a href="page/category.html">Lifestyle</a>
-                            </span>
-            </div>
-          </div>
-
-        </article> <!-- end article -->
-
-        <article class="masonry__brick entry format-link" data-aos="fade-up">
-
-          <div class="entry__thumb">
-            <div class="link-wrap">
-              <p>The Only Resource You Will Need To Start a Blog Using WordPress.</p>
-              <cite>
-                <a target="_blank" href="https://colorlib.com/">https://colorlib.com</a>
-              </cite>
-            </div>
-          </div>
-
-        </article> <!-- end article -->
-
-        <article class="masonry__brick entry format-standard" data-aos="fade-up">
-
-          <div class="entry__thumb">
-            <a href="page/single-standard.html" class="entry__thumb-link">
-              <img src="images/thumbs/masonry/jump-400.jpg"
-                   srcset="images/thumbs/masonry/jump-400.jpg 1x, images/thumbs/masonry/jump-800.jpg 2x" alt="">
-            </a>
-          </div>
-
-          <div class="entry__text">
-            <div class="entry__header">
-
-              <div class="entry__date">
-                <a href="page/single-standard.html">December 10, 2017</a>
-              </div>
-              <h1 class="entry__title"><a href="page/single-standard.html">Create Meaningful Family Moments.</a></h1>
-
-            </div>
-            <div class="entry__excerpt">
-              <p>
-                Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua...
-              </p>
-            </div>
-            <div class="entry__meta">
-                            <span class="entry__meta-links">
-                                <a href="page/category.html">Family</a>
-                                <a href="page/category.html">Relationship</a>
-                            </span>
-            </div>
-          </div>
-
-        </article> <!-- end article -->
-
-        <article class="masonry__brick entry format-standard" data-aos="fade-up">
-
-          <div class="entry__thumb">
-            <a href="page/single-standard.html" class="entry__thumb-link">
-              <img src="images/thumbs/masonry/beetle-400.jpg"
-                   srcset="images/thumbs/masonry/beetle-400.jpg 1x, images/thumbs/masonry/beetle-800.jpg 2x" alt="">
-            </a>
-          </div>
-
-          <div class="entry__text">
-            <div class="entry__header">
-
-              <div class="entry__date">
-                <a href="page/single-standard.html">December 10, 2017</a>
-              </div>
-              <h1 class="entry__title"><a href="page/single-standard.html">Throwback To The Good Old Days.</a></h1>
-
-            </div>
-            <div class="entry__excerpt">
-              <p>
-                Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua...
-              </p>
-            </div>
-            <div class="entry__meta">
-                            <span class="entry__meta-links">
-                                <a href="page/category.html">Lifestyle</a>
-                            </span>
-            </div>
-          </div>
-
-        </article> <!-- end article -->
-
-        <article class="masonry__brick entry format-standard" data-aos="fade-up">
-
-          <div class="entry__thumb">
-            <a href="page/single-standard.html" class="entry__thumb-link">
-              <img src="images/thumbs/masonry/fuji-400.jpg"
-                   srcset="images/thumbs/masonry/fuji-400.jpg 1x, images/thumbs/masonry/fuji-800.jpg 2x" alt="">
-            </a>
-          </div>
-
-          <div class="entry__text">
-            <div class="entry__header">
-
-              <div class="entry__date">
-                <a href="page/single-standard.html">December 10, 2017</a>
-              </div>
-              <h1 class="entry__title"><a href="page/single-standard.html">Just Another  Standard Format Post.</a></h1>
-
-            </div>
-            <div class="entry__excerpt">
-              <p>
-                Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua...
-              </p>
-            </div>
-            <div class="entry__meta">
-                            <span class="entry__meta-links">
-                                <a href="page/category.html">Design</a>
-                                <a href="page/category.html">Photography</a>
-                            </span>
-            </div>
-          </div>
-
-        </article> <!-- end article -->
-
-        <article class="masonry__brick entry format-standard" data-aos="fade-up">
-
-          <div class="entry__thumb">
-            <a href="page/single-standard.html" class="entry__thumb-link">
-              <img src="images/thumbs/masonry/sydney-400.jpg"
-                   srcset="images/thumbs/masonry/sydney-400.jpg 1x, images/thumbs/masonry/sydney-800.jpg 2x" alt="">
-            </a>
-          </div>
-
-          <div class="entry__text">
-            <div class="entry__header">
-
-              <div class="entry__date">
-                <a href="page/single-standard.html">December 10, 2017</a>
-              </div>
-              <h1 class="entry__title"><a href="page/single-standard.html">Planning Your First Trip to Sydney.</a></h1>
-
-            </div>
-            <div class="entry__excerpt">
-              <p>
-                Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua...
-              </p>
-            </div>
-            <div class="entry__meta">
-                            <span class="entry__meta-links">
-                                <a href="page/category.html">Travel</a>
-                                <a href="page/category.html">Vacation</a>
-                            </span>
-            </div>
-          </div>
-
-        </article> <!-- end article -->
 
       </div> <!-- end masonry -->
     </div> <!-- end masonry-wrap -->
@@ -463,18 +95,39 @@
         <nav class="pgn">
           <ul>
             <li><a class="pgn__prev" href="#0">Prev</a></li>
-            <li><a class="pgn__num" href="#0">1</a></li>
-            <li><span class="pgn__num current">2</span></li>
-            <li><a class="pgn__num" href="#0">3</a></li>
-            <li><a class="pgn__num" href="#0">4</a></li>
-            <li><a class="pgn__num" href="#0">5</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=1&countNews=<c:out value="${requestScope.countNews}"/>">1</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=2&countNews=<c:out value="${requestScope.countNews}"/>">2</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=3&countNews=<c:out value="${requestScope.countNews}"/>">3</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=4&countNews=<c:out value="${requestScope.countNews}"/>">4</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=5&countNews=<c:out value="${requestScope.countNews}"/>">5</a></li>
             <li><span class="pgn__num dots">…</span></li>
-            <li><a class="pgn__num" href="#0">8</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=8&countNews=<c:out value="${requestScope.countNews}"/>">8</a></li>
             <li><a class="pgn__next" href="#0">Next</a></li>
           </ul>
         </nav>
       </div>
     </div>
+    <div class="row">
+      <div class="col-full">
+        <nav class="pgn">
+          <ul>
+            <li><a class="pgn__num" href="/news?command=open_news&countNews=5&numberOfPage=<c:out value="${requestScope.numberOfPage}"/>">5</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&countNews=10&numberOfPage=<c:out value="${requestScope.numberOfPage}"/>">10</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&countNews=15&numberOfPage=<c:out value="${requestScope.numberOfPage}"/>">15</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&countNews=20&numberOfPage=<c:out value="${requestScope.numberOfPage}"/>">20</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&countNews=25&numberOfPage=<c:out value="${requestScope.numberOfPage}"/>">">25</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&countNews=30&numberOfPage=<c:out value="${requestScope.numberOfPage}"/>">30</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <form action="/news" method="post">
+      <input type="hidden" name="command" value="open_news">
+      <input type="number" name="numberOfPage">
+      <input type="number" name="countNews">
+      <input type="submit" value="Set">
+    </form>
 
   </section> <!-- s-content -->
 

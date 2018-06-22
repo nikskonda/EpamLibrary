@@ -63,6 +63,8 @@
 </head>
     <body>
 
+        <jsp:include page="../Header.jsp"/>
+
         <section id="signup">
             <div class="container">
                 <div class="row main">

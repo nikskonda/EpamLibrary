@@ -1,5 +1,6 @@
 package by.epam.java.training.dao.impl;
 
+import by.epam.java.training.dao.AbstractDAO;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.UserDAO;
 import by.epam.java.training.dao.util.ConnectionPool;
@@ -10,205 +11,155 @@ import static by.epam.java.training.dao.util.SQLRequest.*;
 
 import java.sql.*;
 
-public class UserDAOImpl implements UserDAO {
+public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
-
-    private void closeResultSetAndStatement(ResultSet resultSet, Statement statement){
-        try{
-            if (resultSet!=null){
-                resultSet.close();
-            }
-        }
-        catch (SQLException ex){
-            logger.warn("I can not close ResultSet",ex);
-        }
-
-        try{
-            if (statement!=null){
-                statement.close();
-            }
-        }
-        catch (SQLException ex){
-            logger.warn("I can not close Statement",ex);
-        }
-    }
-
-
 
 
 
     @Override
-    public boolean isExistLoginAndPassword(AuthorizationForm authorizationForm) {
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        ConnectionPool connectionPool = DAOFactory.getInstance().getConnectionPool();
+    public boolean isExistLoginAndPassword(SignInForm signInForm) {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
         boolean result = false;
-        try {
-            connection = connectionPool.retrieve();
-            statement = connection.createStatement();
-            String query = FIND_USER_BY_LOGIN_AND_PASSWORD.replaceFirst(PLACE_FOR_LOGIN, authorizationForm.getLogin())
-                    .replaceFirst(PLACE_FOR_PASSWORD, EncriptionMD5.encrypt(authorizationForm.getPassword()));
-            resultSet = statement.executeQuery(query);
 
-            if (resultSet.next()) {
-                result = true;
-            }
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(IS_EXIST_USER_WITH_LOGIN_AND_PASSWORD);
+            cstmt.setString(USER_LOGIN, signInForm.getLogin());
+            cstmt.setString(USER_PASSWORD, EncriptionMD5.encrypt(signInForm.getPassword()));
+            cstmt.registerOutParameter(RESULT, Types.BOOLEAN);
+            cstmt.executeQuery();
+
+            result = cstmt.getBoolean(RESULT);
+
         } catch (SQLException ex) {
             logger.warn("Вatabase query error",ex);
         } finally {
-            closeResultSetAndStatement(resultSet, statement);
-            try{
-                connectionPool.putback(connection);
-            } catch (NullPointerException ex){
-                logger.warn("Connection was not received", ex);
-            }
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
         }
         return result;
     }
 
-    private Role getRoleById(Integer id){
-
-        return new Role(id,"ADMIN");
-    }
-
-
     @Override
     public User getUserByLogin(String login) {
-        User user = null;
-        Connection connection = null;
-        Statement statement = null;
+        Connection con = null;
+        CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool connectionPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        User user = null;
         try {
-            connection = connectionPool.retrieve();
-            statement = connection.createStatement();
-            String query = FIND_USER_BY_LOGIN.replaceFirst(PLACE_FOR_LOGIN, login);
-            rs = statement.executeQuery(query);
-
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(GET_USER_BY_LOGIN);
+            cstmt.setString(USER_LOGIN, login);
+            rs = cstmt.executeQuery();
             while (rs.next()) {
-                user = new User();
-                user.setId(rs.getInt(ID_USER));
-                user.setLogin(rs.getString(LOGIN));
-                user.setEmail(rs.getString(EMAIL));
-                user.setFirstName(rs.getString(FIRST_NAME));
-                user.setLastName(rs.getString(LAST_NAME));
-                user.setRegistrationDate(rs.getDate(REGISTRATION_DATE));
-                user.setAddress(new Address());
-                user.setRole(getRoleById(1));
+                user.setId(rs.getInt(USER_ID));
+                user.setLogin(rs.getString(USER_LOGIN));
+                user.setEmail(rs.getString(USER_EMAIL));
+                user.setFirstName(rs.getString(USER_FIRST_NAME));
+                user.setLastName(rs.getString(USER_LAST_NAME));
+                user.setRegistrationDate(rs.getDate(USER_REGISTRATION_DATE));
+                Role role = new Role(rs.getInt(USER_ROLE_ID),rs.getString(USER_ROLE_NAME));
+                user.setRole(role);
             }
-
         } catch (SQLException ex) {
-            logger.warn("Вatabase query error",ex);
+            logger.warn("Database query error",ex);
         } finally {
-            closeResultSetAndStatement(rs, statement);
-            try{
-                connectionPool.putback(connection);
-            } catch (NullPointerException ex){
-                logger.warn("Connection was not received", ex);
-            }
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
         }
         return user;
     }
 
     @Override
     public ActiveUser getActiveUser(String login) {
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        ConnectionPool connectionPool = DAOFactory.getInstance().getConnectionPool();
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
         ActiveUser activeUser = null;
-        try {
-            connection = connectionPool.retrieve();
-            statement = connection.createStatement();
-            String query = FIND_ACTIVE_USER_BY_LOGIN.replaceFirst(PLACE_FOR_LOGIN, login);
-            resultSet = statement.executeQuery(query);
 
-            if (resultSet.next()) {
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(GET_USER_BY_LOGIN);
+            cstmt.setString(USER_LOGIN, login);
+            rs = cstmt.executeQuery();
+
+            if (rs.next()) {
                 activeUser = new ActiveUser();
-                activeUser.setId(resultSet.getInt(ID_USER));
-                activeUser.setLogin(resultSet.getString(LOGIN));
+                activeUser.setId(rs.getInt(USER_ID));
+                activeUser.setLogin(rs.getString(USER_LOGIN));
             }
 
         } catch (SQLException ex) {
             logger.warn("Вatabase query error",ex);
         } finally {
-            closeResultSetAndStatement(resultSet, statement);
-            try{
-                connectionPool.putback(connection);
-            } catch (NullPointerException ex){
-                logger.warn("Connection was not received", ex);
-            }
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
         }
         return activeUser;
     }
 
     @Override
-    public ActiveUser addUser(RegistrationForm registrationForm) {
+    public ActiveUser addUser(SignUpForm signUpForm) {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
         ActiveUser activeUser = null;
 
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        ConnectionPool connectionPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
         try {
-            connection = connectionPool.retrieve();
-            statement = connection.createStatement();
-            String query = ADD_USER.replaceFirst(PLACE_FOR_LOGIN, registrationForm.getLogin())
-                    .replaceFirst(PLACE_FOR_PASSWORD, EncriptionMD5.encrypt(registrationForm.getPassword()))
-                    .replaceFirst(PLACE_FOR_EMAIL, registrationForm.getEmail())
-                    .replaceFirst(PLACE_FOR_FIRST_NAME, registrationForm.getFirstName())
-                    .replaceFirst(PLACE_FOR_SECOND_NAME, registrationForm.getLastName());
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(ADD_USER);
+            cstmt.setString(USER_LOGIN, signUpForm.getLogin());
+            cstmt.setString(USER_PASSWORD, EncriptionMD5.encrypt(signUpForm.getLogin()));
+            cstmt.setString(USER_FIRST_NAME, signUpForm.getFirstName());
+            cstmt.setString(USER_LAST_NAME, signUpForm.getLastName());
+            cstmt.setString(USER_EMAIL, signUpForm.getEmail());
+            cstmt.setString(USER_ROLE_NAME, signUpForm.getRole().getName());
+            cstmt.execute();
 
-            int result = statement.executeUpdate(query);
-
-            if (result>0){
-                activeUser =getActiveUser(registrationForm.getLogin());
-            }
-
+            activeUser = getActiveUser(signUpForm.getLogin());
         } catch (SQLException ex) {
             logger.warn("Вatabase query error",ex);
         } finally {
-            closeResultSetAndStatement(resultSet, statement);
-            try{
-                connectionPool.putback(connection);
-            } catch (NullPointerException ex){
-                logger.warn("Connection was not received", ex);
-            }
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
         }
         return activeUser;
     }
 
     @Override
     public boolean isFreeLogin(String login) {
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        ConnectionPool connectionPool = DAOFactory.getInstance().getConnectionPool();
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
         boolean result = false;
+
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
         try {
-            connection = connectionPool.retrieve();
-            statement = connection.createStatement();
-            String query = FIND_USER_BY_LOGIN.replaceFirst(PLACE_FOR_LOGIN, login);
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(IS_FREE_LOGIN);
+            cstmt.setString(USER_LOGIN, login);
+            cstmt.registerOutParameter(RESULT, Types.BOOLEAN);
+            cstmt.executeQuery();
 
-            resultSet = statement.executeQuery(query);
-
-            if (!resultSet.next()) {
-                result = true;
-            }
-
-            connectionPool.putback(connection);
+            result = cstmt.getBoolean(RESULT);
 
         } catch (SQLException ex) {
             logger.warn("Вatabase query error",ex);
         } finally {
-            closeResultSetAndStatement(resultSet, statement);
-            try{
-                connectionPool.putback(connection);
-            } catch (NullPointerException ex){
-                logger.warn("Connection was not received", ex);
-            }
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
         }
         return result;
     }

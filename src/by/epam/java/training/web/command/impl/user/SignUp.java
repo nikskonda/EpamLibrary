@@ -1,7 +1,7 @@
 package by.epam.java.training.web.command.impl.user;
 
 import by.epam.java.training.model.user.ActiveUser;
-import by.epam.java.training.model.user.RegistrationForm;
+import by.epam.java.training.model.user.SignUpForm;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.servise.impl.UserServiceImpl;
 import by.epam.java.training.web.command.AbstractCommand;
@@ -30,7 +30,7 @@ public class SignUp extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        RegistrationForm regForm = new RegistrationForm();
+        SignUpForm regForm = new SignUpForm();
 
         regForm.setLogin(request.getParameter(LOGIN));
         regForm.setPassword(request.getParameter(PASSWORD));
@@ -49,9 +49,11 @@ public class SignUp extends AbstractCommand {
         }
         request.setAttribute(ERROR_EXIST, false);
         ActiveUser user = userService.getActiveUser(regForm.getLogin());
+        if (user == null) {
+            redirect(response, ERROR.getPage());
+        }
         HttpSession session = request.getSession(true);
         session.setAttribute(USER, user);
-
         redirect(response, PROFILE.getPage());
     }
 

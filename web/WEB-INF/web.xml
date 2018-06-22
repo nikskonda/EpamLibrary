@@ -54,6 +54,27 @@
         <servlet-name>Catalog</servlet-name>
         <url-pattern>/catalog</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>News</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>News</servlet-name>
+        <url-pattern>/news</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>NewsConstructor</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>NewsConstructor</servlet-name>
+        <url-pattern>/newsConstructor</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>

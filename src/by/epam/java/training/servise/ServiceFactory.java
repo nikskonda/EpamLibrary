@@ -2,6 +2,7 @@ package by.epam.java.training.servise;
 
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.servise.impl.BookServiceImpl;
+import by.epam.java.training.servise.impl.NewsServiceImpl;
 import by.epam.java.training.servise.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
 
@@ -18,6 +19,7 @@ public class ServiceFactory {
 
     private final UserService userService = new UserServiceImpl();
     private final BookService bookService = new BookServiceImpl();
+    private final NewsService newsService = new NewsServiceImpl();
 
     private ServiceFactory() {}
 
@@ -27,6 +29,10 @@ public class ServiceFactory {
     public BookService getBookService() {
         return bookService;
     }
+    public NewsService getNewsService(){
+        return newsService;
+    }
+
 
 
     public static ServiceFactory getInstance() {

@@ -8,6 +8,7 @@ public class ActiveUser implements Serializable {
 
     private Integer id;
     private String login;
+    private String Role;
 
     public ActiveUser() {
     }

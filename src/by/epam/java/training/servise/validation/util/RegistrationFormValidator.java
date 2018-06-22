@@ -1,6 +1,6 @@
 package by.epam.java.training.servise.validation.util;
 
-import by.epam.java.training.model.user.RegistrationForm;
+import by.epam.java.training.model.user.SignUpForm;
 import by.epam.java.training.servise.validation.Validator;
 
 public class RegistrationFormValidator implements Validator {
@@ -21,11 +21,11 @@ public class RegistrationFormValidator implements Validator {
     @Override
     public boolean isValid(Object obj) {
 
-        if (RegistrationForm.class != obj.getClass()){
+        if (SignUpForm.class != obj.getClass()){
             return false;
         }
 
-        RegistrationForm regForm = (RegistrationForm) obj;
+        SignUpForm regForm = (SignUpForm) obj;
 
         if (!new LoginValidator().isValid(regForm.getLogin())){
             return false;

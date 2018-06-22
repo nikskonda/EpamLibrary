@@ -1,17 +1,17 @@
 package by.epam.java.training.dao;
 
 import by.epam.java.training.model.user.ActiveUser;
-import by.epam.java.training.model.user.AuthorizationForm;
-import by.epam.java.training.model.user.RegistrationForm;
+import by.epam.java.training.model.user.SignInForm;
+import by.epam.java.training.model.user.SignUpForm;
 import by.epam.java.training.model.user.User;
 
 public interface UserDAO {
 
-    boolean isExistLoginAndPassword(AuthorizationForm authorizationForm);
+    boolean isExistLoginAndPassword(SignInForm signInForm);
 
     User getUserByLogin(String login);
 
-    ActiveUser addUser(RegistrationForm registrationForm);
+    ActiveUser addUser(SignUpForm signUpForm);
 
     ActiveUser getActiveUser(String login);
 

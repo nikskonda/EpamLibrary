@@ -1,7 +1,7 @@
 package by.epam.java.training.web.command.impl.user;
 
 import by.epam.java.training.model.user.ActiveUser;
-import by.epam.java.training.model.user.AuthorizationForm;
+import by.epam.java.training.model.user.SignInForm;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.servise.impl.UserServiceImpl;
 import by.epam.java.training.web.command.AbstractCommand;
@@ -31,7 +31,7 @@ public class SignIn extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            AuthorizationForm authForm = new AuthorizationForm();
+            SignInForm authForm = new SignInForm();
 
             authForm.setLogin(request.getParameter(LOGIN));
             authForm.setPassword(request.getParameter(PASSWORD));

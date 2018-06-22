@@ -1,6 +1,6 @@
 package by.epam.java.training.servise.validation.util;
 
-import by.epam.java.training.model.user.AuthorizationForm;
+import by.epam.java.training.model.user.SignInForm;
 import by.epam.java.training.servise.validation.Validator;
 
 public class AuthorizationFormValidator implements Validator {
@@ -10,11 +10,11 @@ public class AuthorizationFormValidator implements Validator {
 
     @Override
     public boolean isValid(Object obj) {
-        if (AuthorizationForm.class != obj.getClass()){
+        if (SignInForm.class != obj.getClass()){
             return false;
         }
 
-        AuthorizationForm authForm = (AuthorizationForm) obj;
+        SignInForm authForm = (SignInForm) obj;
 
         if (!new LoginValidator().isValid(authForm.getLogin())){
             return false;

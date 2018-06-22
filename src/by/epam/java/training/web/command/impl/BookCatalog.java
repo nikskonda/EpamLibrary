@@ -1,6 +1,7 @@
 package by.epam.java.training.web.command.impl;
 
 import by.epam.java.training.model.book.Book;
+import by.epam.java.training.model.book.BookCover;
 import by.epam.java.training.servise.BookService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
@@ -30,7 +31,11 @@ public class BookCatalog extends AbstractCommand {
             HttpSession session = request.getSession(true);
             String locale = (String)session.getAttribute(LOCAL);
 
-            List<Book> books = service.getBooks(locale);
+            if (locale == null) {
+                locale = "en";
+            }
+
+            List<BookCover> books = service.getAllBooks(locale);
 
             request.setAttribute(BOOKS, books);
             forward(request, response, CATALOG.getPage());
