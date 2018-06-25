@@ -1,4 +1,4 @@
-package by.epam.java.training.dao.util;
+package by.epam.java.training.web.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
 

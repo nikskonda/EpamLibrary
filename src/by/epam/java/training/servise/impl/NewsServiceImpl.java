@@ -36,4 +36,12 @@ public class NewsServiceImpl implements NewsService {
         }
         return newsDAO.getNews(id, locale);
     }
+
+    @Override
+    public Integer calcMaxPages(String locale, Integer countNewsOnOnePage) {
+        if (false){
+            return null;
+        }
+        return  newsDAO.calcMaxPages(locale, countNewsOnOnePage);
+    }
 }

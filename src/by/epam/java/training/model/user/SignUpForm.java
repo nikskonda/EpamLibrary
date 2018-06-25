@@ -14,7 +14,7 @@ public class SignUpForm implements Serializable {
     private Role role;
 
     public SignUpForm() {
-
+        this.role = new Role("User");
     }
 
     public SignUpForm(String login, String password, String confirmPassword, String firstName, String lastName, String email, Address address, Role role) {
@@ -24,7 +24,7 @@ public class SignUpForm implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.role = new Role("User");
+
 
     }
 

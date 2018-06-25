@@ -4,11 +4,9 @@ import by.epam.java.training.dao.AbstractDAO;
 import by.epam.java.training.dao.BookDAO;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.util.ConnectionPool;
-import by.epam.java.training.dao.util.EncriptionMD5;
 import by.epam.java.training.model.book.Book;
 import by.epam.java.training.model.book.BookCover;
 import by.epam.java.training.model.book.PublishingHouse;
-import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
 
 import java.sql.CallableStatement;

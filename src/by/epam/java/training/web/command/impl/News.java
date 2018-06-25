@@ -21,6 +21,7 @@ public class News extends AbstractCommand {
     private static final String LOCALE = "local";
     private static final String COUNT_NEWS_ON_PAGE = "countNews";
     private static final String NUMBER_OF_PAGE = "numberOfPage";
+    private static final String MAX_COUNT_PAGE = "maxCountPage";
 
     private static final int INIT_COUNT_NEWS = 10;
     private static final int INIT_NUMBER_OF_PAGE = 1;
@@ -46,10 +47,18 @@ public class News extends AbstractCommand {
             }
             String locale = (String)session.getAttribute(LOCALE);
 
-            Integer countNews = getInt(request.getParameter(COUNT_NEWS_ON_PAGE));
-            if (countNews==null){
-                request.setAttribute(COUNT_NEWS_ON_PAGE, INIT_COUNT_NEWS);
-                countNews = INIT_COUNT_NEWS;
+            Integer countNews = null;
+
+            Integer newCountNews = getInt(request.getParameter(COUNT_NEWS_ON_PAGE));
+            if (newCountNews == null){
+                countNews = (Integer)(session.getAttribute(COUNT_NEWS_ON_PAGE));
+                if (countNews==null){
+                    session.setAttribute(COUNT_NEWS_ON_PAGE, INIT_COUNT_NEWS);
+                    countNews = INIT_COUNT_NEWS;
+                }
+            } else {
+                session.setAttribute(COUNT_NEWS_ON_PAGE, newCountNews);
+                countNews = newCountNews;
             }
 
             Integer numberOfPage = getInt(request.getParameter(NUMBER_OF_PAGE));
@@ -57,6 +66,8 @@ public class News extends AbstractCommand {
                 request.setAttribute(NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE);
                 numberOfPage = INIT_NUMBER_OF_PAGE;
             }
+
+            request.setAttribute(MAX_COUNT_PAGE, service.calcMaxPages(locale, countNews));
 
             request.setAttribute(NEWS, service.getNewsByPage(locale, countNews, numberOfPage));
             forward(request, response, START_PAGE.getPage());

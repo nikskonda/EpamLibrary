@@ -16,4 +16,5 @@ public interface UserService {
     ActiveUser getActiveUser(String login);
 
     boolean isFreeLogin(String login);
+
 }

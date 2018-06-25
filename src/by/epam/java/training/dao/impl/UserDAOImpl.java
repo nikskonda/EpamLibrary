@@ -4,7 +4,7 @@ import by.epam.java.training.dao.AbstractDAO;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.UserDAO;
 import by.epam.java.training.dao.util.ConnectionPool;
-import by.epam.java.training.dao.util.EncriptionMD5;
+import by.epam.java.training.web.util.EncriptionMD5;
 import by.epam.java.training.model.user.*;
 import org.apache.log4j.Logger;
 import static by.epam.java.training.dao.util.SQLRequest.*;
@@ -14,7 +14,6 @@ import java.sql.*;
 public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
-
 
 
     @Override
@@ -29,7 +28,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             con = conPool.retrieve();
             cstmt = con.prepareCall(IS_EXIST_USER_WITH_LOGIN_AND_PASSWORD);
             cstmt.setString(USER_LOGIN, signInForm.getLogin());
-            cstmt.setString(USER_PASSWORD, EncriptionMD5.encrypt(signInForm.getPassword()));
+            cstmt.setString(USER_PASSWORD, signInForm.getPassword());
             cstmt.registerOutParameter(RESULT, Types.BOOLEAN);
             cstmt.executeQuery();
 
@@ -119,7 +118,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             con = conPool.retrieve();
             cstmt = con.prepareCall(ADD_USER);
             cstmt.setString(USER_LOGIN, signUpForm.getLogin());
-            cstmt.setString(USER_PASSWORD, EncriptionMD5.encrypt(signUpForm.getLogin()));
+            cstmt.setString(USER_PASSWORD, signUpForm.getLogin());
             cstmt.setString(USER_FIRST_NAME, signUpForm.getFirstName());
             cstmt.setString(USER_LAST_NAME, signUpForm.getLastName());
             cstmt.setString(USER_EMAIL, signUpForm.getEmail());

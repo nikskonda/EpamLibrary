@@ -1,10 +1,5 @@
 package by.epam.java.training.controller;
 
-import by.epam.java.training.dao.util.EncriptionMD5;
-import by.epam.java.training.model.user.ActiveUser;
-import by.epam.java.training.model.user.SignInForm;
-import by.epam.java.training.servise.ServiceFactory;
-
 import static java.lang.Thread.sleep;
 
 public class Main {
@@ -29,12 +24,12 @@ public class Main {
 //        System.out.println("qw-e@gmail.com".matches(str));
 
 //        SignUpForm regForm = new SignUpForm();
-//        regForm.setLogin("admin");
-//        regForm.setPassword("admin1");
-//        regForm.setConfirmPassword("admin1");
-//        regForm.setEmail("admin@admin.admin");
-//        regForm.setFirstName("Nikita");
-//        regForm.setLastName("Shkonda");
+//        regForm.setLogin("FromBelarus");
+//        regForm.setPassword("password");
+//        regForm.setConfirmPassword("password");
+//        regForm.setEmail("by@mail.ru");
+//        regForm.setFirstName("Eugene");
+//        regForm.setLastName("Bulbash");
 //
 //        ActiveUser activeUser =
 //                (ServiceFactory.getInstance().getUserService()
@@ -49,7 +44,8 @@ public class Main {
 //            ActiveUser auser = ServiceFactory.getInstance().getUserService().getActiveUser(af.getLogin());
 //            System.out.println(auser.getId());
 //        }
-        System.out.println(Integer.MAX_VALUE+"");
-        System.out.println(EncriptionMD5.encrypt(Integer.MAX_VALUE+""));
+
+//        System.out.println(Integer.MAX_VALUE+"");
+//        System.out.println(EncriptionMD5.encrypt(Integer.MAX_VALUE+""));
     }
 }

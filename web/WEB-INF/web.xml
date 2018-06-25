@@ -25,6 +25,22 @@
         <url-pattern>/sign_up</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>Encription</filter-name>
+        <filter-class>by.epam.java.training.web.filter.user.EncriptionFilter</filter-class>
+    </filter>
+
+    <!--<filter-mapping>-->
+        <!--<filter-name>Encription</filter-name>-->
+        <!--<servlet-name>SignUp</servlet-name>-->
+    <!--</filter-mapping>-->
+
+    <filter-mapping>
+        <filter-name>Encription</filter-name>
+        <servlet-name>SignIn</servlet-name>
+    </filter-mapping>
+
+
     <servlet>
         <servlet-name>RU</servlet-name>
         <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>

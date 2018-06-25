@@ -95,13 +95,13 @@
         <nav class="pgn">
           <ul>
             <li><a class="pgn__prev" href="#0">Prev</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=1&countNews=<c:out value="${requestScope.countNews}"/>">1</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=2&countNews=<c:out value="${requestScope.countNews}"/>">2</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=3&countNews=<c:out value="${requestScope.countNews}"/>">3</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=4&countNews=<c:out value="${requestScope.countNews}"/>">4</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=5&countNews=<c:out value="${requestScope.countNews}"/>">5</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=1">1</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=2">2</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=3">3</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=4">4</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=5">5</a></li>
             <li><span class="pgn__num dots">…</span></li>
-            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=8&countNews=<c:out value="${requestScope.countNews}"/>">8</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=8">8</a></li>
             <li><a class="pgn__next" href="#0">Next</a></li>
           </ul>
         </nav>
@@ -111,12 +111,12 @@
       <div class="col-full">
         <nav class="pgn">
           <ul>
-            <li><a class="pgn__num" href="/news?command=open_news&countNews=5&numberOfPage=<c:out value="${requestScope.numberOfPage}"/>">5</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&countNews=10&numberOfPage=<c:out value="${requestScope.numberOfPage}"/>">10</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&countNews=15&numberOfPage=<c:out value="${requestScope.numberOfPage}"/>">15</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&countNews=20&numberOfPage=<c:out value="${requestScope.numberOfPage}"/>">20</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&countNews=25&numberOfPage=<c:out value="${requestScope.numberOfPage}"/>">">25</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&countNews=30&numberOfPage=<c:out value="${requestScope.numberOfPage}"/>">30</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&countNews=5">5</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&countNews=10">10</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&countNews=15">15</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&countNews=20">20</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&countNews=25">25</a></li>
+            <li><a class="pgn__num" href="/news?command=open_news&countNews=30">30</a></li>
           </ul>
         </nav>
       </div>

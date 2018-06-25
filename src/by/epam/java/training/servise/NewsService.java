@@ -11,4 +11,5 @@ public interface NewsService {
 
     News getNews(Integer id, String locale);
 
+    Integer calcMaxPages(String locale, Integer countNewsOnOnePage);
 }

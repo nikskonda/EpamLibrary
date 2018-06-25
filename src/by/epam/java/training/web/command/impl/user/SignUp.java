@@ -2,6 +2,7 @@ package by.epam.java.training.web.command.impl.user;
 
 import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.model.user.SignUpForm;
+import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.servise.impl.UserServiceImpl;
 import by.epam.java.training.web.command.AbstractCommand;
@@ -30,25 +31,25 @@ public class SignUp extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        SignUpForm regForm = new SignUpForm();
+        SignUpForm signUpForm = new SignUpForm();
 
-        regForm.setLogin(request.getParameter(LOGIN));
-        regForm.setPassword(request.getParameter(PASSWORD));
-        regForm.setConfirmPassword(request.getParameter(CONFIRM_PASSWORD));
-        regForm.setEmail(request.getParameter(EMAIL));
-        regForm.setFirstName(request.getParameter(FIRST_NAME));
-        regForm.setLastName(request.getParameter(LAST_NAME));
+        signUpForm.setLogin(request.getParameter(LOGIN));
+        signUpForm.setPassword(request.getParameter(PASSWORD));
+        signUpForm.setConfirmPassword(request.getParameter(CONFIRM_PASSWORD));
+        signUpForm.setEmail(request.getParameter(EMAIL));
+        signUpForm.setFirstName(request.getParameter(FIRST_NAME));
+        signUpForm.setLastName(request.getParameter(LAST_NAME));
 
-        UserService userService = new UserServiceImpl();
+        UserService userService = ServiceFactory.getInstance().getUserService();
 
-        if (!userService.isFreeLogin(regForm.getLogin()) || !regForm.comparePasswords()){
-            request.setAttribute(SIGN_UP_FORM, regForm);
+        if (!userService.isFreeLogin(signUpForm.getLogin()) || !signUpForm.comparePasswords()){
+            request.setAttribute(SIGN_UP_FORM, signUpForm);
             request.setAttribute(ERROR_EXIST, true);
             forward(request, response, SIGN_UP.getPage());
             return;
         }
         request.setAttribute(ERROR_EXIST, false);
-        ActiveUser user = userService.getActiveUser(regForm.getLogin());
+        ActiveUser user = userService.addUser(signUpForm);
         if (user == null) {
             redirect(response, ERROR.getPage());
         }

@@ -8,7 +8,7 @@ public class SQLRequest {
     //USERS
     public final static String IS_EXIST_USER_WITH_LOGIN_AND_PASSWORD = "{call is_exist_user_with_login_and_password(?,?,?)}";
     public final static String IS_FREE_LOGIN = "{call is_free_login(?,?)}";
-    public final static String ADD_USER = "{call get_all_books_by_lang(?,?,?,?,?,?)}";
+    public final static String ADD_USER = "{call add_user(?,?,?,?,?,?)}";
     public final static String GET_USER_BY_LOGIN = "{call get_user_by_login(?)}";
 
     //Column labels
@@ -41,6 +41,7 @@ public class SQLRequest {
     //NEWS
     public final static String GET_NEWS_BY_ID = "{call get_news_by_id_and_lang(?,?)}";
     public final static String GET_ALL_NEWS = "{call get_all_news_by_lang(?,?,?)}";
+    public final static String CALC_MAX_PAGE = "{call calc_pages_in_news_by_lang(?,?,?)}";
 
     //Column labels
     public final static String NEWS_ID = "news_id";

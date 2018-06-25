@@ -8,10 +8,7 @@ import by.epam.java.training.model.news.News;
 import by.epam.java.training.model.news.NewsCover;
 import org.apache.log4j.Logger;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,5 +84,31 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
         return news;
     }
 
+    @Override
+    public Integer calcMaxPages(String locale, Integer countNewsOnOnePage) {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        Integer result = null;
 
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(CALC_MAX_PAGE);
+            cstmt.setInt(COUNT_NEWS_ON_PAGE, countNewsOnOnePage);
+            cstmt.setString(LOCALE, locale);
+            cstmt.registerOutParameter(RESULT, Types.SMALLINT);
+            cstmt.executeQuery();
+
+            result = cstmt.getInt(RESULT);
+
+        } catch (SQLException ex) {
+            logger.warn("Вatabase query error",ex);
+        } finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return result;
+    }
 }
