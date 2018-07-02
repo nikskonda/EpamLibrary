@@ -5,8 +5,7 @@ import by.epam.java.training.servise.validation.Validator;
 
 public class RegistrationFormValidator implements Validator {
 
-    private static final int PASSWORD_MIN_LENGTH = 6;
-    private static final int PASSWORD_MAX_LENGTH = 20;
+    private static final int PASSWORD_LENGTH = 32;
 
     private static final int FIRST_NAME_MIN_LENGTH = 3;
     private static final int FIRST_NAME_MAX_LENGTH = 20;
@@ -31,8 +30,7 @@ public class RegistrationFormValidator implements Validator {
             return false;
         }
 
-        if (regForm.getPassword().length() < PASSWORD_MIN_LENGTH ||
-                regForm.getPassword().length()>PASSWORD_MAX_LENGTH){
+        if (regForm.getPassword().length() != PASSWORD_LENGTH){
             return false;
         }
 

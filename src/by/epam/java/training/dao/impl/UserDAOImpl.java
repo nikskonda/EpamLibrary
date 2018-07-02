@@ -10,11 +10,40 @@ import org.apache.log4j.Logger;
 import static by.epam.java.training.dao.util.SQLRequest.*;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
 
+    @Override
+    public boolean updateUser(ProfileForm profile) {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(UPDATE_USER);
+            cstmt.setString(USER_LOGIN, profile.getLogin());
+            cstmt.setString(USER_PASSWORD, profile.getPassword());
+            cstmt.setString(USER_FIRST_NAME, profile.getFirstName());
+            cstmt.setString(USER_LAST_NAME, profile.getLastName());
+            cstmt.setString(USER_EMAIL, profile.getEmail());
+            cstmt.executeQuery();
+            result = true;
+        } catch (SQLException ex) {
+            logger.warn("Вatabase query error",ex);
+        } finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return result;
+    }
 
     @Override
     public boolean isExistLoginAndPassword(SignInForm signInForm) {
@@ -57,6 +86,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             cstmt.setString(USER_LOGIN, login);
             rs = cstmt.executeQuery();
             while (rs.next()) {
+                user = new User();
                 user.setId(rs.getInt(USER_ID));
                 user.setLogin(rs.getString(USER_LOGIN));
                 user.setEmail(rs.getString(USER_EMAIL));
@@ -68,7 +98,10 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             }
         } catch (SQLException ex) {
             logger.warn("Database query error",ex);
-        } finally {
+        }  catch (Exception ex){
+            logger.warn("Database query error",ex);
+        }
+        finally {
             closeResultSet(rs);
             closeCallableStatement(cstmt);
             putbackConnection(con, conPool);
@@ -161,5 +194,42 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             putbackConnection(con, conPool);
         }
         return result;
+    }
+
+    @Override
+    public List<User> findUsers() {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        List<User> userList = new ArrayList<>();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(FIND_USER_LIST);
+            rs = cstmt.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt(USER_ID));
+                user.setLogin(rs.getString(USER_LOGIN));
+                user.setEmail(rs.getString(USER_EMAIL));
+                user.setFirstName(rs.getString(USER_FIRST_NAME));
+                user.setLastName(rs.getString(USER_LAST_NAME));
+                user.setRegistrationDate(rs.getDate(USER_REGISTRATION_DATE));
+                Role role = new Role(rs.getInt(USER_ROLE_ID),rs.getString(USER_ROLE_NAME));
+                user.setRole(role);
+
+                userList.add(user);
+            }
+        } catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+        }  catch (Exception ex){
+            logger.warn("Database query error",ex);
+        }
+        finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return userList;
     }
 }

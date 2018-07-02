@@ -54,7 +54,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
     }
 
     @Override
-    public Book getBook(Integer id, String locale) {
+    public Book getBook(Integer bookId, String locale) {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -63,7 +63,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
         try {
             con = conPool.retrieve();
             cstmt = con.prepareCall(GET_BOOK_BY_ID);
-            cstmt.setInt(BOOK_ID, id);
+            cstmt.setInt(BOOK_ID, bookId);
             cstmt.setString(LOCALE, locale);
             rs = cstmt.executeQuery();
             while (rs.next()) {
@@ -87,6 +87,31 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
             putbackConnection(con, conPool);
         }
         return book;
+    }
 
+    @Override
+    public String getUrlToTextOfBook(Integer bookId, String locale) {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        String textUrl = null;
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(GET_URL_TO_TEXT_OF_BOOK);
+            cstmt.setString(LOCALE, locale);
+            cstmt.setInt(BOOK_ID, bookId);
+            rs = cstmt.executeQuery();
+            while (rs.next()) {
+                textUrl = rs.getString(BOOK_TEXT_FILE);
+            }
+        } catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+        } finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return textUrl;
     }
 }

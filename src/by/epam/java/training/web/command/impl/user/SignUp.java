@@ -6,6 +6,7 @@ import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.servise.impl.UserServiceImpl;
 import by.epam.java.training.web.command.AbstractCommand;
+import by.epam.java.training.web.util.EncriptionMD5;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,7 @@ public class SignUp extends AbstractCommand {
         SignUpForm signUpForm = new SignUpForm();
 
         signUpForm.setLogin(request.getParameter(LOGIN));
-        signUpForm.setPassword(request.getParameter(PASSWORD));
+        signUpForm.setPassword(EncriptionMD5.encrypt(request.getParameter(PASSWORD)));
         signUpForm.setConfirmPassword(request.getParameter(CONFIRM_PASSWORD));
         signUpForm.setEmail(request.getParameter(EMAIL));
         signUpForm.setFirstName(request.getParameter(FIRST_NAME));
@@ -42,7 +43,7 @@ public class SignUp extends AbstractCommand {
 
         UserService userService = ServiceFactory.getInstance().getUserService();
 
-        if (!userService.isFreeLogin(signUpForm.getLogin()) || !signUpForm.comparePasswords()){
+        if (!userService.isFreeLogin(signUpForm.getLogin())){
             request.setAttribute(SIGN_UP_FORM, signUpForm);
             request.setAttribute(ERROR_EXIST, true);
             forward(request, response, SIGN_UP.getPage());

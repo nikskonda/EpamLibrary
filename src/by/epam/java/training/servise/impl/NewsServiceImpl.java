@@ -30,11 +30,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public News getNews(Integer id, String locale) {
+    public News getNews(Integer newsId, String locale) {
         if (!validator.isValid(ValidatorType.LOCALE_VALIDATOR, locale)){
             return null;
         }
-        return newsDAO.getNews(id, locale);
+        return newsDAO.getNews(newsId, locale);
     }
 
     @Override

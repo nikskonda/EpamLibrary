@@ -9,7 +9,7 @@ public interface NewsService {
 
     List<NewsCover> getNewsByPage(String locale, Integer countOnPage, Integer numberOfPage);
 
-    News getNews(Integer id, String locale);
+    News getNews(Integer newsId, String locale);
 
     Integer calcMaxPages(String locale, Integer countNewsOnOnePage);
 }

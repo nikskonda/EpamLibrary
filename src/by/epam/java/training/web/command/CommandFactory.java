@@ -13,7 +13,7 @@ public class CommandFactory {
     }
 
     public Command getCommand(String command){
-        return this.commandManager.getCommand(command);
+        return instance.commandManager.getCommand(command);
     }
 
     public static CommandFactory getInstance(){

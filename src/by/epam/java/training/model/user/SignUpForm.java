@@ -2,11 +2,9 @@ package by.epam.java.training.model.user;
 
 import java.io.Serializable;
 
-public class SignUpForm implements Serializable {
-    private static final long serialVersionUID = 1239618902290L;
+public class SignUpForm extends SignInForm implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    private String login;
-    private String password;
     private String confirmPassword;
     private String firstName;
     private String lastName;
@@ -17,23 +15,14 @@ public class SignUpForm implements Serializable {
         this.role = new Role("User");
     }
 
-    public SignUpForm(String login, String password, String confirmPassword, String firstName, String lastName, String email, Address address, Role role) {
-        this.login = login;
-        this.password = password;
+    public SignUpForm(String login, String password, String confirmPassword, String firstName, String lastName, String email) {
+        super(login, password);
         this.confirmPassword = confirmPassword;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
 
 
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getFirstName() {
@@ -66,13 +55,6 @@ public class SignUpForm implements Serializable {
     }
 
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getConfirmPassword() {
         return confirmPassword;
@@ -82,7 +64,4 @@ public class SignUpForm implements Serializable {
         this.confirmPassword = confirmPassword;
     }
 
-    public boolean comparePasswords(){
-        return this.password.equals(this.confirmPassword);
-    }
 }

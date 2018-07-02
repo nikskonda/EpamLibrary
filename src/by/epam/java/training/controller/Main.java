@@ -1,5 +1,13 @@
 package by.epam.java.training.controller;
 
+import by.epam.java.training.model.user.User;
+import by.epam.java.training.servise.ServiceFactory;
+import by.epam.java.training.servise.UserService;
+import by.epam.java.training.web.util.EncriptionMD5;
+
+import java.io.Serializable;
+import java.util.ResourceBundle;
+
 import static java.lang.Thread.sleep;
 
 public class Main {
@@ -47,5 +55,39 @@ public class Main {
 
 //        System.out.println(Integer.MAX_VALUE+"");
 //        System.out.println(EncriptionMD5.encrypt(Integer.MAX_VALUE+""));
+
+//        String password1 = "123456";
+//        String password2 = "12345678901234567890";
+//        String password3 = "qwerty";
+//        String password4 = "qwertyqweqweqweqweqw";
+//        String password5 = "1wgy3er52b";
+//
+//        System.out.println(EncriptionMD5.encrypt(password1));
+//        System.out.println((password1).length());
+//        System.out.println(EncriptionMD5.encrypt(password1).length());
+//
+//        System.out.println(EncriptionMD5.encrypt(password2));
+//        System.out.println((password2).length());
+//        System.out.println(EncriptionMD5.encrypt(password2).length());
+//
+//        System.out.println(EncriptionMD5.encrypt(password3));
+//        System.out.println((password3).length());
+//        System.out.println(EncriptionMD5.encrypt(password3).length());
+//
+//        System.out.println(EncriptionMD5.encrypt(password4));
+//        System.out.println((password4).length());
+//        System.out.println(EncriptionMD5.encrypt(password4).length());
+//
+//        System.out.println(EncriptionMD5.encrypt(password5));
+//        System.out.println((password5).length());
+//        System.out.println(EncriptionMD5.encrypt(password5).length());
+
+//        UserService serv = ServiceFactory.getInstance().getUserService();
+//        User us = serv.getUserByLogin("admin");
+
+//        ResourceBundle rb = ResourceBundle.getBundle("resource.db");
+//        System.out.println(rb.getString("login"));
+
+
     }
 }

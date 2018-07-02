@@ -3,7 +3,7 @@ package by.epam.java.training.model.user;
 import java.io.Serializable;
 
 public class SignInForm implements Serializable {
-    private static final long serialVersionUID = 3846457549196098786L;
+    private static final long serialVersionUID = 1L;
 
     private String login;
     private String password;

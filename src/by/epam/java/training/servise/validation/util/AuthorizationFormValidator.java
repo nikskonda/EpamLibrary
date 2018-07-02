@@ -5,12 +5,11 @@ import by.epam.java.training.servise.validation.Validator;
 
 public class AuthorizationFormValidator implements Validator {
 
-    private static final int PASSWORD_MIN_LENGTH = 6;
-    private static final int PASSWORD_MAX_LENGTH = 20;
+    private static final int PASSWORD_LENGTH = 32;
 
     @Override
     public boolean isValid(Object obj) {
-        if (SignInForm.class != obj.getClass()){
+        if (!(obj instanceof SignInForm)){
             return false;
         }
 
@@ -19,8 +18,7 @@ public class AuthorizationFormValidator implements Validator {
         if (!new LoginValidator().isValid(authForm.getLogin())){
             return false;
         }
-        if (authForm.getPassword().length() < PASSWORD_MIN_LENGTH ||
-                authForm.getPassword().length()>PASSWORD_MAX_LENGTH){
+        if (authForm.getPassword().length() != PASSWORD_LENGTH){
             return false;
         }
 

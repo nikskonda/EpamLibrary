@@ -10,6 +10,7 @@ public class SQLRequest {
     public final static String IS_FREE_LOGIN = "{call is_free_login(?,?)}";
     public final static String ADD_USER = "{call add_user(?,?,?,?,?,?)}";
     public final static String GET_USER_BY_LOGIN = "{call get_user_by_login(?)}";
+    public final static String UPDATE_USER = "{call update_user(?,?,?,?,?)}";
 
     //Column labels
     public final static String USER_ID = "user_id";
@@ -25,6 +26,7 @@ public class SQLRequest {
     //BOOKS
     public final static String GET_BOOK_BY_ID = "{call get_book_by_id_and_lang(?,?)}";
     public final static String GET_ALL_BOOKS = "{call get_all_books_by_lang(?)}";
+    public final static String GET_URL_TO_TEXT_OF_BOOK = "{call get_url_to_text_of_book(?,?)}";
 
     //Column labels
     public final static String BOOK_ID = "book_id";
@@ -37,11 +39,13 @@ public class SQLRequest {
     public final static String BOOK_PUBLISHING_HOUSE_NAME = "publishing_house_name";
     public final static String BOOK_COVER = "cover_url";
     public final static String BOOK_PDF_FILE = "pdf_file_url";
+    public final static String BOOK_TEXT_FILE = "text_file_url";
 
     //NEWS
     public final static String GET_NEWS_BY_ID = "{call get_news_by_id_and_lang(?,?)}";
     public final static String GET_ALL_NEWS = "{call get_all_news_by_lang(?,?,?)}";
     public final static String CALC_MAX_PAGE = "{call calc_pages_in_news_by_lang(?,?,?)}";
+    public final static String FIND_USER_LIST = "{call find_user_list()}";
 
     //Column labels
     public final static String NEWS_ID = "news_id";

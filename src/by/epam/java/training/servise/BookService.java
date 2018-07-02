@@ -9,6 +9,8 @@ public interface BookService {
 
     List<BookCover> getAllBooks(String locale);
 
-    Book getBook(Integer id, String locale);
+    Book getBook(Integer bookId, String locale);
+
+    String getTextOfBook(Integer bookId, String locale);
 
 }

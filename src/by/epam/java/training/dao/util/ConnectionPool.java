@@ -12,10 +12,11 @@ public class ConnectionPool {
 
     private static final int INIT_COUNT_CONNECTIONS = 7;
 
-    private static final String SQL_LOGIN = "root";
-    private static final String SQL_PASSWORD = "password";
-    private static final String URL = "jdbc:mysql://localhost:3306/library?useSSL=false";
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_RESOURCE_BUNDLE = "resource.db";
+    private static final String SQL_LOGIN = "db.login";
+    private static final String SQL_PASSWORD = "db.password";
+    private static final String URL = "db.url";
+    private static final String DRIVER = "db.driver";
 
     private Queue<Connection> freeConnections = new LinkedList<>();
     private List<Connection> usedConnections = new LinkedList<>();
@@ -28,10 +29,12 @@ public class ConnectionPool {
     }
 
     private Connection getConnection() {
+        ResourceBundle rb = ResourceBundle.getBundle(DB_RESOURCE_BUNDLE);
         Connection connection = null;
         try {
-            Class.forName(DRIVER);
-            connection = DriverManager.getConnection(URL, SQL_LOGIN, SQL_PASSWORD);
+            Class.forName(rb.getString(DRIVER));
+            connection = DriverManager.getConnection(rb.getString(URL),
+                    rb.getString(SQL_LOGIN), rb.getString(SQL_PASSWORD));
         } catch (ClassNotFoundException ex){
             logger.warn("Driver Class not found", ex);
         }

@@ -2,9 +2,11 @@ package by.epam.java.training.web.command.impl.user;
 
 import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.model.user.SignInForm;
+import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.servise.impl.UserServiceImpl;
 import by.epam.java.training.web.command.AbstractCommand;
+import by.epam.java.training.web.util.EncriptionMD5;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static by.epam.java.training.web.command.Commandos.OPEN_NEWS;
 import static by.epam.java.training.web.command.Pages.*;
 
 public class SignIn extends AbstractCommand {
@@ -34,9 +37,9 @@ public class SignIn extends AbstractCommand {
             SignInForm authForm = new SignInForm();
 
             authForm.setLogin(request.getParameter(LOGIN));
-            authForm.setPassword(request.getParameter(PASSWORD));
+            authForm.setPassword(EncriptionMD5.encrypt(request.getParameter(PASSWORD)));
 
-            UserService userService = new UserServiceImpl();
+            UserService userService = ServiceFactory.getInstance().getUserService();
 
             if (!userService.isExistLoginAndPassword(authForm)){
                 request.setAttribute(ERROR_EXIST, true);
@@ -48,7 +51,7 @@ public class SignIn extends AbstractCommand {
             ActiveUser user = userService.getActiveUser(authForm.getLogin());
             HttpSession session = request.getSession();
             session.setAttribute(USER, user);
-            redirect(response, START_PAGE.getPage());
+            redirect(response, "/news?command=open_news");
             return;
         } catch (IOException ex){
 

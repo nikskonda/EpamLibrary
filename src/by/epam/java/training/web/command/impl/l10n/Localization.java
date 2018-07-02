@@ -22,6 +22,6 @@ public class Localization extends AbstractCommand {
         HttpSession session = request.getSession(true);
         session.setAttribute(LOCAL, request.getParameter(COMMAND));
 
-        forward(request, response, Pages.START_PAGE.getPage());
+        redirect(response, "/catalog?command=open_news");
     }
 }

@@ -54,7 +54,7 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
     }
 
     @Override
-    public News getNews(Integer id, String locale) {
+    public News getNews(Integer newsId, String locale) {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -62,8 +62,9 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
         News news = new News();
         try {
             con = conPool.retrieve();
-            cstmt = con.prepareCall(GET_ALL_NEWS);
+            cstmt = con.prepareCall(GET_NEWS_BY_ID);
             cstmt.setString(LOCALE, locale);
+            cstmt.setInt(NEWS_ID, newsId);
             rs = cstmt.executeQuery();
             while (rs.next()) {
                 news.setId(rs.getInt(NEWS_ID));

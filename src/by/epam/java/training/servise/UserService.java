@@ -1,9 +1,8 @@
 package by.epam.java.training.servise;
 
-import by.epam.java.training.model.user.ActiveUser;
-import by.epam.java.training.model.user.SignInForm;
-import by.epam.java.training.model.user.SignUpForm;
-import by.epam.java.training.model.user.User;
+import by.epam.java.training.model.user.*;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -17,4 +16,7 @@ public interface UserService {
 
     boolean isFreeLogin(String login);
 
+    boolean updateUser(ProfileForm profile);
+
+    List<User> findUsers();
 }
