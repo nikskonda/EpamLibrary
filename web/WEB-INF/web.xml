@@ -30,10 +30,10 @@
         <filter-class>by.epam.java.training.web.filter.user.EncriptionFilter</filter-class>
     </filter>
 
-    <!--<filter-mapping>-->
-        <!--<filter-name>Encription</filter-name>-->
-        <!--<servlet-name>SignUp</servlet-name>-->
-    <!--</filter-mapping>-->
+    <filter-mapping>
+        <filter-name>Encription</filter-name>
+        <servlet-name>SignUp</servlet-name>
+    </filter-mapping>
 
     <filter-mapping>
         <filter-name>Encription</filter-name>
@@ -89,6 +89,36 @@
     <servlet-mapping>
         <servlet-name>NewsConstructor</servlet-name>
         <url-pattern>/newsConstructor</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Profile</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Profile</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Admin</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Admin</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Book</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Book</servlet-name>
+        <url-pattern>/book</url-pattern>
     </servlet-mapping>
 
     <servlet>

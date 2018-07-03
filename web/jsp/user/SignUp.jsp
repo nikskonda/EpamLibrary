@@ -9,8 +9,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<fmt:setLocale value="${sessionScope.local}" />
-<fmt:setBundle basename="l10n.local" var="loc" />
+    <fmt:setLocale value="${sessionScope.local}" />
+    <fmt:setBundle basename="l10n.local" var="loc" />
     <fmt:message bundle="${loc}" key="local.header.sign" var="headerTitle" />
     <fmt:message bundle="${loc}" key="local.button.signup.name" var="signup" />
 
@@ -62,8 +62,6 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
     <body>
-
-        <jsp:include page="../Header.jsp"/>
 
         <section id="signup">
             <div class="container">

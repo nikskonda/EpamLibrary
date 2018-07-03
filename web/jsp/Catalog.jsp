@@ -57,27 +57,27 @@
                 <div class="grid-sizer"></div>
                 <c:choose>
                     <c:when test="${requestScope.books.size()-1 > 0}">
-                        <c:forEach var="i" begin="0" end="${requestScope.books.size()-1}" step="1">
+                        <c:forEach var="book" items="${requestScope.books}">
                             <article class="masonry__brick entry format-standard">
 
                                 <div class="entry__thumb">
                                     <a href="single-standard.html" class="entry__thumb-link">
-                                        <img src="../<c:out value="${requestScope.books.get(i).getCoverUrl()}"/>"
-                                             srcset="../<c:out value="${requestScope.books.get(i).getCoverUrl()}"/> 1x, <c:out value="${requestScope.books.get(i).getCoverUrl()}"/> 2x" alt="">
+                                        <img src="../<c:out value="${book.getCoverUrl()}"/>"
+                                             srcset="../<c:out value="${book.getCoverUrl()}"/> 1x, <c:out value="${book.getCoverUrl()}"/> 2x" alt="">
                                     </a>
                                 </div>
 
                                 <div class="entry__text">
                                     <div class="entry__header">
-                                        <h1 class="entry__title"><a href="single-standard.html"><c:out value="${requestScope.books.get(i).getName()}"/></a></h1>
+                                        <h1 class="entry__title"><a href="single-standard.html"><c:out value="${book.getName()}"/></a></h1>
                                         <div class="entry__date">
-                                            <a href="single-standard.html"><c:out value="${requestScope.books.get(i).getPublishYear()}"/></a>
+                                            <a href="single-standard.html"><c:out value="${book.getPublishYear()}"/></a>
                                         </div>
                                     </div>
                                     <div class="entry__meta">
-                                        <form method="post" action="">
-                                            <input type="hidden" name="command" value="bookById">
-                                            <input type="hidden" name="command" value="<c:out value="${requestScope.books.get(i).getId()}"/>">
+                                        <form method="post" action="/book">
+                                            <input type="hidden" name="command" value="open_book_by_id">
+                                            <input type="hidden" name="book_id" value="<c:out value="${book.getId()}"/>">
                                             <button type="submit">More</button>
                                         </form>
                                     </div>

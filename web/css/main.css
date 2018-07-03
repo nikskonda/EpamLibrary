@@ -4156,3 +4156,11 @@ footer h4::after {
    top: 12px;
 }
 
+.error-input{
+   color: #F54D4D;
+}
+
+.a_news_id, .a_news_id:hover{
+   color: black;
+   text-decoration: none;
+}

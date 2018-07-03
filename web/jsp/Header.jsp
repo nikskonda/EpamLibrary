@@ -37,8 +37,8 @@
                     </ul>
                 </div>
                 <div class="col-md-4 offset-md-2">
-                    <a class="logo" href="index.html">
-                        <img src="images/logo.png" alt="Homepage">
+                    <a class="logo" href="Main.jsp">
+                        <img src="../images/logo.png" alt="Homepage">
                     </a>
                 </div>
                 <div class="col-md-2 offset-md-2">
@@ -62,40 +62,27 @@
                     <h2 class="header__nav-heading h6">Site Navigation</h2>
 
                     <ul class="header__nav">
-                        <li class="current"><a href="index.html" title="">Home</a></li>
+                        <li class="current"><a href="Main.jsp" title="">Home</a></li>
                         <li class="has-children">
-                            <a href="#0" title="">Categories</a>
+                            <a href="#0" title="">User</a>
                             <ul class="sub-menu">
-                                <li><a href="page/category.html">Lifestyle</a></li>
-                                <li><a href="page/category.html">Health</a></li>
-                                <li><a href="page/category.html">Family</a></li>
-                                <li><a href="page/category.html">Management</a></li>
-                                <li><a href="page/category.html">Travel</a></li>
-                                <li><a href="page/category.html">Work</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-children">
-                            <a href="#0" title="">Blog</a>
-                            <ul class="sub-menu">
-                                <li><a href="page/single-video.html">Video Post</a></li>
-                                <li><a href="page/single-audio.html">Audio Post</a></li>
-                                <li><a href="page/single-gallery.html">Gallery Post</a></li>
-                                <li><a href="page/single-standard.html">Standard Post</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="page/style-guide.html" title="">Styles</a></li>
-                        <li><a href="page/about.html" title="">About</a></li>
-                        <li><a href="page/contact.html" title="">Contact</a></li>
-                        <li class="has-children">
-                            <a href="#0" title="">JSP</a>
-                            <ul class="sub-menu">
-                                <li><a href="index.jsp">Index</a></li>
+                                <li><a href="/catalog?command=open_catalog">${catalog}</a></li>
                                 <li><a href="jsp/user/SignIn.jsp">${signin}</a></li>
                                 <li><a href="jsp/user/SignUp.jsp">${signup}</a></li>
-                                <li><a href="/catalog?command=open_catalog">${catalog}</a></li>
-                                <li><a href="jsp/Test.jsp">Test Page</a></li>
+                                <li><a href="/profile?command=open_profile">Profile</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#0" title="">Moder</a>
+                            <ul class="sub-menu">
                                 <li><a href="jsp/AddNews.jsp">Add news</a></li>
-
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#0" title="">Admin</a>
+                            <ul class="sub-menu">
+                                <li><a href="/admin?command=show_user_list">User List</a></li>
+                                <li><a href="jsp/Test.jsp">Test Page</a></li>
                             </ul>
                         </li>
                     </ul> <!-- end header__nav -->

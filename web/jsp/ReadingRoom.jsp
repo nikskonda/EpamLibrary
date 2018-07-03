@@ -2,15 +2,22 @@
   Created by IntelliJ IDEA.
   User: niksk
   Date: 12-Jun-18
-  Time: 22:55
+  Time: 22:42
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="l10n.local" var="loc" />
+<fmt:message bundle="${loc}" key="local.message.catalog.title" var="title" />
+<fmt:message bundle="${loc}" key="local.message.catalog.header" var="headerP" />
+
+
 <html>
 <head>
-    <title>Error</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Catalog</title>
 
     <!-- CSS
     ================================================== -->
@@ -28,18 +35,18 @@
     ================================================== -->
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
-</head>
-<body>
-<div class="row">
-    <form action="/newsConstructor" method="POST" enctype="multipart/form-data">
-    <form action="/newsConstructor" method="put">
-            <input type="hidden" name="command" value="add_news" >
-            <textarea name="title">Enter title here...</textarea>
-            <input type="file" name="file" multiple="false" >
-            <textarea name="mainText">Enter text here...</textarea>
 
-            <input class="btn btn--primary" type="submit" value="рус" style="padding: 0; width: 50px;">
-    </form>
-</div>
-</body>
+</head>
+    <body style="background-color: black">
+
+    <jsp:include page="Header.jsp"/>
+
+    <section class="s-content">
+        <div class="container">
+            <p><c:out value="${requestScope.text}"/></p>
+        </div>
+
+    </section> <!-- s-content -->
+
+    </body>
 </html>
