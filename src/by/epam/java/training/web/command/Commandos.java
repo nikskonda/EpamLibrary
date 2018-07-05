@@ -1,27 +1,20 @@
 package by.epam.java.training.web.command;
 
-public enum Commandos {
-    SIGN_IN("sign_in"), SIGN_UP("sign_up"),
-    RU("ru"), EN("en"),
-    OPEN_CATALOG("open_catalog"),
-    OPEN_NEWS("open_news"),
-    ADD_NEWS("add_news"),
-    OPEN_PROFILE("open_profile"),
-    UPDATE_PROFILE("update_profile"),
-    SHOW_NEWS_BY_ID("open_news_by_id"),
-    SHOW_USER_LIST("show_user_list"),
-    SHOW_BOOK_BY_ID("open_book_by_id"),
-    READ_BOOK_BY_ID("read_book_by_id"),
-    ;
+public class Commandos {
+    public static final String SIGN_IN = ("sign_in");
+    public static final String SIGN_UP = ("sign_up");
+    public static final String RU = ("ru");
+    public static final String EN = ("en");
+    public static final String OPEN_CATALOG = ("open_catalog");
+    public static final String OPEN_NEWS = ("open_news");
+    public static final String ADD_NEWS = ("add_news");
+    public static final String OPEN_PROFILE = ("open_profile");
+    public static final String UPDATE_PROFILE = ("update_profile");
+    public static final String SHOW_NEWS = ("open_news_by_id");
+    public static final String SHOW_USER_LIST = ("show_user_list");
+    public static final String SHOW_BOOK = ("open_book_by_id");
+    public static final String READ_BOOK = ("read_book_by_id");
+    public static final String OPEN_USER = ("open_user");
 
-    private String value;
-
-    Commandos(String value){
-        this.value = value;
-    }
-
-    public String getValue(){
-        return this.value;
-    }
 
 }

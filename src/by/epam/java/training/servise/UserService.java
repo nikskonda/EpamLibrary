@@ -8,7 +8,7 @@ public interface UserService {
 
     boolean isExistLoginAndPassword(SignInForm signInForm);
 
-    User getUserByLogin(String login);
+    User getUser(Integer userId);
 
     ActiveUser addUser(SignUpForm signUpForm);
 
@@ -18,5 +18,7 @@ public interface UserService {
 
     boolean updateUser(ProfileForm profile);
 
-    List<User> findUsers();
+    List<User> getUsers();
+
+    List<Role> getRoles();
 }

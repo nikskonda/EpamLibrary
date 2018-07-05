@@ -1,7 +1,6 @@
 package by.epam.java.training.web.command.impl;
 
 import by.epam.java.training.servise.BookService;
-import by.epam.java.training.servise.NewsService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
 import org.apache.log4j.Logger;
@@ -12,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Pages.BOOK;
-import static by.epam.java.training.web.command.Pages.NEWS;
+import static by.epam.java.training.web.command.Pages2.BOOK;
 
 public class ShowBook extends AbstractCommand {
 

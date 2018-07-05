@@ -9,14 +9,13 @@ import org.apache.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import static by.epam.java.training.web.command.Pages.START_PAGE;
+import static by.epam.java.training.web.command.Pages2.START_PAGE;
 
 public class NewsConstructor extends AbstractCommand {
 

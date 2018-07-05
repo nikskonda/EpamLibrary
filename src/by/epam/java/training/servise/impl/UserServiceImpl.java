@@ -26,11 +26,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByLogin(String login) {
-        if (!validator.isValid(ValidatorType.LOGIN_VALIDATOR, login)){
-            return null;
-        }
-        return userDAO.getUserByLogin(login);
+    public User getUser(Integer userId) {
+//        if (!validator.isValid(ValidatorType.LOGIN_VALIDATOR, login)){
+//            return null;
+//        }
+        return userDAO.getUser(userId);
     }
 
     @Override
@@ -67,7 +67,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUsers() {
-        return userDAO.findUsers();
+    public List<User> getUsers() {
+        return userDAO.getUsers();
+    }
+
+    @Override
+    public List<Role> getRoles() {
+        return userDAO.getRoles();
     }
 }

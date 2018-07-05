@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Pages.USER_LIST;
+import static by.epam.java.training.web.command.Pages2.USER_LIST;
 
 public class ShowUserList extends AbstractCommand {
 
@@ -23,7 +23,7 @@ public class ShowUserList extends AbstractCommand {
         try{
             UserService service = ServiceFactory.getInstance().getUserService();
 
-            request.setAttribute(USERS, service.findUsers());
+            request.setAttribute(USERS, service.getUsers());
             forward(request, response, USER_LIST.getPage());
 
         } catch (IOException ex){

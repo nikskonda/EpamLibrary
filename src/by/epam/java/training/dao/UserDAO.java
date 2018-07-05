@@ -8,7 +8,7 @@ public interface UserDAO {
 
     boolean isExistLoginAndPassword(SignInForm signInForm);
 
-    User getUserByLogin(String login);
+    User getUser(Integer userId);
 
     ActiveUser addUser(SignUpForm signUpForm);
 
@@ -18,6 +18,8 @@ public interface UserDAO {
 
     boolean updateUser(ProfileForm profile);
 
-    List<User> findUsers();
+    List<User> getUsers();
+
+    List<Role> getRoles();
 
 }

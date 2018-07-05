@@ -1,6 +1,5 @@
 package by.epam.java.training.web.command.impl;
 
-import by.epam.java.training.model.book.Book;
 import by.epam.java.training.model.book.BookCover;
 import by.epam.java.training.servise.BookService;
 import by.epam.java.training.servise.ServiceFactory;
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-import static by.epam.java.training.web.command.Pages.CATALOG;
+import static by.epam.java.training.web.command.Pages2.CATALOG;
 
 public class BookCatalog extends AbstractCommand {
 

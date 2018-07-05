@@ -5,15 +5,11 @@ import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.model.book.Book;
 import by.epam.java.training.model.book.BookCover;
 import by.epam.java.training.servise.BookService;
+import by.epam.java.training.servise.util.ReadFromFile;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.apache.log4j.Logger;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.CallableStatement;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BookServiceImpl implements BookService {
@@ -39,17 +35,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public String getTextOfBook(Integer bookId, String locale) {
+    public String getTextOfBook(Integer bookId, String locale, String path) {
         String fileName = bookDAO.getUrlToTextOfBook(bookId, locale);
-
-        try{
-            File uploadetFile = new File("qwerty.txt");
-            if (!uploadetFile.exists())
-                uploadetFile.createNewFile();
-        } catch (Exception ex){
-
-        }
-
-        return ReadFromFile.readText(fileName);
+        String text = ReadFromFile.readText(path);
+        text.replaceAll("\n", "<\\p><p>");
+        text = "<p>" + text + "<\\p>";
+        return text;
     }
 }

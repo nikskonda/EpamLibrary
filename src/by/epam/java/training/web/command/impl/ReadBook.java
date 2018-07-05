@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Pages.BOOK;
-import static by.epam.java.training.web.command.Pages.READING_ROOM;
+import static by.epam.java.training.web.command.Pages2.READING_ROOM;
 
 public class ReadBook extends AbstractCommand {
 
@@ -46,7 +45,7 @@ public class ReadBook extends AbstractCommand {
 
             Integer bookId = Integer.parseInt(request.getParameter(BOOK_ID));
 
-            request.setAttribute(TEXT, service.getTextOfBook(bookId, locale));
+            request.setAttribute(TEXT, service.getTextOfBook(bookId, locale, request.getServletContext().getRealPath("WEB-INF/classes/text/book1.txt")));
             forward(request, response, READING_ROOM.getPage());
 
         } catch (IOException ex){

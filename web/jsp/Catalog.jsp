@@ -62,7 +62,7 @@
 
                                 <div class="entry__thumb">
                                     <a href="single-standard.html" class="entry__thumb-link">
-                                        <img src="../<c:out value="${book.getCoverUrl()}"/>"
+                                        <img src="../<c:out value="${book.getCoverUrl()}"/>" width="400px" height="400px"
                                              srcset="../<c:out value="${book.getCoverUrl()}"/> 1x, <c:out value="${book.getCoverUrl()}"/> 2x" alt="">
                                     </a>
                                 </div>

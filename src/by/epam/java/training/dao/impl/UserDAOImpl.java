@@ -73,7 +73,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         return result;
     }
 
-    @Override
+
     public User getUserByLogin(String login) {
         Connection con = null;
         CallableStatement cstmt = null;
@@ -84,6 +84,42 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             con = conPool.retrieve();
             cstmt = con.prepareCall(GET_USER_BY_LOGIN);
             cstmt.setString(USER_LOGIN, login);
+            rs = cstmt.executeQuery();
+            while (rs.next()) {
+                user = new User();
+                user.setId(rs.getInt(USER_ID));
+                user.setLogin(rs.getString(USER_LOGIN));
+                user.setEmail(rs.getString(USER_EMAIL));
+                user.setFirstName(rs.getString(USER_FIRST_NAME));
+                user.setLastName(rs.getString(USER_LAST_NAME));
+                user.setRegistrationDate(rs.getDate(USER_REGISTRATION_DATE));
+                Role role = new Role(rs.getInt(USER_ROLE_ID),rs.getString(USER_ROLE_NAME));
+                user.setRole(role);
+            }
+        } catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+        }  catch (Exception ex){
+            logger.warn("Database query error",ex);
+        }
+        finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return user;
+    }
+
+    @Override
+    public User getUser(Integer userId) {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        User user = null;
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(GET_USER_BY_ID);
+            cstmt.setInt(USER_ID, userId);
             rs = cstmt.executeQuery();
             while (rs.next()) {
                 user = new User();
@@ -197,7 +233,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     }
 
     @Override
-    public List<User> findUsers() {
+    public List<User> getUsers() {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -205,7 +241,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         List<User> userList = new ArrayList<>();
         try {
             con = conPool.retrieve();
-            cstmt = con.prepareCall(FIND_USER_LIST);
+            cstmt = con.prepareCall(GET_USER_LIST);
             rs = cstmt.executeQuery();
             while (rs.next()) {
                 User user = new User();
@@ -231,5 +267,33 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             putbackConnection(con, conPool);
         }
         return userList;
+    }
+
+    @Override
+    public List<Role> getRoles() {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        List<Role> roleList = new ArrayList<>();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(GET_ROLE_LIST);
+            rs = cstmt.executeQuery();
+            while (rs.next()) {
+                Role role = new Role(rs.getInt(USER_ROLE_ID),rs.getString(USER_ROLE_NAME));
+                roleList.add(role);
+            }
+        } catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+        }  catch (Exception ex){
+            logger.warn("Database query error",ex);
+        }
+        finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return roleList;
     }
 }

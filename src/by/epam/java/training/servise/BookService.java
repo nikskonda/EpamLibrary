@@ -11,6 +11,6 @@ public interface BookService {
 
     Book getBook(Integer bookId, String locale);
 
-    String getTextOfBook(Integer bookId, String locale);
+    String getTextOfBook(Integer bookId, String locale, String path);
 
 }

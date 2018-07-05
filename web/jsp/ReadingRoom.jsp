@@ -43,7 +43,7 @@
 
     <section class="s-content">
         <div class="container">
-            <p><c:out value="${requestScope.text}"/></p>
+            <c:out value="${requestScope.text}"/>
         </div>
 
     </section> <!-- s-content -->

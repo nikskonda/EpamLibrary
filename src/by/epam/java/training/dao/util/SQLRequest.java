@@ -10,7 +10,10 @@ public class SQLRequest {
     public final static String IS_FREE_LOGIN = "{call is_free_login(?,?)}";
     public final static String ADD_USER = "{call add_user(?,?,?,?,?,?)}";
     public final static String GET_USER_BY_LOGIN = "{call get_user_by_login(?)}";
+    public final static String GET_USER_BY_ID = "{call get_user_by_id(?)}";
     public final static String UPDATE_USER = "{call update_user(?,?,?,?,?)}";
+    public final static String GET_ROLE_LIST = "{call get_role_list()}";
+    public final static String GET_USER_LIST = "{call get_user_list()}";
 
     //Column labels
     public final static String USER_ID = "user_id";
@@ -45,7 +48,7 @@ public class SQLRequest {
     public final static String GET_NEWS_BY_ID = "{call get_news_by_id_and_lang(?,?)}";
     public final static String GET_ALL_NEWS = "{call get_all_news_by_lang(?,?,?)}";
     public final static String CALC_MAX_PAGE = "{call calc_pages_in_news_by_lang(?,?,?)}";
-    public final static String FIND_USER_LIST = "{call find_user_list()}";
+
 
     //Column labels
     public final static String NEWS_ID = "news_id";

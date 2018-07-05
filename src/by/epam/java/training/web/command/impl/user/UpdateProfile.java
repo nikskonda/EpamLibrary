@@ -4,7 +4,6 @@ import by.epam.java.training.model.user.ProfileForm;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
-import by.epam.java.training.web.filter.user.EncriptionFilter;
 import by.epam.java.training.web.util.EncriptionMD5;
 import org.apache.log4j.Logger;
 
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Pages.*;
+import static by.epam.java.training.web.command.Pages2.*;
 
 public class UpdateProfile extends AbstractCommand {
 
@@ -72,9 +71,6 @@ public class UpdateProfile extends AbstractCommand {
                     profile.setPassword(profile.getNewPassword());
                 }
             }
-
-
-
 
             if (!userService.updateUser(profile)){
                 forward(request, response, ERROR.getPage());

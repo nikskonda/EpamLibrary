@@ -1,8 +1,6 @@
 package by.epam.java.training.web.command.impl.l10n;
 
 import by.epam.java.training.web.command.AbstractCommand;
-import by.epam.java.training.web.command.Command;
-import by.epam.java.training.web.command.Pages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

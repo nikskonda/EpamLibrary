@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Pages.START_PAGE;
+import static by.epam.java.training.web.command.Pages2.START_PAGE;
 
 public class ShowNewsList extends AbstractCommand {
 

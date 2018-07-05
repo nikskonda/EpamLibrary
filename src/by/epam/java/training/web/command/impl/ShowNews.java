@@ -3,7 +3,6 @@ package by.epam.java.training.web.command.impl;
 import by.epam.java.training.servise.NewsService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
-import by.epam.java.training.web.command.Pages;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -12,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Pages.NEWS;
-import static by.epam.java.training.web.command.Pages.START_PAGE;
+import static by.epam.java.training.web.command.Pages2.NEWS;
 
 public class ShowNews extends AbstractCommand {
 

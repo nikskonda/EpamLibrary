@@ -81,7 +81,7 @@
                                         <td><c:out value="${user.email}"/></td>
                                         <td><c:out value="${user.getRole().getName()}"/></td>
                                         <td><a style="color: limegreen">Change Role</a></td>
-                                        <td><a style="color: red">Delete</a></td>
+                                        <td><a style="color: red" href="/admin?command=open_user&user_id=<c:out value="${user.id}"/>">Delete</a></td>
                                     </tr>
                                 </c:forEach>
                             </c:when>

@@ -2,11 +2,9 @@ package by.epam.java.training.web.command.impl.user;
 
 import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.model.user.ProfileForm;
-import by.epam.java.training.model.user.SignInForm;
 import by.epam.java.training.model.user.User;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
-import by.epam.java.training.servise.impl.UserServiceImpl;
 import by.epam.java.training.web.command.AbstractCommand;
 import org.apache.log4j.Logger;
 
@@ -16,9 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Pages.PROFILE;
-import static by.epam.java.training.web.command.Pages.SIGN_IN;
-import static by.epam.java.training.web.command.Pages.START_PAGE;
+import static by.epam.java.training.web.command.Pages2.PROFILE;
+import static by.epam.java.training.web.command.Pages2.SIGN_IN;
 
 public class OpenProfile extends AbstractCommand {
 
@@ -42,7 +39,7 @@ public class OpenProfile extends AbstractCommand {
 
             UserService userService = ServiceFactory.getInstance().getUserService();
 
-            User user = userService.getUserByLogin(activeUser.getLogin());
+            User user = userService.getUser(activeUser.getId());
 
             ProfileForm profile = new ProfileForm(user.getLogin(),
                     user.getFirstName(), user.getLastName(), user.getEmail());
