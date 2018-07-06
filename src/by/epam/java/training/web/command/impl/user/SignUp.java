@@ -40,7 +40,7 @@ public class SignUp extends AbstractCommand {
         signUpForm.setFirstName(request.getParameter(FIRST_NAME));
         signUpForm.setLastName(request.getParameter(LAST_NAME));
 
-        UserService userService = ServiceFactory.getInstance().getUserService();
+        UserService userService = ServiceFactory.getUserService();
 
         if (!userService.isFreeLogin(signUpForm.getLogin())){
             request.setAttribute(SIGN_UP_FORM, signUpForm);

@@ -6,7 +6,9 @@ import by.epam.java.training.dao.NewsDAO;
 import by.epam.java.training.model.book.Book;
 import by.epam.java.training.model.book.BookCover;
 import by.epam.java.training.model.news.News;
+import by.epam.java.training.model.news.NewsConstr;
 import by.epam.java.training.model.news.NewsCover;
+import by.epam.java.training.model.news.NewsLang;
 import by.epam.java.training.servise.BookService;
 import by.epam.java.training.servise.NewsService;
 import by.epam.java.training.servise.validation.ValidatorManager;
@@ -43,5 +45,15 @@ public class NewsServiceImpl implements NewsService {
             return null;
         }
         return  newsDAO.calcMaxPages(locale, countNewsOnOnePage);
+    }
+
+    @Override
+    public void addNews(NewsConstr defNews, NewsLang news) {
+        if (false){
+            return;
+        }
+        Integer newsId = newsDAO.addNews(defNews);
+        news.setId(newsId);
+        newsDAO.addNewsByLang(news);
     }
 }

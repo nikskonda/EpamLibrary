@@ -35,6 +35,7 @@
     <fmt:message bundle="${loc}" key="local.message.error.last_name.content" var="lnCont" />
     <fmt:message bundle="${loc}" key="local.message.error.last_name.length" var="lnLen" />
     <fmt:message bundle="${loc}" key="local.message.error.email.content" var="emailCont" />
+    <fmt:message bundle="${loc}" key="local.message.error.login.not_found" var="notFound" />
 <html>
 <head>
     <title>Profile</title>
@@ -101,25 +102,34 @@
             <div class="col-lg-6">
                 <form method="post" action="/admin">
                     <input type="hidden" name="command" value="change_user_role"/>
-                    <input type="hidden" name="login" value="<c:out value="${requestScope.profile.login}"/>"/>
-
+                    <input type="hidden" name="user_id" value="<c:out value="${requestScope.profile.id}"/>"/>
                     <c:forEach var="role" items="${requestScope.roles}">
-                        <input type="radio" name="roles" value="<c:out value="${role.name}"/>"
-                        <c:if test="${role.equals(requestScope.profile.role)}">
+                        <p><input type="radio" name="role" value="<c:out value="${role.name}"/>"
+                        <c:if test="${role.name == requestScope.profile.role.name}">
                             <c:out value="checked"/>
-                            </c:if> >
+                        </c:if> > ${role.name} </p>
                     </c:forEach>
                     <label for="password">${password}</label>
                     <input type="password" name="password" id="password" placeholder="${ioldPassword}">
+                    <p class="error-input">
+                        <c:if test="${requestScope.error_exist == true}">
+                            ${notFound}
+                        </c:if>
+                    </p>
                     <input type="submit" value="Apply">
                 </form>
             </div>
                  <div class="col-lg-6">
                         <form method="post" action="/admin">
-                        <input type="hidden" name="command" value="delete_user"/>
-                        <input type="hidden" name="login" value="<c:out value="${requestScope.profile.login}"/>"/>
+                            <input type="hidden" name="command" value="delete_user"/>
+                            <input type="hidden" name="user_id" value="<c:out value="${requestScope.profile.id}"/>"/>
                             <label for="password2">${password}</label>
                             <input type="password" name="password" id="password2" placeholder="${ioldPassword}">
+                            <p class="error-input">
+                                <c:if test="${requestScope.del_error_exist == true}">
+                                    ${notFound}
+                                </c:if>
+                            </p>
                             <input type="submit" value="Delete">
                             </form>
                         </div>

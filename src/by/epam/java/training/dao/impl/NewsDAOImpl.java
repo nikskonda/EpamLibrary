@@ -5,7 +5,9 @@ import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.NewsDAO;
 import by.epam.java.training.dao.util.ConnectionPool;
 import by.epam.java.training.model.news.News;
+import by.epam.java.training.model.news.NewsConstr;
 import by.epam.java.training.model.news.NewsCover;
+import by.epam.java.training.model.news.NewsLang;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -111,5 +113,57 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
             putbackConnection(con, conPool);
         }
         return result;
+    }
+
+    @Override
+    public Integer addNews(NewsConstr defNews) {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        Integer newsId = null;
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(ADD_NEWS);
+            cstmt.setString(NEWS_TITLE, defNews.getTitle());
+            cstmt.setString(NEWS_TEXT, defNews.getText());
+            cstmt.setString(NEWS_PHOTO_URL, defNews.getPhotoUrl());
+            cstmt.setInt(USER_ID, defNews.getUserId());
+            cstmt.registerOutParameter(NEWS_ID, Types.SMALLINT);
+            cstmt.executeQuery();
+            newsId = cstmt.getInt(NEWS_ID);
+
+        } catch (SQLException ex) {
+            logger.warn("Вatabase query error",ex);
+        } finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return newsId;
+    }
+
+    @Override
+    public void addNewsByLang(NewsLang news) {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(ADD_NEWS_LANG);
+            cstmt.setInt(NEWS_ID, news.getId());
+            cstmt.setString(NEWS_TITLE, news.getTitle());
+            cstmt.setString(NEWS_TEXT, news.getText());
+            cstmt.setString(LOCALE, news.getLang());
+            cstmt.executeQuery();
+
+        } catch (SQLException ex) {
+            logger.warn("Вatabase query error",ex);
+        } finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
     }
 }

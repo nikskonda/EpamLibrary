@@ -73,6 +73,34 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         return result;
     }
 
+    @Override
+    public boolean isAdministrator(SignInForm signInForm) {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(IS_ADMINISTRATOR);
+            cstmt.setString(USER_LOGIN, signInForm.getLogin());
+            cstmt.setString(USER_PASSWORD, signInForm.getPassword());
+            cstmt.registerOutParameter(RESULT, Types.BOOLEAN);
+            cstmt.executeQuery();
+
+            result = cstmt.getBoolean(RESULT);
+        } catch (SQLException ex) {
+            logger.warn("Вatabase query error",ex);
+        } finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return result;
+    }
+
+
 
     public User getUserByLogin(String login) {
         Connection con = null;
@@ -295,5 +323,58 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             putbackConnection(con, conPool);
         }
         return roleList;
+    }
+
+    @Override
+    public boolean changeRole(Integer userId, String roleName) {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        boolean result = false;
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(CHANGE_USER_ROLE);
+            cstmt.setInt(USER_ID, userId);
+            cstmt.setString(USER_ROLE_NAME, roleName);
+            rs = cstmt.executeQuery();
+            result = true;
+        } catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+        }  catch (Exception ex){
+            logger.warn("Database query error",ex);
+        }
+        finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean deleteUser(Integer userId) {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        boolean result = false;
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(DELETE_USER);
+            cstmt.setInt(USER_ID, userId);
+            rs = cstmt.executeQuery();
+            result = true;
+        } catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+        }  catch (Exception ex){
+            logger.warn("Database query error",ex);
+        }
+        finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return result;
     }
 }

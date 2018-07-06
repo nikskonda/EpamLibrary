@@ -50,7 +50,7 @@ public class UpdateProfile extends AbstractCommand {
             profile.setFirstName(request.getParameter(FIRST_NAME));
             profile.setLastName(request.getParameter(LAST_NAME));
 
-            UserService userService = ServiceFactory.getInstance().getUserService();
+            UserService userService = ServiceFactory.getUserService();
 
             if (!userService.isExistLoginAndPassword(profile)){
                 request.setAttribute(ERROR_MATCH, true);

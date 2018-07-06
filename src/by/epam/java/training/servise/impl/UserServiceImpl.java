@@ -26,6 +26,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isAdministrator(SignInForm signInForm) {
+        if (!validator.isValid(ValidatorType.AUTHORIZATION_FORM_VALIDATOR, signInForm)){
+            return false;
+        }
+        return userDAO.isAdministrator(signInForm);
+
+    }
+
+    @Override
     public User getUser(Integer userId) {
 //        if (!validator.isValid(ValidatorType.LOGIN_VALIDATOR, login)){
 //            return null;
@@ -74,5 +83,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Role> getRoles() {
         return userDAO.getRoles();
+    }
+
+    @Override
+    public boolean changeRole(Integer userId, String roleName) {
+
+        return userDAO.changeRole(userId, roleName);
+    }
+
+    @Override
+    public boolean deleteUser(Integer userId) {
+        return userDAO.deleteUser(userId);
     }
 }

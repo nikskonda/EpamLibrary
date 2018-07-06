@@ -37,7 +37,7 @@ public class SignIn extends AbstractCommand {
             authForm.setLogin(request.getParameter(LOGIN));
             authForm.setPassword(EncriptionMD5.encrypt(request.getParameter(PASSWORD)));
 
-            UserService userService = ServiceFactory.getInstance().getUserService();
+            UserService userService = ServiceFactory.getUserService();
 
             if (!userService.isExistLoginAndPassword(authForm)){
                 request.setAttribute(ERROR_EXIST, true);

@@ -50,6 +50,8 @@
             <h5><c:out value="${requestScope.book.price}"/></h5>
             <p><c:out value="${requestScope.book.pages}"/></p>
             <p><c:out value="${requestScope.book.publishingHouse.name}"/></p>
+            <p><c:out value="${requestScope.book.getAuthorsAsString()}"/></p>
+            <p><c:out value="${requestScope.book.getGernesAsString()}"/></p>
             <form method="post" action="/book">
                 <input type="hidden" name="command" value="read_book_by_id">
                 <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">

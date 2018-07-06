@@ -13,4 +13,5 @@ public class Pages {
     public static final String READING_ROOM = ("jsp/ReadingRoom.jsp");
     public static final String ADMINISTRATION_USER = ("jsp/AdministrationUser.jsp");
 
+
 }

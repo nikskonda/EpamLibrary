@@ -29,6 +29,8 @@ public class CommandManager {
         commands.put(SHOW_BOOK, new ShowBook());
         commands.put(READ_BOOK, new ReadBook());
         commands.put(OPEN_USER, new OpenUser());
+        commands.put(CHANGE_USER_ROLE, new ChangeUserRole());
+        commands.put(DELETE_USER, new DeleteUser());
     }
 
     public Command getCommand(String command){

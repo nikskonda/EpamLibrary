@@ -37,7 +37,7 @@
                     </ul>
                 </div>
                 <div class="col-md-4 offset-md-2">
-                    <a class="logo" href="Main.jsp">
+                    <a class="logo" href="/news?command=open_news">
                         <img src="../images/logo.png" alt="Homepage">
                     </a>
                 </div>
@@ -62,7 +62,7 @@
                     <h2 class="header__nav-heading h6">Site Navigation</h2>
 
                     <ul class="header__nav">
-                        <li class="current"><a href="Main.jsp" title="">Home</a></li>
+                        <li class="current"><a href="/news?command=open_news" title="">Home</a></li>
                         <li class="has-children">
                             <a href="#0" title="">User</a>
                             <ul class="sub-menu">
@@ -75,7 +75,7 @@
                         <li class="has-children">
                             <a href="#0" title="">Moder</a>
                             <ul class="sub-menu">
-                                <li><a href="jsp/AddNews.jsp">Add news</a></li>
+                                <li><a href="jsp/NewsConstructor.jsp">Add news</a></li>
                             </ul>
                         </li>
                         <li class="has-children">

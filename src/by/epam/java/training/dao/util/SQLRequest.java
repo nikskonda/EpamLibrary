@@ -14,6 +14,10 @@ public class SQLRequest {
     public final static String UPDATE_USER = "{call update_user(?,?,?,?,?)}";
     public final static String GET_ROLE_LIST = "{call get_role_list()}";
     public final static String GET_USER_LIST = "{call get_user_list()}";
+    public final static String CHANGE_USER_ROLE = "{call change_user_role(?,?)}";
+    public final static String DELETE_USER = "{call delete_user(?)}";
+    public final static String IS_ADMINISTRATOR = "{call is_administrator(?,?,?)}";
+
 
     //Column labels
     public final static String USER_ID = "user_id";
@@ -44,11 +48,25 @@ public class SQLRequest {
     public final static String BOOK_PDF_FILE = "pdf_file_url";
     public final static String BOOK_TEXT_FILE = "text_file_url";
 
+    //AUTHORS
+    public final static String FIND_BOOK_AUTHORS = "{call find_book_authors(?)}";
+    //Column labels
+    public final static String AUTHOR_ID = "author_id";
+    public final static String AUTHOR_FIRST_NAME = "first_name";
+    public final static String AUTHOR_LAST_NAME = "last_name";
+
+    //GENRES
+    public final static String FIND_BOOK_GENRES = "{call find_book_genres(?)}";
+    //Column labels
+    public final static String GENRE_ID = "genre_id";
+    public final static String GENRE_NAME = "genre_name";
+
     //NEWS
     public final static String GET_NEWS_BY_ID = "{call get_news_by_id_and_lang(?,?)}";
     public final static String GET_ALL_NEWS = "{call get_all_news_by_lang(?,?,?)}";
     public final static String CALC_MAX_PAGE = "{call calc_pages_in_news_by_lang(?,?,?)}";
-
+    public final static String ADD_NEWS = "{call add_news(?,?,?,?,?)}";
+    public final static String ADD_NEWS_LANG = "{call add_news_lang(?,?,?,?)}";
 
     //Column labels
     public final static String NEWS_ID = "news_id";

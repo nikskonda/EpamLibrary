@@ -28,15 +28,12 @@ public class OpenUser extends AbstractCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
             Integer userId = Integer.parseInt(request.getParameter(USER_ID));
-
-            UserService userService = ServiceFactory.getInstance().getUserService();
+            UserService userService = ServiceFactory.getUserService();
 
             User user = userService.getUser(userId);
 
             request.setAttribute(USER_PROFILE, user);
-
             request.setAttribute(ROLE_LIST, userService.getRoles());
-
             forward(request, response, ADMINISTRATION_USER);
 
         } catch (IOException ex){

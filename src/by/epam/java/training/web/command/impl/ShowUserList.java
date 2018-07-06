@@ -21,7 +21,7 @@ public class ShowUserList extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            UserService service = ServiceFactory.getInstance().getUserService();
+            UserService service = ServiceFactory.getUserService();
 
             request.setAttribute(USERS, service.getUsers());
             forward(request, response, USER_LIST.getPage());

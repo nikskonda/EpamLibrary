@@ -1,5 +1,7 @@
 package by.epam.java.training.controller;
 
+import by.epam.java.training.dao.DAOFactory;
+import by.epam.java.training.model.book.Book;
 import by.epam.java.training.model.user.User;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
@@ -88,6 +90,9 @@ public class Main {
 //        ResourceBundle rb = ResourceBundle.getBundle("resource.db");
 //        System.out.println(rb.getString("login"));
 
+//        Book book = DAOFactory.getInstance().getBookDAO().getBook(24, "en");
+//        System.out.println(book.getGenresAsString());
+//        System.out.println(book.getAuthorsAsString());
 
     }
 }

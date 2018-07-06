@@ -31,9 +31,9 @@
 </head>
 <body>
 <div class="row">
-    <form action="/newsConstructor" method="POST" enctype="multipart/form-data">
-    <form action="/newsConstructor" method="put">
-            <input type="hidden" name="command" value="add_news" >
+    <%--<form action="/newsConstructor" method="POST" enctype="multipart/form-data">--%>
+    <form action="/book" method="put">
+            <input type="hidden" name="command" value="add_book" >
             <textarea name="title">Enter title here...</textarea>
             <input type="file" name="file" multiple="false" >
             <textarea name="mainText">Enter text here...</textarea>

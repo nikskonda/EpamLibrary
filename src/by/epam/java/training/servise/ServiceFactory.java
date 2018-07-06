@@ -23,19 +23,17 @@ public class ServiceFactory {
 
     private ServiceFactory() {}
 
-    public UserService getUserService() {
-        return userService;
+    public static UserService getUserService() {
+        return getInstance().userService;
     }
-    public BookService getBookService() {
-        return bookService;
+    public static BookService getBookService() {
+        return getInstance().bookService;
     }
-    public NewsService getNewsService(){
-        return newsService;
+    public static NewsService getNewsService(){
+        return getInstance().newsService;
     }
 
-
-
-    public static ServiceFactory getInstance() {
+    private static ServiceFactory getInstance() {
         try {
             lock.lock();
             if (instance == null){

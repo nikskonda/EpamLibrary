@@ -37,7 +37,7 @@ public class OpenProfile extends AbstractCommand {
             }
 
 
-            UserService userService = ServiceFactory.getInstance().getUserService();
+            UserService userService = ServiceFactory.getUserService();
 
             User user = userService.getUser(activeUser.getId());
 

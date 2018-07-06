@@ -8,6 +8,8 @@ public interface UserService {
 
     boolean isExistLoginAndPassword(SignInForm signInForm);
 
+    boolean isAdministrator(SignInForm signInForm);
+
     User getUser(Integer userId);
 
     ActiveUser addUser(SignUpForm signUpForm);
@@ -21,4 +23,10 @@ public interface UserService {
     List<User> getUsers();
 
     List<Role> getRoles();
+
+    boolean changeRole(Integer userId, String roleName);
+
+    boolean deleteUser(Integer userId);
+
+
 }

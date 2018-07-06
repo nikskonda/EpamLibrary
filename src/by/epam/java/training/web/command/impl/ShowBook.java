@@ -35,7 +35,7 @@ public class ShowBook extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            BookService service = ServiceFactory.getInstance().getBookService();
+            BookService service = ServiceFactory.getBookService();
 
             HttpSession session = request.getSession(true);
             if (session.getAttribute(LOCALE)==null){

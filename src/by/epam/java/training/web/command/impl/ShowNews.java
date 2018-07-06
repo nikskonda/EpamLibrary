@@ -37,7 +37,7 @@ public class ShowNews extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            NewsService service = ServiceFactory.getInstance().getNewsService();
+            NewsService service = ServiceFactory.getNewsService();
 
             HttpSession session = request.getSession(true);
             if (session.getAttribute(LOCALE)==null){

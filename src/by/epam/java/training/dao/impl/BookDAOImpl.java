@@ -4,9 +4,7 @@ import by.epam.java.training.dao.AbstractDAO;
 import by.epam.java.training.dao.BookDAO;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.util.ConnectionPool;
-import by.epam.java.training.model.book.Book;
-import by.epam.java.training.model.book.BookCover;
-import by.epam.java.training.model.book.PublishingHouse;
+import by.epam.java.training.model.book.*;
 import org.apache.log4j.Logger;
 
 import java.sql.CallableStatement;
@@ -78,6 +76,8 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
                 book.setPublishingHouse(ph);
                 book.setPdfFileUrl(rs.getString(BOOK_PDF_FILE));
                 book.setCoverUrl(rs.getString(BOOK_COVER));
+                book.setAuthors(findAuthors(bookId));
+                book.setGenres(findGenres(bookId));
             }
         } catch (SQLException ex) {
             logger.warn("Database query error",ex);
@@ -87,6 +87,61 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
             putbackConnection(con, conPool);
         }
         return book;
+    }
+
+    private List<Author> findAuthors(Integer bookId){
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        List<Author> authors = new ArrayList<>();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(FIND_BOOK_AUTHORS);
+            cstmt.setInt(BOOK_ID, bookId);
+            rs = cstmt.executeQuery();
+            while (rs.next()) {
+                Author author = new Author();
+                author.setId(rs.getInt(AUTHOR_ID));
+                author.setFirstName(rs.getString(AUTHOR_FIRST_NAME));
+                author.setLastName(rs.getString(AUTHOR_LAST_NAME));
+                authors.add(author);
+            }
+        } catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+        } finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return authors;
+    }
+
+    private List<Genre> findGenres(Integer bookId){
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        List<Genre> genres = new ArrayList<>();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(FIND_BOOK_GENRES);
+            cstmt.setInt(BOOK_ID, bookId);
+            rs = cstmt.executeQuery();
+            while (rs.next()) {
+                Genre genre = new Genre();
+                genre.setId(rs.getInt(GENRE_ID));
+                genre.setName(rs.getString(GENRE_NAME));
+                genres.add(genre);
+            }
+        } catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+        } finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return genres;
     }
 
     @Override
@@ -114,4 +169,6 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
         }
         return textUrl;
     }
+
+
 }
