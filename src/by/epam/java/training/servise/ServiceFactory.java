@@ -1,6 +1,7 @@
 package by.epam.java.training.servise;
 
 import by.epam.java.training.dao.DAOFactory;
+import by.epam.java.training.servise.impl.BookSearchServiceImpl;
 import by.epam.java.training.servise.impl.BookServiceImpl;
 import by.epam.java.training.servise.impl.NewsServiceImpl;
 import by.epam.java.training.servise.impl.UserServiceImpl;
@@ -20,6 +21,7 @@ public class ServiceFactory {
     private final UserService userService = new UserServiceImpl();
     private final BookService bookService = new BookServiceImpl();
     private final NewsService newsService = new NewsServiceImpl();
+    private final BookSearchService bookSearchService = new BookSearchServiceImpl();
 
     private ServiceFactory() {}
 
@@ -28,6 +30,9 @@ public class ServiceFactory {
     }
     public static BookService getBookService() {
         return getInstance().bookService;
+    }
+    public static BookSearchService getBookSearchService() {
+        return getInstance().bookSearchService;
     }
     public static NewsService getNewsService(){
         return getInstance().newsService;

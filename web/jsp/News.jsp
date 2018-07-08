@@ -46,7 +46,7 @@
                 <c:out value="${requestScope.news.getTitle()}"/>
             </h1>
             <ul class="s-content__header-meta">
-                <li class="date"><c:out value="${requestScope.news.getPublishDate()}"/></li>
+                <li class="date"><fmt:formatDate type="both" pattern="HH:mm dd-MMM-yy" value="${news.publishDate}"/></li>
                 <li class="cat">
                     By <c:out value="${requestScope.news.getUserFirstName()}"/> <c:out value="${requestScope.news.getUserLastName()}"/>
                 </li>
@@ -55,11 +55,7 @@
 
         <div class="s-content__media col-full">
             <div class="s-content__post-thumb">
-                <img src="../<c:out value="${requestScope.news.getPhotoUrl()}"/>"
-                     srcset="../<c:out value="${requestScope.news.getPhotoUrl()}"/> 2000w,
-                                 ../<c:out value="${requestScope.news.getPhotoUrl()}"/> 1000w,
-                                 ../<c:out value="${requestScope.news.getPhotoUrl()}"/> 500w"
-                     sizes="(max-width: 2000px) 100vw, 2000px" alt="" >
+                <img src="../<c:out value="${requestScope.news.photoUrl}"/>" alt="" >
             </div>
         </div> <!-- end s-content__media -->
 

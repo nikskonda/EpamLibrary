@@ -32,8 +32,12 @@ public class SQLRequest {
 
     //BOOKS
     public final static String GET_BOOK_BY_ID = "{call get_book_by_id_and_lang(?,?)}";
-    public final static String GET_ALL_BOOKS = "{call get_all_books_by_lang(?)}";
+    public final static String GET_ALL_BOOKS = "{call get_all_books_by_lang(?,?,?)}";
+    public final static String CALC_TOTAL_PAGES_BOOKS = "{call calc_pages_in_books_by_lang(?,?,?)}";
     public final static String GET_URL_TO_TEXT_OF_BOOK = "{call get_url_to_text_of_book(?,?)}";
+
+    public final static String FIND_BOOKS = "{call find_book(?,?,?,?)}";
+    public final static String CALC_TOTAL_PAGES_BOOKS_SERCH = "{call calc_pages_in_book_search(?,?,?,?)}";
 
     //Column labels
     public final static String BOOK_ID = "book_id";
@@ -47,6 +51,8 @@ public class SQLRequest {
     public final static String BOOK_COVER = "cover_url";
     public final static String BOOK_PDF_FILE = "pdf_file_url";
     public final static String BOOK_TEXT_FILE = "text_file_url";
+    public final static String COUNT_BOOKS_ON_PAGE = "count_books_on_page";
+    public final static String SEARCH = "search";
 
     //AUTHORS
     public final static String FIND_BOOK_AUTHORS = "{call find_book_authors(?)}";
@@ -64,8 +70,8 @@ public class SQLRequest {
     //NEWS
     public final static String GET_NEWS_BY_ID = "{call get_news_by_id_and_lang(?,?)}";
     public final static String GET_ALL_NEWS = "{call get_all_news_by_lang(?,?,?)}";
-    public final static String CALC_MAX_PAGE = "{call calc_pages_in_news_by_lang(?,?,?)}";
-    public final static String ADD_NEWS = "{call add_news(?,?,?,?,?)}";
+    public final static String CALC_TOTAL_PAGES_NEWS = "{call calc_pages_in_news_by_lang(?,?,?)}";
+    public final static String ADD_NEWS = "{call add_news(?,?,?,?,?,?)}";
     public final static String ADD_NEWS_LANG = "{call add_news_lang(?,?,?,?)}";
 
     //Column labels
@@ -74,6 +80,7 @@ public class SQLRequest {
     public final static String NEWS_TEXT = "text";
     public final static String NEWS_PUBLISH_DATE = "publish_date";
     public final static String NEWS_PHOTO_URL = "photo_url";
+    public final static String NEWS_SMALL_PHOTO_URL = "small_photo_url";
 
     public final static String COUNT_NEWS_ON_PAGE = "count_news_on_page";
     public final static String NUMBER_OF_PAGE = "number_of_page";

@@ -38,10 +38,10 @@ public class DeleteUser extends AbstractCommand {
 
             if (userService.isAdministrator(new SignInForm(user.getLogin(), password))){
                 userService.deleteUser(userId);
-                CommandFactory.getInstance().getCommand(Commandos.SHOW_USER_LIST).execute(request, response);
+                CommandFactory.getCommand(Commandos.SHOW_USER_LIST).execute(request, response);
             }else{
                 request.setAttribute(ERROR_EXIST, true);
-                CommandFactory.getInstance().getCommand(Commandos.OPEN_USER).execute(request, response);
+                CommandFactory.getCommand(Commandos.OPEN_USER).execute(request, response);
             }
 
         } catch (IOException ex){

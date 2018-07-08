@@ -40,10 +40,10 @@ public class ChangeUserRole extends AbstractCommand {
 
             if (userService.isAdministrator(new SignInForm(user.getLogin(), password))){
                 userService.changeRole(userId, roleName);
-                CommandFactory.getInstance().getCommand(Commandos.OPEN_USER).execute(request, response);
+                CommandFactory.getCommand(Commandos.OPEN_USER).execute(request, response);
             }else{
                 request.setAttribute(ERROR_EXIST, true);
-                CommandFactory.getInstance().getCommand(Commandos.OPEN_USER).execute(request, response);
+                CommandFactory.getCommand(Commandos.OPEN_USER).execute(request, response);
             }
 
         } catch (IOException ex){

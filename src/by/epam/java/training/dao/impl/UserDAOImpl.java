@@ -24,7 +24,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         ResultSet rs = null;
         boolean result = false;
 
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
             con = conPool.retrieve();
             cstmt = con.prepareCall(UPDATE_USER);
@@ -52,7 +52,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         ResultSet rs = null;
         boolean result = false;
 
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
             con = conPool.retrieve();
             cstmt = con.prepareCall(IS_EXIST_USER_WITH_LOGIN_AND_PASSWORD);
@@ -80,7 +80,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         ResultSet rs = null;
         boolean result = false;
 
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
             con = conPool.retrieve();
             cstmt = con.prepareCall(IS_ADMINISTRATOR);
@@ -106,7 +106,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         User user = null;
         try {
             con = conPool.retrieve();
@@ -142,7 +142,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         User user = null;
         try {
             con = conPool.retrieve();
@@ -180,7 +180,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         ResultSet rs = null;
         ActiveUser activeUser = null;
 
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
             con = conPool.retrieve();
             cstmt = con.prepareCall(GET_USER_BY_LOGIN);
@@ -210,7 +210,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         ResultSet rs = null;
         ActiveUser activeUser = null;
 
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
             con = conPool.retrieve();
             cstmt = con.prepareCall(ADD_USER);
@@ -240,7 +240,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         ResultSet rs = null;
         boolean result = false;
 
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
             con = conPool.retrieve();
             cstmt = con.prepareCall(IS_FREE_LOGIN);
@@ -265,7 +265,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         List<User> userList = new ArrayList<>();
         try {
             con = conPool.retrieve();
@@ -302,7 +302,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         List<Role> roleList = new ArrayList<>();
         try {
             con = conPool.retrieve();
@@ -330,7 +330,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         boolean result = false;
         try {
             con = conPool.retrieve();
@@ -357,7 +357,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         boolean result = false;
         try {
             con = conPool.retrieve();

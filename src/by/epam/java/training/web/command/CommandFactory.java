@@ -12,15 +12,12 @@ public class CommandFactory {
     private CommandFactory() {
     }
 
-    public Command getCommand(String command){
-        return instance.commandManager.getCommand(command);
+    public static Command getCommand(String command){
+        return getInstance().commandManager.getCommand(command);
     }
 
-    public static CommandFactory getInstance(){
+    private static CommandFactory getInstance(){
         return instance;
     }
 
-    public CommandManager getCommandManager(){
-        return this.commandManager;
-    }
 }

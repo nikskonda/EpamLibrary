@@ -53,15 +53,14 @@
               <article class="masonry__brick entry format-standard" data-aos="fade-up">
 
                   <div class="entry__thumb">
-                      <img src="<c:out value="${news.getPhotoUrl()}"/>"
-                           srcset="<c:out value="${news.getPhotoUrl()}"/> 1x, <c:out value="${news.getPhotoUrl()}"/> 2x" alt="">
+                      <img src="<c:out value="${news.getSmallPhotoUrl()}"/>" alt="">
                   </div>
 
                   <div class="entry__text">
                     <div class="entry__header">
 
                       <div class="entry__date">
-                        <c:out value="${news.getPublishDate()}"/>
+                        <fmt:formatDate type="both" pattern="HH:mm dd-MMM-yy" value="${news.publishDate}"/>
                       </div>
                       <div class="entry__date">
                         <p><c:out value="${news.getUserFirstName()}"/> <c:out value="${news.getUserLastName()}"/></p>
@@ -89,15 +88,21 @@
       <div class="col-full">
         <nav class="pgn">
           <ul>
-            <li><a class="pgn__prev" href="#0">Prev</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=1">1</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=2">2</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=3">3</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=4">4</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=5">5</a></li>
-            <li><span class="pgn__num dots">…</span></li>
-            <li><a class="pgn__num" href="/news?command=open_news&numberOfPage=8">8</a></li>
-            <li><a class="pgn__next" href="#0">Next</a></li>
+            <c:if test="${requestScope.currentPage!=1}">
+              <li><a class="pgn__num" href="/news?command=open_news&currentPage=1">First: 1</a></li>
+            </c:if>
+            <c:if test="${requestScope.currentPage>1}">
+              <li><a class="pgn__prev" href="/news?command=open_news&currentPage=${requestScope.currentPage-1}">Prev</a></li>
+            </c:if>
+            <%--<c:if test="${requestScope.currentPage>1}">--%>
+              <li><a class="pgn__num current"><c:out value="${requestScope.currentPage}"/></a></li>
+            <%--</c:if>--%>
+            <c:if test="${requestScope.currentPage<requestScope.totalPages}">
+              <li><a class="pgn__next" href="/news?command=open_news&currentPage=${requestScope.currentPage+1}">Next</a></li>
+            </c:if>
+            <c:if test="${requestScope.currentPage<requestScope.totalPages}">
+              <li><a class="pgn__num" href="/news?command=open_news&currentPage=${requestScope.totalPages}">Last: <c:out value="${requestScope.totalPages}"/></a></li>
+            </c:if>
           </ul>
         </nav>
       </div>
@@ -106,12 +111,18 @@
       <div class="col-full">
         <nav class="pgn">
           <ul>
-            <li><a class="pgn__num" href="/news?command=open_news&countNews=5">5</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&countNews=10">10</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&countNews=15">15</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&countNews=20">20</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&countNews=25">25</a></li>
-            <li><a class="pgn__num" href="/news?command=open_news&countNews=30">30</a></li>
+            <c:forEach var="i" begin="5" end="30" step="5">
+              <c:choose>
+                <c:when test="${i == sessionScope.countNews}">
+                  <li><a class="pgn__num current" href="/news?command=open_news&countNews=${i}">${i}</a></li>
+                </c:when>
+                <c:otherwise>
+                  <li><a class="pgn__num" href="/news?command=open_news&countNews=${i}">${i}</a></li>
+                </c:otherwise>
+              </c:choose>
+
+
+            </c:forEach>
           </ul>
         </nav>
       </div>

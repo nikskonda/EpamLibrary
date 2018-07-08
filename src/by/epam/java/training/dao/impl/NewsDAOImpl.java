@@ -14,6 +14,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import static by.epam.java.training.dao.util.SQLRequest.*;
 
 public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
@@ -25,7 +26,7 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         List<NewsCover> newsList = new ArrayList<>();
         try {
             con = conPool.retrieve();
@@ -38,11 +39,10 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
                 NewsCover news = new NewsCover();
                 news.setId(rs.getInt(NEWS_ID));
                 news.setTitle(rs.getString(NEWS_TITLE));
-                news.setPhotoUrl(rs.getString(NEWS_PHOTO_URL));
+                news.setSmallPhotoUrl(rs.getString(NEWS_SMALL_PHOTO_URL));
                 news.setUserFirstName(rs.getString(USER_FIRST_NAME));
                 news.setUserLastName(rs.getString(USER_LAST_NAME));
-                news.setPublishDate(rs.getDate(NEWS_PUBLISH_DATE));
-
+                news.setPublishDate(rs.getTime(NEWS_PUBLISH_DATE));
                 newsList.add(news);
             }
         } catch (SQLException ex) {
@@ -60,7 +60,7 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         News news = new News();
         try {
             con = conPool.retrieve();
@@ -74,7 +74,7 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
                 news.setPhotoUrl(rs.getString(NEWS_PHOTO_URL));
                 news.setUserFirstName(rs.getString(USER_FIRST_NAME));
                 news.setUserLastName(rs.getString(USER_LAST_NAME));
-                news.setPublishDate(rs.getDate(NEWS_PUBLISH_DATE));
+                news.setPublishDate(rs.getTime(NEWS_PUBLISH_DATE));
                 news.setText(rs.getString(NEWS_TEXT));
             }
         } catch (SQLException ex) {
@@ -88,16 +88,16 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
     }
 
     @Override
-    public Integer calcMaxPages(String locale, Integer countNewsOnOnePage) {
+    public Integer calcTotalPages(String locale, Integer countNewsOnOnePage) {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
         Integer result = null;
 
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
             con = conPool.retrieve();
-            cstmt = con.prepareCall(CALC_MAX_PAGE);
+            cstmt = con.prepareCall(CALC_TOTAL_PAGES_NEWS);
             cstmt.setInt(COUNT_NEWS_ON_PAGE, countNewsOnOnePage);
             cstmt.setString(LOCALE, locale);
             cstmt.registerOutParameter(RESULT, Types.SMALLINT);
@@ -120,7 +120,7 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         Integer newsId = null;
         try {
             con = conPool.retrieve();
@@ -128,6 +128,7 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
             cstmt.setString(NEWS_TITLE, defNews.getTitle());
             cstmt.setString(NEWS_TEXT, defNews.getText());
             cstmt.setString(NEWS_PHOTO_URL, defNews.getPhotoUrl());
+            cstmt.setString(NEWS_SMALL_PHOTO_URL, defNews.getPhotoUrl());
             cstmt.setInt(USER_ID, defNews.getUserId());
             cstmt.registerOutParameter(NEWS_ID, Types.SMALLINT);
             cstmt.executeQuery();
@@ -148,7 +149,7 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getInstance().getConnectionPool();
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
             con = conPool.retrieve();
             cstmt = con.prepareCall(ADD_NEWS_LANG);

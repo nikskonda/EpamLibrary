@@ -1,6 +1,7 @@
 package by.epam.java.training.web.command.impl;
 
-import by.epam.java.training.servise.NewsService;
+import by.epam.java.training.servise.BookSearchService;
+import by.epam.java.training.servise.BookService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
 import org.apache.log4j.Logger;
@@ -11,19 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Pages2.START_PAGE;
+import static by.epam.java.training.web.command.Pages.BOOK_CATALOG;
 
-public class ShowNewsList extends AbstractCommand {
+public class BookSearch extends AbstractCommand {
 
-    private static final Logger logger = Logger.getLogger(ShowNewsList.class);
+    private static final Logger logger = Logger.getLogger(BookSearch.class);
 
-    private static final String NEWS = "news";
+    private static final String BOOKS = "books";
     private static final String LOCALE = "local";
-    private static final String COUNT_NEWS_ON_PAGE = "countNews";
+    private static final String SEARCH = "search";
+
+    private static final String COUNT_BOOKS_ON_PAGE = "countBooks";
     private static final String CURRENT_PAGE = "currentPage";
     private static final String TOTAL_PAGES = "totalPages";
 
-    private static final int INIT_COUNT_NEWS = 10;
+    private static final int INIT_COUNT_BOOKS = 6;
     private static final int INIT_NUMBER_OF_PAGE = 1;
 
     private Integer getInt(String str){
@@ -39,7 +42,8 @@ public class ShowNewsList extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            NewsService service = ServiceFactory.getNewsService();
+            BookSearchService service = ServiceFactory.getBookSearchService();
+            String search = request.getParameter(SEARCH);
 
             HttpSession session = request.getSession(true);
             if (session.getAttribute(LOCALE)==null){
@@ -47,16 +51,16 @@ public class ShowNewsList extends AbstractCommand {
             }
             String locale = (String)session.getAttribute(LOCALE);
 
-            Integer countNews = null;
+            Integer countBooks = null;
 
-            Integer newCountNews = getInt(request.getParameter(COUNT_NEWS_ON_PAGE));
-            if (newCountNews == null){
-                countNews = (Integer)(session.getAttribute(COUNT_NEWS_ON_PAGE));
-                if (countNews==null){
-                    countNews = INIT_COUNT_NEWS;
+            Integer newCountBooks = getInt(request.getParameter(COUNT_BOOKS_ON_PAGE));
+            if (newCountBooks == null){
+                countBooks = (Integer)(session.getAttribute(COUNT_BOOKS_ON_PAGE));
+                if (countBooks==null){
+                    countBooks = INIT_COUNT_BOOKS;
                 }
             } else {
-                countNews = newCountNews;
+                countBooks = newCountBooks;
             }
 
             Integer currentPage = getInt(request.getParameter(CURRENT_PAGE));
@@ -64,12 +68,13 @@ public class ShowNewsList extends AbstractCommand {
                 currentPage = INIT_NUMBER_OF_PAGE;
             }
 
-            session.setAttribute(COUNT_NEWS_ON_PAGE, newCountNews);
+            session.setAttribute(COUNT_BOOKS_ON_PAGE, newCountBooks);
             request.setAttribute(CURRENT_PAGE, currentPage);
-            request.setAttribute(TOTAL_PAGES, service.calcTotalPages(locale, countNews));
-            request.setAttribute(NEWS, service.getNewsByPage(locale, countNews, currentPage));
+            request.setAttribute(TOTAL_PAGES, service.calcTotalPages(locale, search, countBooks));
+            request.setAttribute(SEARCH, search);
+            request.setAttribute(BOOKS, service.getBooksByPage(locale, search, countBooks, currentPage));
 
-            forward(request, response, START_PAGE.getPage());
+            forward(request, response, BOOK_CATALOG);
 
         } catch (IOException ex){
 

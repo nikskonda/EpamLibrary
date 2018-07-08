@@ -1,15 +1,11 @@
 package by.epam.java.training.servise.impl;
 
-import by.epam.java.training.dao.BookDAO;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.NewsDAO;
-import by.epam.java.training.model.book.Book;
-import by.epam.java.training.model.book.BookCover;
 import by.epam.java.training.model.news.News;
 import by.epam.java.training.model.news.NewsConstr;
 import by.epam.java.training.model.news.NewsCover;
 import by.epam.java.training.model.news.NewsLang;
-import by.epam.java.training.servise.BookService;
 import by.epam.java.training.servise.NewsService;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
@@ -20,7 +16,7 @@ import java.util.List;
 public class NewsServiceImpl implements NewsService {
     private static final Logger logger = Logger.getLogger(NewsServiceImpl.class);
 
-    private final NewsDAO newsDAO = DAOFactory.getInstance().getNewsDAO();
+    private final NewsDAO newsDAO = DAOFactory.getNewsDAO();
     private final ValidatorManager validator = new ValidatorManager();
 
     @Override
@@ -40,11 +36,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public Integer calcMaxPages(String locale, Integer countNewsOnOnePage) {
+    public Integer calcTotalPages(String locale, Integer countNewsOnOnePage) {
         if (false){
             return null;
         }
-        return  newsDAO.calcMaxPages(locale, countNewsOnOnePage);
+        return  newsDAO.calcTotalPages(locale, countNewsOnOnePage);
     }
 
     @Override

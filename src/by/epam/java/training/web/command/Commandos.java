@@ -13,9 +13,10 @@ public class Commandos {
     public static final String SHOW_NEWS = ("open_news_by_id");
     public static final String SHOW_USER_LIST = ("show_user_list");
     public static final String SHOW_BOOK = ("open_book_by_id");
-    public static final String READ_BOOK = ("read_book_by_id");
+    public static final String READ_BOOK = ("read_book");
     public static final String OPEN_USER = ("open_user");
     public static final String CHANGE_USER_ROLE = ("change_user_role");
     public static final String DELETE_USER = "delete_user";
+    public static final String BOOK_SEARCH = ("book_search");
 
 }

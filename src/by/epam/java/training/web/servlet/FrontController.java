@@ -84,7 +84,7 @@ public class FrontController extends HttpServlet {
 
     private void process(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
         String command = request.getParameter(COMMAND);
-        CommandFactory.getInstance().getCommand(command).execute(request, response);
+        CommandFactory.getCommand(command).execute(request, response);
     }
 
 

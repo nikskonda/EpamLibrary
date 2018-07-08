@@ -31,6 +31,7 @@ public class CommandManager {
         commands.put(OPEN_USER, new OpenUser());
         commands.put(CHANGE_USER_ROLE, new ChangeUserRole());
         commands.put(DELETE_USER, new DeleteUser());
+        commands.put(BOOK_SEARCH, new BookSearch());
     }
 
     public Command getCommand(String command){

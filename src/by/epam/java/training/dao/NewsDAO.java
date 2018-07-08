@@ -15,7 +15,7 @@ public interface NewsDAO {
 
     News getNews(Integer newsId, String locale);
 
-    Integer calcMaxPages(String locale, Integer countNewsOnOnePage);
+    Integer calcTotalPages(String locale, Integer countNewsOnOnePage);
 
     Integer addNews(NewsConstr defNews);
 

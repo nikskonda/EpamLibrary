@@ -21,6 +21,9 @@ public class ReadBook extends AbstractCommand {
     private static final String BOOK_ID = "book_id";
     private static final String LOCALE = "local";
 
+    private static final String CURRENT_PAGE = "currentPage";
+
+    private static final int INIT_NUMBER_OF_PAGE = 1;
 
     private Integer getInt(String str){
         Integer result = null;
@@ -43,9 +46,19 @@ public class ReadBook extends AbstractCommand {
             }
             String locale = (String)session.getAttribute(LOCALE);
 
+            Integer currentPage = getInt(request.getParameter(CURRENT_PAGE));
+            if (currentPage==null){
+                currentPage = INIT_NUMBER_OF_PAGE;
+            }
+
+
+
             Integer bookId = Integer.parseInt(request.getParameter(BOOK_ID));
 
-            request.setAttribute(TEXT, service.getTextOfBook(bookId, locale, request.getServletContext().getRealPath("WEB-INF/classes/text/book1.txt")));
+            String path = request.getServletContext().getRealPath("WEB-INF/classes/");
+            request.setAttribute(BOOK_ID, bookId);
+            request.setAttribute(CURRENT_PAGE, currentPage);
+            request.setAttribute(TEXT, service.getTextOfBook(bookId, locale, path, currentPage));
             forward(request, response, READING_ROOM.getPage());
 
         } catch (IOException ex){

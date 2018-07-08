@@ -13,14 +13,31 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-import static by.epam.java.training.web.command.Pages2.CATALOG;
+import static by.epam.java.training.web.command.Pages.*;
 
 public class BookCatalog extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(BookCatalog.class);
 
     private static final String BOOKS = "books";
-    private static final String LOCAL = "local";
+    private static final String LOCALE = "local";
+
+    private static final String COUNT_BOOKS_ON_PAGE = "countBooks";
+    private static final String CURRENT_PAGE = "currentPage";
+    private static final String TOTAL_PAGES = "totalPages";
+
+    private static final int INIT_COUNT_BOOKS = 6;
+    private static final int INIT_NUMBER_OF_PAGE = 1;
+
+    private Integer getInt(String str){
+        Integer result = null;
+        try{
+            result = Integer.parseInt(str);
+        } catch (NumberFormatException ex){
+            logger.warn("", ex);
+        }
+        return result;
+    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -28,16 +45,34 @@ public class BookCatalog extends AbstractCommand {
             BookService service = ServiceFactory.getBookService();
 
             HttpSession session = request.getSession(true);
-            String locale = (String)session.getAttribute(LOCAL);
+            if (session.getAttribute(LOCALE)==null){
+                session.setAttribute(LOCALE, "en");
+            }
+            String locale = (String)session.getAttribute(LOCALE);
 
-            if (locale == null) {
-                locale = "en";
+            Integer countBooks = null;
+
+            Integer newCountBooks = getInt(request.getParameter(COUNT_BOOKS_ON_PAGE));
+            if (newCountBooks == null){
+                countBooks = (Integer)(session.getAttribute(COUNT_BOOKS_ON_PAGE));
+                if (countBooks==null){
+                    countBooks = INIT_COUNT_BOOKS;
+                }
+            } else {
+                countBooks = newCountBooks;
             }
 
-            List<BookCover> books = service.getAllBooks(locale);
+            Integer currentPage = getInt(request.getParameter(CURRENT_PAGE));
+            if (currentPage==null){
+                currentPage = INIT_NUMBER_OF_PAGE;
+            }
 
-            request.setAttribute(BOOKS, books);
-            forward(request, response, CATALOG.getPage());
+            session.setAttribute(COUNT_BOOKS_ON_PAGE, newCountBooks);
+            request.setAttribute(CURRENT_PAGE, currentPage);
+            request.setAttribute(TOTAL_PAGES, service.calcTotalPages(locale, countBooks));
+            request.setAttribute(BOOKS, service.getBooksByPage(locale, countBooks, currentPage));
+
+            forward(request, response, BOOK_CATALOG);
 
         } catch (IOException ex){
 

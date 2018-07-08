@@ -78,7 +78,7 @@ public class NewsConstructor extends AbstractCommand {
     private static final String PHOTO_URL = "new_photo_url";
 
     private static final String USER = "user";
-    private static final String NEW_LANG = "news_lang";
+    private static final String NEWS_LANG = "news_lang";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -100,7 +100,7 @@ public class NewsConstructor extends AbstractCommand {
             NewsLang newsRu = new NewsLang();
             newsRu.setText(request.getParameter(TEXT_RU));
             newsRu.setTitle(request.getParameter(TITLE_RU));
-            newsRu.setLang(request.getParameter(NEW_LANG));
+            newsRu.setLang(request.getParameter(NEWS_LANG));
             NewsService service = ServiceFactory.getNewsService();
 
             service.addNews(defNews, newsRu);

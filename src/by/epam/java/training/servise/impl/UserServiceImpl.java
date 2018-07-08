@@ -13,7 +13,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
-    private final UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
+    private final UserDAO userDAO = DAOFactory.getUserDAO();
     private final ValidatorManager validator = new ValidatorManager();
 
     @Override

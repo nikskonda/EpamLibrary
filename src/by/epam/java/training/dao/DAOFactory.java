@@ -1,6 +1,7 @@
 package by.epam.java.training.dao;
 
 import by.epam.java.training.dao.impl.BookDAOImpl;
+import by.epam.java.training.dao.impl.BookSearchDAOImpl;
 import by.epam.java.training.dao.impl.NewsDAOImpl;
 import by.epam.java.training.dao.impl.UserDAOImpl;
 import by.epam.java.training.dao.util.ConnectionPool;
@@ -19,25 +20,29 @@ public class DAOFactory {
 
     private final UserDAO userDAO = new UserDAOImpl();
     private final BookDAO bookDAO = new BookDAOImpl();
+    private final BookSearchDAO bookSearchDAO = new BookSearchDAOImpl();
     private final NewsDAO newsDAO = new NewsDAOImpl();
 
     private DAOFactory() {}
 
-    public UserDAO getUserDAO() {
-        return this.userDAO;
+    public static UserDAO getUserDAO() {
+        return getInstance().userDAO;
     }
-    public BookDAO getBookDAO(){
-        return this.bookDAO;
+    public static BookDAO getBookDAO(){
+        return getInstance().bookDAO;
     }
-    public NewsDAO getNewsDAO(){
-        return this.newsDAO;
+    public static NewsDAO getNewsDAO(){
+        return getInstance().newsDAO;
+    }
+    public static BookSearchDAO getBookSearchDAO(){
+        return getInstance().bookSearchDAO;
     }
 
-    public ConnectionPool getConnectionPool(){
-        return this.connectionPool;
+    public static ConnectionPool getConnectionPool(){
+        return getInstance().connectionPool;
     }
 
-    public static DAOFactory getInstance() {
+    private static DAOFactory getInstance() {
         try {
             lock.lock();
             if (instance == null){

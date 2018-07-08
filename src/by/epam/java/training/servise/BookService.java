@@ -7,10 +7,12 @@ import java.util.List;
 
 public interface BookService {
 
-    List<BookCover> getAllBooks(String locale);
-
     Book getBook(Integer bookId, String locale);
 
-    String getTextOfBook(Integer bookId, String locale, String path);
+    List<String> getTextOfBook(Integer bookId, String locale, String path, Integer page);
 
+    List<BookCover> getBooksByPage(String locale, Integer countOnPage, Integer numberOfPage);
+
+    Integer calcTotalPages(String locale, Integer countBooksOnOnePage);
 }
+

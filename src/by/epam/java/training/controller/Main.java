@@ -2,12 +2,14 @@ package by.epam.java.training.controller;
 
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.model.book.Book;
+import by.epam.java.training.model.news.NewsCover;
 import by.epam.java.training.model.user.User;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.util.EncriptionMD5;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import static java.lang.Thread.sleep;

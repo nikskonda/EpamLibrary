@@ -43,7 +43,7 @@
 
     <section class="s-content">
         <div class="container">
-            <img src="<c:out value="${requestScope.book.coverUrl}"/>">
+            <img src="<c:out value="${requestScope.book.coverUrl}"/>" width="200px" height="200px">
             <h1><c:out value="${requestScope.book.name}"/></h1>
             <p><c:out value="${requestScope.book.description}"/></p>
             <h6><c:out value="${requestScope.book.publishYear}"/></h6>
@@ -51,9 +51,9 @@
             <p><c:out value="${requestScope.book.pages}"/></p>
             <p><c:out value="${requestScope.book.publishingHouse.name}"/></p>
             <p><c:out value="${requestScope.book.getAuthorsAsString()}"/></p>
-            <p><c:out value="${requestScope.book.getGernesAsString()}"/></p>
+            Genre<p><c:out value="${requestScope.book.getGenresAsString()}"/></p>
             <form method="post" action="/book">
-                <input type="hidden" name="command" value="read_book_by_id">
+                <input type="hidden" name="command" value="read_book">
                 <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
                 <button type="submit">Read</button>
             </form>

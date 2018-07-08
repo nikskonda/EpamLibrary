@@ -7,13 +7,15 @@ public class News extends NewsCover implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String text;
+    private String photoUrl;
 
     public News() {
     }
 
-    public News(Integer id, String title, String photoUrl, String userFirstName, String userLastName, Date publishDate, String text) {
-        super(id, title, photoUrl, userFirstName, userLastName, publishDate);
+    public News(Integer id, String title, String smallPhotoUrl, String userFirstName, String userLastName, Date publishDate, String text, String photoUrl) {
+        super(id, title, smallPhotoUrl, userFirstName, userLastName, publishDate);
         this.text = text;
+        this.photoUrl = photoUrl;
     }
 
     public String getText() {
@@ -22,5 +24,13 @@ public class News extends NewsCover implements Serializable {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }

@@ -13,7 +13,7 @@ public interface NewsService {
 
     News getNews(Integer newsId, String locale);
 
-    Integer calcMaxPages(String locale, Integer countNewsOnOnePage);
+    Integer calcTotalPages(String locale, Integer countNewsOnOnePage);
 
     void addNews(NewsConstr defNews, NewsLang news);
 }

@@ -43,8 +43,50 @@
 
     <section class="s-content">
         <div class="container">
-            <c:out value="${requestScope.text}"/>
+            <form method="post" action="/book">
+                <input type="hidden" name="command" value="bookmark">
+                <input type="hidden" name="book_id" value="<c:out value="${requestScope.book_id}"/>">
+                <input type="hidden" name="currentPage" value="<c:out value="${requestScope.currentPage}"/>">
+                <button type="submit">Bookmark on current page</button>
+            </form>
+            <div class="row">
+                <c:choose>
+                    <c:when test="${requestScope.text.size()>0}">
+                        <c:forEach var="paragraph" items="${requestScope.text}">
+                            <p><c:out value="${paragraph}"/></p>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <p>Happy end!</p>
+                        <p>Thank you for using our service!</p>
+                        <p>Good Luck</p>
+                        <form method="post" action="/book">
+                            <input type="hidden" name="command" value="open_book_by_id">
+                            <input type="hidden" name="book_id" value="<c:out value="${requestScope.book_id}"/>">
+                            <button type="submit">Go to book</button>
+                        </form>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <div class="row">
+                <div class="col-full">
+                    <nav class="pgn">
+                        <ul>
+                            <c:if test="${requestScope.currentPage>1}">
+                                <li><a class="pgn__prev" href="/news?command=read_book&book_id=${requestScope.book_id}&currentPage=${requestScope.currentPage-1}">Prev</a></li>
+                            </c:if>
+                            <li><a class="pgn__num current"><c:out value="${requestScope.currentPage}"/></a></li>
+                            <c:if test="${requestScope.text.size() > 0}">
+                                <li><a class="pgn__next" href="/news?command=read_book&book_id=${requestScope.book_id}&currentPage=${requestScope.currentPage+1}">Next</a></li>
+                            </c:if>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </div>
+
+
 
     </section> <!-- s-content -->
 

@@ -12,4 +12,9 @@ public interface BookDAO {
     Book getBook(Integer bookId, String locale);
 
     String getUrlToTextOfBook(Integer bookId, String locale);
+
+    List<BookCover> getBooksByPage(String locale, Integer countOnPage, Integer numberOfPage);
+
+    Integer calcTotalPages(String locale, Integer countBooksOnOnePage);
+
 }
