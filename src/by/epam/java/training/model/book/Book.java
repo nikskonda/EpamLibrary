@@ -15,8 +15,11 @@ public class Book extends BookCover implements Serializable {
 
     private String description;
     private Integer pages;
+    private Float price;
     private PublishingHouse publishingHouse;
     private String pdfFileUrl;
+    private String textFileUrl;
+
 
     private List<Author> authors;
     private List<Genre> genres;
@@ -116,4 +119,13 @@ public class Book extends BookCover implements Serializable {
         }
         return sb.toString().substring(FIRST_CHAR, sb.length() - COMMA_AND_SPACE.length()-STEP);
     }
+
+    public String getTextFileUrl() {
+        return textFileUrl;
+    }
+
+    public void setTextFileUrl(String textFileUrl) {
+        this.textFileUrl = textFileUrl;
+    }
+
 }

@@ -1,8 +1,13 @@
 package by.epam.java.training.web.command.impl;
 
+import by.epam.java.training.model.book.Bookmark;
+import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.servise.BookService;
+import by.epam.java.training.servise.BookmarkService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
+import by.epam.java.training.web.command.CommandFactory;
+import by.epam.java.training.web.command.Commandos;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -11,19 +16,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Pages2.READING_ROOM;
+import static by.epam.java.training.web.command.Pages.READING_ROOM;
+import static by.epam.java.training.web.command.Pages.SIGN_IN;
 
-public class ReadBook extends AbstractCommand {
+public class OpenBookmark extends AbstractCommand {
 
-    private static final Logger logger = Logger.getLogger(ReadBook.class);
+    private static final Logger logger = Logger.getLogger(OpenBookmark.class);
 
+    private static final String USER = "user";
     private static final String TEXT = "text";
     private static final String BOOK_ID = "book_id";
     private static final String LOCALE = "local";
 
     private static final String CURRENT_PAGE = "currentPage";
-
-    private static final int INIT_NUMBER_OF_PAGE = 1;
 
     private Integer getInt(String str){
         Integer result = null;
@@ -38,26 +43,21 @@ public class ReadBook extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            BookService service = ServiceFactory.getBookService();
-
+            BookmarkService service = ServiceFactory.getBookmarkService();
             HttpSession session = request.getSession(true);
-            if (session.getAttribute(LOCALE)==null){
-                session.setAttribute(LOCALE, "en");
+
+            ActiveUser activeUser = (ActiveUser)session.getAttribute(USER);
+            if (activeUser==null){
+                redirect(response, SIGN_IN);
             }
-            String locale = (String)session.getAttribute(LOCALE);
+            Bookmark bookmark = new Bookmark();
+            bookmark.setBookId(getInt(request.getParameter(BOOK_ID)));
+            bookmark.setUserId(activeUser.getId());
+            bookmark.setLocale((String)session.getAttribute(LOCALE));
 
-            Integer currentPage = getInt(request.getParameter(CURRENT_PAGE));
-            if (currentPage==null){
-                currentPage = INIT_NUMBER_OF_PAGE;
-            }
-            Integer bookId = Integer.parseInt(request.getParameter(BOOK_ID));
+            Integer page = service.getBookmark(bookmark);
 
-            String path = request.getServletContext().getRealPath("WEB-INF/classes/");
-            request.setAttribute(BOOK_ID, bookId);
-            request.setAttribute(CURRENT_PAGE, currentPage);
-            request.setAttribute(TEXT, service.getTextOfBook(bookId, locale, path, currentPage));
-            forward(request, response, READING_ROOM.getPage());
-
+            redirect(response, "/book?command=read_book&book_id="+bookmark.getBookId()+"&currentPage="+page);
         } catch (IOException ex){
 
         } catch (Exception ex) {

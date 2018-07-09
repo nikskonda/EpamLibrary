@@ -57,6 +57,11 @@
                 <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
                 <button type="submit">Read</button>
             </form>
+            <form method="post" action="/book">
+                <input type="hidden" name="command" value="open_bookmark">
+                <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
+                <button type="submit">Go to Bookmark</button>
+            </form>
         </div>
 
     </section> <!-- s-content -->

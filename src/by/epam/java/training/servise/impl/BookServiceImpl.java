@@ -56,4 +56,9 @@ public class BookServiceImpl implements BookService {
         }
         return  bookDAO.calcTotalPages(locale, countBooksOnOnePage);
     }
+
+    @Override
+    public Integer getBookmark(Integer userId, Integer bookId, String locale) {
+        return bookDAO.getBookmark(userId, bookId, locale);
+    }
 }

@@ -30,16 +30,33 @@
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
 </head>
 <body>
-<div class="row">
-    <%--<form action="/newsConstructor" method="POST" enctype="multipart/form-data">--%>
-    <form action="/book" method="put">
+<section class="s-content">
+    <div class="row">
+        <%--<form action="/newsConstructor" method="POST" enctype="multipart/form-data">--%>
+        <form action="/book" method="POST">
             <input type="hidden" name="command" value="add_book" >
-            <textarea name="title">Enter title here...</textarea>
-            <input type="file" name="file" multiple="false" >
-            <textarea name="mainText">Enter text here...</textarea>
+            <div class="col-lg-6">
+                <input type="text" name="name" style="width: 100%">
+                <textarea name="description" style="width: 100%">Enter description here...</textarea>
+                <input type="text" name="textUrl">
+                <input type="text" name="pdfUrl">
+            </div>
+            <div class="col-lg-6">
+                <input type="text" name="nameRU" style="width: 100%">
+                <textarea name="descriptionRU" style="width: 100%">Enter description here...</textarea>
+                <input type="text" name="textUrlRU">
+                <input type="text" name="pdfUrlRU">
+            </div>
 
-            <input class="btn btn--primary" type="submit" value="рус" style="padding: 0; width: 50px;">
-    </form>
-</div>
+            <input type="number" name="year">
+            <input type="number" name="price">
+            <input type="number" name="pages">
+            <input type="text" name="publishingHouse">
+            <input type="text" name="coverUrl">
+
+            <input type="submit" value="Add book">
+        </form>
+    </div>
+</section>
 </body>
 </html>

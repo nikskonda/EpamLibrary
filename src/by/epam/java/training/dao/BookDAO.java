@@ -17,4 +17,5 @@ public interface BookDAO {
 
     Integer calcTotalPages(String locale, Integer countBooksOnOnePage);
 
+    Integer getBookmark(Integer userId, Integer bookId, String locale);
 }

@@ -1,10 +1,8 @@
 package by.epam.java.training.servise;
 
 import by.epam.java.training.dao.DAOFactory;
-import by.epam.java.training.servise.impl.BookSearchServiceImpl;
-import by.epam.java.training.servise.impl.BookServiceImpl;
-import by.epam.java.training.servise.impl.NewsServiceImpl;
-import by.epam.java.training.servise.impl.UserServiceImpl;
+import by.epam.java.training.model.book.Bookmark;
+import by.epam.java.training.servise.impl.*;
 import org.apache.log4j.Logger;
 
 import java.util.concurrent.locks.Lock;
@@ -20,6 +18,7 @@ public class ServiceFactory {
 
     private final UserService userService = new UserServiceImpl();
     private final BookService bookService = new BookServiceImpl();
+    private final BookmarkService bookmarkService = new BookmarkServiceImpl();
     private final NewsService newsService = new NewsServiceImpl();
     private final BookSearchService bookSearchService = new BookSearchServiceImpl();
 
@@ -36,6 +35,9 @@ public class ServiceFactory {
     }
     public static NewsService getNewsService(){
         return getInstance().newsService;
+    }
+    public static BookmarkService getBookmarkService() {
+        return getInstance().bookmarkService;
     }
 
     private static ServiceFactory getInstance() {

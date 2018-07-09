@@ -14,5 +14,7 @@ public interface BookService {
     List<BookCover> getBooksByPage(String locale, Integer countOnPage, Integer numberOfPage);
 
     Integer calcTotalPages(String locale, Integer countBooksOnOnePage);
+
+    Integer getBookmark(Integer userId, Integer bookId, String locale);
 }
 

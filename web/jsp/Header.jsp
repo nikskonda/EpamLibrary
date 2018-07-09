@@ -76,6 +76,7 @@
                             <a href="#0" title="">Moder</a>
                             <ul class="sub-menu">
                                 <li><a href="jsp/NewsConstructor.jsp">Add news</a></li>
+                                <li><a href="jsp/BookConstructor.jsp">Add book</a></li>
                             </ul>
                         </li>
                         <li class="has-children">

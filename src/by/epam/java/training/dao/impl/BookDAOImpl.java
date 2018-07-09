@@ -226,4 +226,31 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
         }
         return result;
     }
+
+    @Override
+    public Integer getBookmark(Integer userId, Integer bookId, String locale){
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
+        Integer page = new Integer(1);
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(GET_BOOKMARK);
+            cstmt.setInt(USER_ID, userId);
+            cstmt.setInt(BOOK_ID, bookId);
+            cstmt.setString(LOCALE, locale);
+            rs = cstmt.executeQuery();
+            while (rs.next()) {
+                page = rs.getInt(PAGE_NUMBER);
+            }
+        } catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+        } finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return page;
+    }
 }

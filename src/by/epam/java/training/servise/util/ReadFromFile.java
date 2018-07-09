@@ -1,9 +1,6 @@
 package by.epam.java.training.servise.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class ReadFromFile {
 
@@ -12,7 +9,8 @@ public class ReadFromFile {
 
     public static String readText(String fileName, Integer page){
         StringBuilder sb = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File(fileName)))){
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"))){
+
             int c;
             int count = 0;
             boolean flag = page==1?true:false;

@@ -39,6 +39,9 @@ public class SQLRequest {
     public final static String FIND_BOOKS = "{call find_book(?,?,?,?)}";
     public final static String CALC_TOTAL_PAGES_BOOKS_SERCH = "{call calc_pages_in_book_search(?,?,?,?)}";
 
+    public final static String GET_BOOKMARK = "{call get_bookmark(?,?,?)}";
+    public final static String SET_BOOKMARK = "{call set_bookmark(?,?,?,?)}";
+
     //Column labels
     public final static String BOOK_ID = "book_id";
     public final static String BOOK_NAME = "name";
@@ -53,6 +56,7 @@ public class SQLRequest {
     public final static String BOOK_TEXT_FILE = "text_file_url";
     public final static String COUNT_BOOKS_ON_PAGE = "count_books_on_page";
     public final static String SEARCH = "search";
+    public final static String PAGE_NUMBER = "page_number";
 
     //AUTHORS
     public final static String FIND_BOOK_AUTHORS = "{call find_book_authors(?)}";

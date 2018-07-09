@@ -11,6 +11,10 @@ public class PublishingHouse implements Serializable {
     public PublishingHouse() {
     }
 
+    public PublishingHouse(String name) {
+        this.name = name;
+    }
+
     public PublishingHouse(Integer id, String name) {
         this.id = id;
         this.name = name;

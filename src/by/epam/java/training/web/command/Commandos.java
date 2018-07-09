@@ -18,5 +18,6 @@ public class Commandos {
     public static final String CHANGE_USER_ROLE = ("change_user_role");
     public static final String DELETE_USER = "delete_user";
     public static final String BOOK_SEARCH = ("book_search");
-
+    public static final String OPEN_BOOKMARK = ("open_bookmark");
+    public static final String SET_BOOKMARK = ("set_bookmark");
 }

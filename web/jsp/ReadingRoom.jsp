@@ -44,10 +44,26 @@
     <section class="s-content">
         <div class="container">
             <form method="post" action="/book">
-                <input type="hidden" name="command" value="bookmark">
+                <input type="hidden" name="command" value="set_bookmark">
                 <input type="hidden" name="book_id" value="<c:out value="${requestScope.book_id}"/>">
                 <input type="hidden" name="currentPage" value="<c:out value="${requestScope.currentPage}"/>">
                 <button type="submit">Bookmark on current page</button>
+            </form>
+            <c:if test="${requestScope.set_bookmark_result != null}">
+                <c:choose>
+                    <c:when test="${requestScope.set_bookmark_result}">
+                        Sucsess!
+                    </c:when>
+                    <c:otherwise>
+                        Ou =( error
+                    </c:otherwise>
+                </c:choose>
+            </c:if>
+
+            <form method="post" action="/book">
+                <input type="hidden" name="command" value="open_book_by_id">
+                <input type="hidden" name="book_id" value="<c:out value="${book_id}"/>">
+                <button type="submit">Back to book</button>
             </form>
             <div class="row">
                 <c:choose>
@@ -60,11 +76,6 @@
                         <p>Happy end!</p>
                         <p>Thank you for using our service!</p>
                         <p>Good Luck</p>
-                        <form method="post" action="/book">
-                            <input type="hidden" name="command" value="open_book_by_id">
-                            <input type="hidden" name="book_id" value="<c:out value="${requestScope.book_id}"/>">
-                            <button type="submit">Go to book</button>
-                        </form>
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -73,11 +84,11 @@
                     <nav class="pgn">
                         <ul>
                             <c:if test="${requestScope.currentPage>1}">
-                                <li><a class="pgn__prev" href="/news?command=read_book&book_id=${requestScope.book_id}&currentPage=${requestScope.currentPage-1}">Prev</a></li>
+                                <li><a class="pgn__prev" href="/book?command=read_book&book_id=${requestScope.book_id}&currentPage=${requestScope.currentPage-1}">Prev</a></li>
                             </c:if>
                             <li><a class="pgn__num current"><c:out value="${requestScope.currentPage}"/></a></li>
                             <c:if test="${requestScope.text.size() > 0}">
-                                <li><a class="pgn__next" href="/news?command=read_book&book_id=${requestScope.book_id}&currentPage=${requestScope.currentPage+1}">Next</a></li>
+                                <li><a class="pgn__next" href="/book?command=read_book&book_id=${requestScope.book_id}&currentPage=${requestScope.currentPage+1}">Next</a></li>
                             </c:if>
 
                         </ul>

@@ -1,9 +1,6 @@
 package by.epam.java.training.dao;
 
-import by.epam.java.training.dao.impl.BookDAOImpl;
-import by.epam.java.training.dao.impl.BookSearchDAOImpl;
-import by.epam.java.training.dao.impl.NewsDAOImpl;
-import by.epam.java.training.dao.impl.UserDAOImpl;
+import by.epam.java.training.dao.impl.*;
 import by.epam.java.training.dao.util.ConnectionPool;
 import org.apache.log4j.Logger;
 
@@ -20,6 +17,7 @@ public class DAOFactory {
 
     private final UserDAO userDAO = new UserDAOImpl();
     private final BookDAO bookDAO = new BookDAOImpl();
+    private final BookmarkDAO bookmarkDAO = new BookmarkDAOImpl();
     private final BookSearchDAO bookSearchDAO = new BookSearchDAOImpl();
     private final NewsDAO newsDAO = new NewsDAOImpl();
 
@@ -30,6 +28,9 @@ public class DAOFactory {
     }
     public static BookDAO getBookDAO(){
         return getInstance().bookDAO;
+    }
+    public static BookmarkDAO getBookmarkDAO(){
+        return getInstance().bookmarkDAO;
     }
     public static NewsDAO getNewsDAO(){
         return getInstance().newsDAO;
