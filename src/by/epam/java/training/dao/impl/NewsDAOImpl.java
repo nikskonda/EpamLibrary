@@ -82,7 +82,7 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
                 news.setPhotoUrl(rs.getString(NEWS_PHOTO_URL));
                 news.setUserFirstName(rs.getString(USER_FIRST_NAME));
                 news.setUserLastName(rs.getString(USER_LAST_NAME));
-                news.setPublishDate(rs.getTime(NEWS_PUBLISH_DATE));
+                news.setPublishDate(rs.getTimestamp(NEWS_PUBLISH_DATE));
                 news.setText(rs.getString(NEWS_TEXT));
             }
         } catch (ConnectionPoolException ex){

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.epam.java.training.web.command.CommandName.ERROR;
+import static by.epam.java.training.web.command.CommandName.OPEN_BOOK_CATALOG;
 import static by.epam.java.training.web.command.Page.BOOK_CATALOG;
 import static by.epam.java.training.web.command.Page.SIGN_IN;
 import static by.epam.java.training.web.command.util.FieldNames.ERROR_DATABASE;
@@ -77,7 +78,7 @@ public class BookConstructor extends AbstractCommand {
             ModeratorService service = ServiceFactory.getModeratorService();
             service.addBook(defBook, translatedBook, lang);
 
-            redirect(response, "/book?command=open_book_catalog");
+            CommandFactory.getCommand(OPEN_BOOK_CATALOG).execute(request, response);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

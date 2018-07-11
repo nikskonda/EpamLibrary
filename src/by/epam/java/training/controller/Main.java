@@ -7,6 +7,7 @@ import by.epam.java.training.model.user.User;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.util.EncriptionMD5;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -96,9 +97,11 @@ public class Main {
 //        System.out.println(book.getGenresAsString());
 //        System.out.println(book.getAuthorsAsString());
 
-        Date date = new Date();
-        date.setTime((long)720775807);
-        System.out.println(date);
+//        Date date = new Date();
+//        date.setTime((long)720775807);
+//        System.out.println(date);
+//        System.out.println(Long.MAX_VALUE);
+        System.out.println(Integer.MAX_VALUE);
         System.out.println(Long.MAX_VALUE);
     }
 }

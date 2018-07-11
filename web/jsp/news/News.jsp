@@ -55,7 +55,7 @@
 
         <div class="s-content__media col-full">
             <div class="s-content__post-thumb">
-                <img src="../<c:out value="${requestScope.news.photoUrl}"/>" alt="" >
+                <img src="<c:out value="${requestScope.news.photoUrl}"/>" alt="" >
             </div>
         </div> <!-- end s-content__media -->
 

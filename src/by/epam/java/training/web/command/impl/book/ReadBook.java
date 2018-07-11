@@ -59,7 +59,7 @@ public class ReadBook extends AbstractCommand {
             }
             Integer bookId = Integer.parseInt(request.getParameter(BOOK_ID));
 
-            String path = request.getServletContext().getRealPath("WEB-INF/classes/");
+            String path = request.getServletContext().getRealPath("");
             request.setAttribute(BOOK_ID, bookId);
             request.setAttribute(CURRENT_PAGE, currentPage);
             request.setAttribute(TEXT, service.getTextOfBook(bookId, locale, path, currentPage));

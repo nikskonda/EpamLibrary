@@ -32,29 +32,33 @@
 <body>
 <section class="s-content">
     <div class="row">
-        <%--<form action="/newsConstructor" method="POST" enctype="multipart/form-data">--%>
-        <form action="/book" method="POST">
+        <form action="/bookConstructor" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="command" value="add_book" >
 
             <div class="col-lg-6">
                 <input type="text" name="name" style="width: 100%">
                 <textarea name="description" style="width: 100%">Enter description here...</textarea>
-                <input type="text" name="textUrl">
-                <input type="text" name="pdfUrl">
+                text
+                <input type="file" name="textUrl">
+                pdf
+                <input type="file" name="pdfUrl">
             </div>
             <div class="col-lg-6">
                 <input type="hidden" name="lang" value="ru" >
                 <input type="text" name="nameRU" style="width: 100%">
                 <textarea name="descriptionRU" style="width: 100%">Enter description here...</textarea>
-                <input type="text" name="textUrlRU">
-                <input type="text" name="pdfUrlRU">
+                text ru
+                <input type="file" name="textUrlRU">
+                pdf ru
+                <input type="file" name="pdfUrlRU">
             </div>
 
             <input type="number" name="year">
             <input type="number" name="price" min="0" step="0.25">
             <input type="number" name="pages">
             <input type="text" name="publishingHouse">
-            <input type="text" name="coverUrl">
+            cover
+            <input type="file" name="coverUrl">
 
             <input type="submit" value="Add book">
         </form>

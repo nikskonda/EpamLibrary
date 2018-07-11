@@ -25,7 +25,7 @@ public class Page {
 
 
     public static final String ERROR = ("jsp/Error.jsp");
-
+    public static final String START_PAGE = ("Index.jsp");
 
 
 

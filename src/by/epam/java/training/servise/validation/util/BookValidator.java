@@ -15,16 +15,14 @@ public class BookValidator implements Validator {
 
         Book book = (Book) obj;
 
-        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, book.getPublishYear())){
-            return false;
-        }
+
         if (!ValidatorManager.isValid(ValidatorType.DOUBLE_VALIDATION, book.getPrice())){
             return false;
         }
         if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, book.getPages())){
             return false;
         }
-        if (!ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, book.getPublishingHouse())){
+        if (!ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, book.getPublishingHouse().getName())){
             return false;
         }
         if (!ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, book.getCoverUrl())){

@@ -110,6 +110,9 @@ public class Book extends BookCover implements Serializable {
         for (Genre genre : genres){
             sb.append(genre.getName()).append(COMMA_AND_SPACE);
         }
+        if (sb.length()==0){
+            return sb.toString();
+        }
         return sb.toString().substring(FIRST_CHAR, sb.length() - COMMA_AND_SPACE.length()-STEP);
     }
 
@@ -117,6 +120,9 @@ public class Book extends BookCover implements Serializable {
         StringBuilder sb = new StringBuilder();
         for (Author author : authors){
             sb.append(author.getFirstName()).append(SPACE).append(author.getLastName()).append(COMMA_AND_SPACE);
+        }
+        if (sb.length()==0){
+            return sb.toString();
         }
         return sb.toString().substring(FIRST_CHAR, sb.length() - COMMA_AND_SPACE.length()-STEP);
     }

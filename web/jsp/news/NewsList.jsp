@@ -53,7 +53,7 @@
               <article class="masonry__brick entry format-standard" data-aos="fade-up">
 
                   <div class="entry__thumb">
-                      <img src="<c:out value="${news.thumbsUrl}"/>" alt="">
+                      <img src="..<c:out value="${news.thumbsUrl}"/>" alt="">
                   </div>
 
                   <div class="entry__text">

@@ -34,12 +34,10 @@
 <section class="s-content">
     <div class="content">
         <div class="row">
-            <%--<form action="/newsConstructor" method="POST" enctype="multipart/form-data">--%>
-            <form action="/newsConstructor" method="POST">
+            <form action="/newsConstructor" method="POST" enctype="multipart/form-data">
                 <div class="col-lg-6">
                     <input type="hidden" name="command" value="add_news" >
                     <input type="text" name="news_title" placeholder="Enter title here..." style="width: 100%">
-                    <%--<input type="file" name="file" multiple="false" >--%>
                     <textarea name="news_text" style="width: 100%">Enter text here...</textarea>
                 </div>
                 <div class="col-lg-6">
@@ -47,8 +45,9 @@
                     <input type="text" name="news_title_ru" placeholder="Enter title here..." style="width: 100%">
                     <textarea name="news_text_ru" style="width: 100%">Enter text here...</textarea>
                 </div>
-                <input type="text" name="news_photo_url" placeholder="Enter photo Url">
-                <input type="text" name="news_thumbs_url" placeholder="Enter thumbs Url">
+                <input type="file" name="news_photo_url">
+                <input type="file" name="news_thumbs_url">
+                <%--<input type="file" name="file" multiple="false" >--%>
                 <input type="submit" value="Add news">
             </form>
         </div>

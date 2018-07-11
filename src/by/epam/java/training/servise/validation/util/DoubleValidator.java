@@ -12,7 +12,7 @@ public class DoubleValidator implements Validator {
 
         Double number = (Double) obj;
 
-        if (number!=null){
+        if (number == null){
             return false;
         }
         if (number <= 0){

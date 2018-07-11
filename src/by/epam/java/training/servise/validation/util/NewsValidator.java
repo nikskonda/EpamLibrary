@@ -19,16 +19,13 @@ public class NewsValidator implements Validator {
         if (!ValidatorManager.isValid(ValidatorType.TRANSLATED_NEWS_VALIDATOR, news)){
             return false;
         }
-        if (ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, news.getText())){
+        if (!ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, news.getText())){
             return false;
         }
-        if (ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, news.getPhotoUrl())){
+        if (!ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, news.getPhotoUrl())){
             return false;
         }
-        if (ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, news.getThumbsUrl())){
-            return false;
-        }
-        if (ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, news.getUserId())){
+        if (!ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, news.getThumbsUrl())){
             return false;
         }
 

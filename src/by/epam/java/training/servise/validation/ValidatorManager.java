@@ -39,7 +39,8 @@ public class ValidatorManager {
     }
 
     public static boolean isValid(ValidatorType validatorType, Object obj){
-        return getInstance().validators.get(validatorType).isValid(obj);
+        return getInstance().validators.get(validatorType)
+                .isValid(obj);
     }
 
     public static Validator getValidator(ValidatorType validatorType){
