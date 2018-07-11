@@ -1,6 +1,8 @@
 package by.epam.java.training.model.book;
 
-import org.apache.commons.codec.binary.StringUtils;
+import by.epam.java.training.model.book.constituents.Author;
+import by.epam.java.training.model.book.constituents.Genre;
+import by.epam.java.training.model.book.constituents.PublishingHouse;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,7 +17,6 @@ public class Book extends BookCover implements Serializable {
 
     private String description;
     private Integer pages;
-    private Float price;
     private PublishingHouse publishingHouse;
     private String pdfFileUrl;
     private String textFileUrl;

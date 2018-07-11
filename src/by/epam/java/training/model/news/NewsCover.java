@@ -1,7 +1,6 @@
 package by.epam.java.training.model.news;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class NewsCover implements Serializable {
@@ -9,7 +8,7 @@ public class NewsCover implements Serializable {
 
     private Integer id;
     private String title;
-    private String smallPhotoUrl;
+    private String thumbsUrl;
     private String userFirstName;
     private String userLastName;
     private Date publishDate;
@@ -17,10 +16,10 @@ public class NewsCover implements Serializable {
     public NewsCover() {
     }
 
-    public NewsCover(Integer id, String title, String smallPhotoUrl, String userFirstName, String userLastName, Date publishDate) {
+    public NewsCover(Integer id, String title, String thumbsUrl, String userFirstName, String userLastName, Date publishDate) {
         this.id = id;
         this.title = title;
-        this.smallPhotoUrl = smallPhotoUrl;
+        this.thumbsUrl = thumbsUrl;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.publishDate = publishDate;
@@ -42,12 +41,12 @@ public class NewsCover implements Serializable {
         this.title = title;
     }
 
-    public String getSmallPhotoUrl() {
-        return smallPhotoUrl;
+    public String getThumbsUrl() {
+        return thumbsUrl;
     }
 
-    public void setSmallPhotoUrl(String smallPhotoUrl) {
-        this.smallPhotoUrl = smallPhotoUrl;
+    public void setThumbsUrl(String thumbsUrl) {
+        this.thumbsUrl = thumbsUrl;
     }
 
     public String getUserFirstName() {

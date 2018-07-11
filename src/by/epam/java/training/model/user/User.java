@@ -1,5 +1,8 @@
 package by.epam.java.training.model.user;
 
+import by.epam.java.training.model.user.constituents.Address;
+import by.epam.java.training.model.user.constituents.Role;
+
 import java.io.Serializable;
 import java.util.Date;
 

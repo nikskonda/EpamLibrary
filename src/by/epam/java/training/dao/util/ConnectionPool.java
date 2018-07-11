@@ -1,5 +1,6 @@
 package by.epam.java.training.dao.util;
 
+import by.epam.java.training.dao.exception.ConnectionPoolException;
 import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,7 +25,10 @@ public class ConnectionPool {
 
     public ConnectionPool() {
         for (int i = 0; i< INIT_COUNT_CONNECTIONS; i++){
-            freeConnections.offer(getConnection());
+            Connection con = getConnection();
+            if (con != null){
+                freeConnections.offer(con);
+            }
         }
     }
 
@@ -44,7 +48,7 @@ public class ConnectionPool {
         return connection;
     }
 
-    public synchronized Connection retrieve() throws SQLException{
+    public synchronized Connection retrieve() throws ConnectionPoolException{
         Connection newConn = null;
         if (freeConnections.size() == 0){
             newConn = getConnection();
@@ -52,6 +56,9 @@ public class ConnectionPool {
             newConn = freeConnections.poll();
         }
         usedConnections.add(newConn);
+        if (newConn == null){
+            throw new ConnectionPoolException();
+        }
         return newConn;
     }
 

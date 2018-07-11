@@ -1,23 +1,19 @@
 package by.epam.java.training.dao;
 
-import by.epam.java.training.model.book.Book;
-import by.epam.java.training.model.book.BookCover;
+import by.epam.java.training.dao.exception.ConnectionPoolException;
+import by.epam.java.training.dao.exception.DAOException;
+import by.epam.java.training.model.LordOfPages;
 import by.epam.java.training.model.news.News;
-import by.epam.java.training.model.news.NewsConstr;
 import by.epam.java.training.model.news.NewsCover;
-import by.epam.java.training.model.news.NewsLang;
 
 import java.util.List;
 
 public interface NewsDAO {
 
-    List<NewsCover> getNewsByPage(String locale, Integer countOnPage, Integer numberOfPage);
+    List<NewsCover> getNewsByPage(LordOfPages pageData) throws DAOException;
 
-    News getNews(Integer newsId, String locale);
+    News getNews(Integer newsId, String locale) throws DAOException;
 
-    Integer calcTotalPages(String locale, Integer countNewsOnOnePage);
+    Integer calcTotalPagesWithBooks(String locale, Integer countNewsOnOnePage) throws DAOException;
 
-    Integer addNews(NewsConstr defNews);
-
-    void addNewsByLang(NewsLang news);
 }

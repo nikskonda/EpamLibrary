@@ -1,32 +1,29 @@
 package by.epam.java.training.servise;
 
+import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.user.*;
+import by.epam.java.training.model.user.constituents.Role;
+import by.epam.java.training.model.user.form.ProfileForm;
+import by.epam.java.training.model.user.form.SignInForm;
+import by.epam.java.training.model.user.form.SignUpForm;
 
 import java.util.List;
 
 public interface UserService {
 
-    boolean isExistLoginAndPassword(SignInForm signInForm);
+    boolean isExistLoginAndPassword(SignInForm signInForm) throws DAOException;
 
-    boolean isAdministrator(SignInForm signInForm);
+    User getUser(Integer userId) throws DAOException;
 
-    User getUser(Integer userId);
+    ActiveUser addUser(SignUpForm signUpForm) throws DAOException;
 
-    ActiveUser addUser(SignUpForm signUpForm);
+    ActiveUser getActiveUser(String login) throws DAOException;
 
-    ActiveUser getActiveUser(String login);
+    boolean isFreeLogin(String login) throws DAOException;
 
-    boolean isFreeLogin(String login);
+    boolean updateUser(ProfileForm profile) throws DAOException;
 
-    boolean updateUser(ProfileForm profile);
 
-    List<User> getUsers();
-
-    List<Role> getRoles();
-
-    boolean changeRole(Integer userId, String roleName);
-
-    boolean deleteUser(Integer userId);
 
 
 }

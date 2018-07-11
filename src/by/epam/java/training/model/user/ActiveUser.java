@@ -8,7 +8,7 @@ public class ActiveUser implements Serializable {
 
     private Integer id;
     private String login;
-    private String Role;
+    private String role;
 
     public ActiveUser() {
     }
@@ -34,4 +34,13 @@ public class ActiveUser implements Serializable {
     public void setLogin(String login) {
         this.login = login;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
 }

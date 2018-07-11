@@ -2,36 +2,43 @@ package by.epam.java.training.servise.impl;
 
 import by.epam.java.training.dao.BookDAO;
 import by.epam.java.training.dao.DAOFactory;
+import by.epam.java.training.dao.exception.DAOException;
+import by.epam.java.training.model.LordOfPages;
 import by.epam.java.training.model.book.Book;
 import by.epam.java.training.model.book.BookCover;
 import by.epam.java.training.servise.BookService;
 import by.epam.java.training.servise.util.ReadFromFile;
+import by.epam.java.training.servise.validation.Validator;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class BookServiceImpl implements BookService {
     private static final Logger logger = Logger.getLogger(BookServiceImpl.class);
 
     private final BookDAO bookDAO = DAOFactory.getBookDAO();
-    private final ValidatorManager validator = new ValidatorManager();
 
 
     @Override
-    public Book getBook(Integer bookId, String locale) {
-        if (!validator.isValid(ValidatorType.LOCALE_VALIDATOR, locale)){
+    public Book getBook(Integer bookId, String locale) throws DAOException {
+        if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)){
             return null;
         }
         return bookDAO.getBook(bookId, locale);
     }
 
     @Override
-    public List<String> getTextOfBook(Integer bookId, String locale, String path, Integer page) {
+    public List<String> getTextOfBook(Integer bookId, String locale, String path, Integer page) throws DAOException{
+        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, bookId)
+                || !ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
+                || !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, path)
+                || !ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, page)){
+            return null;
+        }
+
         String fileName = bookDAO.getUrlToTextOfBook(bookId, locale);
         String bookText = ReadFromFile.readText(path+fileName, page);
         if (bookText.isEmpty()){
@@ -42,23 +49,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookCover> getBooksByPage(String locale, Integer countOnPage, Integer numberOfPage) {
-        if (!validator.isValid(ValidatorType.LOCALE_VALIDATOR, locale)){
+    public List<BookCover> getBooksByPage(LordOfPages pageData) throws DAOException{
+        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageData)){
             return null;
         }
-        return bookDAO.getBooksByPage(locale, countOnPage, numberOfPage);
+        return bookDAO.getListOfBooksByPage(pageData);
     }
 
     @Override
-    public Integer calcTotalPages(String locale, Integer countBooksOnOnePage) {
+    public Integer calcTotalPages(String locale, Integer countBooksOnOnePage) throws DAOException{
         if (false){
             return null;
         }
-        return  bookDAO.calcTotalPages(locale, countBooksOnOnePage);
-    }
-
-    @Override
-    public Integer getBookmark(Integer userId, Integer bookId, String locale) {
-        return bookDAO.getBookmark(userId, bookId, locale);
+        return  bookDAO.calcTotalPagesWithBooks(locale, countBooksOnOnePage);
     }
 }

@@ -16,4 +16,9 @@ public interface Command {
     void redirect(HttpServletResponse response, String destination)
             throws ServletException, IOException;
 
+    void rememberLastAction(HttpServletRequest request)
+            throws ServletException;
+
+    void executeLastAction(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException;
 }

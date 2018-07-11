@@ -1,9 +1,13 @@
 package by.epam.java.training.web.command.impl.user;
 
-import by.epam.java.training.model.user.ProfileForm;
+import by.epam.java.training.dao.exception.DAOException;
+import by.epam.java.training.model.user.form.ProfileForm;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
+import by.epam.java.training.web.command.CommandFactory;
+import by.epam.java.training.web.command.CommandManager;
+import by.epam.java.training.web.command.CommandName;
 import by.epam.java.training.web.util.EncriptionMD5;
 import org.apache.log4j.Logger;
 
@@ -12,7 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Pages2.*;
+import static by.epam.java.training.web.command.CommandName.ERROR;
+import static by.epam.java.training.web.command.Page.*;
+import static by.epam.java.training.web.command.util.FieldNames.ERROR_DATABASE;
+import static by.epam.java.training.web.command.util.FieldNames.ERROR_PATH;
+import static by.epam.java.training.web.command.util.FieldNames.ERROR_UNKNOWN;
 
 public class UpdateProfile extends AbstractCommand {
 
@@ -55,7 +63,7 @@ public class UpdateProfile extends AbstractCommand {
             if (!userService.isExistLoginAndPassword(profile)){
                 request.setAttribute(ERROR_MATCH, true);
                 request.setAttribute(USER_PROFILE, profile);
-                forward(request, response, PROFILE.getPage());
+                forward(request, response, PROFILE);
                 return;
             }
             request.setAttribute(ERROR_MATCH, false);
@@ -64,7 +72,7 @@ public class UpdateProfile extends AbstractCommand {
                     || profile.getConfirmPassword()==null)) {
                 if (!profile.getNewPassword().equals(profile.getConfirmPassword())){
                     request.setAttribute(ERROR_CONFIRM, true);
-                    forward(request, response, ERROR.getPage());
+                    forward(request, response, ERROR);
                     return;
                 } else {
                     request.setAttribute(ERROR_CONFIRM, false);
@@ -73,16 +81,20 @@ public class UpdateProfile extends AbstractCommand {
             }
 
             if (!userService.updateUser(profile)){
-                forward(request, response, ERROR.getPage());
+                forward(request, response, ERROR);
                 return;
             }
 
-            redirect(response, "/profile?command=open_profile");
-            return;
+            CommandFactory.getCommand(CommandName.OPEN_PROFILE).execute(request, response);
+        } catch (DAOException ex){
+            logger.warn("Problem with database", ex);
+            request.setAttribute(ERROR_DATABASE, true);
         } catch (IOException ex){
-
-        } catch (Exception ex) {
-
+            logger.warn("Error in pages path", ex);
+            request.setAttribute(ERROR_PATH, true);
+        } catch (Exception ex){
+            logger.warn(ex);
+            request.setAttribute(ERROR_UNKNOWN, true);
         }
 
 

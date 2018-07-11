@@ -8,6 +8,7 @@ public class News extends NewsCover implements Serializable {
 
     private String text;
     private String photoUrl;
+    private Integer userId;
 
     public News() {
     }
@@ -32,5 +33,13 @@ public class News extends NewsCover implements Serializable {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

@@ -2,6 +2,9 @@ package by.epam.java.training.servise.impl;
 
 import by.epam.java.training.dao.BookSearchDAO;
 import by.epam.java.training.dao.DAOFactory;
+import by.epam.java.training.dao.exception.ConnectionPoolException;
+import by.epam.java.training.dao.exception.DAOException;
+import by.epam.java.training.model.LordOfPages;
 import by.epam.java.training.model.book.BookCover;
 import by.epam.java.training.servise.BookSearchService;
 import by.epam.java.training.servise.validation.ValidatorManager;
@@ -14,18 +17,19 @@ public class BookSearchServiceImpl implements BookSearchService {
     private static final Logger logger = Logger.getLogger(BookSearchServiceImpl.class);
 
     private final BookSearchDAO bookSearchDAO = DAOFactory.getBookSearchDAO();
-    private final ValidatorManager validator = new ValidatorManager();
+
 
     @Override
-    public List<BookCover> getBooksByPage(String locale, String search, Integer countOnPage, Integer numberOfPage) {
-        if (!validator.isValid(ValidatorType.LOCALE_VALIDATOR, locale)){
+    public List<BookCover> getBooksByPage(String search, LordOfPages pageData) throws DAOException {
+        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageData) ||
+                !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, search)){
             return null;
         }
-        return bookSearchDAO.getBooksByPage(locale, search, countOnPage, numberOfPage);
+        return bookSearchDAO.getBooksByPage(search, pageData);
     }
 
     @Override
-    public Integer calcTotalPages(String locale, String search, Integer countBooksOnOnePage) {
+    public Integer calcTotalPages(String locale, String search, Integer countBooksOnOnePage) throws DAOException {
         if (false){
             return null;
         }

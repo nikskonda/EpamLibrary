@@ -4,6 +4,8 @@ import by.epam.java.training.dao.AbstractDAO;
 import by.epam.java.training.dao.BookDAO;
 import by.epam.java.training.dao.BookmarkDAO;
 import by.epam.java.training.dao.DAOFactory;
+import by.epam.java.training.dao.exception.ConnectionPoolException;
+import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.dao.util.ConnectionPool;
 import by.epam.java.training.model.book.*;
 import org.apache.log4j.Logger;
@@ -21,7 +23,7 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
     private static final Integer DEFAULT_PAGE_NUMBER = new Integer(1);
 
     @Override
-    public Integer getBookmark(Bookmark bookmark){
+    public Integer getBookmark(Bookmark bookmark) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -37,8 +39,12 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
             while (rs.next()) {
                 page = rs.getInt(PAGE_NUMBER);
             }
-        } catch (SQLException ex) {
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
+        }catch (SQLException ex) {
             logger.warn("Database query error",ex);
+            throw new DAOException();
         } finally {
             closeResultSet(rs);
             closeCallableStatement(cstmt);
@@ -48,7 +54,7 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
     }
 
     @Override
-    public boolean setBookmark(Bookmark bookmark) {
+    public boolean setBookmark(Bookmark bookmark) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -63,9 +69,13 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
             cstmt.setInt(PAGE_NUMBER, bookmark.getPageNumber());
             rs = cstmt.executeQuery();
             result = true;
-        } catch (SQLException ex) {
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
+        }catch (SQLException ex) {
             logger.warn("Database query error",ex);
-        } finally {
+            throw new DAOException();
+        }  finally {
             closeResultSet(rs);
             closeCallableStatement(cstmt);
             putbackConnection(con, conPool);
