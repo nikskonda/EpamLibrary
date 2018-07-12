@@ -9,7 +9,14 @@ public class CommandName {
 
     //moder
     public static final String ADD_NEWS = ("add_news");
+    public static final String OPEN_EDITING_NEWS = ("open_editing_news");
+    public static final String EDIT_NEWS = ("edit_news");
+    public static final String DELETE_NEWS = ("delete_news");
+
     public static final String ADD_BOOK = ("add_book");
+    public static final String OPEN_EDITING_BOOK = ("open_editing_book");
+    public static final String EDIT_BOOK = ("edit_book");
+    public static final String DELETE_BOOK = ("delete_book");
 
     //user
     public static final String SIGN_IN = ("sign_in");
@@ -18,7 +25,7 @@ public class CommandName {
     public static final String UPDATE_PROFILE = ("update_profile");
 
     //book
-    public static final String OPEN_BOOK_CATALOG = ("open_book_catalog");
+    public static final String SHOW_BOOK_CATALOG = ("open_book_catalog");
     public static final String FIND_BOOKS = ("find_book");
     public static final String SHOW_BOOK = ("open_book");
     public static final String READ_BOOK = ("read_book");

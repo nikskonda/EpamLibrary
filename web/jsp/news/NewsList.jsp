@@ -94,9 +94,7 @@
             <c:if test="${requestScope.numberOfPage>1}">
               <li><a class="pgn__prev" href="/news?command=open_news_list&numberOfPage=${requestScope.numberOfPage-1}">Prev</a></li>
             </c:if>
-            <%--<c:if test="${requestScope.numberOfPage>1}">--%>
               <li><a class="pgn__num current"><c:out value="${requestScope.numberOfPage}"/></a></li>
-            <%--</c:if>--%>
             <c:if test="${requestScope.numberOfPage<requestScope.totalPages}">
               <li><a class="pgn__next" href="/news?command=open_news_list&numberOfPage=${requestScope.numberOfPage+1}">Next</a></li>
             </c:if>

@@ -18,26 +18,13 @@ import java.io.IOException;
 
 import static by.epam.java.training.web.command.CommandName.ERROR;
 import static by.epam.java.training.web.command.Page.*;
-import static by.epam.java.training.web.command.util.FieldNames.ERROR_DATABASE;
-import static by.epam.java.training.web.command.util.FieldNames.ERROR_PATH;
-import static by.epam.java.training.web.command.util.FieldNames.ERROR_UNKNOWN;
+import static by.epam.java.training.web.command.util.FieldNames.*;
 
 public class UpdateProfile extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(UpdateProfile.class);
 
-    private static final String USER_ID = "user_id";
-    private static final String LOGIN = "login";
-    private static final String OLD_PASSWORD = "oldPassword";
-    private static final String NEW_PASSWORD = "newPassword";
-    private static final String CONFIRM_PASSWORD = "confirmPassword";
-    private static final String FIRST_NAME = "firstName";
-    private static final String LAST_NAME = "lastName";
-    private static final String EMAIL = "email";
 
-    private static final String USER_PROFILE = "profile";
-    private static final String ERROR_MATCH = "error_match";
-    private static final String ERROR_CONFIRM = "error_confirm";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

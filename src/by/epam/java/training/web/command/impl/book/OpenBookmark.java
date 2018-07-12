@@ -17,20 +17,13 @@ import java.io.IOException;
 
 import static by.epam.java.training.web.command.CommandName.ERROR;
 import static by.epam.java.training.web.command.Page.SIGN_IN;
-import static by.epam.java.training.web.command.util.FieldNames.ERROR_DATABASE;
-import static by.epam.java.training.web.command.util.FieldNames.ERROR_PATH;
-import static by.epam.java.training.web.command.util.FieldNames.ERROR_UNKNOWN;
+import static by.epam.java.training.web.command.util.FieldNames.*;
 
 public class OpenBookmark extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(OpenBookmark.class);
 
-    private static final String USER = "user";
-    private static final String TEXT = "text";
-    private static final String BOOK_ID = "book_id";
-    private static final String LOCALE = "local";
 
-    private static final String CURRENT_PAGE = "currentPage";
 
     private Integer getInt(String str){
         Integer result = null;

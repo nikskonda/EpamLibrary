@@ -14,10 +14,11 @@ public class DAOFactory {
     private static Lock lock = new ReentrantLock();
 
 
-    private final ConnectionPool connectionPool = new ConnectionPool();
+    private static final ConnectionPool connectionPool = new ConnectionPool();
 
 
     private final AdministratorDAO administratorDAO = new AdministratorDAOImpl();
+    private final ModeratorDAO moderatorDAO = new ModeratorDAOImpl();
     private final UserDAO userDAO = new UserDAOImpl();
 
     private final BookDAO bookDAO = new BookDAOImpl();
@@ -31,6 +32,7 @@ public class DAOFactory {
 
 
     public static AdministratorDAO getAdministratorDAO(){ return getInstance().administratorDAO;}
+    public static ModeratorDAO getModeratorDAO() {return getInstance().moderatorDAO;}
     public static UserDAO getUserDAO() {
         return getInstance().userDAO;
     }

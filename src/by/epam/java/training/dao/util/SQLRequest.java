@@ -32,11 +32,14 @@ public class SQLRequest {
 
     //BOOKS
     public final static String GET_BOOK = "{call get_book(?,?)}";
-    public final static String ADD_BOOK = "{call add_book(?,?,?,?,?,?,?,?,?,?)}";
-    public final static String ADD_TRANSLATED_BOOK = "{call add_translated_book(?,?,?,?,?,?)}";
     public final static String GET_LIST_OF_BOOKS = "{call get_list_of_books(?,?,?)}";
     public final static String CALC_TOTAL_PAGES_IN_BOOKS = "{call calc_pages_in_books(?,?,?)}";
     public final static String GET_URL_TO_TEXT_OF_BOOK = "{call get_url_to_text_of_book(?,?)}";
+    public final static String ADD_BOOK = "{call add_book(?,?,?,?,?,?,?,?,?,?)}";
+    public final static String ADD_TRANSLATED_BOOK = "{call add_translated_book(?,?,?,?,?,?)}";
+    public final static String UPDATE_BOOK = "{call update_book(?,?,?,?,?,?,?,?,?,?)}";
+    public final static String UPDATE_TRANSLATED_BOOK = "{call update_translated_book(?,?,?,?,?,?)}";
+    public final static String DELETE_BOOK = "{call delete_book(?)}";
 
     public final static String FIND_BOOKS = "{call find_book(?,?,?,?)}";
     public final static String CALC_TOTAL_PAGES_BOOKS_SEARCH = "{call calc_pages_in_book_search(?,?,?,?)}";
@@ -79,6 +82,9 @@ public class SQLRequest {
     public final static String CALC_TOTAL_PAGES_IN_NEWS = "{call calc_pages_in_news(?,?,?)}";
     public final static String ADD_NEWS = "{call add_news(?,?,?,?,?,?)}";
     public final static String ADD_TRANSLATED_NEWS = "{call add_translated_news(?,?,?,?)}";
+    public final static String UPDATE_NEWS = "{call update_news(?,?,?,?,?,?)}";
+    public final static String UPDATE_TRANSLATED_NEWS = "{call update_translated_news(?,?,?,?)}";
+    public final static String DELETE_NEWS = "{call delete_news(?)}";
 
     //Column labels
     public final static String NEWS_ID = "news_id";

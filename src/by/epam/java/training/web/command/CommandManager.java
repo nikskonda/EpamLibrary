@@ -7,8 +7,7 @@ import by.epam.java.training.web.command.impl.admin.OpenUser;
 import by.epam.java.training.web.command.impl.admin.ShowUserList;
 import by.epam.java.training.web.command.impl.book.*;
 import by.epam.java.training.web.command.impl.l10n.Localization;
-import by.epam.java.training.web.command.impl.moder.BookConstructor;
-import by.epam.java.training.web.command.impl.moder.NewsConstructor;
+import by.epam.java.training.web.command.impl.moder.*;
 import by.epam.java.training.web.command.impl.news.ShowNews;
 import by.epam.java.training.web.command.impl.news.ShowNewsList;
 import by.epam.java.training.web.command.impl.user.*;
@@ -32,8 +31,15 @@ public class CommandManager {
         commands.put(DELETE_USER, new DeleteUser());
 
         //moder
-        commands.put(ADD_NEWS, new NewsConstructor());
-        commands.put(ADD_BOOK, new BookConstructor());
+        commands.put(ADD_NEWS, new AddNews());
+        commands.put(OPEN_EDITING_NEWS, new OpenEditingNews());
+        commands.put(EDIT_NEWS, new EditNews());
+        commands.put(DELETE_NEWS, new DeleteNews());
+
+        commands.put(ADD_BOOK, new AddBook());
+        commands.put(OPEN_EDITING_BOOK, new OpenEditingBook());
+        commands.put(EDIT_BOOK, new EditBook());
+        commands.put(DELETE_BOOK, new DeleteBook());
 
         //user
         commands.put(SIGN_IN, new SignIn());
@@ -42,7 +48,7 @@ public class CommandManager {
         commands.put(UPDATE_PROFILE, new UpdateProfile());
 
         //book
-        commands.put(OPEN_BOOK_CATALOG, new ShowBookCatalog());
+        commands.put(SHOW_BOOK_CATALOG, new ShowBookCatalog());
         commands.put(SHOW_BOOK, new ShowBook());
         commands.put(FIND_BOOKS, new FindBooks());
         commands.put(READ_BOOK, new ReadBook());

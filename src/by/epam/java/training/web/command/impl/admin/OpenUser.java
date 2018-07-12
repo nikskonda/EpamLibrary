@@ -4,9 +4,8 @@ import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.user.User;
 import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
-import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
-import by.epam.java.training.web.command.CommandFactory;
+import static by.epam.java.training.web.command.Page.*;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -14,21 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.CommandName.ERROR;
-import static by.epam.java.training.web.command.Page.ADMINISTRATION_USER;
-import static by.epam.java.training.web.command.util.FieldNames.ERROR_DATABASE;
-import static by.epam.java.training.web.command.util.FieldNames.ERROR_PATH;
-import static by.epam.java.training.web.command.util.FieldNames.ERROR_UNKNOWN;
+import static by.epam.java.training.web.command.util.FieldNames.*;
 
 public class OpenUser extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(OpenUser.class);
-
-    private static final String USER_ID = "user_id";
-    private static final String USER_PROFILE = "profile";
-    private static final String ROLE_LIST = "roles";
-
-
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

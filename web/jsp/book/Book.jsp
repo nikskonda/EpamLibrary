@@ -43,9 +43,17 @@
 
     <section class="s-content">
         <div class="container">
+            <form method="post" action="/moderator">
+                <input type="hidden" name="command" value="open_editing_book">
+                <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
+                <button type="submit">Edit</button>
+            </form>
+
             <img src="<c:out value="${requestScope.book.coverUrl}"/>" width="200px" height="200px">
             <h1><c:out value="${requestScope.book.name}"/></h1>
-            <p><c:out value="${requestScope.book.description}"/></p>
+            <c:forEach var="paragraph" items="${requestScope.description}">
+                <p><c:out value="${paragraph}"/></p>
+            </c:forEach>
             <h6><c:out value="${requestScope.book.publishYear}"/></h6>
             price: <h5><c:out value="${requestScope.book.price}"/></h5>
             Pages: <p><c:out value="${requestScope.book.pages}"/></p>

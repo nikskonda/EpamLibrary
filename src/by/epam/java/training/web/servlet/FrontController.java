@@ -24,58 +24,6 @@ public class FrontController extends HttpServlet {
         process(request, response);
     }
 
-//    @Override
-//    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        try{
-//            boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-//            if (!isMultipart) {
-//                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-//                return;
-//            }
-//
-//            DiskFileItemFactory factory = new DiskFileItemFactory();
-//
-//            factory.setSizeThreshold(1024*1024);
-//            File tempDir = (File)request.getServletContext().getAttribute("javax.servlet.context.tempdir");
-//            factory.setRepository(tempDir);
-//
-//            ServletFileUpload upload = new ServletFileUpload(factory);
-//
-//            upload.setSizeMax(1024 * 1024 * 10);
-//
-//            List items = upload.parseRequest(request);
-//
-//            Iterator iter = items.iterator();
-//
-//            while (iter.hasNext()) {
-//                FileItem item = (FileItem) iter.next();
-//
-//                if (item.isFormField()) {
-//                    //если принимаемая часть данных является полем формы
-//                    System.out.println(item.getFieldName()+"="+item.getString());
-//                } else {
-//                    //в противном случае рассматриваем как файл
-//                    processUploadedFile(item);
-//                }
-//            }
-//
-//            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-//            dispatcher.forward(request, response);
-//        } catch (Exception ex) {
-//            System.out.println(ex);
-//        }
-//    }
-
-//    private void processUploadedFile(FileItem item) throws Exception {
-//        File uploadetFile = null;
-//        do{
-//            String path = getServletContext().getRealPath("/images/news/"+123456 + item.getName());
-//            uploadetFile = new File(path);
-//        }while(uploadetFile.exists());
-//        uploadetFile.createNewFile();
-//        item.write(uploadetFile);
-//    }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             process(request, response);

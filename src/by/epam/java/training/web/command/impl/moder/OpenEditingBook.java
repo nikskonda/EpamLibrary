@@ -1,11 +1,11 @@
-package by.epam.java.training.web.command.impl.admin;
+package by.epam.java.training.web.command.impl.moder;
 
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.servise.AdministratorService;
+import by.epam.java.training.model.book.Book;
+import by.epam.java.training.servise.BookService;
 import by.epam.java.training.servise.ServiceFactory;
-import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
-import by.epam.java.training.web.command.CommandFactory;
+import by.epam.java.training.web.command.Page;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -13,22 +13,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.CommandName.ERROR;
-import static by.epam.java.training.web.command.Page.USER_LIST;
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
-public class ShowUserList extends AbstractCommand {
+public class OpenEditingBook extends AbstractCommand {
 
-    private static final Logger logger = Logger.getLogger(ShowUserList.class);
+    private static final Logger logger = Logger.getLogger(OpenEditingBook.class);
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            AdministratorService service = ServiceFactory.getAdministratorService();
-            rememberLastAction(request);
-            request.setAttribute(USERS, service.getUsers());
-            forward(request, response, USER_LIST);
+            BookService service = ServiceFactory.getBookService();
+            Integer bookId = Integer.parseInt(request.getParameter(BOOK_ID));
 
+            Book defBook = service.getBook(bookId, "en");
+            Book ruBook = service.getBook(bookId, "ru");
+
+            request.setAttribute(BOOK, defBook);
+            request.setAttribute(BOOK_RU, ruBook);
+
+            forward(request, response, Page.BOOK_EDIT);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);
@@ -41,4 +45,5 @@ public class ShowUserList extends AbstractCommand {
         }
 
     }
+
 }

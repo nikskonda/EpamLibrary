@@ -39,14 +39,18 @@
 <jsp:include page="../Header.jsp"/>
 
 <section class="s-content">
-    <article class="row format-standard">
 
+    <form method="post" action="/moderator">
+        <input type="hidden" name="command" value="open_editing_news">
+        <input type="hidden" name="news_id" value="<c:out value="${requestScope.news.id}"/>">
+        <button type="submit">Edit</button>
+    </form>
         <div class="s-content__header col-full">
             <h1 class="s-content__header-title">
                 <c:out value="${requestScope.news.getTitle()}"/>
             </h1>
             <ul class="s-content__header-meta">
-                <li class="date"><fmt:formatDate type="both" pattern="HH:mm dd-MMM-yy" value="${news.publishDate}"/></li>
+                <li class="date"><fmt:formatDate type="both" pattern="HH:mm dd-MMM-yy" value="${requestScope.news.publishDate}"/></li>
                 <li class="cat">
                     By <c:out value="${requestScope.news.getUserFirstName()}"/> <c:out value="${requestScope.news.getUserLastName()}"/>
                 </li>
@@ -54,14 +58,14 @@
         </div> <!-- end s-content__header -->
 
         <div class="s-content__media col-full">
-            <div class="s-content__post-thumb">
                 <img src="<c:out value="${requestScope.news.photoUrl}"/>" alt="" >
-            </div>
         </div> <!-- end s-content__media -->
 
         <div class="col-full s-content__main">
+            <c:forEach var="paragraph" items="${requestScope.news_text}">
+                <p><c:out value="${paragraph}"/></p>
+            </c:forEach>
 
-            <p><c:out value="${requestScope.news.getText()}"/></p>
         </div>
     </article>
 

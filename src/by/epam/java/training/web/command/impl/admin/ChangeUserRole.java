@@ -22,14 +22,6 @@ public class ChangeUserRole extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(ChangeUserRole.class);
 
-    private static final String USER = "user";
-    private static final String USER_ID = "user_id";
-    private static final String ROLE = "role";
-    private static final String PASSWORD = "password";
-    private static final String ERROR_EXIST = "error_exist";
-
-
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{

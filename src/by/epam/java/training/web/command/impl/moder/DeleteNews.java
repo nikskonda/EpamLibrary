@@ -1,12 +1,12 @@
-package by.epam.java.training.web.command.impl.news;
+package by.epam.java.training.web.command.impl.moder;
 
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.news.News;
-import by.epam.java.training.servise.NewsService;
+import by.epam.java.training.model.user.ActiveUser;
+import by.epam.java.training.servise.ModeratorService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
-import by.epam.java.training.web.command.Page;
-import by.epam.java.training.web.command.util.FieldNames;
+import by.epam.java.training.web.command.CommandFactory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -15,33 +15,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Page.NEWS;
+import static by.epam.java.training.web.command.CommandName.SHOW_NEWS_LIST;
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
-public class ShowNews extends AbstractCommand {
+public class DeleteNews extends AbstractCommand {
 
-    private static final Logger logger = Logger.getLogger(ShowNews.class);
+    private static final Logger logger = Logger.getLogger(DeleteNews.class);
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            rememberLastAction(request);
-
-            NewsService service = ServiceFactory.getNewsService();
-
-            HttpSession session = request.getSession(true);
-            if (session.getAttribute(LOCALE)==null){
-                session.setAttribute(LOCALE, "en");
-            }
-            String locale = (String)session.getAttribute(LOCALE);
-
+            ModeratorService service = ServiceFactory.getModeratorService();
             Integer newsId = Integer.parseInt(request.getParameter(NEWS_ID));
-            News news = service.getNews(newsId, locale);
-            request.setAttribute(FieldNames.NEWS, news);
-            request.setAttribute(FieldNames.NEWS_TEXT, news.getText().split("\n"));
 
-            forward(request, response, Page.NEWS);
+            if (service.delNews(newsId)){
 
+            }
+
+            CommandFactory.getCommand(SHOW_NEWS_LIST).execute(request, response);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);
@@ -54,4 +46,5 @@ public class ShowNews extends AbstractCommand {
         }
 
     }
+
 }

@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Error</title>
@@ -32,7 +34,7 @@
 <body>
 <section class="s-content">
     <div class="row">
-        <form action="/bookConstructor" method="POST" enctype="multipart/form-data">
+        <form action="/moderator" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="command" value="add_book" >
 
             <div class="col-lg-6">

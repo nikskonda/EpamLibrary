@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Error</title>
@@ -34,9 +36,10 @@
 <section class="s-content">
     <div class="content">
         <div class="row">
-            <form action="/newsConstructor" method="POST" enctype="multipart/form-data">
+            <form action="/moderator" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="command" value="add_news" >
                 <div class="col-lg-6">
-                    <input type="hidden" name="command" value="add_news" >
+
                     <input type="text" name="news_title" placeholder="Enter title here..." style="width: 100%">
                     <textarea name="news_text" style="width: 100%">Enter text here...</textarea>
                 </div>

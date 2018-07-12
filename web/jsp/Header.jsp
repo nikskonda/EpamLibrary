@@ -75,8 +75,8 @@
                         <li class="has-children">
                             <a href="#0" title="">Moder</a>
                             <ul class="sub-menu">
-                                <li><a href="jsp/moder/NewsConstructor.jsp">Add news</a></li>
-                                <li><a href="jsp/moder/BookConstructor.jsp">Add book</a></li>
+                                <li><a href="jsp/moder/AddNews.jsp">Add news</a></li>
+                                <li><a href="jsp/moder/AddBook.jsp">Add book</a></li>
                             </ul>
                         </li>
                         <li class="has-children">
