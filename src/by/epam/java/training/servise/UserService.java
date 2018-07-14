@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface UserService {
 
-    boolean isExistLoginAndPassword(SignInForm signInForm) throws DAOException;
+    boolean isExistUser(SignInForm signInForm) throws DAOException;
 
     User getUser(Integer userId) throws DAOException;
 

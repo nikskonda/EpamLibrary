@@ -61,7 +61,7 @@
 </head>
 <body>
 
-<%--<jsp:include page="../Header.jsp"/>--%>
+<jsp:include page="../Header.jsp"/>
 
 
 <section class="s-content">
@@ -140,6 +140,6 @@
 
 
 </section>
-
+<jsp:include page="../Footer.jsp"/>
 </body>
 </html>

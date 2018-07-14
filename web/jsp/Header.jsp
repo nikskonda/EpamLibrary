@@ -56,42 +56,25 @@
                 </div>
                 <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
             </div>
-            <div class="row">
-                <nav class="header__nav-wrap">
 
-                    <h2 class="header__nav-heading h6">Site Navigation</h2>
+            <c:choose>
+                <c:when test="${sessionScope.user == null}">
+                    <jsp:include page="header/GuestHeader.jsp"/>
+                </c:when>
+                <c:when test="${sessionScope.user.role.name eq 'User'}">
+                    <jsp:include page="header/UserHeader.jsp"/>
+                </c:when>
+                <c:when test="${sessionScope.user.role.name eq 'Moderator'}">
+                    <jsp:include page="header/ModerHeader.jsp"/>
+                </c:when>
+                <c:when test="${sessionScope.user.role.name eq 'Administrator'}">
+                    <jsp:include page="header/AdminHeader.jsp"/>
+                </c:when>
+                <c:otherwise>
+                    <jsp:include page="header/GuestHeader.jsp"/>
+                </c:otherwise>
+            </c:choose>
 
-                    <ul class="header__nav">
-                        <li class="current"><a href="/news?command=open_news_list" title="">Home</a></li>
-                        <li><a href="/catalog?command=open_book_catalog">${catalog}</a></li>
-                        <li><a href="jsp/user/SignIn.jsp">${signin}</a></li>
-                        <li><a href="jsp/user/SignUp.jsp">${signup}</a></li>
-                        <li class="has-children">
-                            <a href="#0" title="">User</a>
-                            <ul class="sub-menu">
-                                <li><a href="/profile?command=open_profile">Profile</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-children">
-                            <a href="#0" title="">Moder</a>
-                            <ul class="sub-menu">
-                                <li><a href="jsp/moder/AddNews.jsp">Add news</a></li>
-                                <li><a href="jsp/moder/AddBook.jsp">Add book</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-children">
-                            <a href="#0" title="">Admin</a>
-                            <ul class="sub-menu">
-                                <li><a href="/admin?command=show_user_list">User List</a></li>
-                                <li><a href="jsp/Test.jsp">Test Page</a></li>
-                            </ul>
-                        </li>
-                    </ul> <!-- end header__nav -->
-
-                    <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
-
-                </nav> <!-- end header__nav-wrap -->
-            </div>
         </div>
     </header>
 </section>

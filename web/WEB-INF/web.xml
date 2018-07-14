@@ -8,7 +8,52 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    
+
+    <!--ADMIN-->
+
+    <servlet>
+        <servlet-name>Admin</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Admin</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
+
+    <!--MODER-->
+    <servlet>
+        <servlet-name>Moderator</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Moderator</servlet-name>
+        <url-pattern>/moderator</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddNews</servlet-name>
+        <jsp-file>/jsp/moder/AddNews.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AddNews</servlet-name>
+        <url-pattern>/moderator/openAddNews</url-pattern>
+    </servlet-mapping>
+
+    <!--<servlet>-->
+        <!--<servlet-name>AddBook</servlet-name>-->
+        <!--<servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>-->
+    <!--</servlet>-->
+
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>AddBook</servlet-name>-->
+        <!--<url-pattern>/moderator/openAddBook</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+    <!--USER-->
     <servlet>
         <servlet-name>SignIn</servlet-name>
         <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
@@ -16,7 +61,17 @@
 
     <servlet-mapping>
         <servlet-name>SignIn</servlet-name>
-        <url-pattern>/sign_in</url-pattern>
+        <url-pattern>/signIn</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OpenSignIn</servlet-name>
+        <jsp-file>/jsp/user/SignIn.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OpenSignIn</servlet-name>
+        <url-pattern>/openSignIn</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -26,8 +81,73 @@
 
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
-        <url-pattern>/sign_up</url-pattern>
+        <url-pattern>/signUp</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OpenSignUp</servlet-name>
+        <jsp-file>/jsp/user/SignUp.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OpenSignUp</servlet-name>
+        <url-pattern>/openSignUp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SignOut</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SignOut</servlet-name>
+        <url-pattern>/signOut</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Profile</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Profile</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+
+    <!--BOOK-->
+    <servlet>
+        <servlet-name>Book</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Book</servlet-name>
+        <url-pattern>/book</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Catalog</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Catalog</servlet-name>
+        <url-pattern>/catalog</url-pattern>
+    </servlet-mapping>
+
+    <!--NEWS-->
+
+    <servlet>
+        <servlet-name>News</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>News</servlet-name>
+        <url-pattern>/news</url-pattern>
+    </servlet-mapping>
+
+    <!--L10N-->
 
     <servlet>
         <servlet-name>RU</servlet-name>
@@ -49,66 +169,80 @@
         <url-pattern>/en</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>Catalog</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
-    </servlet>
+    <!--FILTER-->
+    <filter>
+        <filter-name>Administrator</filter-name>
+        <filter-class>by.epam.java.training.web.filter.AdminFilter</filter-class>
+    </filter>
 
-    <servlet-mapping>
-        <servlet-name>Catalog</servlet-name>
-        <url-pattern>/catalog</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>News</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>News</servlet-name>
-        <url-pattern>/news</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>Moderator</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Moderator</servlet-name>
-        <url-pattern>/moderator</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Profile</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Profile</servlet-name>
-        <url-pattern>/profile</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Admin</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Admin</servlet-name>
+    <filter-mapping>
+        <filter-name>Administrator</filter-name>
         <url-pattern>/admin</url-pattern>
-    </servlet-mapping>
+    </filter-mapping>
 
-    <servlet>
-        <servlet-name>Book</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
-    </servlet>
+    <filter>
+        <filter-name>Moderator</filter-name>
+        <filter-class>by.epam.java.training.web.filter.ModerFilter</filter-class>
+    </filter>
 
-    <servlet-mapping>
-        <servlet-name>Book</servlet-name>
-        <url-pattern>/book</url-pattern>
-    </servlet-mapping>
+    <filter-mapping>
+        <filter-name>Moderator</filter-name>
+        <url-pattern>/moderator/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>UploadFilter</filter-name>
+        <filter-class>by.epam.java.training.web.filter.FileUpload</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>UploadFilter</filter-name>
+        <url-pattern>/moderator</url-pattern>
+    </filter-mapping>
+
+
+    <filter>
+        <filter-name>SetEncoding</filter-name>
+        <filter-class>by.epam.java.training.web.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>characterEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>SetEncoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>MainFilter</filter-name>
+        <filter-class>by.epam.java.training.web.filter.MainFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>MainFilter</filter-name>
+        <url-pattern>/jsp/*</url-pattern>
+    </filter-mapping>
+
+    <!--ERROR-->
+
+
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/jsp/Error.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/jsp/Error.jsp</location>
+    </error-page>
+
+
+
+
+
+
 
     <servlet>
         <servlet-name>Library</servlet-name>
@@ -129,56 +263,5 @@
         <servlet-name>Controller</servlet-name>
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
-
-
-    <filter>
-        <filter-name>UploadFilter</filter-name>
-        <filter-class>by.epam.java.training.web.filter.user.FileUpload</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>UploadFilter</filter-name>
-        <url-pattern>/moderator</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>UploadFilter</filter-name>
-        <url-pattern>/moderator</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>SetEncoding</filter-name>
-        <filter-class>by.epam.java.training.web.filter.user.EncodingFilter</filter-class>
-        <init-param>
-            <param-name>characterEncoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>SetEncoding</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-
-    <filter>
-        <filter-name>MainFilter</filter-name>
-        <filter-class>by.epam.java.training.web.filter.user.MainFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>MainFilter</filter-name>
-        <url-pattern>/jsp/*</url-pattern>
-    </filter-mapping>
-
-    <!--<error-page>-->
-        <!--<exception-type>java.lang.Exception</exception-type>-->
-        <!--<location>/jsp/Error.jsp</location>-->
-    <!--</error-page>-->
-
-    <!--<error-page>-->
-        <!--<error-code>404</error-code>-->
-        <!--<location>/jsp/Error.jsp</location>-->
-    <!--</error-page>-->
 
 </web-app>

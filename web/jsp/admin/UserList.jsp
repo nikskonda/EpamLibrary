@@ -51,6 +51,14 @@
 <section class="s-content">
     <div class="container">
 
+        <div class="row narrow">
+            <form method="post" action="/admin">
+                <input type="hidden" name="command" value="find_users">
+                <input type="text" name="search" value="<c:out value="${requestScope.search}"/>">
+                <button type="submit">Find me plz</button>
+            </form>
+        </div>
+
         <div class="row add-bottom">
 
             <div class="col-twelve">
@@ -72,7 +80,7 @@
                         </thead>
                         <tbody>
                         <c:choose>
-                            <c:when test="${requestScope.user_list.size()-1 > 0}">
+                            <c:when test="${requestScope.user_list.size()>0}">
                                 <c:forEach var="user" items="${requestScope.user_list}">
                                     <tr>
                                         <td><c:out value="${user.login}"/></td>
@@ -80,8 +88,14 @@
                                         <td><c:out value="${user.lastName}"/></td>
                                         <td><c:out value="${user.email}"/></td>
                                         <td><c:out value="${user.getRole().getName()}"/></td>
-                                        <td><a style="color: limegreen">Change Role</a></td>
-                                        <td><a style="color: red" href="/admin?command=open_user&user_id=<c:out value="${user.id}"/>">Delete</a></td>
+                                        <c:choose>
+                                            <c:when test="${user.id == sessionScope.user.id}">
+                                                <td><a style="color: limegreen" href="/profile?command=open_profile">Profile</a></td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td><a style="color: red" href="/admin?command=open_user&user_id=<c:out value="${user.id}"/>">Administration</a></td>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </tr>
                                 </c:forEach>
                             </c:when>
@@ -99,10 +113,94 @@
 
         </div> <!-- end row -->
 
+        <c:choose>
+            <c:when test="${not empty requestScope.search}">
+                <div class="row">
+                    <div class="col-full">
+                        <nav class="pgn">
+                            <ul>
+                                <c:if test="${requestScope.numberOfPage!=1}">
+                                    <li><a class="pgn__num" href="/admin?command=find_users&search=${requestScope.search}&numberOfPage=1">First: 1</a></li>
+                                </c:if>
+                                <c:if test="${requestScope.numberOfPage>1}">
+                                    <li><a class="pgn__prev" href="/admin?command=find_users&search=${requestScope.search}&numberOfPage=${requestScope.numberOfPage-1}">Prev</a></li>
+                                </c:if>
+                                <li><a class="pgn__num current"><c:out value="${requestScope.numberOfPage}"/></a></li>
+                                <c:if test="${requestScope.numberOfPage<requestScope.totalPages}">
+                                    <li><a class="pgn__next" href="/admin?command=find_users&search=${requestScope.search}&numberOfPage=${requestScope.numberOfPage+1}">Next</a></li>
+                                </c:if>
+                                <c:if test="${requestScope.numberOfPage<requestScope.totalPages}">
+                                    <li><a class="pgn__num" href="/admin?command=find_users&search=${requestScope.search}&numberOfPage=${requestScope.totalPages}">Last: <c:out value="${requestScope.totalPages}"/></a></li>
+                                </c:if>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-full">
+                        <nav class="pgn">
+                            <ul>
+                                <c:forEach var="i" begin="8" end="32" step="4">
+                                    <c:choose>
+                                        <c:when test="${i == sessionScope.countUsers}">
+                                            <li><a class="pgn__num current" href="/admin?command=find_users&search=${requestScope.search}&countUsers=${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a class="pgn__num" href="/admin?command=find_users&search=${requestScope.search}&countUsers=${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="row">
+                    <div class="col-full">
+                        <nav class="pgn">
+                            <ul>
+                                <c:if test="${requestScope.numberOfPage!=1}">
+                                    <li><a class="pgn__num" href="/admin?command=show_user_list&numberOfPage=1">First: 1</a></li>
+                                </c:if>
+                                <c:if test="${requestScope.numberOfPage>1}">
+                                    <li><a class="pgn__prev" href="/admin?command=show_user_list&numberOfPage=${requestScope.numberOfPage-1}">Prev</a></li>
+                                </c:if>
+                                <li><a class="pgn__num current"><c:out value="${requestScope.numberOfPage}"/></a></li>
+                                <c:if test="${requestScope.numberOfPage<requestScope.totalPages}">
+                                    <li><a class="pgn__next" href="/admin?command=show_user_list&numberOfPage=${requestScope.numberOfPage+1}">Next</a></li>
+                                </c:if>
+                                <c:if test="${requestScope.numberOfPage<requestScope.totalPages}">
+                                    <li><a class="pgn__num" href="/admin?command=show_user_list&numberOfPage=${requestScope.totalPages}">Last: <c:out value="${requestScope.totalPages}"/></a></li>
+                                </c:if>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-full">
+                        <nav class="pgn">
+                            <ul>
+                                <c:forEach var="i" begin="8" end="32" step="4">
+                                    <c:choose>
+                                        <c:when test="${i == sessionScope.countUsers}">
+                                            <li><a class="pgn__num current" href="/admin?command=show_user_list&countUsers=${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a class="pgn__num" href="/admin?command=show_user_list&countUsers=${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </c:otherwise>
+        </c:choose>
     </div>
 
 </section>
 
-
+<jsp:include page="../Footer.jsp"/>
 </body>
 </html>

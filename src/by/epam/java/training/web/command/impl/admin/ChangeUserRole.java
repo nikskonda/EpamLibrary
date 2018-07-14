@@ -5,10 +5,13 @@ import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.model.user.form.SignInForm;
 import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
+import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
 import static by.epam.java.training.web.command.CommandName.*;
 import static by.epam.java.training.web.command.util.FieldNames.*;
+
+import by.epam.java.training.web.command.util.FieldNames;
 import by.epam.java.training.web.util.EncriptionMD5;
 import org.apache.log4j.Logger;
 
@@ -30,10 +33,14 @@ public class ChangeUserRole extends AbstractCommand {
             String password = EncriptionMD5.encrypt(request.getParameter(PASSWORD));
             Integer userId = Integer.parseInt(request.getParameter(USER_ID));
             String roleName = request.getParameter(ROLE);
-            AdministratorService userService = ServiceFactory.getAdministratorService();
+            UserService userService = ServiceFactory.getUserService();
+            AdministratorService administratorService = ServiceFactory.getAdministratorService();
 
-            if (userService.isAdministrator(new SignInForm(user.getLogin(), password))){
-                userService.changeRole(userId, roleName);
+            if (userService.isExistUser(new SignInForm(user.getLogin(), password))){
+                if (administratorService.changeRole(userId, roleName)){
+                    CommandFactory.getCommand(SHOW_USER).execute(request, response);
+                }
+                request.setAttribute(FieldNames.ERROR, true);
                 CommandFactory.getCommand(SHOW_USER).execute(request, response);
             }else{
                 request.setAttribute(ERROR_EXIST, true);

@@ -1,4 +1,4 @@
-package by.epam.java.training.web.filter.user.util;
+package by.epam.java.training.web.filter.util;
 
 import org.apache.log4j.Logger;
 
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import static by.epam.java.training.web.filter.user.util.Path.*;
+import static by.epam.java.training.web.filter.util.Path.*;
 
 public class PathManager {
 

@@ -35,9 +35,13 @@ public abstract class AbstractCommand implements Command{
     @Override
     public void rememberLastAction(HttpServletRequest request) throws ServletException {
         HttpSession session = request.getSession(true);
-        String lastAction = request.getQueryString();
-        if (lastAction!=null && !lastAction.isEmpty()) {
-            session.setAttribute(LAST_ACTION, URL_PATTERN+lastAction);
+
+        StringBuffer requestURL = request.getRequestURL();
+        String queryString = request.getQueryString();
+        if (queryString == null) {
+            session.setAttribute(LAST_ACTION, requestURL.toString());
+        } else {
+            session.setAttribute(LAST_ACTION, requestURL.append('?').append(queryString).toString());
         }
     }
 
@@ -50,6 +54,5 @@ public abstract class AbstractCommand implements Command{
         } else {
             this.redirect(response, url);
         }
-
     }
 }

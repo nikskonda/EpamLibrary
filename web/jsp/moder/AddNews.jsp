@@ -33,30 +33,52 @@
 </head>
 <body>
 
+<%--<jsp:include page="../Header.jsp"/>--%>
+
 <section class="s-content">
     <div class="content">
         <div class="row">
-            <form action="/moderator" method="POST" enctype="multipart/form-data">
+            <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidNewsForm()">
                 <input type="hidden" name="command" value="add_news" >
                 <div class="col-lg-6">
 
-                    <input type="text" name="news_title" placeholder="Enter title here..." style="width: 100%">
-                    <textarea name="news_text" style="width: 100%">Enter text here...</textarea>
+                    <input type="text" id="news_title" name="news_title" placeholder="Enter title here..." style="width: 100%">
+                    <p class="error-input" id="titleError"></p>
+                    <textarea id="news_text" name="news_text" style="width: 100%">Enter text here ...</textarea>
+                    <p class="error-input" id="textError"></p>
                 </div>
                 <div class="col-lg-6">
                     <input type="hidden" name="news_lang" value="ru" >
-                    <input type="text" name="news_title_ru" placeholder="Enter title here..." style="width: 100%">
-                    <textarea name="news_text_ru" style="width: 100%">Enter text here...</textarea>
+                    <input type="text" id="news_title_ru" name="news_title_ru" placeholder="Enter title here..." style="width: 100%">
+                    <p class="error-input" id="titleRuError"></p>
+                    <textarea id="news_text_ru" name="news_text_ru" style="width: 100%">Enter russian text here ...</textarea>
+                    <p class="error-input" id="textRuError"></p>
                 </div>
-                <input type="file" name="news_photo_url">
-                <input type="file" name="news_thumbs_url">
-                <%--<input type="file" name="file" multiple="false" >--%>
+                big photo
+                <input type="file" id="news_photo_url" name="news_photo_url" multiple="false">
+                <p class="error-input" id="photoError"></p>
+                thumbs
+                <input type="file" id="news_thumbs_url" name="news_thumbs_url" multiple="false">
+                <p class="error-input" id="thumbsError"></p>
                 <input type="submit" value="Add news">
             </form>
         </div>
     </div>
 </section>
 
+<script type="text/javascript">
+    var validationErrorMessages =
+        {
+            "titleLengthError":"titleLengthError",
+            "textContentError":"textContentError",
+            "photoError":"photoError",
+            "thumbsError":"thumbsError"
+        }
+    ;
+</script>
+<script src="../../js/validator.js"></script>
+
+<%--<jsp:include page="../Footer.jsp"/>--%>
 
 </body>
 </html>

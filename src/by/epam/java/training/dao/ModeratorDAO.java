@@ -4,6 +4,7 @@ import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.dao.exception.TransactionException;
 import by.epam.java.training.model.book.Book;
+import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.model.news.News;
 import by.epam.java.training.model.user.User;
 import by.epam.java.training.model.user.constituents.Role;
@@ -26,4 +27,8 @@ public interface ModeratorDAO {
     boolean editBook(Book defBook, Book translatedBook, String lang) throws ConnectionPoolException, TransactionException;
 
     boolean delBook(Integer bookId) throws DAOException;
+
+    boolean isModerator(String login) throws DAOException;
+
+
 }

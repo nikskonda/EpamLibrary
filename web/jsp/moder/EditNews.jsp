@@ -32,7 +32,7 @@
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 </head>
 <body>
-
+<jsp:include page="../Header.jsp"/>
 <section class="s-content">
     <div class="content">
         <div class="row">
@@ -65,7 +65,7 @@
         </div>
     </div>
 </section>
-
+<jsp:include page="../Footer.jsp"/>
 
 </body>
 </html>

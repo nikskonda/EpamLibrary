@@ -50,7 +50,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     }
 
     @Override
-    public boolean isExistLoginAndPassword(SignInForm signInForm) throws ConnectionPoolException {
+    public boolean isExistUser(SignInForm signInForm) throws ConnectionPoolException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -132,6 +132,8 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
                 activeUser = new ActiveUser();
                 activeUser.setId(rs.getInt(USER_ID));
                 activeUser.setLogin(rs.getString(USER_LOGIN));
+                activeUser.setRole(
+                        new Role(rs.getInt(USER_ROLE_ID), rs.getString(USER_ROLE_NAME)));
             }
 
         } catch (SQLException ex) {

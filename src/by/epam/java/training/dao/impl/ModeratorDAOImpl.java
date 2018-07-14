@@ -11,6 +11,7 @@ import by.epam.java.training.dao.transaction.ModeratorTransaction;
 import by.epam.java.training.dao.transaction.TransactionFactory;
 import by.epam.java.training.dao.util.ConnectionPool;
 import by.epam.java.training.model.book.Book;
+import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.model.news.News;
 import by.epam.java.training.model.user.User;
 import by.epam.java.training.model.user.constituents.Role;
@@ -95,6 +96,32 @@ public class ModeratorDAOImpl extends AbstractDAO implements ModeratorDAO {
         }catch (SQLException ex) {
             logger.warn("Database query error",ex);
             throw new DAOException();
+        } finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean isModerator(String login) throws DAOException {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(IS_MODERATOR);
+            cstmt.setString(USER_LOGIN, login);
+            cstmt.registerOutParameter(RESULT, Types.BOOLEAN);
+            cstmt.executeQuery();
+
+            result = cstmt.getBoolean(RESULT);
+        } catch (SQLException ex) {
+            logger.warn("Вatabase query error",ex);
         } finally {
             closeResultSet(rs);
             closeCallableStatement(cstmt);

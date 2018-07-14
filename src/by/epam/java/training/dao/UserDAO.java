@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface UserDAO {
 
-    boolean isExistLoginAndPassword(SignInForm signInForm) throws ConnectionPoolException;
+    boolean isExistUser(SignInForm signInForm) throws ConnectionPoolException;
 
     User getUser(Integer userId);
 

@@ -32,6 +32,7 @@
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 </head>
 <body>
+<%--<jsp:include page="../Header.jsp"/>--%>
 <section class="s-content">
     <div class="row">
         <form action="/moderator" method="POST" enctype="multipart/form-data">
@@ -62,9 +63,23 @@
             cover
             <input type="file" name="coverUrl">
 
+            List of Genres:
+            <c:choose>
+                <c:when test="${requestScope.genres.size()>0}">
+                    <c:forEach var="genre" items="${requestScope.genres}">
+                        <input type="checkbox" name="genres" value="${genre.id}"><c:out value="${genre.name}"/>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <p>genre нет, сорян</p>
+                </c:otherwise>
+            </c:choose>
+            
+
             <input type="submit" value="Add book">
         </form>
     </div>
 </section>
+<%--<jsp:include page="../Footer.jsp"/>--%>
 </body>
 </html>

@@ -6,6 +6,7 @@ import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.LordOfPages;
 import by.epam.java.training.model.book.Book;
 import by.epam.java.training.model.book.BookCover;
+import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.servise.BookService;
 import by.epam.java.training.servise.util.ReadFromFile;
 import by.epam.java.training.servise.validation.Validator;
@@ -62,5 +63,13 @@ public class BookServiceImpl implements BookService {
             return null;
         }
         return  bookDAO.calcTotalPagesWithBooks(locale, countBooksOnOnePage);
+    }
+
+    @Override
+    public List<Genre> getListOfGenre(String lang) throws DAOException {
+        if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, lang)){
+            return null;
+        }
+        return bookDAO.getListOfGenre(lang);
     }
 }

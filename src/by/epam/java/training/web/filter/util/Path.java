@@ -1,4 +1,4 @@
-package by.epam.java.training.web.filter.user.util;
+package by.epam.java.training.web.filter.util;
 
 public class Path {
 
@@ -16,11 +16,12 @@ public class Path {
     public static final String NEWS_THUMBS_PATH = "/images/thumbs/news/";
     public static final String NEWS_PHOTO_PATH = "/images/news/";
 
+    public static final String BOOK_COVER_PATH = "/images/books/";
     public static final String BOOK_TEXT_PATH = "/WEB-INF/classes/text/";
     public static final String BOOK_RU_TEXT_PATH = "/WEB-INF/classes/text/ru/";
-    public static final String BOOK_PDF_PATH = "/WEB-INF/classes/pdf/";
-    public static final String BOOK_RU_PDF_PATH = "/WEB-INF/classes/pdf/ru/";
-    public static final String BOOK_COVER_PATH = "/images/books/";
+    public static final String BOOK_PDF_PATH = "/pdf/";
+    public static final String BOOK_RU_PDF_PATH = "/pdf/ru/";
+
 
 
 }

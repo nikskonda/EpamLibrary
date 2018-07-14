@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BookSearchService {
 
-    List<BookCover> getBooksByPage(String search, LordOfPages pageData) throws  DAOException;
+    List<BookCover> findBooksByPage(String search, LordOfPages pageData) throws  DAOException;
 
     Integer calcTotalPages(String locale, String search, Integer countBooksOnOnePage) throws DAOException;
 

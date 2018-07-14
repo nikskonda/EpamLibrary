@@ -1,8 +1,8 @@
-package by.epam.java.training.web.command.impl.book;
+package by.epam.java.training.web.command.impl.admin;
 
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.LordOfPages;
-import by.epam.java.training.servise.BookSearchService;
+import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
 import org.apache.log4j.Logger;
@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Page.BOOK_CATALOG;
+import static by.epam.java.training.web.command.Page.USER_LIST;
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
-public class FindBooks extends AbstractCommand {
+public class FindUserList extends AbstractCommand {
 
-    private static final Logger logger = Logger.getLogger(FindBooks.class);
+    private static final Logger logger = Logger.getLogger(FindUserList.class);
 
-    private static final int INIT_COUNT_BOOKS = 6;
+    private static final int INIT_COUNT_USERS = 8;
     private static final int INIT_NUMBER_OF_PAGE = 1;
 
     private Integer getInt(String str){
@@ -32,30 +32,22 @@ public class FindBooks extends AbstractCommand {
         }
         return result;
     }
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
+            AdministratorService service = ServiceFactory.getAdministratorService();
             rememberLastAction(request);
-            BookSearchService service = ServiceFactory.getBookSearchService();
             String search = request.getParameter(SEARCH);
-
             HttpSession session = request.getSession(true);
-            if (session.getAttribute(LOCALE)==null){
-                session.setAttribute(LOCALE, "en");
-            }
-            String locale = (String)session.getAttribute(LOCALE);
-
-            Integer countBooks = null;
-
-            Integer newCountBooks = getInt(request.getParameter(COUNT_BOOKS_ON_PAGE));
-            if (newCountBooks == null){
-                countBooks = (Integer)(session.getAttribute(COUNT_BOOKS_ON_PAGE));
-                if (countBooks==null){
-                    countBooks = INIT_COUNT_BOOKS;
+            Integer countUsers = null;
+            Integer newCountUsers = getInt(request.getParameter(COUNT_USERS_ON_PAGE));
+            if (newCountUsers == null){
+                countUsers = (Integer)(session.getAttribute(COUNT_USERS_ON_PAGE));
+                if (countUsers==null){
+                    countUsers = INIT_COUNT_USERS;
                 }
             } else {
-                countBooks = newCountBooks;
+                countUsers = newCountUsers;
             }
 
             Integer currentPage = getInt(request.getParameter(NUMBER_OF_PAGE));
@@ -63,20 +55,17 @@ public class FindBooks extends AbstractCommand {
                 currentPage = INIT_NUMBER_OF_PAGE;
             }
 
-            session.setAttribute(COUNT_BOOKS_ON_PAGE, newCountBooks);
-            request.setAttribute(NUMBER_OF_PAGE, currentPage);
-            request.setAttribute(TOTAL_PAGES, service.calcTotalPages(locale, search, countBooks));
-            request.setAttribute(SEARCH, search);
-
             LordOfPages pageData = new LordOfPages();
-            pageData.setCountOnPage(countBooks);
+            pageData.setCountOnPage(countUsers);
             pageData.setNumberOfPage(currentPage);
-            pageData.setLocale(locale);
 
-            request.setAttribute(BOOKS, service.getBooksByPage(search, pageData));
+            session.setAttribute(COUNT_USERS_ON_PAGE, countUsers);
+            request.setAttribute(NUMBER_OF_PAGE, currentPage);
+            request.setAttribute(TOTAL_PAGES, service.calcTotalPagesWithUsersSearch(search, countUsers));
+            request.setAttribute(SEARCH, search);
+            request.setAttribute(USERS, service.FindUsersByPages(search, pageData));
 
-            forward(request, response, BOOK_CATALOG);
-
+            forward(request, response, USER_LIST);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

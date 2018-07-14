@@ -20,6 +20,8 @@ public class FieldNames {
     public static final String LAST_NAME = "lastName";
     public static final String EMAIL = "email";
 
+    public static final String COUNT_USERS_ON_PAGE = "countUsers";
+
     public static final String USER_PROFILE = "profile";
     public static final String SIGN_IN_FORM = "signInForm";
     public static final String SIGN_UP_FORM = "signUpForm";
@@ -50,6 +52,7 @@ public class FieldNames {
     public static final String BOOK_TEXT = "text";
 
     public static final String SEARCH = "search";
+    public static final String GENRES = "genres";
 
     public static final String SET_BOOKMARK_RESULT = "set_bookmark_result";
 
@@ -74,12 +77,17 @@ public class FieldNames {
 
 
 
+
+    public static final String ERROR = "error";
+
     public static final String ERROR_EXIST = "error_exist";
     public static final String ERROR_DEL_EXIST = "del_error_exist";
     public static final String ERROR_MATCH = "error_match";
     public static final String ERROR_CONFIRM = "error_confirm";
-    public static final String ERROR_DATABASE = ("error_database");
-    public static final String ERROR_PATH = ("error_path");
-    public static final String ERROR_UNKNOWN = ("error_unknown");
+    public static final String ERROR_DATABASE = "error_database";
+    public static final String ERROR_PATH = "error_path";
+    public static final String ERROR_UNKNOWN = "error_unknown";
+    public static final String INSUFFICIENT_RIGHTS = "insufficient_rights";
+
 
 }

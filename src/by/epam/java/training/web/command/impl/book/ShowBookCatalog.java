@@ -64,7 +64,7 @@ public class ShowBookCatalog extends AbstractCommand {
                 currentPage = INIT_NUMBER_OF_PAGE;
             }
 
-            session.setAttribute(COUNT_BOOKS_ON_PAGE, newCountBooks);
+            session.setAttribute(COUNT_BOOKS_ON_PAGE, countBooks);
             request.setAttribute(NUMBER_OF_PAGE, currentPage);
             request.setAttribute(TOTAL_PAGES, service.calcTotalPages(locale, countBooks));
 

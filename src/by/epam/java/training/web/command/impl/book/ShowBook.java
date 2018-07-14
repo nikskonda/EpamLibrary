@@ -22,19 +22,6 @@ public class ShowBook extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(ShowBook.class);
 
-
-
-
-    private Integer getInt(String str){
-        Integer result = null;
-        try{
-            result = Integer.parseInt(str);
-        } catch (NumberFormatException ex){
-            logger.warn("", ex);
-        }
-        return result;
-    }
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{

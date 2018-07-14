@@ -1,10 +1,7 @@
 package by.epam.java.training.web.command;
 
 import by.epam.java.training.web.command.impl.OpenErrorPage;
-import by.epam.java.training.web.command.impl.admin.ChangeUserRole;
-import by.epam.java.training.web.command.impl.admin.DeleteUser;
-import by.epam.java.training.web.command.impl.admin.OpenUser;
-import by.epam.java.training.web.command.impl.admin.ShowUserList;
+import by.epam.java.training.web.command.impl.admin.*;
 import by.epam.java.training.web.command.impl.book.*;
 import by.epam.java.training.web.command.impl.l10n.Localization;
 import by.epam.java.training.web.command.impl.moder.*;
@@ -29,6 +26,7 @@ public class CommandManager {
         commands.put(SHOW_USER, new OpenUser());
         commands.put(CHANGE_USER_ROLE, new ChangeUserRole());
         commands.put(DELETE_USER, new DeleteUser());
+        commands.put(FIND_USERS, new FindUserList());
 
         //moder
         commands.put(ADD_NEWS, new AddNews());
@@ -36,6 +34,7 @@ public class CommandManager {
         commands.put(EDIT_NEWS, new EditNews());
         commands.put(DELETE_NEWS, new DeleteNews());
 
+        commands.put(OPEN_ADD_BOOK, new OpenAddBook());
         commands.put(ADD_BOOK, new AddBook());
         commands.put(OPEN_EDITING_BOOK, new OpenEditingBook());
         commands.put(EDIT_BOOK, new EditBook());
@@ -44,13 +43,14 @@ public class CommandManager {
         //user
         commands.put(SIGN_IN, new SignIn());
         commands.put(SIGN_UP, new SignUp());
+        commands.put(SIGN_OUT, new SignOut());
         commands.put(OPEN_PROFILE, new OpenProfile());
         commands.put(UPDATE_PROFILE, new UpdateProfile());
 
         //book
         commands.put(SHOW_BOOK_CATALOG, new ShowBookCatalog());
         commands.put(SHOW_BOOK, new ShowBook());
-        commands.put(FIND_BOOKS, new FindBooks());
+        commands.put(FIND_BOOKS, new FindBookList());
         commands.put(READ_BOOK, new ReadBook());
 
         commands.put(OPEN_BOOKMARK, new OpenBookmark());

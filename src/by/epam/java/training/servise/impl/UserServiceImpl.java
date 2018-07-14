@@ -18,11 +18,11 @@ public class UserServiceImpl implements UserService {
     private final UserDAO userDAO = DAOFactory.getUserDAO();
 
     @Override
-    public boolean isExistLoginAndPassword(SignInForm signInForm) throws DAOException {
+    public boolean isExistUser(SignInForm signInForm) throws DAOException {
         if (!ValidatorManager.isValid(ValidatorType.SIGN_IN_FORM_VALIDATOR, signInForm)){
             return false;
         }
-        return userDAO.isExistLoginAndPassword(signInForm);
+        return userDAO.isExistUser(signInForm);
 
     }
 

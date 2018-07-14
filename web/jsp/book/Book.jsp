@@ -58,8 +58,9 @@
             price: <h5><c:out value="${requestScope.book.price}"/></h5>
             Pages: <p><c:out value="${requestScope.book.pages}"/></p>
             publishingHouse: <p><c:out value="${requestScope.book.publishingHouse.name}"/></p>
-            Author: <p><c:out value="${requestScope.book.getAuthorsAsString()}"/></p>
+            Author: <p><c:out value="${requestScope.book.getAuthors()}"/></p>
             Genre: <p><c:out value="${requestScope.book.getGenresAsString()}"/></p>
+
             <form method="post" action="/book">
                 <input type="hidden" name="command" value="read_book">
                 <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
@@ -70,9 +71,10 @@
                 <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
                 <button type="submit">Go to Bookmark</button>
             </form>
+            <a href="<c:out value="${requestScope.book.pdfFileUrl}"/>" target="_blank">pdf file</a>
         </div>
 
     </section> <!-- s-content -->
-    Hello)
+    <jsp:include page="../Footer.jsp"/>
     </body>
 </html>

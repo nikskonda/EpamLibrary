@@ -5,6 +5,7 @@ import by.epam.java.training.dao.ModeratorDAO;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.dao.impl.ModeratorDAOImpl;
 import by.epam.java.training.model.book.Book;
+import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.model.news.News;
 import by.epam.java.training.servise.ModeratorService;
 import by.epam.java.training.servise.validation.ValidatorManager;
@@ -12,6 +13,7 @@ import by.epam.java.training.servise.validation.ValidatorType;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class ModeratorServiceImpl implements ModeratorService {
     private static final Logger logger = Logger.getLogger(ModeratorServiceImpl.class);
@@ -73,5 +75,14 @@ public class ModeratorServiceImpl implements ModeratorService {
             return false;
         }
         return moderatorDAO.delBook(bookId);
+    }
+
+
+    @Override
+    public boolean isModerator(String login) throws DAOException {
+        if (!ValidatorManager.isValid(ValidatorType.LOGIN_VALIDATOR, login)){
+            return false;
+        }
+        return moderatorDAO.isModerator(login);
     }
 }

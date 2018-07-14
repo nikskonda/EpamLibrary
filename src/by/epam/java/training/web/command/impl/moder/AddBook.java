@@ -2,6 +2,7 @@ package by.epam.java.training.web.command.impl.moder;
 
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.book.Book;
+import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.model.book.constituents.PublishingHouse;
 import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.servise.ModeratorService;
@@ -34,6 +35,7 @@ public class AddBook extends AbstractCommand {
                 redirect(response, SIGN_IN);
                 return;
             }
+            String[] genres = request.getParameterValues(GENRES);
             Book defBook = new Book();
             defBook.setName(request.getParameter(BOOK_NAME));
             defBook.setDescription(request.getParameter(BOOK_DESCRIPTION));
@@ -45,6 +47,11 @@ public class AddBook extends AbstractCommand {
             defBook.setCoverUrl(request.getParameter(BOOK_COVER_URL));
             defBook.setPublishingHouse(
                     new PublishingHouse(request.getParameter(BOOK_PUBLISHING_HOUSE)));
+            for (String genreId : genres){
+                defBook.addGenre(
+                        new Genre(Integer.parseInt(genreId)));
+            }
+
             Book translatedBook = new Book();
             translatedBook.setName(request.getParameter(BOOK_NAME_RU));
             translatedBook.setDescription(request.getParameter(BOOK_DESCRIPTION_RU));

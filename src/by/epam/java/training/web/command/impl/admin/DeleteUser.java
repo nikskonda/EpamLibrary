@@ -6,6 +6,7 @@ import by.epam.java.training.model.user.form.SignInForm;
 import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
 
+import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
 import by.epam.java.training.web.command.CommandName;
@@ -34,10 +35,11 @@ public class DeleteUser extends AbstractCommand {
             ActiveUser user = (ActiveUser) session.getAttribute(USER);
             String password = EncriptionMD5.encrypt(request.getParameter(PASSWORD));
             Integer userId = Integer.parseInt(request.getParameter(USER_ID));
-            AdministratorService userService = ServiceFactory.getAdministratorService();
+            AdministratorService adminService = ServiceFactory.getAdministratorService();
+            UserService userService = ServiceFactory.getUserService();
 
-            if (userService.isAdministrator(new SignInForm(user.getLogin(), password))){
-                userService.deleteUser(userId);
+            if (userService.isExistUser(new SignInForm(user.getLogin(), password))){
+                adminService.deleteUser(userId);
                 CommandFactory.getCommand(CommandName.SHOW_USER_LIST).execute(request, response);
             }else{
                 request.setAttribute(ERROR_DEL_EXIST, true);

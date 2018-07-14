@@ -7,6 +7,7 @@ import by.epam.java.training.dao.exception.TransactionException;
 import by.epam.java.training.dao.transaction.TransactionFactory;
 import by.epam.java.training.dao.util.ConnectionPool;
 import by.epam.java.training.model.book.Book;
+import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.model.news.News;
 import org.apache.log4j.Logger;
 
@@ -162,6 +163,9 @@ public class ModeratorTransactionImpl extends AbstractDAO implements ModeratorTr
             Integer bookId = addDefBook(defBook, con);
             translatedBook.setId(bookId);
             addTranslatedBook(translatedBook, lang, con);
+            for (Genre genre : defBook.getGenres()){
+                addGenres(bookId, genre.getId(), con);
+            }
 
             con.commit();
             con.setAutoCommit(true);
@@ -210,6 +214,16 @@ public class ModeratorTransactionImpl extends AbstractDAO implements ModeratorTr
         return newsId;
     }
 
+    private void addGenres(Integer bookId, Integer genreId, Connection con) throws SQLException{
+        CallableStatement cstmt = con.prepareCall(ADD_BOOK_GENRES);
+
+        cstmt.setInt(BOOK_ID, bookId);
+        cstmt.setInt(GENRE_ID, genreId);
+
+        cstmt.executeQuery();
+        closeCallableStatement(cstmt);
+    }
+
     private void addTranslatedBook(Book translatedBook, String lang, Connection con) throws SQLException{
         CallableStatement cstmt = con.prepareCall(ADD_TRANSLATED_BOOK);
 
@@ -237,7 +251,10 @@ public class ModeratorTransactionImpl extends AbstractDAO implements ModeratorTr
 
             updateDefBook(defBook, con);
             updateTranslatedBook(translatedBook, lang, con);
-
+            deleteGenres(defBook.getId(), con);
+            for (Genre genre : defBook.getGenres()){
+                addGenres(defBook.getId(), genre.getId(), con);
+            }
             con.commit();
             con.setAutoCommit(true);
 
@@ -260,6 +277,15 @@ public class ModeratorTransactionImpl extends AbstractDAO implements ModeratorTr
             putbackConnection(con, conPool);
         }
         return result;
+    }
+
+    private void deleteGenres(Integer bookId, Connection con) throws SQLException{
+        CallableStatement cstmt = con.prepareCall(DELETE_BOOK_GENRES);
+
+        cstmt.setInt(BOOK_ID, bookId);
+
+        cstmt.executeQuery();
+        closeCallableStatement(cstmt);
     }
 
     private void updateDefBook(Book defBook, Connection con) throws SQLException{

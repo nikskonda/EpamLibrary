@@ -20,7 +20,7 @@ public class BookSearchServiceImpl implements BookSearchService {
 
 
     @Override
-    public List<BookCover> getBooksByPage(String search, LordOfPages pageData) throws DAOException {
+    public List<BookCover> findBooksByPage(String search, LordOfPages pageData) throws DAOException {
         if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageData) ||
                 !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, search)){
             return null;

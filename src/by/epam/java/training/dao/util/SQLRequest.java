@@ -13,10 +13,14 @@ public class SQLRequest {
     public final static String GET_USER_BY_ID = "{call get_user_by_id(?)}";
     public final static String UPDATE_USER = "{call update_user(?,?,?,?,?)}";
     public final static String GET_LIST_OF_ROLES = "{call get_list_of_roles()}";
-    public final static String GET_LIST_OF_USERS = "{call get_list_of_users()}";
+    public final static String GET_LIST_OF_USERS = "{call get_list_of_users(?,?)}";
+    public final static String FIND_LIST_OF_USERS = "{call find_user(?,?,?)}";
+    public final static String CALC_TOTAL_PAGES_IN_USERS = "{call calc_pages_in_users(?,?)}";
+    public final static String CALC_TOTAL_PAGES_IN_USERS_SEARCH = "{call calc_pages_in_users_search(?,?,?)}";
     public final static String CHANGE_USER_ROLE = "{call change_user_role(?,?)}";
     public final static String DELETE_USER = "{call delete_user(?)}";
-    public final static String IS_ADMINISTRATOR = "{call is_administrator(?,?,?)}";
+    public final static String IS_ADMINISTRATOR = "{call is_administrator(?,?)}";
+    public final static String IS_MODERATOR = "{call is_moderator(?,?)}";
 
 
     //Column labels
@@ -29,6 +33,9 @@ public class SQLRequest {
     public final static String USER_REGISTRATION_DATE = "registration_date";
     public final static String USER_ROLE_ID = "role_id";
     public final static String USER_ROLE_NAME = "role_name";
+
+    public final static String COUNT_USERS_ON_PAGE = "count_users_on_page";
+
 
     //BOOKS
     public final static String GET_BOOK = "{call get_book(?,?)}";
@@ -56,6 +63,7 @@ public class SQLRequest {
     public final static String BOOK_PAGES = "pages";
     public final static String BOOK_PUBLISHING_HOUSE_ID = "publishing_house_id";
     public final static String BOOK_PUBLISHING_HOUSE_NAME = "publishing_house_name";
+    public final static String BOOK_AUTHORS = "authors";
     public final static String BOOK_COVER_URL = "cover_url";
     public final static String BOOK_PDF_FILE_URL = "pdf_file_url";
     public final static String BOOK_TEXT_FILE_URL = "text_file_url";
@@ -63,15 +71,12 @@ public class SQLRequest {
     public final static String SEARCH = "search";
     public final static String PAGE_NUMBER = "page_number";
 
-    //AUTHORS
-    public final static String GET_BOOK_AUTHORS = "{call get_book_authors(?)}";
-    //Column labels
-    public final static String AUTHOR_ID = "author_id";
-    public final static String AUTHOR_FIRST_NAME = "first_name";
-    public final static String AUTHOR_LAST_NAME = "last_name";
 
     //GENRES
-    public final static String GET_BOOK_GENRES = "{call get_book_genres(?)}";
+    public final static String GET_BOOK_GENRES = "{call get_book_genres(?,?)}";
+    public final static String GET_LIST_OF_GENRES = "{call get_list_of_genres(?)}";
+    public final static String ADD_BOOK_GENRES = "{call add_book_genre(?,?)}";
+    public final static String DELETE_BOOK_GENRES = "{call delete_book_genre(?)}";
     //Column labels
     public final static String GENRE_ID = "genre_id";
     public final static String GENRE_NAME = "genre_name";

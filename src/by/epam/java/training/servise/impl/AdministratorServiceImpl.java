@@ -4,6 +4,7 @@ import by.epam.java.training.dao.AdministratorDAO;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
+import by.epam.java.training.model.LordOfPages;
 import by.epam.java.training.model.user.*;
 import by.epam.java.training.model.user.constituents.Role;
 import by.epam.java.training.model.user.form.SignInForm;
@@ -21,17 +22,33 @@ public class AdministratorServiceImpl implements AdministratorService {
     private final AdministratorDAO administratorDAO = DAOFactory.getAdministratorDAO();
 
     @Override
-    public boolean isAdministrator(SignInForm signInForm) throws ConnectionPoolException {
-        if (!ValidatorManager.isValid(ValidatorType.SIGN_IN_FORM_VALIDATOR, signInForm)){
+    public boolean isAdministrator(String login) throws DAOException {
+        if (!ValidatorManager.isValid(ValidatorType.LOGIN_VALIDATOR, login)){
             return false;
         }
-        return administratorDAO.isAdministrator(signInForm);
+        return administratorDAO.isAdministrator(login);
 
     }
 
+
     @Override
-    public List<User> getUsers() {
-        return administratorDAO.getUsers();
+    public List<User> getUsersByPages(LordOfPages pageData) {
+        return administratorDAO.getUsersByPages(pageData);
+    }
+
+    @Override
+    public Integer calcTotalPagesWithUsers(Integer countUsersOnOnePage) throws DAOException {
+        return administratorDAO.calcTotalPagesWithUsers(countUsersOnOnePage);
+    }
+
+    @Override
+    public List<User> FindUsersByPages(String search, LordOfPages pageData) {
+        return administratorDAO.FindUsersByPages(search, pageData);
+    }
+
+    @Override
+    public Integer calcTotalPagesWithUsersSearch(String search, Integer countUsersOnOnePage) throws DAOException {
+        return administratorDAO.calcTotalPagesWithUsersSearch(search, countUsersOnOnePage);
     }
 
     @Override

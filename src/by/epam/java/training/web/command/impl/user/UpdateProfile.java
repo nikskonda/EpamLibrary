@@ -6,7 +6,6 @@ import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
-import by.epam.java.training.web.command.CommandManager;
 import by.epam.java.training.web.command.CommandName;
 import by.epam.java.training.web.util.EncriptionMD5;
 import org.apache.log4j.Logger;
@@ -47,7 +46,7 @@ public class UpdateProfile extends AbstractCommand {
 
             UserService userService = ServiceFactory.getUserService();
 
-            if (!userService.isExistLoginAndPassword(profile)){
+            if (!userService.isExistUser(profile)){
                 request.setAttribute(ERROR_MATCH, true);
                 request.setAttribute(USER_PROFILE, profile);
                 forward(request, response, PROFILE);

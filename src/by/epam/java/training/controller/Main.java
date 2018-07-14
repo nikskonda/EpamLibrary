@@ -21,7 +21,7 @@ public class Main {
 //
 //        UserService us = new UserServiceImpl();
 //
-//        System.out.println(us.isExistLoginAndPassword(au));
+//        System.out.println(us.isExistUser(au));
 
 //        String str = "^[\\w]+@[a-zA-Z]+\\.[a-z]+$";
 //        System.out.println("qwe".matches(str));
@@ -53,7 +53,7 @@ public class Main {
 //        af.setLogin("admin");
 //        af.setPassword("admin1");
 //
-//        if (ServiceFactory.getInstance().getUserService().isExistLoginAndPassword(af)){
+//        if (ServiceFactory.getInstance().getUserService().isExistUser(af)){
 //            ActiveUser auser = ServiceFactory.getInstance().getUserService().getActiveUser(af.getLogin());
 //            System.out.println(auser.getId());
 //        }
@@ -101,7 +101,9 @@ public class Main {
 //        date.setTime((long)720775807);
 //        System.out.println(date);
 //        System.out.println(Long.MAX_VALUE);
-        System.out.println(Integer.MAX_VALUE);
-        System.out.println(Long.MAX_VALUE);
+//        System.out.println(Integer.MAX_VALUE);
+//        System.out.println(Long.MAX_VALUE);
+
+        System.out.println("uyt/d4.jpg.jp".matches("^.+\\.jpg$"));
     }
 }

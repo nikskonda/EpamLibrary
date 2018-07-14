@@ -32,6 +32,7 @@
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 </head>
 <body>
+    <jsp:include page="../Header.jsp"/>
 <section class="s-content">
     <div class="row">
         <form action="/moderator" method="POST" enctype="multipart/form-data">
@@ -65,6 +66,26 @@
             <img src="<c:out value="${requestScope.book.coverUrl}"/>" width="200px" height="200px">
             <input type="file" name="coverUrl">
 
+            list of genres:
+            <c:choose>
+                <c:when test="${requestScope.genres.size()>0}">
+                    <c:forEach var="genre" items="${requestScope.genres}">
+                        <c:choose>
+                            <c:when test="${requestScope.book.getGenres().contains(genre) or requestScope.bookRU.getGenres().contains(genre)}">
+                                <input type="checkbox" name="genres" value="${genre.id}" checked="true"><c:out value="${genre.name}" />
+                            </c:when>
+                            <c:otherwise>
+                                <input type="checkbox" name="genres" value="${genre.id}"><c:out value="${genre.name}"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <p>genre нет, сорян</p>
+                </c:otherwise>
+            </c:choose>
+
+
             <input type="submit" value="Edit book">
         </form>
 
@@ -78,5 +99,6 @@
         </div>
     </div>
 </section>
+<jsp:include page="../Footer.jsp"/>
 </body>
 </html>

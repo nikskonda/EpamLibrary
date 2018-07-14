@@ -15,40 +15,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Page.*;
+import static by.epam.java.training.web.command.Page.SIGN_IN;
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
-public class SignIn extends AbstractCommand {
+public class SignOut extends AbstractCommand {
 
-    private static final Logger logger = Logger.getLogger(SignIn.class);
+    private static final Logger logger = Logger.getLogger(SignOut.class);
 
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            SignInForm authForm = new SignInForm();
-
-            authForm.setLogin(request.getParameter(LOGIN));
-            authForm.setPassword(EncriptionMD5.encrypt(request.getParameter(PASSWORD)));
-
-            UserService userService = ServiceFactory.getUserService();
-
-            if (!userService.isExistUser(authForm)){
-                request.setAttribute(ERROR_EXIST, true);
-                request.setAttribute(SIGN_IN_FORM, authForm);
-                forward(request, response, SIGN_IN);
-                return;
-            }
-            request.setAttribute(ERROR_EXIST, false);
-            ActiveUser user = userService.getActiveUser(authForm.getLogin());
             HttpSession session = request.getSession();
-            session.setAttribute(USER, user);
+            session.setAttribute(USER, null);
 
             executeLastAction(request, response);
-
-        } catch (DAOException ex){
-            logger.warn("Problem with database", ex);
-            request.setAttribute(ERROR_DATABASE, true);
         } catch (IOException ex){
             logger.warn("Error in pages path", ex);
             request.setAttribute(ERROR_PATH, true);

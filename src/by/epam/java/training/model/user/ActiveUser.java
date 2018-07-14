@@ -1,5 +1,7 @@
 package by.epam.java.training.model.user;
 
+import by.epam.java.training.model.user.constituents.Role;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,7 +10,7 @@ public class ActiveUser implements Serializable {
 
     private Integer id;
     private String login;
-    private String role;
+    private Role role;
 
     public ActiveUser() {
     }
@@ -35,12 +37,11 @@ public class ActiveUser implements Serializable {
         this.login = login;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
-
 }

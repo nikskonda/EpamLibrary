@@ -1,7 +1,7 @@
-package by.epam.java.training.web.filter.user;
+package by.epam.java.training.web.filter;
 
-import by.epam.java.training.web.filter.user.util.PathManager;
-import by.epam.java.training.web.util.EncriptionMD5;
+import by.epam.java.training.web.command.Page;
+import by.epam.java.training.web.filter.util.PathManager;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -16,31 +16,27 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-public class FileUpload implements Filter {
+public class FileUpload extends AbstractFilter {
 
     private static final Logger logger = Logger.getLogger(FileUpload.class);
 
     private static final String DEFAULT_CHARSET = "ISO-8859-1";
     private static final String RUSSIAN_CHARSET = "UTF-8";
     private static final String TEMP_DIR = "javax.servlet.context.tempdir";
+    private static final String DOT = ".";
 
-    private FilterConfig filterConfig = null;
     private final Random random = new Random();
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        this.filterConfig = filterConfig;
-    }
-
-    @Override
-    public void destroy() {
-        filterConfig = null;
-    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         try{
+
+//            boolean isMultipart = ServletFileUpload.isMultipartContent(httpRequest);
+//            if (!isMultipart) {
+//                forward(httpRequest, (HttpServletResponse)response, Page.ERROR);
+//                return;
+//            }
 
             DiskFileItemFactory factory = new DiskFileItemFactory();
 
@@ -108,8 +104,6 @@ public class FileUpload implements Filter {
         item.write(uploadetFile);
         return fileName;
     }
-
-    private static final String DOT = ".";
 
     private String nameGenerate(String oldName){
         Integer newName = random.nextInt();

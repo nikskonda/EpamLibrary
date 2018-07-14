@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="main-login main-center">
-                        <form class="form-horizontal" method="post" action="/sign_up" onsubmit="return isValidSignUpForm()">
+                        <form class="form-horizontal" method="post" action="/signUp" onsubmit="return isValidSignUpForm()">
                             <input type="hidden" name="command" value="sign_up">
                             <div class="form-group">
                                 <label for="login" class="cols-sm-2 control-label">${login}</label>
@@ -153,8 +153,15 @@
                             <div class="form-group ">
                                 <button type="submit" class="btn btn-primary btn-lg btn-block login-button">${signup}</button>
                             </div>
+                            <div class="form-group ">
+                                <a class="btn btn-primary btn-lg btn-block login-button" href="/openSignIn">signin</a>
+                            </div>
+                            <div class="form-group ">
+                                <a class="btn btn-primary btn-lg btn-block login-button" href="/news?command=open_news_list">Home</a>
+                            </div>
                         </form>
                     </div>
+
                 </div>
             </div>
         </section>

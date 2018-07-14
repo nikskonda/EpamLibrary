@@ -31,8 +31,6 @@ public class SignUp extends AbstractCommand {
 
         try {
             SignUpForm signUpForm = new SignUpForm();
-
-
             signUpForm.setLogin(request.getParameter(LOGIN));
             signUpForm.setPassword(EncriptionMD5.encrypt(request.getParameter(PASSWORD)));
             signUpForm.setConfirmPassword(request.getParameter(CONFIRM_PASSWORD));
@@ -42,13 +40,6 @@ public class SignUp extends AbstractCommand {
 
             UserService userService = ServiceFactory.getUserService();
 
-            if (!userService.isFreeLogin(signUpForm.getLogin())) {
-                request.setAttribute(SIGN_UP_FORM, signUpForm);
-                request.setAttribute(ERROR_EXIST, true);
-                forward(request, response, SIGN_UP);
-                return;
-            }
-            request.setAttribute(ERROR_EXIST, false);
             ActiveUser user = userService.addUser(signUpForm);
             if (user == null) {
                 redirect(response, ERROR);
