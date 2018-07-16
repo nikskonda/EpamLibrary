@@ -67,22 +67,22 @@
                     <c:when test="${requestScope.books.size()>0}">
                         <c:forEach var="book" items="${requestScope.books}">
                             <article class="masonry__brick entry format-standard">
-                                <img class="entry__thumb" src="../<c:out value="${book.getCoverUrl()}"/>" alt="">
-                                <div class="entry__text">
-                                    <div class="entry__header">
-                                        <h1 class="entry__title"><c:out value="${book.getName()}"/></h1>
+                                    <img class="entry__thumb" src="../<c:out value="${book.getCoverUrl()}"/>" alt="">
+                                    <div class="entry__text">
+                                        <div class="entry__header">
+                                            <h1 class="entry__title"><c:out value="${book.getName()}"/></h1>
+                                        </div>
+                                        <div class="entry__date">
+                                            <p><c:out value="${book.getPublishYear()}"/></p>
+                                        </div>
+                                        <div class="entry__meta">
+                                            <form action="/book" method="post">
+                                                <input type="hidden" name="command" value="open_book">
+                                                <input type="hidden" name="book_id" value="<c:out value="${book.id}"/>">
+                                                <input class="btn btn--stroke full-width" type="submit" value="More" />
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="entry__date">
-                                        <p><c:out value="${book.getPublishYear()}"/></p>
-                                    </div>
-                                    <div class="entry__meta">
-                                        <form action="/book" method="post">
-                                            <input type="hidden" name="command" value="open_book">
-                                            <input type="hidden" name="book_id" value="<c:out value="${book.id}"/>">
-                                            <input class="btn btn--stroke full-width" type="submit" value="More" />
-                                        </form>
-                                    </div>
-                                </div>
                             </article>
 
                         </c:forEach>
@@ -140,8 +140,10 @@
             </div>
         </div>
     </section> <!-- s-content -->
-
-
     <jsp:include page="../Footer.jsp"/>
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
     </body>
 </html>

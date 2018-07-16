@@ -66,7 +66,7 @@
 <section class="s-content">
     <div class="container">
         <div class="row">
-            <form method="post" action="/profile" onsubmit="return isValidProfileForm()">
+            <form style="width: 50%; margin: 0 auto;" method="post" action="/profile" onsubmit="return isValidProfileForm()">
                 <input type="hidden" name="command" value="update_profile"/>
                 <div>
                     <label for="login">${login}</label>

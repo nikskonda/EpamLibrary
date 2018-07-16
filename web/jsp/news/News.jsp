@@ -46,32 +46,31 @@
             <button type="submit">Edit</button>
         </form>
     </div>
-    <div class="s-content__header col-full">
-        <h1 class="s-content__header-title">
-            <c:out value="${requestScope.news.getTitle()}"/>
-        </h1>
-        <ul class="s-content__header-meta">
-            <li class="date"><fmt:formatDate type="both" pattern="HH:mm dd-MMM-yy" value="${requestScope.news.publishDate}"/></li>
-            <li class="cat">
-                By <c:out value="${requestScope.news.getUserFirstName()}"/> <c:out value="${requestScope.news.getUserLastName()}"/>
-            </li>
-        </ul>
-    </div> <!-- end s-content__header -->
+        <div class="s-content__header col-full">
+            <h1 class="s-content__header-title">
+                <c:out value="${requestScope.news.getTitle()}"/>
+            </h1>
+            <ul class="s-content__header-meta">
+                <li class="date"><fmt:formatDate type="both" pattern="HH:mm dd-MMM-yy" value="${requestScope.news.publishDate}"/></li>
+                <li class="cat">
+                    By <c:out value="${requestScope.news.getUserFirstName()}"/> <c:out value="${requestScope.news.getUserLastName()}"/>
+                </li>
+            </ul>
+        </div> <!-- end s-content__header -->
 
-    <div class="s-content__media col-full" style="display: flex; justify-content: center;">
-        <img src="<c:out value="${requestScope.news.photoUrl}"/>" alt="" >
-    </div> <!-- end s-content__media -->
+        <div class="s-content__media col-full" style="display: flex; justify-content: center;">
+                <img src="<c:out value="${requestScope.news.photoUrl}"/>" alt="" >
+        </div> <!-- end s-content__media -->
 
-    <div class="col-full s-content__main">
-        <c:forEach var="paragraph" items="${requestScope.news_text}">
-            <p><c:out value="${paragraph}"/></p>
-        </c:forEach>
+        <div class="col-full s-content__main">
+            <c:forEach var="paragraph" items="${requestScope.news_text}">
+                <p><c:out value="${paragraph}"/></p>
+            </c:forEach>
 
-    </div>
+        </div>
     </article>
 
 </section>
-
 <jsp:include page="../Footer.jsp"/>
 </body>
 </html>

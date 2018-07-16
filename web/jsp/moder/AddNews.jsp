@@ -43,14 +43,14 @@
                 <div class="col-lg-6">
                     <input type="text" id="news_title" name="news_title" placeholder="Enter title here..." style="width: 100%" value="<c:out value="${requestScope.news.getTitle()}"/>">
                     <p class="error-input" id="titleError"></p>
-                    <textarea id="news_text" name="news_text" style="width: 100%"><c:out value="${requestScope.news.getText()}"/></textarea>
+                    <textarea class="add_book_descr" placeholder="text of news" id="news_text" name="news_text" style="width: 100%"><c:out value="${requestScope.news.getText()}"/></textarea>
                     <p class="error-input" id="textError"></p>
                 </div>
                 <div class="col-lg-6">
                     <input type="hidden" name="news_lang" value="ru" >
-                    <input type="text" id="news_title_ru" name="news_title_ru" placeholder="Enter title here..." style="width: 100%" value="<c:out value="${requestScope.newsRU.getTitle()}"/>">
+                    <input type="text" id="news_title_ru" name="news_title_ru" placeholder="Enter RU title here..." style="width: 100%" value="<c:out value="${requestScope.newsRU.getTitle()}"/>">
                     <p class="error-input" id="titleRuError"></p>
-                    <textarea id="news_text_ru" name="news_text_ru" style="width: 100%"><c:out value="${requestScope.newsRU.getText()}"/></textarea>
+                    <textarea class="add_book_descr" placeholder="text of news RU" id="news_text_ru" name="news_text_ru" style="width: 100%"><c:out value="${requestScope.newsRU.getText()}"/></textarea>
                     <p class="error-input" id="textRuError"></p>
                 </div>
                 PHOTO

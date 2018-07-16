@@ -53,9 +53,9 @@
             <input type="hidden" name="command" value="add_book" >
 
             <div class="col-lg-6">
-                <input type="text" id="name" name="name" style="width: 100%" value="<c:out value="${requestScope.book.getName()}"/>" required>
+                <input type="text" id="name" name="name" placeholder="name of book" style="width: 100%" value="<c:out value="${requestScope.book.getName()}"/>" required placeholder="name of book" >
                 <p class="error-input" id="nameError"></p>
-                <textarea id="description" name="description" style="width: 100%" required><c:out value="${requestScope.book.getDescription()}"/></textarea>
+                <textarea id="description" name="description" class="add_book_descr" name="description" placeholder="Enter description here..." style="width: 100%" required><c:out value="${requestScope.book.getDescription()}"/></textarea>
                 <p class="error-input" id="descriptionError"></p>
                 <input type="text" id="authors" name="authors" style="width: 100%" value="<c:out value="${requestScope.bookRU.getName()}"/>" required>
                 <p class="error-input" id="authorsError"></p>
@@ -68,9 +68,9 @@
             </div>
             <div class="col-lg-6">
                 <input type="hidden"name="lang" value="ru" >
-                <input type="text" id="nameRU" name="nameRU" style="width: 100%" value="<c:out value="${requestScope.bookRU.getName()}"/>" required>
+                <input type="text" id="nameRU" name="nameRU" placeholder="RU name of book" style="width: 100%" value="<c:out value="${requestScope.bookRU.getName()}"/>" required>
                 <p class="error-input" id="nameRuError"></p>
-                <textarea id="descriptionRU" name="descriptionRU" style="width: 100%" required placeholder="Enter here"><c:out value="${requestScope.bookRU.getDescription()}"/></textarea>
+                <textarea id="descriptionRU" name="descriptionRU" class="add_book_descr" required placeholder="Enter RU description here..." style="width: 100%"><c:out value="${requestScope.bookRU.getDescription()}"/></textarea>
                 <p class="error-input" id="descriptionRuError"></p>
                 <input type="text" id="authorsRU" name="authorsRU" style="width: 100%" value="<c:out value="${requestScope.bookRU.getName()}"/>" required>
                 <p class="error-input" id="authorsRuError"></p>
@@ -82,14 +82,14 @@
                 <p class="error-input" id="pdfRuError"></p>
             </div>
 
-            <input type="number" id="year" name="year" value="<c:out value="${requestScope.book.publishYear}"/>" required>
+            <input type="number" id="year" name="year" placeholder="year" value="<c:out value="${requestScope.book.publishYear}"/>" required>
             <p class="error-input" id="yearError"></p>
-            <input type="number" id="price" name="price" min="0" step="0.1" value="<c:out value="${requestScope.book.getPrice()}"/>" required>
+            <input type="number" id="price" name="price" min="0" step="0.1" placeholder="price" value="<c:out value="${requestScope.book.getPrice()}"/>" required>
             <p class="error-input" id="priceError"></p>
 
-            <input type="number" id="pages" name="pages" value="<c:out value="${requestScope.book.getPages()}"/>" required>
+            <input type="number" id="pages" name="pages" placeholder="pages" value="<c:out value="${requestScope.book.getPages()}"/>" required>
             <p class="error-input" id="pagesError"></p>
-            <input type="text" id="publishingHouse" name="publishingHouse" value="<c:out value="${requestScope.book.getPublishingHouse().getName()}"/>" required>
+            <input type="text" id="publishingHouse" name="publishingHouse" placeholder="publishing house" value="<c:out value="${requestScope.book.getPublishingHouse().getName()}"/>" required>
             <p class="error-input" id="publishingHouseError"></p>
             cover
             <input type="file" id="coverUrl" name="coverUrl" required>
@@ -99,7 +99,9 @@
             <c:choose>
                 <c:when test="${requestScope.genres.size()>0}">
                     <c:forEach var="genre" items="${requestScope.genres}">
-                        <input type="checkbox" name="genres" value="${genre.id}"><c:out value="${genre.name}"/>
+                        <div class="genre-checkbox">
+                            <input type="checkbox" name="genres" value="${genre.id}"><c:out value="${genre.name}"/>
+                        </div>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
@@ -108,7 +110,7 @@
             </c:choose>
             <p class="error-input" id="genresError"></p>
 
-            <input type="submit" value="Add book">
+            <input class="add_book_button" type="submit" value="Add book">
         </form>
     </div>
 </section>

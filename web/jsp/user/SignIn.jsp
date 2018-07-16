@@ -91,7 +91,7 @@
                                 <button type="submit" class="btn btn-primary btn-lg btn-block login-button">${signin}</button>
                             </div>
                             <div class="form-group ">
-                                <a class="btn btn-primary btn-lg btn-block login-button" href="/openSignUp">Sign Up</a>
+                                <a class="btn btn-primary btn-lg btn-block login-button" href="/openSignUp">signup</a>
                             </div>
                             <div class="form-group ">
                                 <a class="btn btn-primary btn-lg btn-block login-button" href="/news?command=open_news_list">Home</a>
