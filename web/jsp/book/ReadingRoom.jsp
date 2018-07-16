@@ -100,6 +100,7 @@
 
 
     </section> <!-- s-content -->
+
     <jsp:include page="../Footer.jsp"/>
     </body>
 </html>

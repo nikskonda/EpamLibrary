@@ -1,4 +1,4 @@
-package by.epam.java.training.web.command.impl.moder;
+package by.epam.java.training.web.command.impl.moder.edit;
 
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.book.Book;
@@ -16,24 +16,30 @@ import java.io.IOException;
 
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
-public class OpenAddBook extends AbstractCommand {
+public class OpenEditingBook extends AbstractCommand {
 
-    private static final Logger logger = Logger.getLogger(OpenAddBook.class);
+    private static final Logger logger = Logger.getLogger(OpenEditingBook.class);
 
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
             BookService service = ServiceFactory.getBookService();
+            Integer bookId = Integer.parseInt(request.getParameter(BOOK_ID));
             HttpSession session = request.getSession(true);
             if (session.getAttribute(LOCALE)==null){
                 session.setAttribute(LOCALE, "en");
             }
             String locale = (String)session.getAttribute(LOCALE);
 
+            Book defBook = service.getBook(bookId, "en");
+            Book ruBook = service.getBook(bookId, "ru");
+
+            request.setAttribute(BOOK, defBook);
+            request.setAttribute(BOOK_RU, ruBook);
             request.setAttribute(GENRES, service.getListOfGenre(locale));
 
-            forward(request, response, Page.ADD_BOOK);
+            forward(request, response, Page.BOOK_EDIT);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

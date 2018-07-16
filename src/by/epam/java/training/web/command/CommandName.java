@@ -9,6 +9,7 @@ public class CommandName {
     public static final String FIND_USERS = "find_users";
 
     //moder
+    public static final String OPEN_ADD_NEWS = ("open_add_news");
     public static final String ADD_NEWS = ("add_news");
     public static final String OPEN_EDITING_NEWS = ("open_editing_news");
     public static final String EDIT_NEWS = ("edit_news");

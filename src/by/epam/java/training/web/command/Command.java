@@ -10,15 +10,4 @@ public interface Command {
     void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException;
 
-    void forward(HttpServletRequest request, HttpServletResponse response, String jspFileName)
-            throws ServletException, IOException;
-
-    void redirect(HttpServletResponse response, String destination)
-            throws ServletException, IOException;
-
-    void rememberLastAction(HttpServletRequest request)
-            throws ServletException;
-
-    void executeLastAction(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException;
 }

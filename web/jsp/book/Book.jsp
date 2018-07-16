@@ -60,21 +60,24 @@
             publishingHouse: <p><c:out value="${requestScope.book.publishingHouse.name}"/></p>
             Author: <p><c:out value="${requestScope.book.getAuthors()}"/></p>
             Genre: <p><c:out value="${requestScope.book.getGenresAsString()}"/></p>
-
-            <form method="post" action="/book">
-                <input type="hidden" name="command" value="read_book">
-                <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
-                <button type="submit">Read</button>
-            </form>
-            <form method="post" action="/book">
-                <input type="hidden" name="command" value="open_bookmark">
-                <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
-                <button type="submit">Go to Bookmark</button>
-            </form>
+            <div class="book_sets">
+                <form method="post" action="/book">
+                    <input type="hidden" name="command" value="read_book">
+                    <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
+                    <button type="submit">Read</button>
+                </form>
+                <form method="post" action="/book">
+                    <input type="hidden" name="command" value="open_bookmark">
+                    <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
+                    <button type="submit">Go to Bookmark</button>
+                </form>
+            </div>
             <a href="<c:out value="${requestScope.book.pdfFileUrl}"/>" target="_blank">pdf file</a>
         </div>
 
     </section> <!-- s-content -->
+
+
     <jsp:include page="../Footer.jsp"/>
     </body>
 </html>

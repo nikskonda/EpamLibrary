@@ -27,17 +27,15 @@ public class ShowBook extends AbstractCommand {
         try{
             rememberLastAction(request);
             BookService service = ServiceFactory.getBookService();
-
             HttpSession session = request.getSession(true);
-            if (session.getAttribute(LOCALE)==null){
-                session.setAttribute(LOCALE, "en");
-            }
             String locale = (String)session.getAttribute(LOCALE);
+            Integer bookId = getInt(request.getParameter(BOOK_ID));
 
-            Integer bookId = Integer.parseInt(request.getParameter(BOOK_ID));
             Book book = service.getBook(bookId, locale);
+
             request.setAttribute(BOOK_DATA, book);
             request.setAttribute(BOOK_DESCRIPTION, book.getDescription());
+
             forward(request, response, BOOK);
 
         } catch (DAOException ex){

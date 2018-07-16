@@ -31,6 +31,8 @@ function isValidSignUpForm() {
             result=false;
             loginField.borderColor = borderColorRed;
             loginError.innerText = validationErrorMessages.loginContentError;
+        } else{
+            clear(loginError);
         }
     } else {
         result = false;
@@ -42,12 +44,16 @@ function isValidSignUpForm() {
         result = false;
         passwordField.borderColor = borderColorRed;
         passwordError.innerText = validationErrorMessages.passwordLengthError;
+    }else{
+        clear(passwordError);
     }
 
     if (passwordField.value !== confirmPasswordField.value){
         result = false;
         confirmPasswordField.borderColor = borderColorRed;
         confirmPasswordError.innerText = validationErrorMessages.confirmPasswordError;
+    }else{
+        clear(confirmPasswordError);
     }
 
     if(firstNameField.value.length >= firstNameMinLength && firstNameField.value.length <= firstNameMaxLength){
@@ -55,6 +61,8 @@ function isValidSignUpForm() {
             result=false;
             firstNameField.borderColor = borderColorRed;
             firstNameError.innerText = validationErrorMessages.firstNameContentError;
+        }else{
+            clear(firstNameError);
         }
     } else {
         result = false;
@@ -67,6 +75,8 @@ function isValidSignUpForm() {
             result=false;
             lastNameField.borderColor = borderColorRed;
             lastNameError.innerText = validationErrorMessages.lastNameContentError;
+        }else{
+            clear(lastNameError);
         }
     } else {
         result = false;
@@ -78,6 +88,8 @@ function isValidSignUpForm() {
         result = false;
         emailField.borderColor = borderColorRed;
         emailError.innerText = validationErrorMessages.emailError;
+    }else{
+        clear(emailError);
     }
 
     return result;
@@ -103,6 +115,8 @@ function isValidSignInForm() {
             result=false;
             loginField.borderColor = borderColorRed;
             loginError.innerText = validationErrorMessages.loginContentError;
+        }else{
+            clear(loginError);
         }
     } else {
         result = false;
@@ -114,6 +128,8 @@ function isValidSignInForm() {
         result = false;
         passwordField.borderColor = borderColorRed;
         passwordError.innerText = validationErrorMessages.passwordLengthError;
+    }else{
+        clear(passwordError);
     }
 
     return result;
@@ -149,6 +165,8 @@ function isValidProfileForm() {
         result = false;
         oldPasswordField.borderColor = borderColorRed;
         oldPasswordError.innerText = validationErrorMessages.passwordLengthError;
+    }else{
+        clear(oldPasswordError);
     }
 
     if (!(isEmpty(newPasswordField.value) && isEmpty(confirmPasswordField.value))) {
@@ -157,12 +175,16 @@ function isValidProfileForm() {
             result = false;
             newPasswordField.borderColor = borderColorRed;
             newPasswordError.innerText = validationErrorMessages.passwordLengthError;
+        }else{
+            clear(newPasswordError);
         }
 
         if (newPasswordField.value !== confirmPasswordField.value) {
             result = false;
             confirmPasswordField.borderColor = borderColorRed;
             confirmPasswordError.innerText = validationErrorMessages.confirmPasswordError;
+        }else{
+            clear(confirmPasswordError);
         }
     }
 
@@ -171,6 +193,8 @@ function isValidProfileForm() {
             result=false;
             firstNameField.borderColor = borderColorRed;
             firstNameError.innerText = validationErrorMessages.firstNameContentError;
+        }else{
+            clear(firstNameError);
         }
     } else {
         result = false;
@@ -183,6 +207,8 @@ function isValidProfileForm() {
             result=false;
             lastNameField.borderColor = borderColorRed;
             lastNameError.innerText = validationErrorMessages.lastNameContentError;
+        }else{
+            clear(lastNameError);
         }
     } else {
         result = false;
@@ -194,6 +220,8 @@ function isValidProfileForm() {
         result = false;
         emailField.borderColor = borderColorRed;
         emailError.innerText = validationErrorMessages.emailError;
+    }else{
+        clear(emailError);
     }
 
     return result;
@@ -302,36 +330,48 @@ function isValidNewsForm() {
         result = false;
         title.borderColor = borderColorRed;
         titleError.innerText = validationErrorMessages.titleLengthError;
+    }else{
+        clear(titleError);
     }
 
     if(titleRu.value.length < titleMinLength || titleRu.value.length > titleMaxLength) {
         result = false;
         titleRu.borderColor = borderColorRed;
         titleRuError.innerText = validationErrorMessages.titleLengthError;
+    }else{
+        clear(titleRuError);
     }
 
     if(text.value.length < textMinLength || text.value.indexOf(DEFAULT_TEXT) !== -1 || text.value.indexOf(DEFAULT_TEXT2) !== -1) {
         result = false;
         text.borderColor = borderColorRed;
         textError.innerText = validationErrorMessages.textContentError;
+    }else{
+        clear(textError);
     }
 
     if(textRu.value.length < textMinLength || textRu.value.indexOf(DEFAULT_TEXT_RU) !== -1 || textRu.value.indexOf(DEFAULT_TEXT_RU2) !== -1) {
         result = false;
         textRu.borderColor = borderColorRed;
         textRuError.innerText = validationErrorMessages.textContentError;
+    }else{
+        clear(textRuError);
     }
 
     if(photo.files.length === 0 || photo.files[0].name.search(REGEXP_JPG) === -1) {
         result = false;
         photo.borderColor = borderColorRed;
         photoError.innerText = validationErrorMessages.photoError;
+    }else{
+        clear(photoError);
     }
 
     if(thumbs.files.length === 0 || thumbs.files[0].name.search(REGEXP_JPG) === -1) {
         result = false;
         thumbs.borderColor = borderColorRed;
         thumbsError.innerText = validationErrorMessages.thumbsError;
+    }else{
+        clear(thumbsError);
     }
 
     return result;
@@ -340,67 +380,182 @@ function isValidNewsForm() {
 function isValidBookForm() {
     var result = true;
 
-    var title = document.getElementById("news_title");
-    var text = document.getElementById("news_text");
-    var titleRu = document.getElementById("news_title_ru");
-    var textRu = document.getElementById("news_text_ru");
-    var photo = document.getElementById("news_photo_url");
-    var thumbs = document.getElementById("news_thumbs_url");
+    var name = document.getElementById("name");
+    var description = document.getElementById("description");
+    var authors = document.getElementById("authors");
+    var textUrl = document.getElementById("textUrl");
+    var pdfUrl = document.getElementById("pdfUrl");
 
-    var titleError = document.getElementById("titleError");
-    var titleRuError = document.getElementById("titleRuError");
+    var nameRu = document.getElementById("nameRU");
+    var descriptionRu = document.getElementById("descriptionRU");
+    var authorsRu = document.getElementById("authorsRU");
+    var textUrlRu = document.getElementById("textUrlRU");
+    var pdfUrlRu = document.getElementById("pdfUrlRU");
+
+    var year = document.getElementById("year");
+    var price = document.getElementById("price");
+    var pages = document.getElementById("pages");
+    var publishingHouse = document.getElementById("publishingHouse");
+    var coverUrl = document.getElementById("coverUrl");
+
+
+    var nameError = document.getElementById("nameError");
+    var descriptionError = document.getElementById("descriptionError");
+    var authorsError = document.getElementById("authorsError");
     var textError = document.getElementById("textError");
+    var pdfError = document.getElementById("pdfError");
+
+    var nameRuError = document.getElementById("nameRuError");
+    var descriptionRuError = document.getElementById("descriptionRuError");
+    var authorsRuError = document.getElementById("authorsRuError");
     var textRuError = document.getElementById("textRuError");
-    var photoError = document.getElementById("photoError");
-    var thumbsError = document.getElementById("thumbsError");
+    var pdfRuError = document.getElementById("pdfRuError");
 
-    var titleMinLength = 6, titleMaxLength = 100;
-    var textMinLength = 10;
+    var yearError = document.getElementById("yearError");
+    var priceError = document.getElementById("priceError");
+    var pagesError = document.getElementById("pagesError");
+    var publishingHouseError = document.getElementById("publishingHouseError");
+    var coverError = document.getElementById("coverError");
+    var genresError = document.getElementById("genresError");
 
-    var DEFAULT_TEXT = "Enter text here ...";
-    var DEFAULT_TEXT2 = "Введите английский текст здесь ...";
-    var DEFAULT_TEXT_RU = "Введите текст здесь ...";
-    var DEFAULT_TEXT_RU2 = "Enter russian text here ...";
+    var nameMinLength = 6, nameMaxLength = 100;
+    var authorsMinLength = 3, authorsMaxLength = 100;
+    var descMinLength = 10;
+    var phMinLength = 3, phMaxLength = 50;
+
+    var DEFAULT_DESC = "Enter english description here ...";
+    var DEFAULT_DESC2 = "Введите описание на английском здесь ...";
+    var DEFAULT_DESC_RU = "Введите описание на русском здесь ...";
+    var DEFAULT_DESC_RU2 = "Enter russian description here ...";
+    var REGEXP_TXT = "^.+\\.txt$";
+    var REGEXP_PDF = "^.+\\.pdf$";
     var REGEXP_JPG = "^.+\\.jpg$";
     var borderColorRed = "#F54D4D";
 
-    if(title.value.length < titleMinLength || title.value.length > titleMaxLength) {
+    if(name.value.length < nameMinLength || name.value.length > nameMaxLength) {
         result = false;
-        title.borderColor = borderColorRed;
-        titleError.innerText = validationErrorMessages.titleLengthError;
+        name.borderColor = borderColorRed;
+        nameError.innerText = validationErrorMessages.nameLengthError;
+    }else{
+        clear(nameError);
     }
 
-    if(titleRu.value.length < titleMinLength || titleRu.value.length > titleMaxLength) {
+    if(nameRu.value.length < nameMinLength || nameRu.value.length > nameMaxLength) {
         result = false;
-        titleRu.borderColor = borderColorRed;
-        titleRuError.innerText = validationErrorMessages.titleLengthError;
+        nameRu.borderColor = borderColorRed;
+        nameRuError.innerText = validationErrorMessages.nameLengthError;
+    }else{
+        clear(nameRuError);
     }
 
-    if(text.value.length < textMinLength || text.value.indexOf(DEFAULT_TEXT) !== -1 || text.value.indexOf(DEFAULT_TEXT2) !== -1) {
+    if(description.value.length < descMinLength || description.value.indexOf(DEFAULT_DESC) !== -1 || description.value.indexOf(DEFAULT_DESC2) !== -1) {
         result = false;
-        text.borderColor = borderColorRed;
-        textError.innerText = validationErrorMessages.textContentError;
+        description.borderColor = borderColorRed;
+        descriptionError.innerText = validationErrorMessages.descriptionContentError;
+    }else{
+        clear(descriptionError);
+    }
+    if(descriptionRu.value.length < descMinLength || descriptionRu.value.indexOf(DEFAULT_DESC_RU) !== -1 || descriptionRu.value.indexOf(DEFAULT_DESC_RU2) !== -1) {
+        result = false;
+        descriptionRu.borderColor = borderColorRed;
+        descriptionRuError.innerText = validationErrorMessages.descriptionContentError;
+    }else{
+        clear(descriptionRuError);
     }
 
-    if(textRu.value.length < textMinLength || textRu.value.indexOf(DEFAULT_TEXT_RU) !== -1 || textRu.value.indexOf(DEFAULT_TEXT_RU2) !== -1) {
+    if(authors.value.length < authorsMinLength || authors.value.length > authorsMaxLength) {
         result = false;
-        textRu.borderColor = borderColorRed;
-        textRuError.innerText = validationErrorMessages.textContentError;
+        authors.borderColor = borderColorRed;
+        authorsError.innerText = validationErrorMessages.authorsLengthError;
+    }else{
+        clear(authorsError);
     }
 
-    if(photo.files.length === 0 || photo.files[0].name.search(REGEXP_JPG) === -1) {
+    if(authorsRu.value.length < authorsMinLength || authorsRu.value.length > authorsMaxLength) {
         result = false;
-        photo.borderColor = borderColorRed;
-        photoError.innerText = validationErrorMessages.photoError;
+        authorsRu.borderColor = borderColorRed;
+        authorsRuError.innerText = validationErrorMessages.authorsLengthError;
+    }else{
+        clear(authorsRuError);
     }
 
-    if(thumbs.files.length === 0 || thumbs.files[0].name.search(REGEXP_JPG) === -1) {
+    if(textUrl.files.length === 0 || textUrl.files[0].name.search(REGEXP_TXT) === -1) {
         result = false;
-        thumbs.borderColor = borderColorRed;
-        thumbsError.innerText = validationErrorMessages.thumbsError;
+        textUrl.borderColor = borderColorRed;
+        textError.innerText = validationErrorMessages.textUrlError;
+    }else{
+        clear(textError);
+    }
+
+    if(textUrlRu.files.length === 0 || textUrlRu.files[0].name.search(REGEXP_TXT) === -1) {
+        result = false;
+        textUrlRu.borderColor = borderColorRed;
+        textRuError.innerText = validationErrorMessages.textUrlError;
+    }else{
+        clear(textRuError);
+    }
+
+    if(pdfUrl.files.length === 0 || pdfUrl.files[0].name.search(REGEXP_PDF) === -1) {
+        result = false;
+        pdfUrl.borderColor = borderColorRed;
+        pdfError.innerText = validationErrorMessages.pdfUrlError;
+    }else{
+        clear(pdfError);
+    }
+
+    if(pdfUrlRu.files.length === 0 || pdfUrlRu.files[0].name.search(REGEXP_PDF) === -1) {
+        result = false;
+        pdfUrlRu.borderColor = borderColorRed;
+        pdfRuError.innerText = validationErrorMessages.pdfUrlError;
+    }else{
+        clear(pdfRuError);
+    }
+
+    var date = new Date();
+    if(year.value < 0 || year.value > date.getFullYear()) {
+        result = false;
+        year.borderColor = borderColorRed;
+        yearError.innerText = validationErrorMessages.yearError;
+    }else{
+        clear(yearError);
+    }
+
+    if(price.value < 0) {
+        result = false;
+        price.borderColor = borderColorRed;
+        priceError.innerText = validationErrorMessages.priceError;
+    }else{
+        clear(priceError);
+    }
+    if(pages.value < 0) {
+        result = false;
+        pages.borderColor = borderColorRed;
+        pagesError.innerText = validationErrorMessages.pagesError;
+    }else{
+        clear(pagesError);
+    }
+    if(publishingHouse.value.length < phMinLength || publishingHouse.value.length > phMaxLength) {
+        result = false;
+        publishingHouse.borderColor = borderColorRed;
+        publishingHouseError.innerText = validationErrorMessages.phLengthError;
+    }else{
+        clear(publishingHouseError);
+    }
+
+    if(coverUrl.files.length === 0 || coverUrl.files[0].name.search(REGEXP_JPG) === -1) {
+        result = false;
+        coverError.borderColor = borderColorRed;
+        coverError.innerText = validationErrorMessages.coverError;
+    }else{
+        clear(coverError);
     }
 
     return result;
+}
+
+function clear(obj) {
+    var EMPTY_STRING = "";
+    obj.innerText = EMPTY_STRING;
 }
 
 function isEmpty(str) {

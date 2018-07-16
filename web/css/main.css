@@ -332,6 +332,19 @@ dd {
    margin: 0 0 0 2rem;
 }
 
+.book_sets {
+   display: flex;
+}
+
+.add_book_descr {
+   border: 1px solid #999999;
+   padding: 0 10px;
+}
+
+.add_book_button {
+   margin-top: 20px;
+}
+
 
 /* ------------------------------------------------------------------- 
  * ## responsive video container
@@ -1372,7 +1385,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
  * ## masonry entries 
  * ------------------------------------------------------------------- */
 .masonry .entry {
-   margin-bottom: 40px;
+   margin-bottom: 20px;
 }
 
 .masonry .entry__thumb, .masonry .entry__text {
@@ -1452,7 +1465,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 }
 
 .masonry .entry__text {
-   padding: 3rem 2.8rem 3.6rem;
+   padding: 2rem 2rem 0.1rem;
    background-color: #FFFFFF;
 }
 
@@ -1670,14 +1683,18 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 }
 
 .s-pageheader--home {
-   min-height: 220px;
-   padding-top: 222px;
+   min-height: 180px;
+   margin-top: 20px;
+}
+.lang-switcher{
+   display: flex;
+   justify-content: space-between;
 }
 
 .header {
    position: absolute;
    text-align: center;
-   top: 30px;
+   top: 20px;
    width: 100%;
 }
 
@@ -1957,6 +1974,10 @@ body.search-is-visible {
 
    .s-pageheader--home {
       padding-top: 120px;
+   }
+
+   .lang-switcher {
+       flex-direction: column;
    }
 
    .header {
@@ -2895,7 +2916,7 @@ html.no-csstransitions .featured {
 
 .masonry__brick {
    float: left;
-   padding: 0 20px;
+   padding: 0 10px;
 }
 
 /* ------------------------------------------------------------------- 
@@ -3195,8 +3216,8 @@ html.no-csstransitions .featured {
  *
  * ------------------------------------------------------------------- */
 footer {
-   padding-top: 10.2rem;
-   padding-bottom: 6rem;
+   padding-top: 6rem;
+   padding-bottom: 4rem;
    font-size: 1.5rem;
    line-height: 2;
    color: rgba(255, 255, 255, 0.4);
@@ -3330,6 +3351,7 @@ footer h4::after {
  * ------------------------------------------------------------------- */
 .s-footer__bottom .s-footer__copyright span {
    display: inline-block;
+    text-align: center;
 }
 
 .s-footer__bottom .s-footer__copyright span::after {
@@ -3337,6 +3359,7 @@ footer h4::after {
    display: inline-block;
    padding: 0 1rem 0 1.2rem;
    color: rgba(255, 255, 255, 0.1);
+    text-align: center;
 }
 
 .s-footer__bottom .s-footer__copyright span:last-child::after {

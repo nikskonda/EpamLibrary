@@ -5,7 +5,7 @@ public class SQLRequest {
     public final static String LOCALE = "lang";
     public final static String RESULT = "result";
 
-    //USERS
+    //USER_LIST
     public final static String IS_EXIST_USER_WITH_LOGIN_AND_PASSWORD = "{call is_exist_user(?,?,?)}";
     public final static String IS_FREE_LOGIN = "{call is_free_login(?,?)}";
     public final static String ADD_USER = "{call add_user(?,?,?,?,?,?)}";

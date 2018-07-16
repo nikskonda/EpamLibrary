@@ -90,7 +90,6 @@
             <div class="col-full">
                 <div class="s-footer__copyright">
                     <span>© Copyright Philosophy 2018</span>
-                    <span>Site Template by <a href="https://colorlib.com/">Colorlib</a></span>
                 </div>
 
                 <div class="go-top">

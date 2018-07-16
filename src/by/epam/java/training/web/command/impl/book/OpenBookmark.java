@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.epam.java.training.web.command.CommandName.ERROR;
+import static by.epam.java.training.web.command.CommandName.READ_BOOK;
 import static by.epam.java.training.web.command.Page.SIGN_IN;
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
@@ -23,17 +24,6 @@ public class OpenBookmark extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(OpenBookmark.class);
 
-
-
-    private Integer getInt(String str){
-        Integer result = null;
-        try{
-            result = Integer.parseInt(str);
-        } catch (NumberFormatException ex){
-            logger.warn("", ex);
-        }
-        return result;
-    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -53,7 +43,10 @@ public class OpenBookmark extends AbstractCommand {
 
             Integer page = service.getBookmark(bookmark);
 
-            redirect(response, "/book?command=read_book&book_id="+bookmark.getBookId()+"&currentPage="+page);
+            request.setAttribute(BOOK_ID, bookmark.getBookId());
+            request.setAttribute(CURRENT_PAGE, page);
+
+            CommandFactory.getCommand(READ_BOOK).execute(request, response);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

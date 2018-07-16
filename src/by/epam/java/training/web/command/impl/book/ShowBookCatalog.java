@@ -25,54 +25,25 @@ public class ShowBookCatalog extends AbstractCommand {
     private static final int INIT_COUNT_BOOKS = 8;
     private static final int INIT_NUMBER_OF_PAGE = 1;
 
-    private Integer getInt(String str){
-        Integer result = null;
-        try{
-            result = Integer.parseInt(str);
-        } catch (NumberFormatException ex){
-            logger.warn("", ex);
-        }
-        return result;
-    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
             rememberLastAction(request);
             BookService service = ServiceFactory.getBookService();
-
             HttpSession session = request.getSession(true);
-            if (session.getAttribute(LOCALE)==null){
-                session.setAttribute(LOCALE, "en");
-            }
+            Integer countBooks = getCount(request, COUNT_BOOKS_ON_PAGE, INIT_COUNT_BOOKS);
+            Integer currentPage = getCurrentPage(request, NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE);
             String locale = (String)session.getAttribute(LOCALE);
-
-            Integer countBooks = null;
-
-            Integer newCountBooks = getInt(request.getParameter(COUNT_BOOKS_ON_PAGE));
-            if (newCountBooks == null){
-                countBooks = (Integer)(session.getAttribute(COUNT_BOOKS_ON_PAGE));
-                if (countBooks==null){
-                    countBooks = INIT_COUNT_BOOKS;
-                }
-            } else {
-                countBooks = newCountBooks;
-            }
-
-            Integer currentPage = getInt(request.getParameter(NUMBER_OF_PAGE));
-            if (currentPage==null){
-                currentPage = INIT_NUMBER_OF_PAGE;
-            }
-
-            session.setAttribute(COUNT_BOOKS_ON_PAGE, countBooks);
-            request.setAttribute(NUMBER_OF_PAGE, currentPage);
-            request.setAttribute(TOTAL_PAGES, service.calcTotalPages(locale, countBooks));
 
             LordOfPages pageData = new LordOfPages();
             pageData.setCountOnPage(countBooks);
             pageData.setNumberOfPage(currentPage);
             pageData.setLocale(locale);
 
+            session.setAttribute(COUNT_BOOKS_ON_PAGE, countBooks);
+            request.setAttribute(NUMBER_OF_PAGE, currentPage);
+            request.setAttribute(TOTAL_PAGES, service.calcTotalPages(locale, countBooks));
             request.setAttribute(BOOKS, service.getBooksByPage(pageData));
 
             forward(request, response, BOOK_CATALOG);

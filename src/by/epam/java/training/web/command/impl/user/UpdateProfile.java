@@ -28,23 +28,19 @@ public class UpdateProfile extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
+            UserService userService = ServiceFactory.getUserService();
             ProfileForm profile = new ProfileForm();
-
             profile.setLogin(request.getParameter(LOGIN));
             profile.setPassword(EncriptionMD5.encrypt(request.getParameter(OLD_PASSWORD)));
-
             if (!request.getParameter(NEW_PASSWORD).isEmpty()){
                 profile.setNewPassword(EncriptionMD5.encrypt(request.getParameter(NEW_PASSWORD)));
             }
             if (!request.getParameter(CONFIRM_PASSWORD).isEmpty()){
                 profile.setConfirmPassword(EncriptionMD5.encrypt(request.getParameter(CONFIRM_PASSWORD)));
             }
-
             profile.setEmail(request.getParameter(EMAIL));
             profile.setFirstName(request.getParameter(FIRST_NAME));
             profile.setLastName(request.getParameter(LAST_NAME));
-
-            UserService userService = ServiceFactory.getUserService();
 
             if (!userService.isExistUser(profile)){
                 request.setAttribute(ERROR_MATCH, true);
@@ -52,6 +48,7 @@ public class UpdateProfile extends AbstractCommand {
                 forward(request, response, PROFILE);
                 return;
             }
+
             request.setAttribute(ERROR_MATCH, false);
 
             if (!(profile.getPassword()==null

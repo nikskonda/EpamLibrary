@@ -17,12 +17,11 @@ public class Localization extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(Localization.class);
 
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
         try {
             HttpSession session = request.getSession(true);
+
             session.setAttribute(LOCALE, request.getParameter(COMMAND));
 
             executeLastAction(request, response);

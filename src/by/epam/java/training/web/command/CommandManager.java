@@ -5,6 +5,14 @@ import by.epam.java.training.web.command.impl.admin.*;
 import by.epam.java.training.web.command.impl.book.*;
 import by.epam.java.training.web.command.impl.l10n.Localization;
 import by.epam.java.training.web.command.impl.moder.*;
+import by.epam.java.training.web.command.impl.moder.add.AddBook;
+import by.epam.java.training.web.command.impl.moder.add.AddNews;
+import by.epam.java.training.web.command.impl.moder.add.OpenAddBook;
+import by.epam.java.training.web.command.impl.moder.add.OpenAddNews;
+import by.epam.java.training.web.command.impl.moder.edit.EditBook;
+import by.epam.java.training.web.command.impl.moder.edit.EditNews;
+import by.epam.java.training.web.command.impl.moder.edit.OpenEditingBook;
+import by.epam.java.training.web.command.impl.moder.edit.OpenEditingNews;
 import by.epam.java.training.web.command.impl.news.ShowNews;
 import by.epam.java.training.web.command.impl.news.ShowNewsList;
 import by.epam.java.training.web.command.impl.user.*;
@@ -29,6 +37,7 @@ public class CommandManager {
         commands.put(FIND_USERS, new FindUserList());
 
         //moder
+        commands.put(OPEN_ADD_NEWS, new OpenAddNews());
         commands.put(ADD_NEWS, new AddNews());
         commands.put(OPEN_EDITING_NEWS, new OpenEditingNews());
         commands.put(EDIT_NEWS, new EditNews());

@@ -25,13 +25,12 @@ public class OpenUser extends AbstractCommand {
             rememberLastAction(request);
             Integer userId = Integer.parseInt(request.getParameter(USER_ID));
             AdministratorService userService = ServiceFactory.getAdministratorService();
-
             User user = userService.getUser(userId);
 
             request.setAttribute(USER_PROFILE, user);
             request.setAttribute(ROLE_LIST, userService.getRoles());
-            forward(request, response, ADMINISTRATION_USER);
 
+            forward(request, response, ADMINISTRATION_USER);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static by.epam.java.training.web.command.CommandName.OPEN_EDITING_NEWS;
+import static by.epam.java.training.web.command.CommandName.SHOW_BOOK_CATALOG;
 import static by.epam.java.training.web.command.CommandName.SHOW_NEWS_LIST;
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
@@ -29,8 +31,9 @@ public class DeleteNews extends AbstractCommand {
             ModeratorService service = ServiceFactory.getModeratorService();
             Integer newsId = Integer.parseInt(request.getParameter(NEWS_ID));
 
-            if (service.delNews(newsId)){
-
+            if (!service.delNews(newsId)){
+                CommandFactory.getCommand(OPEN_EDITING_NEWS).execute(request, response);
+                return;
             }
 
             CommandFactory.getCommand(SHOW_NEWS_LIST).execute(request, response);

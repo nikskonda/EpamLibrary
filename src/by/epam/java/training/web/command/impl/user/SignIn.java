@@ -26,12 +26,11 @@ public class SignIn extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
+            UserService userService = ServiceFactory.getUserService();
+            HttpSession session = request.getSession();
             SignInForm authForm = new SignInForm();
-
             authForm.setLogin(request.getParameter(LOGIN));
             authForm.setPassword(EncriptionMD5.encrypt(request.getParameter(PASSWORD)));
-
-            UserService userService = ServiceFactory.getUserService();
 
             if (!userService.isExistUser(authForm)){
                 request.setAttribute(ERROR_EXIST, true);
@@ -39,9 +38,9 @@ public class SignIn extends AbstractCommand {
                 forward(request, response, SIGN_IN);
                 return;
             }
+
             request.setAttribute(ERROR_EXIST, false);
             ActiveUser user = userService.getActiveUser(authForm.getLogin());
-            HttpSession session = request.getSession();
             session.setAttribute(USER, user);
 
             executeLastAction(request, response);

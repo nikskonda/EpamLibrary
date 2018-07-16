@@ -33,32 +33,31 @@
 </head>
 <body>
 
-<%--<jsp:include page="../Header.jsp"/>--%>
+<jsp:include page="../Header.jsp"/>
 
 <section class="s-content">
     <div class="content">
         <div class="row">
             <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidNewsForm()">
-                <input type="hidden" name="command" value="add_news" >
+                <input type="hidden" name="command" value="add_news">
                 <div class="col-lg-6">
-
-                    <input type="text" id="news_title" name="news_title" placeholder="Enter title here..." style="width: 100%">
+                    <input type="text" id="news_title" name="news_title" placeholder="Enter title here..." style="width: 100%" value="<c:out value="${requestScope.news.getTitle()}"/>">
                     <p class="error-input" id="titleError"></p>
-                    <textarea id="news_text" name="news_text" style="width: 100%">Enter text here ...</textarea>
+                    <textarea id="news_text" name="news_text" style="width: 100%"><c:out value="${requestScope.news.getText()}"/></textarea>
                     <p class="error-input" id="textError"></p>
                 </div>
                 <div class="col-lg-6">
                     <input type="hidden" name="news_lang" value="ru" >
-                    <input type="text" id="news_title_ru" name="news_title_ru" placeholder="Enter title here..." style="width: 100%">
+                    <input type="text" id="news_title_ru" name="news_title_ru" placeholder="Enter title here..." style="width: 100%" value="<c:out value="${requestScope.newsRU.getTitle()}"/>">
                     <p class="error-input" id="titleRuError"></p>
-                    <textarea id="news_text_ru" name="news_text_ru" style="width: 100%">Enter russian text here ...</textarea>
+                    <textarea id="news_text_ru" name="news_text_ru" style="width: 100%"><c:out value="${requestScope.newsRU.getText()}"/></textarea>
                     <p class="error-input" id="textRuError"></p>
                 </div>
-                big photo
-                <input type="file" id="news_photo_url" name="news_photo_url" multiple="false">
+                PHOTO
+                <input type="file" id="news_photo_url" name="news_photo_url" multiple="false" value="<c:out value="${requestScope.news.getPhotoUrl()}"/>">
                 <p class="error-input" id="photoError"></p>
-                thumbs
-                <input type="file" id="news_thumbs_url" name="news_thumbs_url" multiple="false">
+                THUMBS
+                <input type="file" id="news_thumbs_url" name="news_thumbs_url" multiple="false" value="<c:out value="${requestScope.news.getThumbsUrl()}"/>">
                 <p class="error-input" id="thumbsError"></p>
                 <input type="submit" value="Add news">
             </form>
@@ -78,7 +77,7 @@
 </script>
 <script src="../../js/validator.js"></script>
 
-<%--<jsp:include page="../Footer.jsp"/>--%>
+<jsp:include page="../Footer.jsp"/>
 
 </body>
 </html>

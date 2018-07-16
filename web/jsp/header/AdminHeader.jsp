@@ -33,7 +33,7 @@
             <li class="has-children">
                 <a href="#0" title="">Moder</a>
                 <ul class="sub-menu">
-                    <li><a href="/moderator/openAddNews">Add news</a></li>
+                    <li><a href="/news?command=open_add_news">Add news</a></li>
                     <li><a href="/book?command=open_add_book">Add book</a></li>
                 </ul>
             </li>

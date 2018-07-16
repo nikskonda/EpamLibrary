@@ -41,9 +41,11 @@ public class DeleteUser extends AbstractCommand {
             if (userService.isExistUser(new SignInForm(user.getLogin(), password))){
                 adminService.deleteUser(userId);
                 CommandFactory.getCommand(CommandName.SHOW_USER_LIST).execute(request, response);
+                return;
             }else{
                 request.setAttribute(ERROR_DEL_EXIST, true);
                 CommandFactory.getCommand(CommandName.SHOW_USER).execute(request, response);
+                return;
             }
 
         } catch (DAOException ex){

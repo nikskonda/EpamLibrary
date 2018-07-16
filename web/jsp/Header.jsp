@@ -20,7 +20,7 @@
     <header class="header">
         <div class="container">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <ul class="header__social">
                         <li>
                             <a href="#0"><i class="fa fa-facebook" aria-hidden="true"></i></a>
@@ -36,22 +36,15 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-4 offset-md-2">
-                    <a class="logo" href="/news?command=open_news">
+                <div class="col-md-6 offset-md-2">
+                    <a class="header__logo" href="/news?command=open_news_list">
                         <img src="../images/logo.png" alt="Homepage">
                     </a>
                 </div>
-                <div class="col-md-2 offset-md-2">
-                    <div class="row">
-                        <form class="col-lg-1" action="/ru" method="POST">
-                            <input type="hidden" name="command" value="ru">
-                            <input class="btn btn--primary" type="submit" value="рус" style="padding: 0; width: 50px;">
-                        </form>
-                        <form class="col-lg-1" action="/en" method="POST">
-                            <input type="hidden" name="command" value="en">
-                            <input class="btn btn--primary" type="submit" value="en" style="padding: 0; width: 50px;">
-                        </form>
-
+                <div class="col-md-3">
+                    <div class="row lang-switch">
+                        <a class="btn btn--primary" href="/en?command=en">en</a>
+                        <a class="btn btn--primary" href="/ru?command=ru">рус</a>
                     </div>
                 </div>
                 <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>

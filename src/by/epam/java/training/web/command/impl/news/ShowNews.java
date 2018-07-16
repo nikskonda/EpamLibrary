@@ -26,19 +26,15 @@ public class ShowNews extends AbstractCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
             rememberLastAction(request);
-
             NewsService service = ServiceFactory.getNewsService();
-
             HttpSession session = request.getSession(true);
-            if (session.getAttribute(LOCALE)==null){
-                session.setAttribute(LOCALE, "en");
-            }
             String locale = (String)session.getAttribute(LOCALE);
-
             Integer newsId = Integer.parseInt(request.getParameter(NEWS_ID));
+
             News news = service.getNews(newsId, locale);
+
             request.setAttribute(FieldNames.NEWS, news);
-            request.setAttribute(FieldNames.NEWS_TEXT, news.getText().split("\n"));
+            request.setAttribute(FieldNames.NEWS_TEXT, news.getText().split(NEW_LINE));
 
             forward(request, response, Page.NEWS);
 

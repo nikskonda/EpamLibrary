@@ -36,7 +36,7 @@
 <section class="s-content">
     <div class="content">
         <div class="row">
-            <form action="/moderator" method="POST" enctype="multipart/form-data">
+            <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidNewsForm()">
                 <input type="hidden" name="command" value="edit_news">
                 <input type="hidden" name="news_id" value="<c:out value="${requestScope.news.getId()}"/>" >
                 <div class="col-lg-6">

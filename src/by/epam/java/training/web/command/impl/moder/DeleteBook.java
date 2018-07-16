@@ -26,8 +26,9 @@ public class DeleteBook extends AbstractCommand {
             ModeratorService service = ServiceFactory.getModeratorService();
             Integer bookId = Integer.parseInt(request.getParameter(BOOK_ID));
 
-            if (service.delBook(bookId)){
-
+            if (!service.delBook(bookId)){
+                CommandFactory.getCommand(OPEN_EDITING_BOOK).execute(request, response);
+                return;
             }
 
             CommandFactory.getCommand(SHOW_BOOK_CATALOG).execute(request, response);

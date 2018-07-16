@@ -28,8 +28,9 @@ public class SignUp extends AbstractCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         try {
+            HttpSession session = request.getSession(true);
+            UserService userService = ServiceFactory.getUserService();
             SignUpForm signUpForm = new SignUpForm();
             signUpForm.setLogin(request.getParameter(LOGIN));
             signUpForm.setPassword(EncriptionMD5.encrypt(request.getParameter(PASSWORD)));
@@ -38,13 +39,13 @@ public class SignUp extends AbstractCommand {
             signUpForm.setFirstName(request.getParameter(FIRST_NAME));
             signUpForm.setLastName(request.getParameter(LAST_NAME));
 
-            UserService userService = ServiceFactory.getUserService();
-
             ActiveUser user = userService.addUser(signUpForm);
+
             if (user == null) {
                 redirect(response, ERROR);
+                return;
             }
-            HttpSession session = request.getSession(true);
+
             session.setAttribute(USER, user);
 
             executeLastAction(request, response);

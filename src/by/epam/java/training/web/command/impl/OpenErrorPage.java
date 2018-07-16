@@ -22,7 +22,9 @@ public class OpenErrorPage extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
+
             forward(request, response, ERROR);
+
         } catch (IOException ex){
             logger.warn("Error in page path");
         }

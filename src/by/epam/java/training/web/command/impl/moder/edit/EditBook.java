@@ -1,4 +1,4 @@
-package by.epam.java.training.web.command.impl.moder;
+package by.epam.java.training.web.command.impl.moder.edit;
 
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.book.Book;

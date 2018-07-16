@@ -9,7 +9,7 @@ public class FieldNames {
 
 
     public static final String USER = "user";
-    public static final String USERS = "user_list";
+    public static final String USER_LIST = "user_list";
     public static final String USER_ID = "user_id";
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
@@ -75,8 +75,10 @@ public class FieldNames {
 
     public static final String COUNT_NEWS_ON_PAGE = "countNews";
 
-
-
+    public static final String CURRENT_PAGE = "currentPage";
+    public static final String NEW_LINE = "\n";
+    public static final String ENGLISH = "en";
+    public static final String RUSSIAN = "ru";
 
     public static final String ERROR = "error";
 

@@ -5,6 +5,7 @@ import by.epam.java.training.model.LordOfPages;
 import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
+import by.epam.java.training.web.command.util.FieldNames;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -38,22 +39,9 @@ public class FindUserList extends AbstractCommand {
             AdministratorService service = ServiceFactory.getAdministratorService();
             rememberLastAction(request);
             String search = request.getParameter(SEARCH);
+            Integer countUsers = getCount(request, COUNT_USERS_ON_PAGE, INIT_COUNT_USERS);
+            Integer currentPage = getCurrentPage(request, NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE);
             HttpSession session = request.getSession(true);
-            Integer countUsers = null;
-            Integer newCountUsers = getInt(request.getParameter(COUNT_USERS_ON_PAGE));
-            if (newCountUsers == null){
-                countUsers = (Integer)(session.getAttribute(COUNT_USERS_ON_PAGE));
-                if (countUsers==null){
-                    countUsers = INIT_COUNT_USERS;
-                }
-            } else {
-                countUsers = newCountUsers;
-            }
-
-            Integer currentPage = getInt(request.getParameter(NUMBER_OF_PAGE));
-            if (currentPage==null){
-                currentPage = INIT_NUMBER_OF_PAGE;
-            }
 
             LordOfPages pageData = new LordOfPages();
             pageData.setCountOnPage(countUsers);
@@ -63,7 +51,7 @@ public class FindUserList extends AbstractCommand {
             request.setAttribute(NUMBER_OF_PAGE, currentPage);
             request.setAttribute(TOTAL_PAGES, service.calcTotalPagesWithUsersSearch(search, countUsers));
             request.setAttribute(SEARCH, search);
-            request.setAttribute(USERS, service.FindUsersByPages(search, pageData));
+            request.setAttribute(FieldNames.USER_LIST, service.FindUsersByPages(search, pageData));
 
             forward(request, response, USER_LIST);
         } catch (DAOException ex){
@@ -76,6 +64,6 @@ public class FindUserList extends AbstractCommand {
             logger.warn(ex);
             request.setAttribute(ERROR_UNKNOWN, true);
         }
-
     }
+
 }

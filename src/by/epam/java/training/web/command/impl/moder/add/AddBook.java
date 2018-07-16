@@ -1,4 +1,4 @@
-package by.epam.java.training.web.command.impl.moder;
+package by.epam.java.training.web.command.impl.moder.add;
 
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.book.Book;
@@ -15,8 +15,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 
+import static by.epam.java.training.web.command.CommandName.OPEN_ADD_BOOK;
 import static by.epam.java.training.web.command.CommandName.SHOW_BOOK_CATALOG;
 import static by.epam.java.training.web.command.Page.SIGN_IN;
 import static by.epam.java.training.web.command.util.FieldNames.*;
@@ -29,12 +31,7 @@ public class AddBook extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            HttpSession session = request.getSession(true);
-            ActiveUser user = (ActiveUser)session.getAttribute(USER);
-            if (user==null){
-                redirect(response, SIGN_IN);
-                return;
-            }
+            ModeratorService service = ServiceFactory.getModeratorService();
             String[] genres = request.getParameterValues(GENRES);
             Book defBook = new Book();
             defBook.setName(request.getParameter(BOOK_NAME));
@@ -59,10 +56,20 @@ public class AddBook extends AbstractCommand {
             translatedBook.setTextFileUrl(request.getParameter(BOOK_TEXT_URL_RU));
             String lang = request.getParameter(LANG);
 
-            ModeratorService service = ServiceFactory.getModeratorService();
-            service.addBook(defBook, translatedBook, lang);
+            if (!service.addBook(defBook, translatedBook, lang)){
+                delete(request.getServletContext().getRealPath(defBook.getTextFileUrl()));
+                delete(request.getServletContext().getRealPath(defBook.getPdfFileUrl()));
+                delete(request.getServletContext().getRealPath(defBook.getCoverUrl()));
+                delete(request.getServletContext().getRealPath(translatedBook.getPdfFileUrl()));
+                delete(request.getServletContext().getRealPath(translatedBook.getTextFileUrl()));
+                request.setAttribute(BOOK, defBook);
+                request.setAttribute(BOOK_RU, translatedBook);
+                CommandFactory.getCommand(OPEN_ADD_BOOK).execute(request, response);
+                return;
+            }
 
             CommandFactory.getCommand(SHOW_BOOK_CATALOG).execute(request, response);
+
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);
@@ -74,6 +81,13 @@ public class AddBook extends AbstractCommand {
             request.setAttribute(ERROR_UNKNOWN, true);
         }
 
+    }
+
+    private static void delete(String nameFile) {
+        File file = new File(nameFile);
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
 }

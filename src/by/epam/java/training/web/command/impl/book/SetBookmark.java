@@ -24,18 +24,6 @@ public class SetBookmark extends AbstractCommand {
     private static final Logger logger = Logger.getLogger(SetBookmark.class);
 
 
-
-
-    private Integer getInt(String str){
-        Integer result = null;
-        try{
-            result = Integer.parseInt(str);
-        } catch (NumberFormatException ex){
-            logger.warn("", ex);
-        }
-        return result;
-    }
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
@@ -44,6 +32,7 @@ public class SetBookmark extends AbstractCommand {
             ActiveUser activeUser = (ActiveUser)session.getAttribute(USER);
             if (activeUser==null){
                 redirect(response, SIGN_IN);
+                return;
             }
             Bookmark bookmark = new Bookmark();
             bookmark.setBookId(getInt(request.getParameter(BOOK_ID)));

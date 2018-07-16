@@ -5,9 +5,7 @@ import by.epam.java.training.model.LordOfPages;
 import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
-import by.epam.java.training.web.command.CommandFactory;
-import by.epam.java.training.web.command.CommandManager;
-import by.epam.java.training.web.command.CommandName;
+import by.epam.java.training.web.command.util.FieldNames;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -26,46 +24,24 @@ public class ShowUserList extends AbstractCommand {
     private static final int INIT_COUNT_USERS = 8;
     private static final int INIT_NUMBER_OF_PAGE = 1;
 
-    private Integer getInt(String str){
-        Integer result = null;
-        try{
-            result = Integer.parseInt(str);
-        } catch (NumberFormatException ex){
-            logger.warn("", ex);
-        }
-        return result;
-    }
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
             AdministratorService service = ServiceFactory.getAdministratorService();
             rememberLastAction(request);
             HttpSession session = request.getSession(true);
-            Integer countUsers = null;
-            Integer newCountUsers = getInt(request.getParameter(COUNT_USERS_ON_PAGE));
-            if (newCountUsers == null){
-                countUsers = (Integer)(session.getAttribute(COUNT_USERS_ON_PAGE));
-                if (countUsers==null){
-                    countUsers = INIT_COUNT_USERS;
-                }
-            } else {
-                countUsers = newCountUsers;
-            }
-
-            Integer currentPage = getInt(request.getParameter(NUMBER_OF_PAGE));
-            if (currentPage==null){
-                currentPage = INIT_NUMBER_OF_PAGE;
-            }
-
-            session.setAttribute(COUNT_USERS_ON_PAGE, countUsers);
-            request.setAttribute(NUMBER_OF_PAGE, currentPage);
-            request.setAttribute(TOTAL_PAGES, service.calcTotalPagesWithUsers(countUsers));
+            Integer countUsers = getCount(request, COUNT_USERS_ON_PAGE, INIT_COUNT_USERS);
+            Integer currentPage = getCurrentPage(request, NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE);
 
             LordOfPages pageData = new LordOfPages();
             pageData.setCountOnPage(countUsers);
             pageData.setNumberOfPage(currentPage);
 
-            request.setAttribute(USERS, service.getUsersByPages(pageData));
+            session.setAttribute(COUNT_USERS_ON_PAGE, countUsers);
+            request.setAttribute(NUMBER_OF_PAGE, currentPage);
+            request.setAttribute(TOTAL_PAGES, service.calcTotalPagesWithUsers(countUsers));
+            request.setAttribute(FieldNames.USER_LIST, service.getUsersByPages(pageData));
+
             forward(request, response, USER_LIST);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);

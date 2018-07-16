@@ -20,20 +20,8 @@ public class ShowNewsList extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(ShowNewsList.class);
 
-
-
     private static final int INIT_COUNT_NEWS = 8;
     private static final int INIT_NUMBER_OF_PAGE = 1;
-
-    private Integer getInt(String str){
-        Integer result = null;
-        try{
-            result = Integer.parseInt(str);
-        } catch (NumberFormatException ex){
-            logger.warn("", ex);
-        }
-        return result;
-    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -41,39 +29,21 @@ public class ShowNewsList extends AbstractCommand {
             rememberLastAction(request);
 
             NewsService service = ServiceFactory.getNewsService();
-
             HttpSession session = request.getSession(true);
-            if (session.getAttribute(LOCALE)==null){
-                session.setAttribute(LOCALE, "en");
-            }
             String locale = (String)session.getAttribute(LOCALE);
-
-            Integer countNews = null;
-            Integer newCountNews = getInt(request.getParameter(COUNT_NEWS_ON_PAGE));
-            if (newCountNews == null){
-                countNews = (Integer)(session.getAttribute(COUNT_NEWS_ON_PAGE));
-                if (countNews==null){
-                    countNews = INIT_COUNT_NEWS;
-                }
-            } else {
-                countNews = newCountNews;
-            }
-
-            Integer currentPage = getInt(request.getParameter(NUMBER_OF_PAGE));
-            if (currentPage==null){
-                currentPage = INIT_NUMBER_OF_PAGE;
-            }
-
-            session.setAttribute(COUNT_NEWS_ON_PAGE, countNews);
-            request.setAttribute(NUMBER_OF_PAGE, currentPage);
-            request.setAttribute(TOTAL_PAGES, service.calcTotalPages(locale, countNews));
+            Integer countNews = getCount(request, COUNT_NEWS_ON_PAGE, INIT_COUNT_NEWS);
+            Integer currentPage = getCurrentPage(request, NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE);
 
             LordOfPages pageData = new LordOfPages();
             pageData.setCountOnPage(countNews);
             pageData.setNumberOfPage(currentPage);
             pageData.setLocale(locale);
 
+            session.setAttribute(COUNT_NEWS_ON_PAGE, countNews);
+            request.setAttribute(NUMBER_OF_PAGE, currentPage);
+            request.setAttribute(TOTAL_PAGES, service.calcTotalPages(locale, countNews));
             request.setAttribute(NEWS, service.getNewsByPage(pageData));
+
             forward(request, response, NEWS_LIST);
 
         } catch (DAOException ex){

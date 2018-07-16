@@ -29,16 +29,14 @@ public class OpenProfile extends AbstractCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
             rememberLastAction(request);
+
+            UserService userService = ServiceFactory.getUserService();
             HttpSession session = request.getSession(true);
             ActiveUser activeUser = (ActiveUser) session.getAttribute(USER);
-
             if (activeUser == null){
                 redirect(response, SIGN_IN);
                 return;
             }
-
-
-            UserService userService = ServiceFactory.getUserService();
 
             User user = userService.getUser(activeUser.getId());
 

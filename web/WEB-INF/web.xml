@@ -216,6 +216,16 @@
     </filter-mapping>
 
     <filter>
+        <filter-name>SetLocale</filter-name>
+        <filter-class>by.epam.java.training.web.filter.LocalizationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>SetLocale</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
         <filter-name>MainFilter</filter-name>
         <filter-class>by.epam.java.training.web.filter.MainFilter</filter-class>
     </filter>
