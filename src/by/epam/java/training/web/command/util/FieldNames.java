@@ -57,6 +57,7 @@ public class FieldNames {
     public static final String SET_BOOKMARK_RESULT = "set_bookmark_result";
 
     public static final String COUNT_BOOKS_ON_PAGE = "countBooks";
+    public static final String COUNT_BOOKMARKS_ON_PAGE = "countBookmarks";
     public static final String NUMBER_OF_PAGE = "numberOfPage";
     public static final String TOTAL_PAGES = "totalPages";
 

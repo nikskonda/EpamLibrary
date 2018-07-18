@@ -8,6 +8,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="l10n.local" var="loc" />
+
+<fmt:message bundle="${loc}" key="local.news.lable.title" var="title" />
+<fmt:message bundle="${loc}" key="local.news.lable.text" var="text" />
+<fmt:message bundle="${loc}" key="local.news.lable.photo" var="photo" />
+<fmt:message bundle="${loc}" key="local.news.lable.thumbs" var="thumbs" />
+
+<fmt:message bundle="${loc}" key="local.news.placeholder.title" var="ititle" />
+<fmt:message bundle="${loc}" key="local.news.placeholder.text" var="itext" />
+
+<fmt:message bundle="${loc}" key="local.news.button.addNews" var="addNews" />
+<fmt:message bundle="${loc}" key="local.news.button.editNews" var="editNews" />
+<fmt:message bundle="${loc}" key="local.news.button.deleteNews" var="deleteNews" />
+
+<fmt:message bundle="${loc}" key="local.news.message.en" var="headerEN" />
+<fmt:message bundle="${loc}" key="local.news.message.ru" var="headerRU" />
+
+<fmt:message bundle="${loc}" key="local.news.error.title.length" var="titleLengthError" />
+<fmt:message bundle="${loc}" key="local.news.error.text.lenght" var="textLengthError" />
+<fmt:message bundle="${loc}" key="local.news.error.photo.content" var="photoError" />
+<fmt:message bundle="${loc}" key="local.news.error.thumbs.content" var="thumbsError" />
 <html>
 <head>
     <title>Error</title>
@@ -39,33 +62,103 @@
             <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidNewsForm()">
                 <input type="hidden" name="command" value="edit_news">
                 <input type="hidden" name="news_id" value="<c:out value="${requestScope.news.getId()}"/>" >
-                <div class="col-lg-6">
-                    <input type="text" name="news_title" placeholder="Enter title here..." style="width: 100%" value="<c:out value="${requestScope.news.getTitle()}"/>">
-                    <textarea name="news_text" style="width: 100%"><c:out value="${requestScope.news.getText()}"/></textarea>
+
+                <div>
+                    <div class="col-lg-6">
+                        <div>
+                            <h3>${headerEN}</h3>
+                        </div>
+
+                        <div>
+                            <label for="news_title">${title}</label>
+                            <input type="text" id="news_title" name="news_title" placeholder="${ititle}"  value="<c:out value="${requestScope.news.getTitle()}"/>" class="full-width" required>
+                            <p class="error-input" id="titleError"></p>
+                        </div>
+
+                        <div>
+                            <label for="news_text">${text}</label>
+                            <textarea class="add_book_descr full-width" placeholder="${itext}" id="news_text" name="news_text" required><c:out value="${requestScope.news.getText()}"/></textarea>
+                            <p class="error-input" id="textError"></p>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6">
+                        <input type="hidden" name="news_lang" value="ru" >
+
+                        <div>
+                            <h3>${headerRU}</h3>
+                        </div>
+
+                        <div>
+                            <label for="news_title_ru">${title}</label>
+                            <input type="text" id="news_title_ru" name="news_title_ru" placeholder="${ititle}"  value="<c:out value="${requestScope.newsRU.getTitle()}"/>" class="full-width" required>
+                            <p class="error-input" id="titleRuError"></p>
+                        </div>
+
+                        <div>
+                            <label for="news_text_ru">${text}</label>
+                            <textarea class="add_book_descr full-width" placeholder="${itext}" id="news_text_ru" name="news_text_ru" required><c:out value="${requestScope.newsRU.getText()}"/></textarea>
+                            <p class="error-input" id="textRuError"></p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <input type="hidden" name="news_lang" value="ru" >
-                    <input type="text" name="news_title_ru" placeholder="Enter title here..." style="width: 100%" value="<c:out value="${requestScope.newsRU.getTitle()}"/>">
-                    <textarea name="news_text_ru" style="width: 100%"><c:out value="${requestScope.newsRU.getText()}"/></textarea>
+
+                <div style="width: 50%; margin: 0 auto;">
+                    <div>
+                        <label for="news_photo_url">${photo}</label>
+                        <input type="file" id="news_photo_url" name="news_photo_url" class="full-width" multiple="false" required>
+                        <p class="error-input" id="photoError"></p>
+                    </div>
+
+                    <div>
+                        <label for="news_thumbs_url">${thumbs}</label>
+                        <input type="file" id="news_thumbs_url" name="news_thumbs_url" class="full-width" multiple="false" required>
+                        <p class="error-input" id="thumbsError"></p>
+                    </div>
+
+                    <div>
+                        <label for="password">${password}</label>
+                        <input type="password" id="password" name="password" class="full-width" required>
+                        <p class="error-input" ></p>
+                    </div>
+
+                    <input class="add_book_button full-width" type="submit" value="${editNews}">
                 </div>
-                <img src="<c:out value="${requestScope.news.getPhotoUrl()}"/>">
-                <input type="file" name="news_photo_url" multiple="false">
-                <img src="<c:out value="${requestScope.news.getThumbsUrl()}"/>">
-                <input type="file" name="news_thumbs_url" multiple="false">
-                <input type="submit" value="Edit">
+
             </form>
         </div>
         <div class="row">
             <form action="/moderator" method="POST">
                 <input type="hidden" name="command" value="delete_news">
                 <input type="hidden" name="news_id" value="<c:out value="${requestScope.news.getId()}"/>" >
-                <input type="password" name="password">
-                <input type="submit" value="Del">
+
+                <div>
+                    <label for="password2">${password}</label>
+                    <input type="password" id="password2" name="password" class="full-width" required>
+                    <p class="error-input" ></p>
+                </div>
+
+                <input class="add_book_button full-width" type="submit" value="${deleteNews}">
             </form>
         </div>
     </div>
 </section>
+
+
 <jsp:include page="../Footer.jsp"/>
+
+<script type="text/javascript">
+    var validationErrorMessages =
+        {
+            "titleLengthError":"${titleLengthError}",
+            "textLengthError":"${textLengthError}",
+            "photoError":"${photoError}",
+            "thumbsError":"${thumbsError}"
+        }
+    ;
+</script>
+<script src="../../js/validator.js"></script>
 
 </body>
 </html>

@@ -23,7 +23,4 @@ public interface UserService {
 
     boolean updateUser(ProfileForm profile) throws DAOException;
 
-
-
-
 }

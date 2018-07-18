@@ -25,6 +25,5 @@ public interface ModeratorService {
     boolean delBook(Integer bookId) throws DAOException;
 
 
-
     boolean isModerator(String login) throws DAOException;
 }

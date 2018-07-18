@@ -3,11 +3,14 @@ package by.epam.java.training.web.command.impl.moder.edit;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.news.News;
 import by.epam.java.training.model.user.ActiveUser;
+import by.epam.java.training.model.user.form.SignInForm;
 import by.epam.java.training.servise.ModeratorService;
 import by.epam.java.training.servise.ServiceFactory;
+import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
 import by.epam.java.training.web.command.util.FieldNames;
+import by.epam.java.training.web.util.EncriptionMD5;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 
+import static by.epam.java.training.web.command.CommandName.OPEN_ADD_NEWS;
 import static by.epam.java.training.web.command.CommandName.OPEN_EDITING_NEWS;
 import static by.epam.java.training.web.command.CommandName.SHOW_NEWS_LIST;
 import static by.epam.java.training.web.command.util.FieldNames.*;
@@ -34,6 +38,8 @@ public class EditNews extends AbstractCommand {
             ActiveUser user = (ActiveUser)session.getAttribute(USER);
 
             ModeratorService service = ServiceFactory.getModeratorService();
+            UserService userService = ServiceFactory.getUserService();
+
             News defNews = new News();
             defNews.setId(Integer.parseInt(request.getParameter(NEWS_ID)));
             defNews.setText(request.getParameter(NEWS_TEXT));
@@ -42,15 +48,23 @@ public class EditNews extends AbstractCommand {
             defNews.setTitle(request.getParameter(NEWS_TITLE));
             defNews.setUserId(user.getId());
 
-            News translatedNews = new News();
-            translatedNews.setId(defNews.getId());
-            translatedNews.setText(request.getParameter(NEWS_TEXT_RU));
-            translatedNews.setTitle(request.getParameter(NEWS_TITLE_RU));
+            News tNews = new News();
+            tNews.setId(defNews.getId());
+            tNews.setText(request.getParameter(NEWS_TEXT_RU));
+            tNews.setTitle(request.getParameter(NEWS_TITLE_RU));
             String lang = (request.getParameter(NEWS_LANG));
 
-            if (!service.editNews(defNews, translatedNews, lang)){
-                delete(request.getServletContext().getRealPath(defNews.getPhotoUrl()));
-                delete(request.getServletContext().getRealPath(defNews.getThumbsUrl()));
+            String password = EncriptionMD5.encrypt(request.getParameter(PASSWORD));
+
+            if (!userService.isExistUser(new SignInForm(user.getLogin(), password))){
+                clearData(request, defNews, tNews);
+                request.setAttribute(ERROR_EXIST, true);
+                CommandFactory.getCommand(OPEN_EDITING_NEWS).execute(request, response);
+                return;
+            }
+
+            if (!service.editNews(defNews, tNews, lang)){
+                clearData(request, defNews, tNews);
                 CommandFactory.getCommand(OPEN_EDITING_NEWS).execute(request, response);
                 return;
             }
@@ -74,6 +88,13 @@ public class EditNews extends AbstractCommand {
         if (file.exists()) {
             file.delete();
         }
+    }
+
+    private void clearData(HttpServletRequest request, News defNews, News tNews){
+        delete(request.getServletContext().getRealPath(defNews.getPhotoUrl()));
+        delete(request.getServletContext().getRealPath(defNews.getThumbsUrl()));
+        request.setAttribute(FieldNames.NEWS, defNews);
+        request.setAttribute(NEWS_RU, tNews);
     }
 
 }

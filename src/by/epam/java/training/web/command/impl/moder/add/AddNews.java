@@ -3,11 +3,14 @@ package by.epam.java.training.web.command.impl.moder.add;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.news.News;
 import by.epam.java.training.model.user.ActiveUser;
+import by.epam.java.training.model.user.form.SignInForm;
 import by.epam.java.training.servise.ModeratorService;
 import by.epam.java.training.servise.ServiceFactory;
+import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
 import by.epam.java.training.web.command.util.FieldNames;
+import by.epam.java.training.web.util.EncriptionMD5;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -33,11 +36,8 @@ public class AddNews extends AbstractCommand {
         try{
             HttpSession session = request.getSession(true);
             ModeratorService service = ServiceFactory.getModeratorService();
+            UserService userService = ServiceFactory.getUserService();
             ActiveUser user = (ActiveUser)session.getAttribute(USER);
-            if (user==null){
-                redirect(response, SIGN_IN);
-                return;
-            }
 
             News defNews = new News();
             defNews.setText(request.getParameter(NEWS_TEXT));
@@ -46,16 +46,22 @@ public class AddNews extends AbstractCommand {
             defNews.setTitle(request.getParameter(NEWS_TITLE));
             defNews.setUserId(user.getId());
 
-            News translatedNews = new News();
-            translatedNews.setText(request.getParameter(NEWS_TEXT_RU));
-            translatedNews.setTitle(request.getParameter(NEWS_TITLE_RU));
+            News tNews = new News();
+            tNews.setText(request.getParameter(NEWS_TEXT_RU));
+            tNews.setTitle(request.getParameter(NEWS_TITLE_RU));
             String lang = (request.getParameter(NEWS_LANG));
 
-            if (!service.addNews(defNews, translatedNews, lang)){
-                delete(request.getServletContext().getRealPath(defNews.getPhotoUrl()));
-                delete(request.getServletContext().getRealPath(defNews.getThumbsUrl()));
-                request.setAttribute(FieldNames.NEWS, defNews);
-                request.setAttribute(NEWS_RU, translatedNews);
+            String password = EncriptionMD5.encrypt(request.getParameter(PASSWORD));
+
+            if (!userService.isExistUser(new SignInForm(user.getLogin(), password))){
+                clearData(request, defNews, tNews);
+                request.setAttribute(ERROR_EXIST, true);
+                CommandFactory.getCommand(OPEN_ADD_NEWS).execute(request, response);
+                return;
+            }
+
+            if (!service.addNews(defNews, tNews, lang)){
+                clearData(request, defNews, tNews);
                 CommandFactory.getCommand(OPEN_ADD_NEWS).execute(request, response);
                 return;
             }
@@ -79,5 +85,12 @@ public class AddNews extends AbstractCommand {
         if (file.exists()) {
             file.delete();
         }
+    }
+
+    private void clearData(HttpServletRequest request, News defNews, News tNews){
+        delete(request.getServletContext().getRealPath(defNews.getPhotoUrl()));
+        delete(request.getServletContext().getRealPath(defNews.getThumbsUrl()));
+        request.setAttribute(FieldNames.NEWS, defNews);
+        request.setAttribute(NEWS_RU, tNews);
     }
 }

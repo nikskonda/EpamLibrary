@@ -1,4 +1,4 @@
-package by.epam.java.training.web.command.impl.book;
+package by.epam.java.training.web.command.impl.bookmark;
 
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.book.Bookmark;
@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.CommandName.ERROR;
 import static by.epam.java.training.web.command.CommandName.READ_BOOK;
 import static by.epam.java.training.web.command.Page.SIGN_IN;
 import static by.epam.java.training.web.command.util.FieldNames.*;
@@ -44,7 +43,7 @@ public class OpenBookmark extends AbstractCommand {
             Integer page = service.getBookmark(bookmark);
 
             request.setAttribute(BOOK_ID, bookmark.getBookId());
-            request.setAttribute(CURRENT_PAGE, page);
+            request.setAttribute(NUMBER_OF_PAGE, page);
 
             CommandFactory.getCommand(READ_BOOK).execute(request, response);
         } catch (DAOException ex){

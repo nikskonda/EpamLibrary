@@ -1,4 +1,4 @@
-package by.epam.java.training.web.command.impl.book;
+package by.epam.java.training.web.command.impl.bookmark;
 
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.book.Bookmark;

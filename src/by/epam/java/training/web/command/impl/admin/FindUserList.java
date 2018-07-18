@@ -24,15 +24,6 @@ public class FindUserList extends AbstractCommand {
     private static final int INIT_COUNT_USERS = 8;
     private static final int INIT_NUMBER_OF_PAGE = 1;
 
-    private Integer getInt(String str){
-        Integer result = null;
-        try{
-            result = Integer.parseInt(str);
-        } catch (NumberFormatException ex){
-            logger.warn("", ex);
-        }
-        return result;
-    }
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{

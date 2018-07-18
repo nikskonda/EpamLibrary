@@ -345,7 +345,7 @@ function isValidNewsForm() {
     if(text.value.length < textMinLength || text.value.indexOf(DEFAULT_TEXT) !== -1 || text.value.indexOf(DEFAULT_TEXT2) !== -1) {
         result = false;
         text.borderColor = borderColorRed;
-        textError.innerText = validationErrorMessages.textContentError;
+        textError.innerText = validationErrorMessages.textLengthError;
     }else{
         clear(textError);
     }
@@ -353,7 +353,7 @@ function isValidNewsForm() {
     if(textRu.value.length < textMinLength || textRu.value.indexOf(DEFAULT_TEXT_RU) !== -1 || textRu.value.indexOf(DEFAULT_TEXT_RU2) !== -1) {
         result = false;
         textRu.borderColor = borderColorRed;
-        textRuError.innerText = validationErrorMessages.textContentError;
+        textRuError.innerText = validationErrorMessages.textLengthError;
     }else{
         clear(textRuError);
     }

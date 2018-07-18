@@ -105,5 +105,6 @@ public class Main {
 //        System.out.println(Long.MAX_VALUE);
 
         System.out.println("uyt/d4.jpg.jp".matches("^.+\\.jpg$"));
+        int i = (int)5.5;
     }
 }

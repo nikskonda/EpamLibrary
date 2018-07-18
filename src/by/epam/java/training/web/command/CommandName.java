@@ -33,6 +33,8 @@ public class CommandName {
     public static final String FIND_BOOKS = ("find_book");
     public static final String SHOW_BOOK = ("open_book");
     public static final String READ_BOOK = ("read_book");
+    public static final String TAKE_LIST_OF_BOOKMARKS = ("take_list_of_bookmarks");
+    public static final String DELETE_BOOKMARK = ("delete_bookmark");
 
     //bookmark
     public static final String OPEN_BOOKMARK = ("open_bookmark");

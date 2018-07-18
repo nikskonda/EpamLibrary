@@ -82,4 +82,71 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
         }
         return result;
     }
+
+    @Override
+    public List<Bookmark> getBookmarksOfUser(Integer userId, String lang, Integer countBookmarks, Integer numberOfPage) throws DAOException {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
+        List<Bookmark> bookmarks = new ArrayList<>();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(GET_LIST_OF_BOOKMARKS);
+            cstmt.setInt(USER_ID, userId);
+            cstmt.setString(LOCALE, lang);
+            cstmt.setInt(COUNT_BOOKMARKS_ON_PAGE, countBookmarks);
+            cstmt.setInt(NUMBER_OF_PAGE, numberOfPage);
+            rs = cstmt.executeQuery();
+            while (rs.next()){
+                Bookmark bookmark = new Bookmark();
+                bookmark.setBookId(rs.getInt(BOOK_ID));
+                bookmark.setPageNumber(rs.getInt(PAGE_NUMBER));
+                bookmark.setUserId(userId);
+                bookmark.setLocale(lang);
+
+                bookmarks.add(bookmark);
+            }
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
+        }catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+            throw new DAOException();
+        }  finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return bookmarks;
+    }
+
+    @Override
+    public boolean deleteBookmark(Bookmark bookmark) throws DAOException {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
+        boolean result = false;
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(DELETE_BOOKMARK);
+            cstmt.setInt(USER_ID, bookmark.getUserId());
+            cstmt.setInt(BOOK_ID, bookmark.getBookId());
+            cstmt.setString(LOCALE, bookmark.getLocale());
+            rs = cstmt.executeQuery();
+            result = true;
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
+        }catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+            throw new DAOException();
+        }  finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return result;
+    }
 }

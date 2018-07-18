@@ -13,5 +13,9 @@ public interface BookmarkService {
     Integer getBookmark(Bookmark bookmark) throws DAOException;
 
     boolean setBookmark(Bookmark bookmark) throws DAOException;
+
+    List<Book> getListOfBooksWithBookmark(Integer userId, String lang, Integer countBookmarks, Integer numberOfPage) throws DAOException;
+
+    boolean deleteBookmark(Bookmark bookmark) throws DAOException;
 }
 

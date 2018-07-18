@@ -53,6 +53,8 @@ public class SQLRequest {
 
     public final static String GET_BOOKMARK = "{call get_bookmark(?,?,?)}";
     public final static String SET_BOOKMARK = "{call set_bookmark(?,?,?,?)}";
+    public final static String GET_LIST_OF_BOOKMARKS = "{call get_list_of_bookmarks(?,?,?,?)}";
+    public final static String DELETE_BOOKMARK = "{call delete_bookmark(?,?,?)}";
 
     //Column labels
     public final static String BOOK_ID = "book_id";
@@ -70,7 +72,7 @@ public class SQLRequest {
     public final static String COUNT_BOOKS_ON_PAGE = "count_books_on_page";
     public final static String SEARCH = "search";
     public final static String PAGE_NUMBER = "page_number";
-
+    public final static String COUNT_BOOKMARKS_ON_PAGE = "count_bookmarks_on_page";
 
     //GENRES
     public final static String GET_BOOK_GENRES = "{call get_book_genres(?,?)}";

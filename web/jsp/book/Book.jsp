@@ -11,9 +11,15 @@
 
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="l10n.local" var="loc" />
-<fmt:message bundle="${loc}" key="local.message.catalog.title" var="title" />
-<fmt:message bundle="${loc}" key="local.message.catalog.header" var="headerP" />
 
+<fmt:message bundle="${loc}" key="local.book.lable.authors" var="authors" />
+<fmt:message bundle="${loc}" key="local.book.lable.year" var="year" />
+<fmt:message bundle="${loc}" key="local.book.lable.price" var="price" />
+<fmt:message bundle="${loc}" key="local.book.lable.pages" var="pages" />
+<fmt:message bundle="${loc}" key="local.book.lable.publishingHouse" var="publishingHouse" />
+<fmt:message bundle="${loc}" key="local.book.lable.genre" var="genres" />
+<fmt:message bundle="${loc}" key="local.book.lable.pdfFile" var="pdfFile" />
+<fmt:message bundle="${loc}" key="local.book.message.info" var="info" />
 
 <html>
 <head>
@@ -49,17 +55,62 @@
                 <button type="submit">Edit</button>
             </form>
 
-            <img src="<c:out value="${requestScope.book.coverUrl}"/>" width="200px" height="200px">
-            <h1><c:out value="${requestScope.book.name}"/></h1>
-            <c:forEach var="paragraph" items="${requestScope.description}">
-                <p><c:out value="${paragraph}"/></p>
-            </c:forEach>
-            <h6><c:out value="${requestScope.book.publishYear}"/></h6>
-            price: <h5><c:out value="${requestScope.book.price}"/></h5>
-            Pages: <p><c:out value="${requestScope.book.pages}"/></p>
-            publishingHouse: <p><c:out value="${requestScope.book.publishingHouse.name}"/></p>
-            Author: <p><c:out value="${requestScope.book.getAuthors()}"/></p>
-            Genre: <p><c:out value="${requestScope.book.getGenresAsString()}"/></p>
+            <div class="row">
+                <div class="col-lg-6">
+                    <img src="<c:out value="${requestScope.book.coverUrl}"/>" style="float: left">
+                </div>
+
+                <div class="col-lg-6">
+                    <h1><c:out value="${requestScope.book.name}"/></h1>
+                    <h5>${price}: <c:out value="${requestScope.book.price}"/>$</h5>
+                    <c:forEach var="paragraph" items="${requestScope.description}">
+                        <p><c:out value="${paragraph}"/></p>
+                    </c:forEach>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="row">
+                    ${info}
+                </div>
+                <div class="row">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>${year}</td>
+                            <td><c:out value="${requestScope.book.publishYear}"/></td>
+                        </tr>
+
+                        <tr>
+                            <td>${publishingHouse}</td>
+                            <td><c:out value="${requestScope.book.publishingHouse.name}"/></td>
+                        </tr>
+
+
+                        <tr>
+                            <td>${authors}</td>
+                            <td><c:out value="${requestScope.book.getAuthors()}"/></td>
+                        </tr>
+
+                        <tr>
+                            <td>${genres}</td>
+                            <td><c:out value="${requestScope.book.getGenresAsString()}"/></td>
+                        </tr>
+                        <tr>
+                            <td>${pages}</td>
+                            <td><c:out value="${requestScope.book.pages}"/></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><a href="<c:out value="${requestScope.book.pdfFileUrl}"/>" target="_blank">${pdfFile}</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="book_sets">
                 <form method="post" action="/book">
                     <input type="hidden" name="command" value="read_book">
@@ -72,7 +123,7 @@
                     <button type="submit">Go to Bookmark</button>
                 </form>
             </div>
-            <a href="<c:out value="${requestScope.book.pdfFileUrl}"/>" target="_blank">pdf file</a>
+
         </div>
 
     </section> <!-- s-content -->

@@ -2,14 +2,19 @@ package by.epam.java.training.servise.impl;
 
 import by.epam.java.training.dao.BookmarkDAO;
 import by.epam.java.training.dao.DAOFactory;
-import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
+import by.epam.java.training.model.book.Book;
 import by.epam.java.training.model.book.Bookmark;
+import by.epam.java.training.servise.BookService;
 import by.epam.java.training.servise.BookmarkService;
 
+import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
 import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookmarkServiceImpl implements BookmarkService{
     private static final Logger logger = Logger.getLogger(BookmarkServiceImpl.class);
@@ -30,5 +35,30 @@ public class BookmarkServiceImpl implements BookmarkService{
             return false;
         }
         return bookmarkDAO.setBookmark(bookmark);
+    }
+
+    @Override
+    public List<Book> getListOfBooksWithBookmark(Integer userId, String lang, Integer countBookmarks, Integer numberOfPage) throws DAOException{
+        BookService service = ServiceFactory.getBookService();
+
+        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, userId)
+                || !ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, lang)){
+            return null;
+        }
+        List<Bookmark> bookmarks = bookmarkDAO.getBookmarksOfUser(userId, lang, countBookmarks, numberOfPage);
+
+        List<Book> books = new ArrayList<>();
+        for (Bookmark bookmark : bookmarks){
+            books.add(service.getBook(bookmark.getBookId(), bookmark.getLocale()));
+        }
+        return books;
+     }
+
+    @Override
+    public boolean deleteBookmark(Bookmark bookmark) throws DAOException {
+        if (!ValidatorManager.isValid(ValidatorType.BOOKMARK_VALIDATOR, bookmark)){
+            return false;
+        }
+        return bookmarkDAO.deleteBookmark(bookmark);
     }
 }

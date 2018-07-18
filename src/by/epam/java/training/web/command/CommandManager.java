@@ -3,6 +3,10 @@ package by.epam.java.training.web.command;
 import by.epam.java.training.web.command.impl.OpenErrorPage;
 import by.epam.java.training.web.command.impl.admin.*;
 import by.epam.java.training.web.command.impl.book.*;
+import by.epam.java.training.web.command.impl.bookmark.DeleteBookmark;
+import by.epam.java.training.web.command.impl.bookmark.OpenBookmark;
+import by.epam.java.training.web.command.impl.bookmark.SetBookmark;
+import by.epam.java.training.web.command.impl.bookmark.TakeListOfBookmarks;
 import by.epam.java.training.web.command.impl.l10n.Localization;
 import by.epam.java.training.web.command.impl.moder.*;
 import by.epam.java.training.web.command.impl.moder.add.AddBook;
@@ -64,6 +68,8 @@ public class CommandManager {
 
         commands.put(OPEN_BOOKMARK, new OpenBookmark());
         commands.put(SET_BOOKMARK, new SetBookmark());
+        commands.put(TAKE_LIST_OF_BOOKMARKS, new TakeListOfBookmarks());
+        commands.put(DELETE_BOOKMARK, new DeleteBookmark());
 
         //news
         commands.put(SHOW_NEWS_LIST, new ShowNewsList());

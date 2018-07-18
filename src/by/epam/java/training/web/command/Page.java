@@ -21,6 +21,9 @@ public class Page {
     public static final String BOOK = ("jsp/book/Book.jsp");
     public static final String READING_ROOM = ("jsp/book/ReadingRoom.jsp");
 
+    //bookmarks
+    public static final String LIST_OF_BOOKMARK = ("jsp/book/ListOfBookmark.jsp");
+
 
     //news
     public static final String NEWS_LIST = ("jsp/news/NewsList.jsp");

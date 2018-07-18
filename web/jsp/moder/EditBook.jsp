@@ -21,6 +21,34 @@
 <fmt:message bundle="${loc}" key="local.message.error.book.pages.content" var="pagesError" />
 <fmt:message bundle="${loc}" key="local.message.error.book.publishingHouse.length" var="phLengthError" />
 <fmt:message bundle="${loc}" key="local.message.error.book.cover.content" var="coverError" />
+<fmt:message bundle="${loc}" key="local.book.error.genres.notFound" var="genresNotFound" />
+
+<fmt:message bundle="${loc}" key="local.book.lable.name" var="name" />
+<fmt:message bundle="${loc}" key="local.book.lable.description" var="description" />
+<fmt:message bundle="${loc}" key="local.book.lable.authors" var="authors" />
+<fmt:message bundle="${loc}" key="local.book.lable.text" var="textFile" />
+<fmt:message bundle="${loc}" key="local.book.lable.pdf" var="pdfFile" />
+<fmt:message bundle="${loc}" key="local.book.lable.year" var="year" />
+<fmt:message bundle="${loc}" key="local.book.lable.price" var="price" />
+<fmt:message bundle="${loc}" key="local.book.lable.pages" var="pages" />
+<fmt:message bundle="${loc}" key="local.book.lable.publishingHouse" var="publishingHouse" />
+<fmt:message bundle="${loc}" key="local.book.lable.cover" var="coverFile" />
+
+<fmt:message bundle="${loc}" key="local.book.placeholder.name" var="iname" />
+<fmt:message bundle="${loc}" key="local.book.placeholder.description" var="idescription" />
+<fmt:message bundle="${loc}" key="local.book.placeholder.authors" var="iauthors" />
+<fmt:message bundle="${loc}" key="local.book.placeholder.year" var="iyear" />
+<fmt:message bundle="${loc}" key="local.book.placeholder.price" var="iprice" />
+<fmt:message bundle="${loc}" key="local.book.placeholder.pages" var="ipages" />
+<fmt:message bundle="${loc}" key="local.book.placeholder.publishingHouse" var="ipublishingHouse" />
+<fmt:message bundle="${loc}" key="local.book.lable.genres" var="listOfGenres" />
+
+<fmt:message bundle="${loc}" key="local.book.button.addBook" var="addBook" />
+<fmt:message bundle="${loc}" key="local.book.button.editBook" var="editBook" />
+<fmt:message bundle="${loc}" key="local.book.button.deleteBook" var="deleteBook" />
+
+<fmt:message bundle="${loc}" key="local.book.message.en" var="headerEN" />
+<fmt:message bundle="${loc}" key="local.book.message.ru" var="headerRU" />
 <html>
 <head>
     <title>Error</title>
@@ -48,104 +76,203 @@
     <jsp:include page="../Header.jsp"/>
 <section class="s-content">
     <div class="row">
-        <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidBookForm()">
-            <input type="hidden" name="command" value="edit_book" >
-            <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.getId()}"/>" >
-
-            <div class="col-lg-6">
-                <input type="text" id="name" name="name" style="width: 100%" value="<c:out value="${requestScope.book.getName()}"/>" required>
-                <p class="error-input" id="nameError"></p>
-                <textarea id="description" name="description" style="width: 100%" required><c:out value="${requestScope.book.getDescription()}"/></textarea>
-                <p class="error-input" id="descriptionError"></p>
-                <input type="text" id="authors" name="authors" style="width: 100%" value="<c:out value="${requestScope.bookRU.getName()}"/>" required>
-                <p class="error-input" id="authorsError"></p>
-                txt
-                <input type="file" id="textUrl" name="textUrl" required>
-                <p class="error-input" id="textError"></p>
-                pdf
-                <input type="file" id="pdfUrl" name="pdfUrl" required>
-                <p class="error-input" id="pdfError"></p>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
             </div>
-            <div class="col-lg-6">
-                <input type="hidden"name="lang" value="ru" >
-                <input type="text" id="nameRU" name="nameRU" style="width: 100%" value="<c:out value="${requestScope.bookRU.getName()}"/>" required>
-                <p class="error-input" id="nameRuError"></p>
-                <textarea id="descriptionRU" name="descriptionRU" style="width: 100%" required><c:out value="${requestScope.bookRU.getDescription()}"/></textarea>
-                <p class="error-input" id="descriptionRuError"></p>
-                <input type="text" id="authorsRU" name="authorsRU" style="width: 100%" value="<c:out value="${requestScope.bookRU.getName()}"/>" required>
-                <p class="error-input" id="authorsRuError"></p>
-                text ru
-                <input type="file" id="textUrlRU" name="textUrlRU" required>
-                <p class="error-input" id="textRuError"></p>
-                pdf ru
-                <input type="file" id="pdfUrlRU" name="pdfUrlRU" required>
-                <p class="error-input" id="pdfRuError"></p>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <p>123</p>
             </div>
-
-            <input type="number" id="year" name="year" value="<c:out value="${requestScope.book.publishYear}"/>" required>
-            <p class="error-input" id="yearError"></p>
-            <input type="number" id="price" name="price" min="0" step="0.1" value="<c:out value="${requestScope.book.getPrice()}"/>" required>
-            <p class="error-input" id="priceError"></p>
-
-            <input type="number" id="pages" name="pages" value="<c:out value="${requestScope.book.getPages()}"/>" required>
-            <p class="error-input" id="pagesError"></p>
-            <input type="text" id="publishingHouse" name="publishingHouse" value="<c:out value="${requestScope.book.getPublishingHouse().getName()}"/>" required>
-            <p class="error-input" id="publishingHouseError"></p>
-            cover
-            <input type="file" id="coverUrl" name="coverUrl" required>
-            <p class="error-input" id="coverError"></p>
-
-            list of genres:
-            <c:choose>
-                <c:when test="${requestScope.genres.size()>0}">
-                    <c:forEach var="genre" items="${requestScope.genres}">
-                        <c:choose>
-                            <c:when test="${requestScope.book.getGenres().contains(genre) or requestScope.bookRU.getGenres().contains(genre)}">
-                                <input type="checkbox" name="genres" value="${genre.id}" checked="true"><c:out value="${genre.name}" />
-                            </c:when>
-                            <c:otherwise>
-                                <input type="checkbox" name="genres" value="${genre.id}"><c:out value="${genre.name}"/>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <p>genre нет, сорян</p>
-                </c:otherwise>
-            </c:choose>
-            <p class="error-input" id="genresError"></p>
-
-            <input type="submit" value="Edit book">
-        </form>
-
-        <div class="row">
-            <form action="/moderator" method="POST">
-                <input type="hidden" name="command" value="delete_book">
-                <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.getId()}"/>" >
-                <input type="password" name="password">
-                <input type="submit" value="Del">
-            </form>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                1234
+            </div>
         </div>
+        <%--<div class="tab-content">--%>
+            <%--<div id="panel1" class="tab-pane fade in active">--%>
+                <%--<form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidBookForm()">--%>
+                    <%--<input type="hidden" name="command" value="edit_book" >--%>
+                    <%--<input type="hidden" name="book_id" value="<c:out value="${requestScope.book.getId()}"/>" >--%>
+
+                    <%--<div class="col-lg-6">--%>
+                        <%--<div>--%>
+                            <%--<h3>${headerEN}</h3>--%>
+                        <%--</div>--%>
+                        <%--<div>--%>
+                            <%--<label for="name">${name}</label>--%>
+                            <%--<input type="text" id="name" name="name" placeholder="${iname}" class="full-width" value="<c:out value="${requestScope.book.getName()}"/>" required>--%>
+                            <%--<p class="error-input" id="nameError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="description">${description}</label>--%>
+                            <%--<textarea id="description" name="description" class="add_book_descr full-width" name="description" placeholder="${idescription}"  required><c:out value="${requestScope.book.getDescription()}"/></textarea>--%>
+                            <%--<p class="error-input" id="descriptionError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="authors">${authors}</label>--%>
+                            <%--<input type="text" id="authors" name="authors"  class="full-width" placeholder="${iauthors}" value="<c:out value="${requestScope.bookRU.getName()}"/>" required>--%>
+                            <%--<p class="error-input" id="authorsError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="textUrl">${textFile}</label>--%>
+                            <%--<input type="file" id="textUrl" name="textUrl" class="full-width" required>--%>
+                            <%--<p class="error-input" id="textError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="pdfUrl">${pdfFile}</label>--%>
+                            <%--<input type="file" id="pdfUrl" name="pdfUrl" class="full-width" required>--%>
+                            <%--<p class="error-input" id="pdfError"></p>--%>
+                        <%--</div>--%>
+
+                    <%--</div>--%>
+                    <%--<div class="col-lg-6">--%>
+                        <%--<input type="hidden" name="lang" value="ru" >--%>
+
+                        <%--<div>--%>
+                            <%--<h3>${headerRU}</h3>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="nameRU">${name}</label>--%>
+                            <%--<input type="text" id="nameRU" name="nameRU" class="full-width" placeholder="${iname}"  value="<c:out value="${requestScope.bookRU.getName()}"/>" required>--%>
+                            <%--<p class="error-input" id="nameRuError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="descriptionRU">${description}</label>--%>
+                            <%--<textarea id="descriptionRU" name="descriptionRU" class="add_book_descr full-width" required placeholder="${idescription}" required><c:out value="${requestScope.bookRU.getDescription()}"/></textarea>--%>
+                            <%--<p class="error-input" id="descriptionRuError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="authorsRU">${authors}</label>--%>
+                            <%--<input type="text" id="authorsRU" name="authorsRU"  class="full-width" placeholder="${iauthors}" value="<c:out value="${requestScope.bookRU.getName()}"/>" required>--%>
+                            <%--<p class="error-input" id="authorsRuError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="textUrlRU">${textFile}</label>--%>
+                            <%--<input type="file" id="textUrlRU" name="textUrlRU" class="full-width" required>--%>
+                            <%--<p class="error-input" id="textRuError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="pdfUrlRU">${pdfFile}</label>--%>
+                            <%--<input type="file" id="pdfUrlRU" name="pdfUrlRU" class="full-width" required>--%>
+                            <%--<p class="error-input" id="pdfRuError"></p>--%>
+                        <%--</div>--%>
+
+                    <%--</div>--%>
+
+                    <%--<div style="width: 50%; margin: 0 auto;">--%>
+                        <%--<div>--%>
+                            <%--<label for="year">${year}</label>--%>
+                            <%--<input type="number" id="year" name="year" class="full-width" placeholder="${iyear}" value="<c:out value="${requestScope.book.publishYear}"/>" required>--%>
+                            <%--<p class="error-input" id="yearError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="price">${price}</label>--%>
+                            <%--<input type="number" id="price" name="price" min="0" step="0.1" class="full-width" placeholder="${iprice}" value="<c:out value="${requestScope.book.getPrice()}"/>" required>--%>
+                            <%--<p class="error-input" id="priceError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="pages">${pages}</label>--%>
+                            <%--<input type="number" id="pages" name="pages" class="full-width" placeholder="${ipages}" value="<c:out value="${requestScope.book.getPages()}"/>" required>--%>
+                            <%--<p class="error-input" id="pagesError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="publishingHouse">${publishingHouse}</label>--%>
+                            <%--<input type="text" id="publishingHouse" name="publishingHouse" class="full-width" placeholder="${ipublishingHouse}" value="<c:out value="${requestScope.book.getPublishingHouse().getName()}"/>" required>--%>
+                            <%--<p class="error-input" id="publishingHouseError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="coverUrl">${coverFile}</label>--%>
+                            <%--<input type="file" id="coverUrl" name="coverUrl" class="full-width" required>--%>
+                            <%--<p class="error-input" id="coverError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="genres">${listOfGenres}</label>--%>
+                            <%--<div id="genres">--%>
+                                <%--<c:choose>--%>
+                                    <%--<c:when test="${requestScope.genres.size()>0}">--%>
+                                        <%--<c:forEach var="genre" items="${requestScope.genres}">--%>
+                                            <%--<c:choose>--%>
+                                                <%--<c:when test="${requestScope.book.getGenres().contains(genre) or requestScope.bookRU.getGenres().contains(genre)}">--%>
+                                                    <%--<input type="checkbox"  name="genres" value="${genre.id}" checked><c:out value="${genre.name}" />--%>
+                                                <%--</c:when>--%>
+                                                <%--<c:otherwise>--%>
+                                                    <%--<input type="checkbox" name="genres" value="${genre.id}"><c:out value="${genre.name}"/>--%>
+                                                <%--</c:otherwise>--%>
+                                            <%--</c:choose>--%>
+                                            <%--<br>--%>
+                                        <%--</c:forEach>--%>
+                                    <%--</c:when>--%>
+                                    <%--<c:otherwise>--%>
+                                        <%--<p>${genresNotFound}</p>--%>
+                                    <%--</c:otherwise>--%>
+                                <%--</c:choose>--%>
+                            <%--</div>--%>
+
+                            <%--<p class="error-input" id="genresError"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<div>--%>
+                            <%--<label for="password">Password</label>--%>
+                            <%--<input type="password" id="password" name="password" class="full-width" required>--%>
+                            <%--<p class="error-input"></p>--%>
+                        <%--</div>--%>
+
+                        <%--<input class="add_book_button full-width" type="submit" value="${editBook}">--%>
+                    <%--</div>--%>
+                <%--</form>--%>
+            <%--</div>--%>
+            <%--<div id="panel2" class="tab-pane fade">--%>
+                <%--<form action="/moderator" method="POST">--%>
+                    <%--<input type="hidden" name="command" value="delete_book">--%>
+                    <%--<input type="hidden" name="book_id" value="<c:out value="${requestScope.book.getId()}"/>" >--%>
+
+                    <%--<div>--%>
+                        <%--<label for="password2">Password</label>--%>
+                        <%--<input type="password" id="password2" name="password" class="full-width" required>--%>
+                        <%--<p class="error-input"></p>--%>
+                    <%--</div>--%>
+
+                    <%--<input class="add_book_button full-width" type="submit" value="${deleteBook}">--%>
+                <%--</form>--%>
+            <%--</div>--%>
+        <%--</div>--%>
     </div>
+
 </section>
 <jsp:include page="../Footer.jsp"/>
 
-    <script type="text/javascript">
-        var validationErrorMessages =
-            {
-                "nameLengthError":${nameLengthError},
-                "descriptionContentError":${descriptionContentError},
-                "authorsLengthError":${authorsLengthError},
-                "textUrlError":${textUrlError},
-                "pdfUrlError":${pdfUrlError},
-                "yearError":${yearError},
-                "priceError":${priceError},
-                "pagesError":${pagesError},
-                "phLengthError":${phLengthError},
-                "coverError":${coverError}
-            }
-        ;
-    </script>
+<script type="text/javascript">
+    var validationErrorMessages =
+        {
+            "nameLengthError":"${nameLengthError}",
+            "descriptionContentError":"${descriptionContentError}",
+            "authorsLengthError":"${authorsLengthError}",
+            "textUrlError":"${textUrlError}",
+            "pdfUrlError":"${pdfUrlError}",
+            "yearError":"${yearError}",
+            "priceError":"${priceError}",
+            "pagesError":"${pagesError}",
+            "phLengthError":"${phLengthError}",
+            "coverError":"${coverError}"
+        }
+    ;
+</script>
     <script src="../../js/validator.js"></script>
 
 </body>

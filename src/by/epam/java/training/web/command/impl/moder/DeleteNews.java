@@ -3,10 +3,13 @@ package by.epam.java.training.web.command.impl.moder;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.news.News;
 import by.epam.java.training.model.user.ActiveUser;
+import by.epam.java.training.model.user.form.SignInForm;
 import by.epam.java.training.servise.ModeratorService;
 import by.epam.java.training.servise.ServiceFactory;
+import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
+import by.epam.java.training.web.util.EncriptionMD5;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -28,8 +31,18 @@ public class DeleteNews extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
+            HttpSession session = request.getSession(true);
             ModeratorService service = ServiceFactory.getModeratorService();
+            UserService userService = ServiceFactory.getUserService();
+            ActiveUser user = (ActiveUser)session.getAttribute(USER);
             Integer newsId = Integer.parseInt(request.getParameter(NEWS_ID));
+            String password = EncriptionMD5.encrypt(request.getParameter(PASSWORD));
+
+            if (!userService.isExistUser(new SignInForm(user.getLogin(), password))){
+                request.setAttribute(ERROR_EXIST, true);
+                CommandFactory.getCommand(OPEN_EDITING_NEWS).execute(request, response);
+                return;
+            }
 
             if (!service.delNews(newsId)){
                 CommandFactory.getCommand(OPEN_EDITING_NEWS).execute(request, response);
