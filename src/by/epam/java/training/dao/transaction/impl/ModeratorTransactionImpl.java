@@ -205,7 +205,7 @@ public class ModeratorTransactionImpl extends AbstractDAO implements ModeratorTr
         cstmt.setString(BOOK_PDF_FILE_URL, defBook.getPdfFileUrl());
         cstmt.setString(BOOK_COVER_URL, defBook.getCoverUrl());
         cstmt.setString(BOOK_TEXT_FILE_URL, defBook.getTextFileUrl());
-
+        cstmt.setString(BOOK_AUTHORS, defBook.getAuthors());
         cstmt.registerOutParameter(BOOK_ID, Types.SMALLINT);
         cstmt.executeQuery();
         newsId = cstmt.getInt(BOOK_ID);
@@ -232,6 +232,7 @@ public class ModeratorTransactionImpl extends AbstractDAO implements ModeratorTr
         cstmt.setString(BOOK_DESCRIPTION, translatedBook.getDescription());
         cstmt.setString(BOOK_PDF_FILE_URL, translatedBook.getPdfFileUrl());
         cstmt.setString(BOOK_TEXT_FILE_URL, translatedBook.getTextFileUrl());
+        cstmt.setString(BOOK_AUTHORS, translatedBook.getAuthors());
         cstmt.setString(LOCALE, lang);
         cstmt.executeQuery();
 
@@ -302,6 +303,7 @@ public class ModeratorTransactionImpl extends AbstractDAO implements ModeratorTr
         cstmt.setString(BOOK_PDF_FILE_URL, defBook.getPdfFileUrl());
         cstmt.setString(BOOK_COVER_URL, defBook.getCoverUrl());
         cstmt.setString(BOOK_TEXT_FILE_URL, defBook.getTextFileUrl());
+        cstmt.setString(BOOK_AUTHORS, defBook.getAuthors());
         cstmt.setInt(BOOK_ID, defBook.getId());
         cstmt.executeQuery();
 
@@ -316,6 +318,7 @@ public class ModeratorTransactionImpl extends AbstractDAO implements ModeratorTr
         cstmt.setString(BOOK_DESCRIPTION, translatedBook.getDescription());
         cstmt.setString(BOOK_PDF_FILE_URL, translatedBook.getPdfFileUrl());
         cstmt.setString(BOOK_TEXT_FILE_URL, translatedBook.getTextFileUrl());
+        cstmt.setString(BOOK_AUTHORS, translatedBook.getAuthors());
         cstmt.setString(LOCALE, lang);
         cstmt.executeQuery();
 

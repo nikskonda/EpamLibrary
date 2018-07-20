@@ -6,7 +6,7 @@ import by.epam.java.training.dao.NewsDAO;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.dao.util.ConnectionPool;
-import by.epam.java.training.model.LordOfPages;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.news.News;
 import by.epam.java.training.model.news.NewsCover;
 import org.apache.log4j.Logger;
@@ -23,7 +23,7 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
     private static final Logger logger = Logger.getLogger(NewsDAOImpl.class);
 
     @Override
-    public List<NewsCover> getNewsByPage(LordOfPages pageData) throws DAOException {
+    public List<NewsCover> getNewsByPage(PageAttributes pageData) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;

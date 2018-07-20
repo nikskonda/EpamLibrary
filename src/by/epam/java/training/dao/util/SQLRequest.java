@@ -42,10 +42,10 @@ public class SQLRequest {
     public final static String GET_LIST_OF_BOOKS = "{call get_list_of_books(?,?,?)}";
     public final static String CALC_TOTAL_PAGES_IN_BOOKS = "{call calc_pages_in_books(?,?,?)}";
     public final static String GET_URL_TO_TEXT_OF_BOOK = "{call get_url_to_text_of_book(?,?)}";
-    public final static String ADD_BOOK = "{call add_book(?,?,?,?,?,?,?,?,?,?)}";
-    public final static String ADD_TRANSLATED_BOOK = "{call add_translated_book(?,?,?,?,?,?)}";
-    public final static String UPDATE_BOOK = "{call update_book(?,?,?,?,?,?,?,?,?,?)}";
-    public final static String UPDATE_TRANSLATED_BOOK = "{call update_translated_book(?,?,?,?,?,?)}";
+    public final static String ADD_BOOK = "{call add_book(?,?,?,?,?,?,?,?,?,?,?)}";
+    public final static String ADD_TRANSLATED_BOOK = "{call add_translated_book(?,?,?,?,?,?,?)}";
+    public final static String UPDATE_BOOK = "{call update_book(?,?,?,?,?,?,?,?,?,?,?)}";
+    public final static String UPDATE_TRANSLATED_BOOK = "{call update_translated_book(?,?,?,?,?,?,?)}";
     public final static String DELETE_BOOK = "{call delete_book(?)}";
 
     public final static String FIND_BOOKS = "{call find_book(?,?,?,?)}";
@@ -55,6 +55,7 @@ public class SQLRequest {
     public final static String SET_BOOKMARK = "{call set_bookmark(?,?,?,?)}";
     public final static String GET_LIST_OF_BOOKMARKS = "{call get_list_of_bookmarks(?,?,?,?)}";
     public final static String DELETE_BOOKMARK = "{call delete_bookmark(?,?,?)}";
+    public final static String CALC_TOTAL_PAGES_IN_BOOKMARKS = "{call calc_pages_in_bookmarks(?,?,?,?)}";
 
     //Column labels
     public final static String BOOK_ID = "book_id";

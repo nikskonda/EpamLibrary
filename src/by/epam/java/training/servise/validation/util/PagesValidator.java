@@ -1,7 +1,6 @@
 package by.epam.java.training.servise.validation.util;
 
-import by.epam.java.training.model.LordOfPages;
-import by.epam.java.training.model.book.Bookmark;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.servise.validation.Validator;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
@@ -10,11 +9,11 @@ public class PagesValidator implements Validator {
 
     @Override
     public boolean isValid(Object obj) {
-        if (!(obj instanceof LordOfPages)){
+        if (!(obj instanceof PageAttributes)){
             return false;
         }
 
-        LordOfPages pageData = (LordOfPages) obj;
+        PageAttributes pageData = (PageAttributes) obj;
 
         Validator idValidator = ValidatorManager.getValidator(ValidatorType.ID_VALIDATOR);
 

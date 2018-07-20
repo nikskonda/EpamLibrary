@@ -3,13 +3,12 @@ package by.epam.java.training.servise.impl;
 import by.epam.java.training.dao.BookDAO;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.LordOfPages;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.book.Book;
 import by.epam.java.training.model.book.BookCover;
 import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.servise.BookService;
-import by.epam.java.training.servise.util.ReadFromFile;
-import by.epam.java.training.servise.validation.Validator;
+import by.epam.java.training.dao.util.ReadFromFile;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
 import org.apache.log4j.Logger;
@@ -25,7 +24,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getBook(Integer bookId, String locale) throws DAOException {
-        if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)){
+        if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
+                || (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, bookId))){
             return null;
         }
         return bookDAO.getBook(bookId, locale);
@@ -50,7 +50,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookCover> getBooksByPage(LordOfPages pageData) throws DAOException{
+    public List<BookCover> getBooksByPage(PageAttributes pageData) throws DAOException{
         if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageData)){
             return null;
         }
@@ -59,7 +59,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Integer calcTotalPages(String locale, Integer countBooksOnOnePage) throws DAOException{
-        if (false){
+        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, countBooksOnOnePage)
+                || !ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)){
             return null;
         }
         return  bookDAO.calcTotalPagesWithBooks(locale, countBooksOnOnePage);

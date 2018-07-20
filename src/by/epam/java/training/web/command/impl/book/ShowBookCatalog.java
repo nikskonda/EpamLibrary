@@ -1,7 +1,7 @@
 package by.epam.java.training.web.command.impl.book;
 
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.LordOfPages;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.servise.BookService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
@@ -36,7 +36,7 @@ public class ShowBookCatalog extends AbstractCommand {
             Integer currentPage = getCurrentPage(request, NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE);
             String locale = (String)session.getAttribute(LOCALE);
 
-            LordOfPages pageData = new LordOfPages();
+            PageAttributes pageData = new PageAttributes();
             pageData.setCountOnPage(countBooks);
             pageData.setNumberOfPage(currentPage);
             pageData.setLocale(locale);

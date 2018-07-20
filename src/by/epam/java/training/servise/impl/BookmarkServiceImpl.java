@@ -3,6 +3,7 @@ package by.epam.java.training.servise.impl;
 import by.epam.java.training.dao.BookmarkDAO;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.exception.DAOException;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.book.Book;
 import by.epam.java.training.model.book.Bookmark;
 import by.epam.java.training.servise.BookService;
@@ -38,14 +39,15 @@ public class BookmarkServiceImpl implements BookmarkService{
     }
 
     @Override
-    public List<Book> getListOfBooksWithBookmark(Integer userId, String lang, Integer countBookmarks, Integer numberOfPage) throws DAOException{
-        BookService service = ServiceFactory.getBookService();
-
+    public List<Book> getListOfBooksWithBookmark(Integer userId, PageAttributes pageAttributes) throws DAOException{
         if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, userId)
-                || !ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, lang)){
+                || !ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageAttributes)){
             return null;
         }
-        List<Bookmark> bookmarks = bookmarkDAO.getBookmarksOfUser(userId, lang, countBookmarks, numberOfPage);
+
+        BookService service = ServiceFactory.getBookService();
+
+        List<Bookmark> bookmarks = bookmarkDAO.getBookmarksOfUser(userId, pageAttributes);
 
         List<Book> books = new ArrayList<>();
         for (Bookmark bookmark : bookmarks){
@@ -60,5 +62,16 @@ public class BookmarkServiceImpl implements BookmarkService{
             return false;
         }
         return bookmarkDAO.deleteBookmark(bookmark);
+    }
+
+    @Override
+    public Integer calcTotalPages(Integer userId, String locale, Integer countBookmarksOnOnePage) throws DAOException {
+        if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
+                || !ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, countBookmarksOnOnePage)
+                || !ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, userId)){
+            return null;
+        }
+
+        return bookmarkDAO.calcTotalPages(userId, locale, countBookmarksOnOnePage);
     }
 }

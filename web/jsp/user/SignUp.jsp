@@ -154,7 +154,7 @@
                                 <button type="submit" class="btn btn-primary btn-lg btn-block login-button">${signup}</button>
                             </div>
                             <div class="form-group ">
-                                <a class="btn btn-primary btn-lg btn-block login-button" href="/openSignIn">signin</a>
+                                <a class="btn btn-primary btn-lg btn-block login-button" href="/openSignIn">Sign In</a>
                             </div>
                             <div class="form-group ">
                                 <a class="btn btn-primary btn-lg btn-block login-button" href="/news?command=open_news_list">Home</a>

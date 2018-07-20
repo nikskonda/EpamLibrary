@@ -1,4 +1,4 @@
-package by.epam.java.training.servise.util;
+package by.epam.java.training.dao.util;
 
 import java.io.*;
 

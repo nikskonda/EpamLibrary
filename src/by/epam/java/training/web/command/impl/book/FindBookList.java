@@ -1,7 +1,7 @@
 package by.epam.java.training.web.command.impl.book;
 
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.LordOfPages;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.servise.BookSearchService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
@@ -38,7 +38,7 @@ public class FindBookList extends AbstractCommand {
                 session.setAttribute(LOCALE, "en");
             }
             String locale = (String)session.getAttribute(LOCALE);
-            LordOfPages pageData = new LordOfPages();
+            PageAttributes pageData = new PageAttributes();
             pageData.setCountOnPage(countBooks);
             pageData.setNumberOfPage(currentPage);
             pageData.setLocale(locale);

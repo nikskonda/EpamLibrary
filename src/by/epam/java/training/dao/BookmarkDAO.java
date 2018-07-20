@@ -2,6 +2,7 @@ package by.epam.java.training.dao;
 
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.book.Book;
 import by.epam.java.training.model.book.BookCover;
 import by.epam.java.training.model.book.Bookmark;
@@ -14,8 +15,10 @@ public interface BookmarkDAO {
 
     boolean setBookmark(Bookmark bookmark) throws DAOException;
 
-    List<Bookmark> getBookmarksOfUser(Integer userId, String lang, Integer countBookmarks, Integer numberOfPage)
+    List<Bookmark> getBookmarksOfUser(Integer userId, PageAttributes pageAttributes)
             throws DAOException;
 
     boolean deleteBookmark(Bookmark bookmark) throws DAOException;
+
+    Integer calcTotalPages(Integer userId, String locale, Integer countBookmarksOnOnePage) throws DAOException;
 }

@@ -12,6 +12,9 @@ public class LoginValidator implements Validator {
 
     @Override
     public boolean isValid(Object obj) {
+        if (obj == null){
+            return false;
+        }
         if (String.class != obj.getClass()){
             return false;
         }

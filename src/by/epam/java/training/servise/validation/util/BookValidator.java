@@ -16,6 +16,10 @@ public class BookValidator implements Validator {
         Book book = (Book) obj;
 
 
+
+        if (!ValidatorManager.isValid(ValidatorType.TRANSLATED_BOOK_VALIDATOR, book)){
+            return false;
+        }
         if (!ValidatorManager.isValid(ValidatorType.DOUBLE_VALIDATION, book.getPrice())){
             return false;
         }

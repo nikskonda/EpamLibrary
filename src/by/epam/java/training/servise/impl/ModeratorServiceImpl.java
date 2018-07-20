@@ -28,8 +28,7 @@ public class ModeratorServiceImpl implements ModeratorService {
                 || !ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, lang)){
             return false;
         }
-        return false;
-//        return moderatorDAO.addNews(defNews, translatedNews, lang);
+        return moderatorDAO.addNews(defNews, translatedNews, lang);
     }
 
     @Override
@@ -57,8 +56,7 @@ public class ModeratorServiceImpl implements ModeratorService {
                 || !ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, lang)){
             return false;
         }
-        return false;
-//        return moderatorDAO.addBook(defBook, translatedBook, lang);
+        return moderatorDAO.addBook(defBook, translatedBook, lang);
     }
 
     @Override

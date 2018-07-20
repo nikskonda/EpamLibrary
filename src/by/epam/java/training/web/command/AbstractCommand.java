@@ -35,7 +35,6 @@ public abstract class AbstractCommand extends Pagination implements Command{
 
     public void rememberLastAction(HttpServletRequest request) throws ServletException {
         HttpSession session = request.getSession(true);
-
         StringBuffer requestURL = request.getRequestURL();
         String queryString = request.getQueryString();
         if (queryString == null) {

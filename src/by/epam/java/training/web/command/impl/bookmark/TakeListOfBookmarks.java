@@ -1,6 +1,7 @@
 package by.epam.java.training.web.command.impl.bookmark;
 
 import by.epam.java.training.dao.exception.DAOException;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.book.Bookmark;
 import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.servise.BookmarkService;
@@ -35,16 +36,16 @@ public class TakeListOfBookmarks extends AbstractCommand {
             HttpSession session = request.getSession(true);
 
             ActiveUser user = (ActiveUser)session.getAttribute(USER);
-            String lang = (String) session.getAttribute(LOCALE);
+            PageAttributes pa = new PageAttributes();
+            pa.setLocale((String) session.getAttribute(LOCALE));
+            pa.setCountOnPage(getCount(request, COUNT_BOOKMARKS_ON_PAGE, INIT_COUNT_BOOKMARKS));
+            pa.setNumberOfPage(getCurrentPage(request, NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE));
 
-            Integer countBookmarks = getCount(request, COUNT_BOOKMARKS_ON_PAGE, INIT_COUNT_BOOKMARKS);
-            Integer currentPage = getCurrentPage(request, NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE);
-
-            session.setAttribute(COUNT_BOOKMARKS_ON_PAGE, countBookmarks);
-            request.setAttribute(NUMBER_OF_PAGE, currentPage);
+            session.setAttribute(COUNT_BOOKMARKS_ON_PAGE, pa.getCountOnPage());
+            request.setAttribute(NUMBER_OF_PAGE, pa.getNumberOfPage());
             request.setAttribute(TOTAL_PAGES, 10);
 
-            request.setAttribute(BOOKS, service.getListOfBooksWithBookmark(user.getId(), lang, countBookmarks, currentPage));
+            request.setAttribute(BOOKS, service.getListOfBooksWithBookmark(user.getId(), pa));
 
             forward(request, response, LIST_OF_BOOKMARK);
         } catch (DAOException ex){

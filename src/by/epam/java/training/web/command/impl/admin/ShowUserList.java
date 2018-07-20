@@ -1,7 +1,7 @@
 package by.epam.java.training.web.command.impl.admin;
 
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.LordOfPages;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
@@ -33,7 +33,7 @@ public class ShowUserList extends AbstractCommand {
             Integer countUsers = getCount(request, COUNT_USERS_ON_PAGE, INIT_COUNT_USERS);
             Integer currentPage = getCurrentPage(request, NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE);
 
-            LordOfPages pageData = new LordOfPages();
+            PageAttributes pageData = new PageAttributes();
             pageData.setCountOnPage(countUsers);
             pageData.setNumberOfPage(currentPage);
 

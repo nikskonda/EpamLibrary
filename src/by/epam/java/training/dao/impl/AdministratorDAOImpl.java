@@ -3,17 +3,12 @@ package by.epam.java.training.dao.impl;
 import by.epam.java.training.dao.AbstractDAO;
 import by.epam.java.training.dao.AdministratorDAO;
 import by.epam.java.training.dao.DAOFactory;
-import by.epam.java.training.dao.UserDAO;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.dao.util.ConnectionPool;
-import by.epam.java.training.model.LordOfPages;
-import by.epam.java.training.model.user.ActiveUser;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.user.User;
 import by.epam.java.training.model.user.constituents.Role;
-import by.epam.java.training.model.user.form.ProfileForm;
-import by.epam.java.training.model.user.form.SignInForm;
-import by.epam.java.training.model.user.form.SignUpForm;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -53,7 +48,7 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
     }
 
     @Override
-    public List<User> getUsersByPages(LordOfPages pageData) {
+    public List<User> getUsersByPages(PageAttributes pageData) {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -122,7 +117,7 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
     }
 
     @Override
-    public List<User> FindUsersByPages(String search, LordOfPages pageData) {
+    public List<User> FindUsersByPages(String search, PageAttributes pageData) {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;

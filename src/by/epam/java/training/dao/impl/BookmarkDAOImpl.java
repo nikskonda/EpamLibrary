@@ -7,6 +7,7 @@ import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.dao.util.ConnectionPool;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.book.*;
 import org.apache.log4j.Logger;
 
@@ -84,7 +85,7 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
     }
 
     @Override
-    public List<Bookmark> getBookmarksOfUser(Integer userId, String lang, Integer countBookmarks, Integer numberOfPage) throws DAOException {
+    public List<Bookmark> getBookmarksOfUser(Integer userId, PageAttributes pageAttributes) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -94,16 +95,16 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
             con = conPool.retrieve();
             cstmt = con.prepareCall(GET_LIST_OF_BOOKMARKS);
             cstmt.setInt(USER_ID, userId);
-            cstmt.setString(LOCALE, lang);
-            cstmt.setInt(COUNT_BOOKMARKS_ON_PAGE, countBookmarks);
-            cstmt.setInt(NUMBER_OF_PAGE, numberOfPage);
+            cstmt.setString(LOCALE, pageAttributes.getLocale());
+            cstmt.setInt(COUNT_BOOKMARKS_ON_PAGE, pageAttributes.getCountOnPage());
+            cstmt.setInt(NUMBER_OF_PAGE, pageAttributes.getNumberOfPage());
             rs = cstmt.executeQuery();
             while (rs.next()){
                 Bookmark bookmark = new Bookmark();
                 bookmark.setBookId(rs.getInt(BOOK_ID));
                 bookmark.setPageNumber(rs.getInt(PAGE_NUMBER));
                 bookmark.setUserId(userId);
-                bookmark.setLocale(lang);
+                bookmark.setLocale(pageAttributes.getLocale());
 
                 bookmarks.add(bookmark);
             }
@@ -143,6 +144,39 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         }  finally {
+            closeResultSet(rs);
+            closeCallableStatement(cstmt);
+            putbackConnection(con, conPool);
+        }
+        return result;
+    }
+
+    @Override
+    public Integer calcTotalPages(Integer userId, String locale, Integer countBookmarksOnOnePage) throws DAOException {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        Integer result = null;
+
+        ConnectionPool conPool = DAOFactory.getConnectionPool();
+        try {
+            con = conPool.retrieve();
+            cstmt = con.prepareCall(CALC_TOTAL_PAGES_IN_BOOKMARKS);
+            cstmt.setInt(COUNT_BOOKMARKS_ON_PAGE, countBookmarksOnOnePage);
+            cstmt.setString(LOCALE, locale);
+            cstmt.setInt(USER_ID, userId);
+            cstmt.registerOutParameter(RESULT, Types.SMALLINT);
+            cstmt.executeQuery();
+
+            result = cstmt.getInt(RESULT);
+
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
+        }catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+            throw new DAOException();
+        } finally {
             closeResultSet(rs);
             closeCallableStatement(cstmt);
             putbackConnection(con, conPool);

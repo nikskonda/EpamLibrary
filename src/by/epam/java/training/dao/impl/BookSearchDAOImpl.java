@@ -6,7 +6,7 @@ import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.dao.util.ConnectionPool;
-import by.epam.java.training.model.LordOfPages;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.book.*;
 import org.apache.log4j.Logger;
 
@@ -21,7 +21,7 @@ public class BookSearchDAOImpl extends AbstractDAO implements BookSearchDAO {
     private static final Logger logger = Logger.getLogger(BookSearchDAOImpl.class);
 
     @Override
-    public List<BookCover> getBooksByPage(String search, LordOfPages pageData) throws DAOException {
+    public List<BookCover> getBooksByPage(String search, PageAttributes pageData) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;

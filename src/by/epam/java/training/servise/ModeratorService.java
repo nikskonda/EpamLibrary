@@ -15,7 +15,7 @@ public interface ModeratorService {
 
     boolean editNews(News defNews, News translatedNews, String lang) throws DAOException;
 
-    boolean delNews(Integer newsId) throws DAOException, SQLException;
+    boolean delNews(Integer newsId) throws DAOException;
 
 
     boolean addBook(Book defBook, Book translatedBook, String lang) throws DAOException;

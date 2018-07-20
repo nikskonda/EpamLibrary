@@ -3,7 +3,7 @@ package by.epam.java.training.servise.impl;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.NewsDAO;
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.LordOfPages;
+import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.news.News;
 import by.epam.java.training.model.news.NewsCover;
 import by.epam.java.training.servise.NewsService;
@@ -19,7 +19,7 @@ public class NewsServiceImpl implements NewsService {
     private final NewsDAO newsDAO = DAOFactory.getNewsDAO();
 
     @Override
-    public List<NewsCover> getNewsByPage(LordOfPages pageData) throws DAOException {
+    public List<NewsCover> getNewsByPage(PageAttributes pageData) throws DAOException {
         if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageData)){
             return null;
         }
