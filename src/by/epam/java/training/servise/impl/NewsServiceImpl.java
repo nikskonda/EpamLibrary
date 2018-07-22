@@ -36,7 +36,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public Integer calcTotalPages(String locale, Integer countNewsOnOnePage) throws DAOException{
+    public Integer calcPagesCountNews(String locale, Integer countNewsOnOnePage) throws DAOException{
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
                 || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countNewsOnOnePage)){
             return null;

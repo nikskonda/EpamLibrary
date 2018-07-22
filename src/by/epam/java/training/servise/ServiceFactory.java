@@ -25,7 +25,6 @@ public class ServiceFactory {
     private final NewsService newsService = new NewsServiceImpl();
 
 
-
     private ServiceFactory() {}
 
     public static AdministratorService getAdministratorService(){

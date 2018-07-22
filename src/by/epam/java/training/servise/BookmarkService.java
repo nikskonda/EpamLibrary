@@ -19,6 +19,6 @@ public interface BookmarkService {
 
     boolean deleteBookmark(Bookmark bookmark) throws DAOException;
 
-    Integer calcTotalPages(Integer userId, String locale, Integer countBookmarksOnOnePage) throws DAOException;
+    Integer calcPagesCountBookmarks(Integer userId, String locale, Integer countBookmarksOnOnePage) throws DAOException;
 }
 

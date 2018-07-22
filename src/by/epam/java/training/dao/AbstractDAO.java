@@ -12,7 +12,7 @@ public abstract class AbstractDAO {
     private static final Logger logger = Logger.getLogger(AbstractDAO.class);
 
     public Connection retrieveConnection() throws ConnectionPoolException{
-        ConnectionPool connectionPool = new ConnectionPool();
+        ConnectionPool connectionPool = DAOFactory.getConnectionPool();
         Connection connection = connectionPool.retrieve();
         return connection;
     }
@@ -40,7 +40,7 @@ public abstract class AbstractDAO {
     }
 
     public void putbackConnection(Connection connection){
-        ConnectionPool connectionPool = new ConnectionPool();
+        ConnectionPool connectionPool = DAOFactory.getConnectionPool();
         try{
             connectionPool.putback(connection);
         } catch (NullPointerException ex){

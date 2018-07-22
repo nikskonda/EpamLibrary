@@ -13,11 +13,11 @@ public interface AdministratorService {
 
     List<User> getUsersByPages(PageAttributes pageData) throws DAOException;
 
-    Integer calcTotalPagesWithUsers(Integer countUsersOnOnePage) throws DAOException;
+    Integer calcPagesCountUsers(Integer countUsersOnOnePage) throws DAOException;
 
     List<User> FindUsersByPages(String search, PageAttributes pageData) throws DAOException;
 
-    Integer calcTotalPagesWithUsersSearch(String search, Integer countUsersOnOnePage) throws DAOException;
+    Integer calcPagesCountUserSearchResult(String search, Integer countUsersOnOnePage) throws DAOException;
 
     List<Role> getRoles() throws DAOException;
 

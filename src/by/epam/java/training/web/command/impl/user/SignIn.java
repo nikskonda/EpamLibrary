@@ -32,7 +32,7 @@ public class SignIn extends AbstractCommand {
             authForm.setLogin(request.getParameter(LOGIN));
             authForm.setPassword(EncriptionMD5.encrypt(request.getParameter(PASSWORD)));
 
-            if (!userService.isExistUser(authForm)){
+            if (!userService.isUserExist(authForm)){
                 request.setAttribute(ERROR_EXIST, true);
                 request.setAttribute(SIGN_IN_FORM, authForm);
                 forward(request, response, SIGN_IN);

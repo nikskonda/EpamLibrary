@@ -21,7 +21,7 @@ public class Main {
 //
 //        UserService us = new UserServiceImpl();
 //
-//        System.out.println(us.isExistUser(au));
+//        System.out.println(us.isUserExist(au));
 
 //        String str = "^[\\w]+@[a-zA-Z]+\\.[a-z]+$";
 //        System.out.println("qwe".matches(str));
@@ -53,7 +53,7 @@ public class Main {
 //        af.setLogin("admin");
 //        af.setPassword("admin1");
 //
-//        if (ServiceFactory.getInstance().getUserService().isExistUser(af)){
+//        if (ServiceFactory.getInstance().getUserService().isUserExist(af)){
 //            ActiveUser auser = ServiceFactory.getInstance().getUserService().getActiveUser(af.getLogin());
 //            System.out.println(auser.getId());
 //        }

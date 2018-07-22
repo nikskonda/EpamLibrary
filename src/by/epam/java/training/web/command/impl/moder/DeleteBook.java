@@ -37,7 +37,7 @@ public class DeleteBook extends AbstractCommand {
             Integer bookId = Integer.parseInt(request.getParameter(BOOK_ID));
             String password = EncriptionMD5.encrypt(request.getParameter(PASSWORD));
 
-            if (!userService.isExistUser(new SignInForm(user.getLogin(), password))){
+            if (!userService.isUserExist(new SignInForm(user.getLogin(), password))){
                 request.setAttribute(ERROR_EXIST, true);
                 CommandFactory.getCommand(TAKE_ADD_BOOK_FORM).execute(request, response);
                 return;

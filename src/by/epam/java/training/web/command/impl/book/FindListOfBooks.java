@@ -41,7 +41,7 @@ public class FindListOfBooks extends AbstractCommand {
 
             session.setAttribute(COUNT_BOOKS_ON_PAGE, countBooks);
             request.setAttribute(NUMBER_OF_PAGE, currentPage);
-            request.setAttribute(TOTAL_PAGES, service.calcTotalPages(locale, search, countBooks));
+            request.setAttribute(TOTAL_PAGES, service.calcPagesCountBookSearchResult(locale, search, countBooks));
             request.setAttribute(SEARCH, search);
             request.setAttribute(BOOKS, service.findBooksByPage(search, pageData));
 

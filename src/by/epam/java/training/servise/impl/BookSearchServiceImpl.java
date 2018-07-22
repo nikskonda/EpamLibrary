@@ -28,7 +28,7 @@ public class BookSearchServiceImpl implements BookSearchService {
     }
 
     @Override
-    public Integer calcTotalPages(String locale, String search, Integer countBooksOnOnePage) throws DAOException {
+    public Integer calcPagesCountBookSearchResult(String locale, String search, Integer countBooksOnOnePage) throws DAOException {
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
                 || !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, search)
                 || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countBooksOnOnePage)){

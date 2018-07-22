@@ -10,6 +10,6 @@ public interface BookSearchService {
 
     List<BookCover> findBooksByPage(String search, PageAttributes pageData) throws  DAOException;
 
-    Integer calcTotalPages(String locale, String search, Integer countBooksOnOnePage) throws DAOException;
+    Integer calcPagesCountBookSearchResult(String locale, String search, Integer countBooksOnOnePage) throws DAOException;
 
 }

@@ -42,7 +42,7 @@ public class UpdateProfile extends AbstractCommand {
             profile.setFirstName(request.getParameter(FIRST_NAME));
             profile.setLastName(request.getParameter(LAST_NAME));
 
-            if (!userService.isExistUser(profile)){
+            if (!userService.isUserExist(profile)){
                 request.setAttribute(ERROR_MATCH, true);
                 request.setAttribute(USER_PROFILE, profile);
                 forward(request, response, PROFILE);

@@ -16,7 +16,6 @@ public class DAOFactory {
 
     private static final ConnectionPool connectionPool = new ConnectionPool();
 
-
     private final AdministratorDAO administratorDAO = new AdministratorDAOImpl();
     private final ModeratorDAO moderatorDAO = new ModeratorDAOImpl();
     private final UserDAO userDAO = new UserDAOImpl();

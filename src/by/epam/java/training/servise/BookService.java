@@ -16,7 +16,7 @@ public interface BookService {
 
     List<BookCover> getBooksByPage(PageAttributes pageData) throws DAOException;
 
-    Integer calcTotalPages(String locale, Integer countBooksOnOnePage) throws DAOException;
+    Integer calcPagesCountBooks(String locale, Integer countBooksOnOnePage) throws DAOException;
 
     List<Genre> getListOfGenre(String lang) throws DAOException;
 }

@@ -146,7 +146,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
     }
 
     @Override
-    public List<BookCover> getListOfBooksByPage(PageAttributes pageData) throws DAOException {
+    public List<BookCover> getBooksPerPage(PageAttributes pageAttributes) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -155,9 +155,9 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
             con = retrieveConnection();
 
             cstmt = con.prepareCall(GET_LIST_OF_BOOKS);
-            cstmt.setInt(COUNT_BOOKS_ON_PAGE, pageData.getCountOnPage());
-            cstmt.setInt(NUMBER_OF_PAGE, pageData.getNumberOfPage());
-            cstmt.setString(LOCALE, pageData.getLocale());
+            cstmt.setInt(COUNT_BOOKS_ON_PAGE, pageAttributes.getCountOnPage());
+            cstmt.setInt(NUMBER_OF_PAGE, pageAttributes.getNumberOfPage());
+            cstmt.setString(LOCALE, pageAttributes.getLocale());
             rs = cstmt.executeQuery();
 
             while (rs.next()) {
@@ -176,7 +176,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
     }
 
     @Override
-    public Integer calcTotalPagesWithBooks(String locale, Integer countBooksOnOnePage) throws DAOException {
+    public Integer calcPagesCountBooks(String locale, Integer countBooksOnOnePage) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         Integer result = null;

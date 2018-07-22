@@ -36,7 +36,7 @@ public class ChangeUserRole extends AbstractCommand {
             UserService userService = ServiceFactory.getUserService();
             AdministratorService administratorService = ServiceFactory.getAdministratorService();
 
-            if (userService.isExistUser(new SignInForm(user.getLogin(), password))){
+            if (userService.isUserExist(new SignInForm(user.getLogin(), password))){
                 if (administratorService.changeRole(userId, roleName)){
                     CommandFactory.getCommand(TAKE_USER).execute(request, response);
                     return;

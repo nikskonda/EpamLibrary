@@ -51,7 +51,7 @@ public class AddNews extends AbstractCommand {
 
             String password = EncriptionMD5.encrypt(request.getParameter(PASSWORD));
 
-            if (!userService.isExistUser(new SignInForm(user.getLogin(), password))){
+            if (!userService.isUserExist(new SignInForm(user.getLogin(), password))){
                 clearData(request, defNews, tNews);
                 request.setAttribute(ERROR_EXIST, true);
                 CommandFactory.getCommand(TAKE_ADD_NEWS_FORM).execute(request, response);

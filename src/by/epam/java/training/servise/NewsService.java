@@ -13,6 +13,6 @@ public interface NewsService {
 
     News getNews(Integer newsId, String locale) throws DAOException;
 
-    Integer calcTotalPages(String locale, Integer countNewsOnOnePage) throws DAOException;
+    Integer calcPagesCountNews(String locale, Integer countNewsOnOnePage) throws DAOException;
 
 }

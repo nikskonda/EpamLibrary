@@ -64,7 +64,7 @@ public class AddBook extends AbstractCommand {
             String password = EncriptionMD5.encrypt(request.getParameter(PASSWORD));
             ActiveUser user = (ActiveUser)session.getAttribute(USER);
 
-            if (!userService.isExistUser(new SignInForm(user.getLogin(), password))){
+            if (!userService.isUserExist(new SignInForm(user.getLogin(), password))){
                 clearData(request, defBook, tBook);
                 request.setAttribute(ERROR_EXIST, true);
                 CommandFactory.getCommand(TAKE_ADD_BOOK_FORM).execute(request, response);

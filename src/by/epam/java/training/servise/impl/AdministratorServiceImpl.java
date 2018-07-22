@@ -34,15 +34,15 @@ public class AdministratorServiceImpl implements AdministratorService {
         if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageData)){
             return null;
         }
-        return administratorDAO.getUsersByPages(pageData);
+        return administratorDAO.getUsersPerPage(pageData);
     }
 
     @Override
-    public Integer calcTotalPagesWithUsers(Integer countUsersOnOnePage) throws DAOException {
+    public Integer calcPagesCountUsers(Integer countUsersOnOnePage) throws DAOException {
         if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countUsersOnOnePage)){
             return null;
         }
-        return administratorDAO.calcTotalPagesWithUsers(countUsersOnOnePage);
+        return administratorDAO.calcPagesCountUsers(countUsersOnOnePage);
     }
 
     @Override
@@ -51,16 +51,16 @@ public class AdministratorServiceImpl implements AdministratorService {
                 || !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, search)){
             return null;
         }
-        return administratorDAO.FindUsersByPages(search, pageData);
+        return administratorDAO.findUsersByPages(search, pageData);
     }
 
     @Override
-    public Integer calcTotalPagesWithUsersSearch(String search, Integer countUsersOnOnePage) throws DAOException {
+    public Integer calcPagesCountUserSearchResult(String search, Integer countUsersOnOnePage) throws DAOException {
         if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countUsersOnOnePage)
                 || !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, search)){
             return null;
         }
-        return administratorDAO.calcTotalPagesWithUsersSearch(search, countUsersOnOnePage);
+        return administratorDAO.calcPagesCountUserSearchResults(search, countUsersOnOnePage);
     }
 
     @Override

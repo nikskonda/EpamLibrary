@@ -55,16 +55,16 @@ public class BookServiceImpl implements BookService {
         if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageData)){
             return null;
         }
-        return bookDAO.getListOfBooksByPage(pageData);
+        return bookDAO.getBooksPerPage(pageData);
     }
 
     @Override
-    public Integer calcTotalPages(String locale, Integer countBooksOnOnePage) throws DAOException{
+    public Integer calcPagesCountBooks(String locale, Integer countBooksOnOnePage) throws DAOException{
         if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countBooksOnOnePage)
                 || !ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)){
             return null;
         }
-        return  bookDAO.calcTotalPagesWithBooks(locale, countBooksOnOnePage);
+        return  bookDAO.calcPagesCountBooks(locale, countBooksOnOnePage);
     }
 
     @Override

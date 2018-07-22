@@ -34,7 +34,7 @@ public class DeleteUser extends AbstractCommand {
             AdministratorService adminService = ServiceFactory.getAdministratorService();
             UserService userService = ServiceFactory.getUserService();
 
-            if (userService.isExistUser(new SignInForm(user.getLogin(), password))){
+            if (userService.isUserExist(new SignInForm(user.getLogin(), password))){
                 adminService.deleteUser(userId);
                 CommandFactory.getCommand(CommandName.TAKE_LIST_OF_USERS).execute(request, response);
                 return;

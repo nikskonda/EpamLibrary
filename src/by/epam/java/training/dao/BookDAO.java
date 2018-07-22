@@ -14,9 +14,9 @@ public interface BookDAO {
 
     String getUrlToTextOfBook(Integer bookId, String locale) throws DAOException;
 
-    List<BookCover> getListOfBooksByPage(PageAttributes pageData) throws DAOException;
+    List<BookCover> getBooksPerPage(PageAttributes pageAttributes) throws DAOException;
 
-    Integer calcTotalPagesWithBooks(String locale, Integer countBooksOnOnePage) throws DAOException;
+    Integer calcPagesCountBooks(String locale, Integer countBooksOnOnePage) throws DAOException;
 
     List<Genre> getListOfGenre(String lang) throws DAOException;
 

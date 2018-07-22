@@ -37,7 +37,7 @@ public class FindListOfUsers extends AbstractCommand {
 
             session.setAttribute(COUNT_USERS_ON_PAGE, countUsers);
             request.setAttribute(NUMBER_OF_PAGE, currentPage);
-            request.setAttribute(TOTAL_PAGES, service.calcTotalPagesWithUsersSearch(search, countUsers));
+            request.setAttribute(TOTAL_PAGES, service.calcPagesCountUserSearchResult(search, countUsers));
             request.setAttribute(SEARCH, search);
             request.setAttribute(FieldNames.USER_LIST, service.FindUsersByPages(search, pageData));
 

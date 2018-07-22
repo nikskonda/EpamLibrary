@@ -36,7 +36,7 @@ public class TakeListOfUsers extends AbstractCommand {
 
             session.setAttribute(COUNT_USERS_ON_PAGE, countUsers);
             request.setAttribute(NUMBER_OF_PAGE, currentPage);
-            request.setAttribute(TOTAL_PAGES, service.calcTotalPagesWithUsers(countUsers));
+            request.setAttribute(TOTAL_PAGES, service.calcPagesCountUsers(countUsers));
             request.setAttribute(FieldNames.USER_LIST, service.getUsersByPages(pageData));
 
             forward(request, response, USER_LIST);

@@ -38,7 +38,7 @@ public class TakeBookCatalog extends AbstractCommand {
 
             session.setAttribute(COUNT_BOOKS_ON_PAGE, countBooks);
             request.setAttribute(NUMBER_OF_PAGE, currentPage);
-            request.setAttribute(TOTAL_PAGES, service.calcTotalPages(locale, countBooks));
+            request.setAttribute(TOTAL_PAGES, service.calcPagesCountBooks(locale, countBooks));
             request.setAttribute(BOOKS, service.getBooksByPage(pageData));
 
             forward(request, response, BOOK_CATALOG);

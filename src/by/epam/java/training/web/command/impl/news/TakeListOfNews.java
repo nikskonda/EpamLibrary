@@ -39,7 +39,7 @@ public class TakeListOfNews extends AbstractCommand {
 
             session.setAttribute(COUNT_NEWS_ON_PAGE, countNews);
             request.setAttribute(NUMBER_OF_PAGE, currentPage);
-            request.setAttribute(TOTAL_PAGES, service.calcTotalPages(locale, countNews));
+            request.setAttribute(TOTAL_PAGES, service.calcPagesCountNews(locale, countNews));
             request.setAttribute(NEWS, service.getNewsByPage(pageData));
 
             forward(request, response, NEWS_LIST);

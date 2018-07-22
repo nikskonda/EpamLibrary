@@ -36,7 +36,7 @@ public class DeleteNews extends AbstractCommand {
             Integer newsId = Integer.parseInt(request.getParameter(NEWS_ID));
             String password = EncriptionMD5.encrypt(request.getParameter(PASSWORD));
 
-            if (!userService.isExistUser(new SignInForm(user.getLogin(), password))){
+            if (!userService.isUserExist(new SignInForm(user.getLogin(), password))){
                 request.setAttribute(ERROR_EXIST, true);
                 CommandFactory.getCommand(TAKE_EDIT_NEWS_FORM).execute(request, response);
                 return;

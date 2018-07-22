@@ -64,7 +64,7 @@ public class BookmarkServiceImpl implements BookmarkService{
     }
 
     @Override
-    public Integer calcTotalPages(Integer userId, String locale, Integer countBookmarksOnOnePage) throws DAOException {
+    public Integer calcPagesCountBookmarks(Integer userId, String locale, Integer countBookmarksOnOnePage) throws DAOException {
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
                 || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countBookmarksOnOnePage)
                 || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId)){

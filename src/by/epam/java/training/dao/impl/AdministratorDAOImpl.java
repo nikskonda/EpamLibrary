@@ -49,7 +49,7 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
     }
 
     @Override
-    public List<User> getUsersByPages(PageAttributes pageData) throws DAOException{
+    public List<User> getUsersPerPage(PageAttributes pageAttributes) throws DAOException{
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -58,8 +58,8 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
             con = retrieveConnection();
 
             cstmt = con.prepareCall(GET_LIST_OF_USERS);
-            cstmt.setInt(COUNT_USERS_ON_PAGE, pageData.getCountOnPage());
-            cstmt.setInt(NUMBER_OF_PAGE, pageData.getNumberOfPage());
+            cstmt.setInt(COUNT_USERS_ON_PAGE, pageAttributes.getCountOnPage());
+            cstmt.setInt(NUMBER_OF_PAGE, pageAttributes.getNumberOfPage());
             rs = cstmt.executeQuery();
 
             while (rs.next()) {
@@ -102,7 +102,7 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
     }
 
     @Override
-    public Integer calcTotalPagesWithUsers(Integer countUsersOnOnePage) throws DAOException {
+    public Integer calcPagesCountUsers(Integer countUsersOnOnePage) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         Integer result = null;
@@ -128,7 +128,7 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
     }
 
     @Override
-    public List<User> FindUsersByPages(String search, PageAttributes pageData) {
+    public List<User> findUsersByPages(String search, PageAttributes pageAttributes) {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -137,8 +137,8 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
             con = retrieveConnection();
 
             cstmt = con.prepareCall(FIND_LIST_OF_USERS);
-            cstmt.setInt(COUNT_USERS_ON_PAGE, pageData.getCountOnPage());
-            cstmt.setInt(NUMBER_OF_PAGE, pageData.getNumberOfPage());
+            cstmt.setInt(COUNT_USERS_ON_PAGE, pageAttributes.getCountOnPage());
+            cstmt.setInt(NUMBER_OF_PAGE, pageAttributes.getNumberOfPage());
             cstmt.setString(SEARCH, search);
             rs = cstmt.executeQuery();
 
@@ -157,7 +157,7 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
     }
 
     @Override
-    public Integer calcTotalPagesWithUsersSearch(String search, Integer countUsersOnOnePage) throws DAOException {
+    public Integer calcPagesCountUserSearchResults(String search, Integer countUsersOnPage) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         Integer result = null;
@@ -166,7 +166,7 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
 
             cstmt = con.prepareCall(CALC_TOTAL_PAGES_IN_USERS_SEARCH);
             cstmt.setString(SEARCH, search);
-            cstmt.setInt(COUNT_USERS_ON_PAGE, countUsersOnOnePage);
+            cstmt.setInt(COUNT_USERS_ON_PAGE, countUsersOnPage);
             cstmt.registerOutParameter(RESULT, Types.SMALLINT);
             cstmt.executeQuery();
 
