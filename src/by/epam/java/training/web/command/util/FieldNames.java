@@ -77,9 +77,12 @@ public class FieldNames {
     public static final String COUNT_NEWS_ON_PAGE = "countNews";
 
     public static final String CURRENT_PAGE = "currentPage";
-    public static final String NEW_LINE = "\n";
+    public static final Character NEW_LINE = '\n';
+    public static final String EMPTY_STRING = "";
+
     public static final String ENGLISH = "en";
     public static final String RUSSIAN = "ru";
+
 
     public static final String ERROR = "error";
 
@@ -93,4 +96,10 @@ public class FieldNames {
     public static final String INSUFFICIENT_RIGHTS = "insufficient_rights";
 
 
+    public static final int INIT_COUNT_NEWS = 8;
+    public static final int INIT_COUNT_BOOKMARKS = 8;
+    public static final int INIT_COUNT_USERS = 8;
+    public static final int INIT_COUNT_BOOKS = 6;
+    public static final Integer TOTAL_LETTER_ON_PAGE = 5000;
+    public static final int INIT_NUMBER_OF_PAGE = 1;
 }

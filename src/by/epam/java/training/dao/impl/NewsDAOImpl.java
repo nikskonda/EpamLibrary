@@ -27,38 +27,27 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         List<NewsCover> newsList = new ArrayList<>();
         try {
-
-            con = conPool.retrieve();
+            con = retrieveConnection();
 
             cstmt = con.prepareCall(GET_LIST_OF_NEWS);
             cstmt.setString(LOCALE, pageData.getLocale());
             cstmt.setInt(COUNT_NEWS_ON_PAGE, pageData.getCountOnPage());
             cstmt.setInt(NUMBER_OF_PAGE, pageData.getNumberOfPage());
             rs = cstmt.executeQuery();
-            while (rs.next()) {
-                NewsCover news = new NewsCover();
-                news.setId(rs.getInt(NEWS_ID));
-                news.setTitle(rs.getString(NEWS_TITLE));
-                news.setThumbsUrl(rs.getString(NEWS_THUMBS_URL));
-                news.setUserFirstName(rs.getString(USER_FIRST_NAME));
-                news.setUserLastName(rs.getString(USER_LAST_NAME));
-                news.setPublishDate(rs.getTimestamp(NEWS_PUBLISH_DATE));
-                newsList.add(news);
-            }
 
+            while (rs.next()) {
+                newsList.add(buildNewsCover(rs));
+            }
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
             throw new DAOException();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             logger.warn("Database query error",ex);
             throw new DAOException();
         }  finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return newsList;
     }
@@ -68,22 +57,17 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
-        News news = new News();
+        News news = null;
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(GET_NEWS);
             cstmt.setString(LOCALE, locale);
             cstmt.setInt(NEWS_ID, newsId);
             rs = cstmt.executeQuery();
+
             while (rs.next()) {
-                news.setId(rs.getInt(NEWS_ID));
-                news.setTitle(rs.getString(NEWS_TITLE));
-                news.setPhotoUrl(rs.getString(NEWS_PHOTO_URL));
-                news.setUserFirstName(rs.getString(USER_FIRST_NAME));
-                news.setUserLastName(rs.getString(USER_LAST_NAME));
-                news.setPublishDate(rs.getTimestamp(NEWS_PUBLISH_DATE));
-                news.setText(rs.getString(NEWS_TEXT));
+                news = buildNews(rs);
             }
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
@@ -92,10 +76,30 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
+        return news;
+    }
+
+    private NewsCover buildNewsCover(ResultSet rs) throws SQLException{
+        NewsCover news = new NewsCover();
+
+        news.setId(rs.getInt(NEWS_ID));
+        news.setTitle(rs.getString(NEWS_TITLE));
+        news.setThumbsUrl(rs.getString(NEWS_THUMBS_URL));
+        news.setUserFirstName(rs.getString(USER_FIRST_NAME));
+        news.setUserLastName(rs.getString(USER_LAST_NAME));
+        news.setPublishDate(rs.getTimestamp(NEWS_PUBLISH_DATE));
+
+        return news;
+    }
+
+    private News buildNews(ResultSet rs) throws SQLException{
+        News news = new News(buildNewsCover(rs));
+
+        news.setPhotoUrl(rs.getString(NEWS_PHOTO_URL));
+        news.setText(rs.getString(NEWS_TEXT));
+
         return news;
     }
 
@@ -105,10 +109,9 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
         CallableStatement cstmt = null;
         ResultSet rs = null;
         Integer result = null;
-
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(CALC_TOTAL_PAGES_IN_NEWS);
             cstmt.setInt(COUNT_NEWS_ON_PAGE, countNewsOnOnePage);
             cstmt.setString(LOCALE, locale);
@@ -116,7 +119,6 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
             cstmt.executeQuery();
 
             result = cstmt.getInt(RESULT);
-
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
             throw new DAOException();
@@ -124,9 +126,7 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return result;
     }

@@ -1,6 +1,5 @@
 package by.epam.java.training.model.book;
 
-import by.epam.java.training.model.book.constituents.Author;
 import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.model.book.constituents.PublishingHouse;
 
@@ -26,6 +25,15 @@ public class Book extends BookCover implements Serializable {
 
 
     public Book() {
+        genres = new ArrayList<>();
+    }
+
+    public Book(BookCover bookCover) {
+        super.setId(bookCover.getId());
+        super.setName(bookCover.getName());
+        super.setCoverUrl(bookCover.getCoverUrl());
+        super.setPrice(bookCover.getPrice());
+        super.setPublishYear(bookCover.getPublishYear());
         genres = new ArrayList<>();
     }
 

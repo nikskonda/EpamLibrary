@@ -6,15 +6,14 @@ public class StringValidator implements Validator {
 
     @Override
     public boolean isValid(Object obj) {
+        if (obj == null){
+            return false;
+        }
         if (!(obj instanceof String)){
             return false;
         }
 
         String str = (String) obj;
-
-        if (str == null){
-            return false;
-        }
 
         if (str.isEmpty()){
             return false;

@@ -21,22 +21,23 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
 
     private static final Logger logger = Logger.getLogger(BookmarkDAOImpl.class);
 
-    private static final Integer DEFAULT_PAGE_NUMBER = new Integer(1);
+    private static final Integer DEFAULT_PAGE_NUMBER = 1;
 
     @Override
     public Integer getBookmark(Bookmark bookmark) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
-        Integer page = new Integer(DEFAULT_PAGE_NUMBER);
+        Integer page = DEFAULT_PAGE_NUMBER;
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(GET_BOOKMARK);
             cstmt.setInt(USER_ID, bookmark.getUserId());
             cstmt.setInt(BOOK_ID, bookmark.getBookId());
             cstmt.setString(LOCALE, bookmark.getLocale());
             rs = cstmt.executeQuery();
+
             while (rs.next()) {
                 page = rs.getInt(PAGE_NUMBER);
             }
@@ -47,9 +48,7 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return page;
     }
@@ -59,16 +58,17 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         boolean result = false;
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(SET_BOOKMARK);
             cstmt.setInt(USER_ID, bookmark.getUserId());
             cstmt.setInt(BOOK_ID, bookmark.getBookId());
             cstmt.setString(LOCALE, bookmark.getLocale());
             cstmt.setInt(PAGE_NUMBER, bookmark.getPageNumber());
             rs = cstmt.executeQuery();
+
             result = true;
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
@@ -77,9 +77,7 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         }  finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return result;
     }
@@ -89,16 +87,17 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         List<Bookmark> bookmarks = new ArrayList<>();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(GET_LIST_OF_BOOKMARKS);
             cstmt.setInt(USER_ID, userId);
             cstmt.setString(LOCALE, pageAttributes.getLocale());
             cstmt.setInt(COUNT_BOOKMARKS_ON_PAGE, pageAttributes.getCountOnPage());
             cstmt.setInt(NUMBER_OF_PAGE, pageAttributes.getNumberOfPage());
             rs = cstmt.executeQuery();
+
             while (rs.next()){
                 Bookmark bookmark = new Bookmark();
                 bookmark.setBookId(rs.getInt(BOOK_ID));
@@ -115,9 +114,7 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         }  finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return bookmarks;
     }
@@ -127,15 +124,16 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         boolean result = false;
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(DELETE_BOOKMARK);
             cstmt.setInt(USER_ID, bookmark.getUserId());
             cstmt.setInt(BOOK_ID, bookmark.getBookId());
             cstmt.setString(LOCALE, bookmark.getLocale());
             rs = cstmt.executeQuery();
+
             result = true;
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
@@ -144,9 +142,7 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         }  finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return result;
     }
@@ -155,12 +151,10 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
     public Integer calcTotalPages(Integer userId, String locale, Integer countBookmarksOnOnePage) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
         Integer result = null;
-
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(CALC_TOTAL_PAGES_IN_BOOKMARKS);
             cstmt.setInt(COUNT_BOOKMARKS_ON_PAGE, countBookmarksOnOnePage);
             cstmt.setString(LOCALE, locale);
@@ -169,7 +163,6 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
             cstmt.executeQuery();
 
             result = cstmt.getInt(RESULT);
-
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
             throw new DAOException();
@@ -177,9 +170,7 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }

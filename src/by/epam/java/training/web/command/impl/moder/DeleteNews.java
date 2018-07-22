@@ -1,7 +1,6 @@
 package by.epam.java.training.web.command.impl.moder;
 
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.news.News;
 import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.model.user.form.SignInForm;
 import by.epam.java.training.servise.ModeratorService;
@@ -18,9 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.CommandName.OPEN_EDITING_NEWS;
-import static by.epam.java.training.web.command.CommandName.SHOW_BOOK_CATALOG;
-import static by.epam.java.training.web.command.CommandName.SHOW_NEWS_LIST;
+import static by.epam.java.training.web.command.CommandName.TAKE_EDIT_NEWS_FORM;
+import static by.epam.java.training.web.command.CommandName.TAKE_LIST_OF_NEWS;
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
 public class DeleteNews extends AbstractCommand {
@@ -40,16 +38,16 @@ public class DeleteNews extends AbstractCommand {
 
             if (!userService.isExistUser(new SignInForm(user.getLogin(), password))){
                 request.setAttribute(ERROR_EXIST, true);
-                CommandFactory.getCommand(OPEN_EDITING_NEWS).execute(request, response);
+                CommandFactory.getCommand(TAKE_EDIT_NEWS_FORM).execute(request, response);
                 return;
             }
 
             if (!service.delNews(newsId)){
-                CommandFactory.getCommand(OPEN_EDITING_NEWS).execute(request, response);
+                CommandFactory.getCommand(TAKE_EDIT_NEWS_FORM).execute(request, response);
                 return;
             }
 
-            CommandFactory.getCommand(SHOW_NEWS_LIST).execute(request, response);
+            CommandFactory.getCommand(TAKE_LIST_OF_NEWS).execute(request, response);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

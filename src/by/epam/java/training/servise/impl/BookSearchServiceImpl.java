@@ -31,7 +31,7 @@ public class BookSearchServiceImpl implements BookSearchService {
     public Integer calcTotalPages(String locale, String search, Integer countBooksOnOnePage) throws DAOException {
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
                 || !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, search)
-                || !ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, countBooksOnOnePage)){
+                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countBooksOnOnePage)){
             return null;
         }
         return  bookSearchDAO.calcTotalPages(locale, search, countBooksOnOnePage);

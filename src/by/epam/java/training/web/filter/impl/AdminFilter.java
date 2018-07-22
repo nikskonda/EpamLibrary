@@ -1,10 +1,11 @@
-package by.epam.java.training.web.filter;
+package by.epam.java.training.web.filter.impl;
 
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.Page;
+import by.epam.java.training.web.filter.AbstractFilter;
 
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
@@ -31,7 +32,7 @@ public class AdminFilter extends AbstractFilter {
             }
             if (!service.isAdministrator(user.getLogin())) {
                 request.setAttribute(INSUFFICIENT_RIGHTS, true);
-                executeLastAction(request, response);
+                executeLastAction(request);
                 return;
             } else {
                 filterChain.doFilter(request, response);

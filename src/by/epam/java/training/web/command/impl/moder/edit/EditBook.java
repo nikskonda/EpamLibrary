@@ -21,9 +21,8 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.CommandName.OPEN_ADD_BOOK;
-import static by.epam.java.training.web.command.CommandName.SHOW_BOOK_CATALOG;
-import static by.epam.java.training.web.command.Page.SIGN_IN;
+import static by.epam.java.training.web.command.CommandName.TAKE_ADD_BOOK_FORM;
+import static by.epam.java.training.web.command.CommandName.TAKE_BOOK_CATALOG;
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
 public class EditBook extends AbstractCommand {
@@ -71,17 +70,17 @@ public class EditBook extends AbstractCommand {
             if (!userService.isExistUser(new SignInForm(user.getLogin(), password))){
                 clearData(request, defBook, tBook);
                 request.setAttribute(ERROR_EXIST, true);
-                CommandFactory.getCommand(OPEN_ADD_BOOK).execute(request, response);
+                CommandFactory.getCommand(TAKE_ADD_BOOK_FORM).execute(request, response);
                 return;
             }
 
             if (!service.editBook(defBook, tBook, lang)){
                 clearData(request, defBook, tBook);
-                CommandFactory.getCommand(OPEN_ADD_BOOK).execute(request, response);
+                CommandFactory.getCommand(TAKE_ADD_BOOK_FORM).execute(request, response);
                 return;
             }
 
-            CommandFactory.getCommand(SHOW_BOOK_CATALOG).execute(request, response);
+            CommandFactory.getCommand(TAKE_BOOK_CATALOG).execute(request, response);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

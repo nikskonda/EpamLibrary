@@ -24,10 +24,6 @@ public class DeleteUser extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(DeleteUser.class);
 
-
-
-
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
@@ -40,11 +36,11 @@ public class DeleteUser extends AbstractCommand {
 
             if (userService.isExistUser(new SignInForm(user.getLogin(), password))){
                 adminService.deleteUser(userId);
-                CommandFactory.getCommand(CommandName.SHOW_USER_LIST).execute(request, response);
+                CommandFactory.getCommand(CommandName.TAKE_LIST_OF_USERS).execute(request, response);
                 return;
             }else{
                 request.setAttribute(ERROR_DEL_EXIST, true);
-                CommandFactory.getCommand(CommandName.SHOW_USER).execute(request, response);
+                CommandFactory.getCommand(CommandName.TAKE_USER).execute(request, response);
                 return;
             }
 

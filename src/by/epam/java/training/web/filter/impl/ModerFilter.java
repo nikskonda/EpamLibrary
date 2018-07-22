@@ -1,12 +1,10 @@
-package by.epam.java.training.web.filter;
+package by.epam.java.training.web.filter.impl;
 
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.user.ActiveUser;
-import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ModeratorService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.CommandName;
-import by.epam.java.training.web.command.Page;
 import by.epam.java.training.web.filter.AbstractFilter;
 
 import javax.servlet.FilterChain;
@@ -39,7 +37,7 @@ public class ModerFilter extends AbstractFilter {
             }
             if (!service.isModerator(user.getLogin())) {
                 request.setAttribute(INSUFFICIENT_RIGHTS, true);
-                forward(request, response, CommandName.SHOW_NEWS_LIST);
+                forward(request, response, CommandName.TAKE_LIST_OF_NEWS);
                 return;
             } else {
                 filterChain.doFilter(request, response);

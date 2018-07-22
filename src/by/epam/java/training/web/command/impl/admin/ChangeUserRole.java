@@ -38,18 +38,17 @@ public class ChangeUserRole extends AbstractCommand {
 
             if (userService.isExistUser(new SignInForm(user.getLogin(), password))){
                 if (administratorService.changeRole(userId, roleName)){
-                    CommandFactory.getCommand(SHOW_USER).execute(request, response);
+                    CommandFactory.getCommand(TAKE_USER).execute(request, response);
                     return;
                 }
                 request.setAttribute(FieldNames.ERROR, true);
-                CommandFactory.getCommand(SHOW_USER).execute(request, response);
+                CommandFactory.getCommand(TAKE_USER).execute(request, response);
                 return;
             }else{
                 request.setAttribute(ERROR_EXIST, true);
-                CommandFactory.getCommand(SHOW_USER).execute(request, response);
+                CommandFactory.getCommand(TAKE_USER).execute(request, response);
                 return;
             }
-
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

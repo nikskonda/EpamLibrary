@@ -13,8 +13,17 @@ public class News extends NewsCover implements Serializable {
     public News() {
     }
 
-    public News(Integer id, String title, String smallPhotoUrl, String userFirstName, String userLastName, Date publishDate, String text, String photoUrl) {
-        super(id, title, smallPhotoUrl, userFirstName, userLastName, publishDate);
+    public News(NewsCover newsCover){
+        super.setId(newsCover.getId());
+        super.setTitle(newsCover.getTitle());
+        super.setThumbsUrl(newsCover.getThumbsUrl());
+        super.setPublishDate(newsCover.getPublishDate());
+        super.setUserFirstName(newsCover.getUserFirstName());
+        super.setUserLastName(newsCover.getUserLastName());
+    }
+
+    public News(Integer id, String title, String thumbsUrl, String userFirstName, String userLastName, Date publishDate, String text, String photoUrl) {
+        super(id, title, thumbsUrl, userFirstName, userLastName, publishDate);
         this.text = text;
         this.photoUrl = photoUrl;
     }

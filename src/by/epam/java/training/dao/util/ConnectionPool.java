@@ -11,20 +11,23 @@ public class ConnectionPool {
 
     private static final Logger logger = Logger.getLogger(ConnectionPool.class);
 
-    private static final int INIT_COUNT_CONNECTIONS = 7;
 
     private static final String DB_RESOURCE_BUNDLE = "resource.db";
     private static final String SQL_LOGIN = "db.login";
     private static final String SQL_PASSWORD = "db.password";
     private static final String URL = "db.url";
     private static final String DRIVER = "db.driver";
+    private static final String INIT_COUNT_CONNECTIONS = "db.countConnections";
+
 
     private Queue<Connection> freeConnections = new LinkedList<>();
     private List<Connection> usedConnections = new LinkedList<>();
 
 
     public ConnectionPool() {
-        for (int i = 0; i< INIT_COUNT_CONNECTIONS; i++){
+        ResourceBundle rb = ResourceBundle.getBundle(DB_RESOURCE_BUNDLE);
+        int initCount = Integer.parseInt(rb.getString(INIT_COUNT_CONNECTIONS));
+        for (int i = 0; i < initCount; i++){
             Connection con = getConnection();
             if (con != null){
                 freeConnections.offer(con);
@@ -71,7 +74,6 @@ public class ConnectionPool {
             }
         }
     }
-
 
     public int getFreeConnectionsCount() {
         return freeConnections.size();

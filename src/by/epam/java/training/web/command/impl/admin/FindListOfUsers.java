@@ -17,21 +17,19 @@ import java.io.IOException;
 import static by.epam.java.training.web.command.Page.USER_LIST;
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
-public class ShowUserList extends AbstractCommand {
+public class FindListOfUsers extends AbstractCommand {
 
-    private static final Logger logger = Logger.getLogger(ShowUserList.class);
-
-    private static final int INIT_COUNT_USERS = 8;
-    private static final int INIT_NUMBER_OF_PAGE = 1;
+    private static final Logger logger = Logger.getLogger(FindListOfUsers.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
             AdministratorService service = ServiceFactory.getAdministratorService();
             rememberLastAction(request);
-            HttpSession session = request.getSession(true);
+            String search = request.getParameter(SEARCH);
             Integer countUsers = getCount(request, COUNT_USERS_ON_PAGE, INIT_COUNT_USERS);
-            Integer currentPage = getCurrentPage(request, NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE);
+            Integer currentPage = getCurrentPage(request);
+            HttpSession session = request.getSession(true);
 
             PageAttributes pageData = new PageAttributes();
             pageData.setCountOnPage(countUsers);
@@ -39,8 +37,9 @@ public class ShowUserList extends AbstractCommand {
 
             session.setAttribute(COUNT_USERS_ON_PAGE, countUsers);
             request.setAttribute(NUMBER_OF_PAGE, currentPage);
-            request.setAttribute(TOTAL_PAGES, service.calcTotalPagesWithUsers(countUsers));
-            request.setAttribute(FieldNames.USER_LIST, service.getUsersByPages(pageData));
+            request.setAttribute(TOTAL_PAGES, service.calcTotalPagesWithUsersSearch(search, countUsers));
+            request.setAttribute(SEARCH, search);
+            request.setAttribute(FieldNames.USER_LIST, service.FindUsersByPages(search, pageData));
 
             forward(request, response, USER_LIST);
         } catch (DAOException ex){
@@ -53,6 +52,6 @@ public class ShowUserList extends AbstractCommand {
             logger.warn(ex);
             request.setAttribute(ERROR_UNKNOWN, true);
         }
-
     }
+
 }

@@ -1,8 +1,5 @@
 package by.epam.java.training.web.command.impl;
 
-import by.epam.java.training.model.user.User;
-import by.epam.java.training.servise.AdministratorService;
-import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
 import org.apache.log4j.Logger;
 
@@ -11,12 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Page.ADMINISTRATION_USER;
 import static by.epam.java.training.web.command.Page.ERROR;
 
-public class OpenErrorPage extends AbstractCommand {
+public class TakeErrorPage extends AbstractCommand {
 
-    private static final Logger logger = Logger.getLogger(OpenErrorPage.class);
+    private static final Logger logger = Logger.getLogger(TakeErrorPage.class);
 
 
     @Override

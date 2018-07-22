@@ -39,16 +39,16 @@ public class DeleteBook extends AbstractCommand {
 
             if (!userService.isExistUser(new SignInForm(user.getLogin(), password))){
                 request.setAttribute(ERROR_EXIST, true);
-                CommandFactory.getCommand(OPEN_ADD_BOOK).execute(request, response);
+                CommandFactory.getCommand(TAKE_ADD_BOOK_FORM).execute(request, response);
                 return;
             }
 
             if (!service.delBook(bookId)){
-                CommandFactory.getCommand(OPEN_EDITING_BOOK).execute(request, response);
+                CommandFactory.getCommand(TAKE_EDIT_BOOK_FORM).execute(request, response);
                 return;
             }
 
-            CommandFactory.getCommand(SHOW_BOOK_CATALOG).execute(request, response);
+            CommandFactory.getCommand(TAKE_BOOK_CATALOG).execute(request, response);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

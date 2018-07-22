@@ -11,9 +11,9 @@ public interface AdministratorDAO {
 
     boolean isAdministrator(String login) throws DAOException;
 
-    User getUser(Integer userId);
+    User getUser(Integer userId) throws DAOException;
 
-    List<User> getUsersByPages(PageAttributes pageData);
+    List<User> getUsersByPages(PageAttributes pageData) throws DAOException;
 
     Integer calcTotalPagesWithUsers(Integer countUsersOnOnePage) throws DAOException;
 
@@ -21,11 +21,11 @@ public interface AdministratorDAO {
 
     Integer calcTotalPagesWithUsersSearch(String search, Integer countUsersOnOnePage) throws DAOException;
 
-    List<Role> getRoles();
+    List<Role> getRoles() throws DAOException;
 
-    boolean changeRole(Integer userId, String roleName);
+    boolean changeRole(Integer userId, String roleName) throws DAOException;
 
-    boolean deleteUser(Integer userId);
+    boolean deleteUser(Integer userId) throws DAOException;
 
 
 }

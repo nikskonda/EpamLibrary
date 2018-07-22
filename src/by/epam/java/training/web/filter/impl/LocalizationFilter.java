@@ -1,6 +1,7 @@
-package by.epam.java.training.web.filter;
+package by.epam.java.training.web.filter.impl;
 
 import by.epam.java.training.web.command.util.FieldNames;
+import by.epam.java.training.web.filter.AbstractFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

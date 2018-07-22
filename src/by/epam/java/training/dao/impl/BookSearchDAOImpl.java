@@ -25,16 +25,17 @@ public class BookSearchDAOImpl extends AbstractDAO implements BookSearchDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         List<BookCover> booksList = new ArrayList<>();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(FIND_BOOKS);
             cstmt.setInt(COUNT_BOOKS_ON_PAGE, pageData.getCountOnPage());
             cstmt.setInt(NUMBER_OF_PAGE, pageData.getNumberOfPage());
             cstmt.setString(LOCALE, pageData.getLocale());
             cstmt.setString(SEARCH, search);
             rs = cstmt.executeQuery();
+
             while (rs.next()) {
                 BookCover book = new BookCover();
                 book.setId(rs.getInt(BOOK_ID));
@@ -42,6 +43,7 @@ public class BookSearchDAOImpl extends AbstractDAO implements BookSearchDAO {
                 book.setPublishYear(rs.getInt(BOOK_PUBLISH_YEAR));
                 book.setPrice(rs.getDouble(BOOK_PRICE));
                 book.setCoverUrl(rs.getString(BOOK_COVER_URL));
+
                 booksList.add(book);
             }
         }catch (ConnectionPoolException ex){
@@ -51,9 +53,7 @@ public class BookSearchDAOImpl extends AbstractDAO implements BookSearchDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         }  finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return booksList;
     }
@@ -62,12 +62,10 @@ public class BookSearchDAOImpl extends AbstractDAO implements BookSearchDAO {
     public Integer calcTotalPages(String locale, String search, Integer countBooksOnOnePage) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
         Integer result = null;
-
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(CALC_TOTAL_PAGES_BOOKS_SEARCH);
             cstmt.setInt(COUNT_BOOKS_ON_PAGE, countBooksOnOnePage);
             cstmt.setString(LOCALE, locale);
@@ -83,9 +81,7 @@ public class BookSearchDAOImpl extends AbstractDAO implements BookSearchDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }

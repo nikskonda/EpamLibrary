@@ -4,6 +4,7 @@ import by.epam.java.training.dao.AbstractDAO;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.UserDAO;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
+import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.dao.util.ConnectionPool;
 import by.epam.java.training.model.user.constituents.Role;
 import by.epam.java.training.model.user.form.ProfileForm;
@@ -22,15 +23,13 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
 
     @Override
-    public boolean updateUser(ProfileForm profile) throws ConnectionPoolException {
+    public boolean updateUser(ProfileForm profile) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
         boolean result = false;
-
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(UPDATE_USER);
             cstmt.setString(USER_LOGIN, profile.getLogin());
             cstmt.setString(USER_PASSWORD, profile.getPassword());
@@ -38,27 +37,28 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             cstmt.setString(USER_LAST_NAME, profile.getLastName());
             cstmt.setString(USER_EMAIL, profile.getEmail());
             cstmt.executeQuery();
+
             result = true;
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
         } catch (SQLException ex) {
-            logger.warn("Вatabase query error",ex);
+            logger.warn("Database query error",ex);
+            throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }
 
     @Override
-    public boolean isExistUser(SignInForm signInForm) throws ConnectionPoolException {
+    public boolean isExistUser(SignInForm signInForm) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
         boolean result = false;
-
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(IS_EXIST_USER_WITH_LOGIN_AND_PASSWORD);
             cstmt.setString(USER_LOGIN, signInForm.getLogin());
             cstmt.setString(USER_PASSWORD, signInForm.getPassword());
@@ -66,96 +66,112 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             cstmt.executeQuery();
 
             result = cstmt.getBoolean(RESULT);
-
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
         } catch (SQLException ex) {
-            logger.warn("Вatabase query error",ex);
+            logger.warn("Database query error",ex);
+            throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }
 
 
     @Override
-    public User getUser(Integer userId) {
+    public User getUser(Integer userId) throws DAOException{
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         User user = null;
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(GET_USER_BY_ID);
             cstmt.setInt(USER_ID, userId);
             rs = cstmt.executeQuery();
+
             while (rs.next()) {
-                user = new User();
-                user.setId(rs.getInt(USER_ID));
-                user.setLogin(rs.getString(USER_LOGIN));
-                user.setEmail(rs.getString(USER_EMAIL));
-                user.setFirstName(rs.getString(USER_FIRST_NAME));
-                user.setLastName(rs.getString(USER_LAST_NAME));
-                user.setRegistrationDate(rs.getDate(USER_REGISTRATION_DATE));
-                Role role = new Role(rs.getInt(USER_ROLE_ID),rs.getString(USER_ROLE_NAME));
-                user.setRole(role);
+                user = buildUser(rs);
             }
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
         } catch (SQLException ex) {
             logger.warn("Database query error",ex);
-        }  catch (Exception ex){
-            logger.warn("Database query error",ex);
-        }
-        finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            throw new DAOException();
+        } finally {
+            closeAll(rs, cstmt, con);
         }
         return user;
     }
 
+    private ActiveUser buildActiveUser(ResultSet rs) throws SQLException{
+        ActiveUser activeUser = new ActiveUser();
+
+        activeUser.setId(rs.getInt(USER_ID));
+        activeUser.setLogin(rs.getString(USER_LOGIN));
+        activeUser.setRole(buildRole(rs));
+
+        return activeUser;
+    }
+
+    private User buildUser(ResultSet rs) throws SQLException{
+        User user = new User(buildActiveUser(rs));
+
+        user.setEmail(rs.getString(USER_EMAIL));
+        user.setFirstName(rs.getString(USER_FIRST_NAME));
+        user.setLastName(rs.getString(USER_LAST_NAME));
+        user.setRegistrationDate(rs.getDate(USER_REGISTRATION_DATE));
+
+        return user;
+    }
+
+    private Role buildRole(ResultSet rs) throws SQLException{
+        Role role = new Role();
+
+        role.setId(rs.getInt(USER_ROLE_ID));
+        role.setName(rs.getString(USER_ROLE_NAME));
+
+        return role;
+    }
+
     @Override
-    public ActiveUser getActiveUser(String login) throws ConnectionPoolException {
+    public ActiveUser getActiveUser(String login) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
         ActiveUser activeUser = null;
-
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
             cstmt = con.prepareCall(GET_USER_BY_LOGIN);
             cstmt.setString(USER_LOGIN, login);
             rs = cstmt.executeQuery();
 
-            if (rs.next()) {
-                activeUser = new ActiveUser();
-                activeUser.setId(rs.getInt(USER_ID));
-                activeUser.setLogin(rs.getString(USER_LOGIN));
-                activeUser.setRole(
-                        new Role(rs.getInt(USER_ROLE_ID), rs.getString(USER_ROLE_NAME)));
+            while (rs.next()) {
+                activeUser = buildActiveUser(rs);
             }
-
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
         } catch (SQLException ex) {
-            logger.warn("Вatabase query error",ex);
+            logger.warn("Database query error",ex);
+            throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return activeUser;
     }
 
     @Override
-    public ActiveUser addUser(SignUpForm signUpForm) throws ConnectionPoolException {
+    public ActiveUser addUser(SignUpForm signUpForm) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
         ActiveUser activeUser = null;
-
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(ADD_USER);
             cstmt.setString(USER_LOGIN, signUpForm.getLogin());
             cstmt.setString(USER_PASSWORD, signUpForm.getLogin());
@@ -166,39 +182,40 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             cstmt.execute();
 
             activeUser = getActiveUser(signUpForm.getLogin());
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
         } catch (SQLException ex) {
-            logger.warn("Вatabase query error",ex);
+            logger.warn("Database query error",ex);
+            throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return activeUser;
     }
 
     @Override
-    public boolean isFreeLogin(String login) throws ConnectionPoolException {
+    public boolean isFreeLogin(String login) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
         boolean result = false;
-
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(IS_FREE_LOGIN);
             cstmt.setString(USER_LOGIN, login);
             cstmt.registerOutParameter(RESULT, Types.BOOLEAN);
             cstmt.executeQuery();
 
             result = cstmt.getBoolean(RESULT);
-
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
         } catch (SQLException ex) {
-            logger.warn("Вatabase query error",ex);
+            logger.warn("Database query error",ex);
+            throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }

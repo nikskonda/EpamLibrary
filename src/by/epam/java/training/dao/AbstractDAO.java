@@ -1,17 +1,21 @@
 package by.epam.java.training.dao;
 
+import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.impl.BookDAOImpl;
 import by.epam.java.training.dao.util.ConnectionPool;
 import org.apache.log4j.Logger;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public abstract class AbstractDAO {
 
     private static final Logger logger = Logger.getLogger(AbstractDAO.class);
+
+    public Connection retrieveConnection() throws ConnectionPoolException{
+        ConnectionPool connectionPool = new ConnectionPool();
+        Connection connection = connectionPool.retrieve();
+        return connection;
+    }
 
     public void closeResultSet(ResultSet resultSet){
         try{
@@ -24,10 +28,10 @@ public abstract class AbstractDAO {
         }
     }
 
-    public void closeCallableStatement(CallableStatement callableStatement){
+    public void closeStatement(Statement statement){
         try{
-            if (callableStatement!=null){
-                callableStatement.close();
+            if (statement!=null){
+                statement.close();
             }
         }
         catch (SQLException ex){
@@ -35,11 +39,23 @@ public abstract class AbstractDAO {
         }
     }
 
-    public void putbackConnection(Connection connection, ConnectionPool connectionPool){
+    public void putbackConnection(Connection connection){
+        ConnectionPool connectionPool = new ConnectionPool();
         try{
             connectionPool.putback(connection);
         } catch (NullPointerException ex){
             logger.warn("Connection was not received", ex);
         }
+    }
+
+    public void closeAll(ResultSet resultSet, Statement statement, Connection connection){
+        closeResultSet(resultSet);
+        closeStatement(statement);
+        putbackConnection(connection);
+    }
+
+    public void closeStatementAndConnection(Statement statement, Connection connection){
+        closeStatement(statement);
+        putbackConnection(connection);
     }
 }

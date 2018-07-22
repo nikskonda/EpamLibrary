@@ -68,7 +68,7 @@ public class UpdateProfile extends AbstractCommand {
                 return;
             }
 
-            CommandFactory.getCommand(CommandName.OPEN_PROFILE).execute(request, response);
+            CommandFactory.getCommand(CommandName.TAKE_PROFILE_FORM).execute(request, response);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

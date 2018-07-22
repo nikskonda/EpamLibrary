@@ -1,36 +1,35 @@
-package by.epam.java.training.web.command.impl.admin;
+package by.epam.java.training.web.command.impl.moder.add;
 
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.user.User;
-import by.epam.java.training.servise.AdministratorService;
+import by.epam.java.training.servise.BookService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
-import static by.epam.java.training.web.command.Page.*;
+import by.epam.java.training.web.command.Page;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
-public class OpenUser extends AbstractCommand {
+public class TakeAddBookForm extends AbstractCommand {
 
-    private static final Logger logger = Logger.getLogger(OpenUser.class);
+    private static final Logger logger = Logger.getLogger(TakeAddBookForm.class);
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            rememberLastAction(request);
-            Integer userId = Integer.parseInt(request.getParameter(USER_ID));
-            AdministratorService userService = ServiceFactory.getAdministratorService();
-            User user = userService.getUser(userId);
+            BookService service = ServiceFactory.getBookService();
+            HttpSession session = request.getSession(true);
+            String locale = (String)session.getAttribute(LOCALE);
 
-            request.setAttribute(USER_PROFILE, user);
-            request.setAttribute(ROLE_LIST, userService.getRoles());
+            request.setAttribute(GENRES, service.getListOfGenre(locale));
 
-            forward(request, response, ADMINISTRATION_USER);
+            forward(request, response, Page.ADD_BOOK);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);
@@ -42,7 +41,6 @@ public class OpenUser extends AbstractCommand {
             request.setAttribute(ERROR_UNKNOWN, true);
         }
 
-
-
     }
+
 }

@@ -23,16 +23,21 @@ public class ValidatorManager {
         this.validators = new HashMap<>();
         validators.put(SIGN_IN_FORM_VALIDATOR, new SignInFormValidator());
         validators.put(SIGN_UP_FORM_VALIDATOR, new SignUpFormValidator());
+
         validators.put(LOGIN_VALIDATOR, new LoginValidator());
         validators.put(LOCALE_VALIDATOR, new LocaleValidator());
-        validators.put(ID_VALIDATOR, new IdValidator());
+        validators.put(NATURAL_NUMBER_VALIDATOR, new NaturalNumberValidator());
         validators.put(STRING_VALIDATOR, new StringValidator());
         validators.put(DOUBLE_VALIDATION, new DoubleValidator());
+
         validators.put(PAGES_VALIDATOR, new PagesValidator());
+
         validators.put(TRANSLATED_NEWS_VALIDATOR, new TranslatedNewsValidator());
         validators.put(NEWS_VALIDATOR, new NewsValidator());
+
         validators.put(TRANSLATED_BOOK_VALIDATOR, new TranslatedBookValidator());
         validators.put(BOOK_VALIDATOR, new BookValidator());
+
         validators.put(BOOKMARK_VALIDATOR, new BookmarkValidator());
         validators.put(NEW_BOOKMARK_VALIDATOR, new NewBookmarkValidator());
 

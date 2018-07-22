@@ -1,6 +1,6 @@
-package by.epam.java.training.web.filter;
+package by.epam.java.training.web.filter.impl;
 
-import by.epam.java.training.web.command.Page;
+import by.epam.java.training.web.filter.AbstractFilter;
 import by.epam.java.training.web.filter.util.PathManager;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -100,6 +99,7 @@ public class FileUpload extends AbstractFilter {
             String path = request.getServletContext().getRealPath( fileName);
             uploadetFile = new File(path);
         }while(uploadetFile.exists());
+
         uploadetFile.createNewFile();
         item.write(uploadetFile);
         return fileName;

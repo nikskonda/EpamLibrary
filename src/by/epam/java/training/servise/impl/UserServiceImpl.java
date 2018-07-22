@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Integer userId) throws DAOException{
-        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, userId)){
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId)){
             return null;
         }
         return userDAO.getUser(userId);

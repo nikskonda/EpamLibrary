@@ -28,28 +28,17 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         Book book = new Book();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(GET_BOOK);
             cstmt.setInt(BOOK_ID, bookId);
             cstmt.setString(LOCALE, locale);
             rs = cstmt.executeQuery();
+
             while (rs.next()) {
-                book.setId(rs.getInt(BOOK_ID));
-                book.setName(rs.getString(BOOK_NAME));
-                book.setDescription(rs.getString(BOOK_DESCRIPTION));
-                book.setPublishYear(rs.getInt(BOOK_PUBLISH_YEAR));
-                book.setPrice(rs.getDouble(BOOK_PRICE));
-                book.setPages(rs.getInt(BOOK_PAGES));
-                PublishingHouse ph = new PublishingHouse(rs.getInt(BOOK_PUBLISHING_HOUSE_ID),
-                        rs.getString(BOOK_PUBLISHING_HOUSE_NAME));
-                book.setPublishingHouse(ph);
-                book.setPdfFileUrl(rs.getString(BOOK_PDF_FILE_URL));
-                book.setCoverUrl(rs.getString(BOOK_COVER_URL));
-                book.setAuthors(rs.getString(BOOK_AUTHORS));
-                book.setGenres(getGenres(bookId, locale));
+                book = buildBook(rs, locale);
             }
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
@@ -58,10 +47,44 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
+        return book;
+    }
+
+    private Genre buildGenre(ResultSet rs) throws SQLException{
+        Genre genre = new Genre();
+
+        genre.setId(rs.getInt(GENRE_ID));
+        genre.setName(rs.getString(GENRE_NAME));
+
+        return genre;
+    }
+
+    private BookCover buildBookCover(ResultSet rs) throws SQLException{
+        BookCover book = new BookCover();
+
+        book.setId(rs.getInt(BOOK_ID));
+        book.setName(rs.getString(BOOK_NAME));
+        book.setPublishYear(rs.getInt(BOOK_PUBLISH_YEAR));
+        book.setPrice(rs.getDouble(BOOK_PRICE));
+        book.setCoverUrl(rs.getString(BOOK_COVER_URL));
+
+        return book;
+    }
+
+    private Book buildBook(ResultSet rs, String locale) throws DAOException, SQLException{
+        Book book = new Book(buildBookCover(rs));
+
+        book.setDescription(rs.getString(BOOK_DESCRIPTION));
+        book.setPages(rs.getInt(BOOK_PAGES));
+        PublishingHouse ph = new PublishingHouse(rs.getInt(BOOK_PUBLISHING_HOUSE_ID),
+                rs.getString(BOOK_PUBLISHING_HOUSE_NAME));
+        book.setPublishingHouse(ph);
+        book.setPdfFileUrl(rs.getString(BOOK_PDF_FILE_URL));
+        book.setAuthors(rs.getString(BOOK_AUTHORS));
+        book.setGenres(getGenres(book.getId(), locale));
+
         return book;
     }
 
@@ -69,19 +92,17 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         List<Genre> genres = new ArrayList<>();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(GET_BOOK_GENRES);
             cstmt.setInt(BOOK_ID, bookId);
             cstmt.setString(LOCALE, lang);
             rs = cstmt.executeQuery();
+
             while (rs.next()) {
-                Genre genre = new Genre();
-                genre.setId(rs.getInt(GENRE_ID));
-                genre.setName(rs.getString(GENRE_NAME));
-                genres.add(genre);
+                genres.add(buildGenre(rs));
             }
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
@@ -90,9 +111,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return genres;
     }
@@ -102,14 +121,15 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         String textUrl = null;
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(GET_URL_TO_TEXT_OF_BOOK);
             cstmt.setString(LOCALE, locale);
             cstmt.setInt(BOOK_ID, bookId);
             rs = cstmt.executeQuery();
+
             while (rs.next()) {
                 textUrl = rs.getString(BOOK_TEXT_FILE_URL);
             }
@@ -120,9 +140,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return textUrl;
     }
@@ -132,23 +150,18 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         List<BookCover> booksList = new ArrayList<>();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(GET_LIST_OF_BOOKS);
             cstmt.setInt(COUNT_BOOKS_ON_PAGE, pageData.getCountOnPage());
             cstmt.setInt(NUMBER_OF_PAGE, pageData.getNumberOfPage());
             cstmt.setString(LOCALE, pageData.getLocale());
             rs = cstmt.executeQuery();
+
             while (rs.next()) {
-                BookCover book = new BookCover();
-                book.setId(rs.getInt(BOOK_ID));
-                book.setName(rs.getString(BOOK_NAME));
-                book.setPublishYear(rs.getInt(BOOK_PUBLISH_YEAR));
-                book.setPrice(rs.getDouble(BOOK_PRICE));
-                book.setCoverUrl(rs.getString(BOOK_COVER_URL));
-                booksList.add(book);
+                booksList.add(buildBookCover(rs));
             }
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
@@ -157,9 +170,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return booksList;
     }
@@ -168,12 +179,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
     public Integer calcTotalPagesWithBooks(String locale, Integer countBooksOnOnePage) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
         Integer result = null;
-
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(CALC_TOTAL_PAGES_IN_BOOKS);
             cstmt.setInt(COUNT_BOOKS_ON_PAGE, countBooksOnOnePage);
             cstmt.setString(LOCALE, locale);
@@ -188,9 +197,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }
@@ -200,18 +207,16 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         List<Genre> genres = new ArrayList<>();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(GET_LIST_OF_GENRES);
             cstmt.setString(LOCALE, lang);
             rs = cstmt.executeQuery();
+
             while (rs.next()) {
-                Genre genre = new Genre();
-                genre.setId(rs.getInt(GENRE_ID));
-                genre.setName(rs.getString(GENRE_NAME));
-                genres.add(genre);
+                genres.add(buildGenre(rs));
             }
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
@@ -220,9 +225,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return genres;
     }

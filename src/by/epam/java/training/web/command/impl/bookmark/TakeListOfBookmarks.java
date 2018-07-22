@@ -25,8 +25,7 @@ public class TakeListOfBookmarks extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(TakeListOfBookmarks.class);
 
-    private static final int INIT_COUNT_BOOKMARKS = 8;
-    private static final int INIT_NUMBER_OF_PAGE = 1;
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -39,7 +38,7 @@ public class TakeListOfBookmarks extends AbstractCommand {
             PageAttributes pa = new PageAttributes();
             pa.setLocale((String) session.getAttribute(LOCALE));
             pa.setCountOnPage(getCount(request, COUNT_BOOKMARKS_ON_PAGE, INIT_COUNT_BOOKMARKS));
-            pa.setNumberOfPage(getCurrentPage(request, NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE));
+            pa.setNumberOfPage(getCurrentPage(request));
 
             session.setAttribute(COUNT_BOOKMARKS_ON_PAGE, pa.getCountOnPage());
             request.setAttribute(NUMBER_OF_PAGE, pa.getNumberOfPage());

@@ -20,11 +20,6 @@ public class ReadBook extends AbstractCommand {
     private static final Logger logger = Logger.getLogger(ReadBook.class);
 
 
-    private static final String EMPTY_STRING = "";
-    private static final int INIT_NUMBER_OF_PAGE = 1;
-
-
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
@@ -32,7 +27,7 @@ public class ReadBook extends AbstractCommand {
             BookService service = ServiceFactory.getBookService();
             HttpSession session = request.getSession(true);
             String locale = (String)session.getAttribute(LOCALE);
-            Integer currentPage = getCurrentPage(request, NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE);
+            Integer currentPage = getCurrentPage(request);
             Integer bookId = Integer.parseInt(request.getParameter(BOOK_ID));
             String path = request.getServletContext().getRealPath(EMPTY_STRING);
 

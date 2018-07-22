@@ -9,6 +9,9 @@ public class NewBookmarkValidator implements Validator {
 
     @Override
     public boolean isValid(Object obj) {
+        if (obj == null){
+            return false;
+        }
         if (!(obj instanceof Bookmark)){
             return false;
         }
@@ -18,7 +21,7 @@ public class NewBookmarkValidator implements Validator {
         if (!ValidatorManager.isValid(ValidatorType.BOOKMARK_VALIDATOR, bookmark)){
             return false;
         }
-        if (!(ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, bookmark.getPageNumber()))){
+        if (!(ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, bookmark.getPageNumber()))){
             return false;
         }
 

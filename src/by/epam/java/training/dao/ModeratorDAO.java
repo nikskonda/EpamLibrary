@@ -15,16 +15,16 @@ import java.util.List;
 
 public interface ModeratorDAO {
 
-    boolean addNews(News defNews, News translatedNews, String lang) throws ConnectionPoolException, TransactionException;
+    boolean addNews(News defNews, News translatedNews, String lang) throws ConnectionPoolException, TransactionException, DAOException;
 
-    boolean editNews(News defNews, News translatedNews, String lang) throws ConnectionPoolException, TransactionException;
+    boolean editNews(News defNews, News translatedNews, String lang) throws ConnectionPoolException, TransactionException, DAOException;
 
     boolean delNews(Integer newsId) throws DAOException;
 
 
-    boolean addBook(Book defBook, Book translatedBook, String lang) throws ConnectionPoolException, TransactionException;
+    boolean addBook(Book defBook, Book translatedBook, String lang) throws ConnectionPoolException, TransactionException, DAOException;
 
-    boolean editBook(Book defBook, Book translatedBook, String lang) throws ConnectionPoolException, TransactionException;
+    boolean editBook(Book defBook, Book translatedBook, String lang) throws ConnectionPoolException, TransactionException, DAOException;
 
     boolean delBook(Integer bookId) throws DAOException;
 

@@ -1,8 +1,9 @@
-package by.epam.java.training.web.filter;
+package by.epam.java.training.web.filter.impl;
 
 import by.epam.java.training.model.user.form.SignUpForm;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
+import by.epam.java.training.web.filter.AbstractFilter;
 import by.epam.java.training.web.util.EncriptionMD5;
 
 import javax.servlet.*;

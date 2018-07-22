@@ -41,11 +41,6 @@ public class SignUp extends AbstractCommand {
 
             ActiveUser user = userService.addUser(signUpForm);
 
-            if (user == null) {
-                redirect(response, ERROR);
-                return;
-            }
-
             session.setAttribute(USER, user);
 
             executeLastAction(request, response);

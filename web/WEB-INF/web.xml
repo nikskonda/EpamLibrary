@@ -172,7 +172,7 @@
     <!--FILTER-->
     <filter>
         <filter-name>Administrator</filter-name>
-        <filter-class>by.epam.java.training.web.filter.AdminFilter</filter-class>
+        <filter-class>by.epam.java.training.web.filter.impl.AdminFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -182,7 +182,7 @@
 
     <filter>
         <filter-name>Moderator</filter-name>
-        <filter-class>by.epam.java.training.web.filter.ModerFilter</filter-class>
+        <filter-class>by.epam.java.training.web.filter.impl.ModerFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -192,7 +192,7 @@
 
     <filter>
         <filter-name>UploadFilter</filter-name>
-        <filter-class>by.epam.java.training.web.filter.FileUpload</filter-class>
+        <filter-class>by.epam.java.training.web.filter.impl.FileUpload</filter-class>
     </filter>
 
     <filter-mapping>
@@ -203,7 +203,7 @@
 
     <filter>
         <filter-name>SetEncoding</filter-name>
-        <filter-class>by.epam.java.training.web.filter.EncodingFilter</filter-class>
+        <filter-class>by.epam.java.training.web.filter.impl.EncodingFilter</filter-class>
         <init-param>
             <param-name>characterEncoding</param-name>
             <param-value>UTF-8</param-value>
@@ -217,7 +217,7 @@
 
     <filter>
         <filter-name>SetLocale</filter-name>
-        <filter-class>by.epam.java.training.web.filter.LocalizationFilter</filter-class>
+        <filter-class>by.epam.java.training.web.filter.impl.LocalizationFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -227,7 +227,7 @@
 
     <filter>
         <filter-name>MainFilter</filter-name>
-        <filter-class>by.epam.java.training.web.filter.MainFilter</filter-class>
+        <filter-class>by.epam.java.training.web.filter.impl.MainFilter</filter-class>
     </filter>
 
     <filter-mapping>

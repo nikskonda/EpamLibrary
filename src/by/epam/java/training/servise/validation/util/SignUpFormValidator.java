@@ -19,7 +19,9 @@ public class SignUpFormValidator implements Validator {
 
     @Override
     public boolean isValid(Object obj) {
-
+        if (obj == null){
+            return false;
+        }
         if (SignUpForm.class != obj.getClass()){
             return false;
         }

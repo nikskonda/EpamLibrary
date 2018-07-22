@@ -1,17 +1,17 @@
 package by.epam.java.training.servise.validation.util;
 
 import by.epam.java.training.servise.validation.Validator;
+import static by.epam.java.training.web.command.util.FieldNames.*;
 
 public class LocaleValidator implements Validator {
 
     private static final int LOCALE_LENGTH = 2;
 
-    private static final String RU_LOCALE = "ru";
-    private static final String EN_LOCALE = "en";
-
-
     @Override
     public boolean isValid(Object obj) {
+        if (obj == null){
+            return false;
+        }
         if (String.class != obj.getClass()){
             return false;
         }
@@ -21,7 +21,7 @@ public class LocaleValidator implements Validator {
             return false;
         }
 
-        if (!(locale.equals(RU_LOCALE) || locale.equals(EN_LOCALE))){
+        if (!(locale.equals(RUSSIAN) || locale.equals(ENGLISH))){
             return false;
         }
 

@@ -29,7 +29,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public News getNews(Integer newsId, String locale) throws DAOException{
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
-                || !ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, newsId)){
+                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, newsId)){
             return null;
         }
         return newsDAO.getNews(newsId, locale);
@@ -38,7 +38,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public Integer calcTotalPages(String locale, Integer countNewsOnOnePage) throws DAOException{
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
-                || !ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, countNewsOnOnePage)){
+                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countNewsOnOnePage)){
             return null;
         }
         return  newsDAO.calcTotalPagesWithBooks(locale, countNewsOnOnePage);

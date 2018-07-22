@@ -30,10 +30,7 @@ public class SetBookmark extends AbstractCommand {
             BookmarkService service = ServiceFactory.getBookmarkService();
             HttpSession session = request.getSession(true);
             ActiveUser activeUser = (ActiveUser)session.getAttribute(USER);
-            if (activeUser==null){
-                redirect(response, SIGN_IN);
-                return;
-            }
+
             Bookmark bookmark = new Bookmark();
             bookmark.setBookId(getInt(request.getParameter(BOOK_ID)));
             bookmark.setUserId(activeUser.getId());

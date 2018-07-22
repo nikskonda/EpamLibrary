@@ -11,6 +11,9 @@ public class ProfileFormValidator implements Validator {
 
     @Override
     public boolean isValid(Object obj) {
+        if (obj == null){
+            return false;
+        }
         if (!(obj instanceof ProfileForm)){
             return false;
         }

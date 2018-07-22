@@ -15,7 +15,6 @@ public class TransactionFactory {
     private static TransactionFactory instance = new TransactionFactory();
     private static Lock lock = new ReentrantLock();
 
-    private final ConnectionPool connectionPool = new ConnectionPool();
 
     private final ModeratorTransaction moderatorTransaction = new ModeratorTransactionImpl();
 
@@ -27,9 +26,6 @@ public class TransactionFactory {
         return getInstance().moderatorTransaction;
     }
 
-    public static ConnectionPool getConnectionPool(){
-        return getInstance().connectionPool;
-    }
 
     private static TransactionFactory getInstance() {
         try {

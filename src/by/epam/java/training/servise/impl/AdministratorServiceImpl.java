@@ -30,7 +30,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public List<User> getUsersByPages(PageAttributes pageData) {
+    public List<User> getUsersByPages(PageAttributes pageData) throws DAOException{
         if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageData)){
             return null;
         }
@@ -39,7 +39,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public Integer calcTotalPagesWithUsers(Integer countUsersOnOnePage) throws DAOException {
-        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, countUsersOnOnePage)){
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countUsersOnOnePage)){
             return null;
         }
         return administratorDAO.calcTotalPagesWithUsers(countUsersOnOnePage);
@@ -56,7 +56,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public Integer calcTotalPagesWithUsersSearch(String search, Integer countUsersOnOnePage) throws DAOException {
-        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, countUsersOnOnePage)
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countUsersOnOnePage)
                 || !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, search)){
             return null;
         }
@@ -70,7 +70,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public boolean changeRole(Integer userId, String roleName) throws DAOException{
-        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, userId) ||
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId) ||
                 !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, roleName)){
             return false;
         }
@@ -79,7 +79,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public boolean deleteUser(Integer userId) throws DAOException{
-        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, userId)){
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId)){
             return false;
         }
         return administratorDAO.deleteUser(userId);
@@ -87,7 +87,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public User getUser(Integer userId) throws DAOException {
-        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, userId)){
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId)){
             return null;
         }
         return administratorDAO.getUser(userId);

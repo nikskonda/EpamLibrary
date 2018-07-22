@@ -11,6 +11,7 @@ import by.epam.java.training.servise.BookService;
 import by.epam.java.training.dao.util.ReadFromFile;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
+import static by.epam.java.training.web.command.util.FieldNames.*;
 import org.apache.log4j.Logger;
 
 import java.util.Arrays;
@@ -25,7 +26,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book getBook(Integer bookId, String locale) throws DAOException {
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
-                || (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, bookId))){
+                || (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, bookId))){
             return null;
         }
         return bookDAO.getBook(bookId, locale);
@@ -33,10 +34,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<String> getTextOfBook(Integer bookId, String locale, String path, Integer page) throws DAOException{
-        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, bookId)
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, bookId)
                 || !ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
                 || !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, path)
-                || !ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, page)){
+                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, page)){
             return null;
         }
 
@@ -45,7 +46,7 @@ public class BookServiceImpl implements BookService {
         if (bookText.isEmpty()){
             return null;
         }
-        List<String> text = Arrays.asList(bookText.split("\n"));
+        List<String> text = Arrays.asList(bookText.split(NEW_LINE.toString()));
         return text;
     }
 
@@ -59,7 +60,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Integer calcTotalPages(String locale, Integer countBooksOnOnePage) throws DAOException{
-        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, countBooksOnOnePage)
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countBooksOnOnePage)
                 || !ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)){
             return null;
         }

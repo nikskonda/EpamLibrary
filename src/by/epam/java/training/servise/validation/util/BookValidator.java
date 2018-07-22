@@ -9,13 +9,14 @@ public class BookValidator implements Validator {
 
     @Override
     public boolean isValid(Object obj) {
+        if (obj == null){
+            return false;
+        }
         if (!(obj instanceof Book)){
             return false;
         }
 
         Book book = (Book) obj;
-
-
 
         if (!ValidatorManager.isValid(ValidatorType.TRANSLATED_BOOK_VALIDATOR, book)){
             return false;
@@ -23,7 +24,7 @@ public class BookValidator implements Validator {
         if (!ValidatorManager.isValid(ValidatorType.DOUBLE_VALIDATION, book.getPrice())){
             return false;
         }
-        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, book.getPages())){
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, book.getPages())){
             return false;
         }
         if (!ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, book.getPublishingHouse().getName())){

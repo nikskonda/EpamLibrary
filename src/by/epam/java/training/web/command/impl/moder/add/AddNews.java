@@ -18,12 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.CommandName.OPEN_ADD_NEWS;
-import static by.epam.java.training.web.command.CommandName.SHOW_NEWS_LIST;
-import static by.epam.java.training.web.command.Page.*;
+import static by.epam.java.training.web.command.CommandName.TAKE_ADD_NEWS_FORM;
+import static by.epam.java.training.web.command.CommandName.TAKE_LIST_OF_NEWS;
 import static by.epam.java.training.web.command.util.FieldNames.*;
 
 public class AddNews extends AbstractCommand {
@@ -56,17 +54,17 @@ public class AddNews extends AbstractCommand {
             if (!userService.isExistUser(new SignInForm(user.getLogin(), password))){
                 clearData(request, defNews, tNews);
                 request.setAttribute(ERROR_EXIST, true);
-                CommandFactory.getCommand(OPEN_ADD_NEWS).execute(request, response);
+                CommandFactory.getCommand(TAKE_ADD_NEWS_FORM).execute(request, response);
                 return;
             }
 
             if (!service.addNews(defNews, tNews, lang)){
                 clearData(request, defNews, tNews);
-                CommandFactory.getCommand(OPEN_ADD_NEWS).execute(request, response);
+                CommandFactory.getCommand(TAKE_ADD_NEWS_FORM).execute(request, response);
                 return;
             }
 
-            CommandFactory.getCommand(SHOW_NEWS_LIST).execute(request, response);
+            CommandFactory.getCommand(TAKE_LIST_OF_NEWS).execute(request, response);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static by.epam.java.training.web.command.util.FieldNames.*;
+
 public class Pagination {
     private  static final Logger logger = Logger.getLogger(Pagination.class);
 
@@ -14,7 +16,7 @@ public class Pagination {
         try{
             result = Integer.parseInt(str);
         } catch (NumberFormatException ex){
-            logger.warn("", ex);
+            logger.warn("Error converting number to string", ex);
         }
         return result;
     }
@@ -36,11 +38,11 @@ public class Pagination {
         return count;
     }
 
-    protected Integer getCurrentPage(HttpServletRequest request, String numberOfPage, Integer initNumberOfPage){
-        Integer currentPage = getInt(request.getParameter(numberOfPage));
+    protected Integer getCurrentPage(HttpServletRequest request){
+        Integer currentPage = getInt(request.getParameter(NUMBER_OF_PAGE));
 
         if (currentPage==null){
-            currentPage = initNumberOfPage;
+            currentPage = INIT_NUMBER_OF_PAGE;
         }
 
         return currentPage;

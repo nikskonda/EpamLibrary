@@ -22,80 +22,93 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
     private static final Logger logger = Logger.getLogger(AdministratorDAOImpl.class);
 
     @Override
-    public boolean isAdministrator(String login) throws ConnectionPoolException {
+    public boolean isAdministrator(String login) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
         boolean result = false;
 
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(IS_ADMINISTRATOR);
             cstmt.setString(USER_LOGIN, login);
             cstmt.registerOutParameter(RESULT, Types.BOOLEAN);
             cstmt.executeQuery();
 
             result = cstmt.getBoolean(RESULT);
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
         } catch (SQLException ex) {
-            logger.warn("Вatabase query error",ex);
+            logger.warn("Database query error", ex);
+            throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }
 
     @Override
-    public List<User> getUsersByPages(PageAttributes pageData) {
+    public List<User> getUsersByPages(PageAttributes pageData) throws DAOException{
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         List<User> userList = new ArrayList<>();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(GET_LIST_OF_USERS);
             cstmt.setInt(COUNT_USERS_ON_PAGE, pageData.getCountOnPage());
             cstmt.setInt(NUMBER_OF_PAGE, pageData.getNumberOfPage());
             rs = cstmt.executeQuery();
-            while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt(USER_ID));
-                user.setLogin(rs.getString(USER_LOGIN));
-                user.setEmail(rs.getString(USER_EMAIL));
-                user.setFirstName(rs.getString(USER_FIRST_NAME));
-                user.setLastName(rs.getString(USER_LAST_NAME));
-                user.setRegistrationDate(rs.getDate(USER_REGISTRATION_DATE));
-                Role role = new Role(rs.getInt(USER_ROLE_ID),rs.getString(USER_ROLE_NAME));
-                user.setRole(role);
 
-                userList.add(user);
+            while (rs.next()) {
+                userList.add(buildUser(rs));
             }
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
         } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-        }  catch (Exception ex){
-            logger.warn("Database query error",ex);
-        }
-        finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            logger.warn("Database query error", ex);
+            throw new DAOException();
+        } finally {
+            closeAll(rs, cstmt, con);
         }
         return userList;
+    }
+
+    private User buildUser(ResultSet rs) throws SQLException{
+        User user = new User();
+
+        user.setId(rs.getInt(USER_ID));
+        user.setLogin(rs.getString(USER_LOGIN));
+        user.setEmail(rs.getString(USER_EMAIL));
+        user.setFirstName(rs.getString(USER_FIRST_NAME));
+        user.setLastName(rs.getString(USER_LAST_NAME));
+        user.setRegistrationDate(rs.getDate(USER_REGISTRATION_DATE));
+
+        user.setRole(buildRole(rs));
+
+        return user;
+    }
+
+    private Role buildRole(ResultSet rs) throws SQLException{
+        Role role = new Role();
+
+        role.setId(rs.getInt(USER_ROLE_ID));
+        role.setName(rs.getString(USER_ROLE_NAME));
+
+        return role;
     }
 
     @Override
     public Integer calcTotalPagesWithUsers(Integer countUsersOnOnePage) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
         Integer result = null;
-
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(CALC_TOTAL_PAGES_IN_USERS);
             cstmt.setInt(COUNT_USERS_ON_PAGE, countUsersOnOnePage);
             cstmt.registerOutParameter(RESULT, Types.SMALLINT);
@@ -105,13 +118,11 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
             throw new DAOException();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }
@@ -121,37 +132,26 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         List<User> userList = new ArrayList<>();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(FIND_LIST_OF_USERS);
             cstmt.setInt(COUNT_USERS_ON_PAGE, pageData.getCountOnPage());
             cstmt.setInt(NUMBER_OF_PAGE, pageData.getNumberOfPage());
             cstmt.setString(SEARCH, search);
             rs = cstmt.executeQuery();
-            while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt(USER_ID));
-                user.setLogin(rs.getString(USER_LOGIN));
-                user.setEmail(rs.getString(USER_EMAIL));
-                user.setFirstName(rs.getString(USER_FIRST_NAME));
-                user.setLastName(rs.getString(USER_LAST_NAME));
-                user.setRegistrationDate(rs.getDate(USER_REGISTRATION_DATE));
-                Role role = new Role(rs.getInt(USER_ROLE_ID),rs.getString(USER_ROLE_NAME));
-                user.setRole(role);
 
-                userList.add(user);
+            while (rs.next()) {
+                userList.add(buildUser(rs));
             }
-        } catch (SQLException ex) {
+        } catch (ConnectionPoolException ex){
             logger.warn("Database query error",ex);
-        }  catch (Exception ex){
+        } catch (SQLException ex) {
             logger.warn("Database query error",ex);
         }
         finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeAll(rs, cstmt, con);
         }
         return userList;
     }
@@ -160,12 +160,10 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
     public Integer calcTotalPagesWithUsersSearch(String search, Integer countUsersOnOnePage) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
         Integer result = null;
-
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(CALC_TOTAL_PAGES_IN_USERS_SEARCH);
             cstmt.setString(SEARCH, search);
             cstmt.setInt(COUNT_USERS_ON_PAGE, countUsersOnOnePage);
@@ -176,55 +174,45 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
             throw new DAOException();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }
 
     @Override
-    public User getUser(Integer userId) {
+    public User getUser(Integer userId) throws DAOException{
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         User user = null;
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(GET_USER_BY_ID);
             cstmt.setInt(USER_ID, userId);
             rs = cstmt.executeQuery();
+
             while (rs.next()) {
-                user = new User();
-                user.setId(rs.getInt(USER_ID));
-                user.setLogin(rs.getString(USER_LOGIN));
-                user.setEmail(rs.getString(USER_EMAIL));
-                user.setFirstName(rs.getString(USER_FIRST_NAME));
-                user.setLastName(rs.getString(USER_LAST_NAME));
-                user.setRegistrationDate(rs.getDate(USER_REGISTRATION_DATE));
-                Role role = new Role(rs.getInt(USER_ROLE_ID),rs.getString(USER_ROLE_NAME));
-                user.setRole(role);
+                user = buildUser(rs);
             }
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
         } catch (SQLException ex) {
             logger.warn("Database query error",ex);
-        }  catch (Exception ex){
-            logger.warn("Database query error",ex);
-        }
-        finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            throw new DAOException();
+        } finally {
+            closeAll(rs, cstmt, con);
         }
         return user;
     }
 
     @Override
-    public List<Role> getRoles() {
+    public List<Role> getRoles() throws DAOException{
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -234,72 +222,69 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
             con = conPool.retrieve();
             cstmt = con.prepareCall(GET_LIST_OF_ROLES);
             rs = cstmt.executeQuery();
+
             while (rs.next()) {
-                Role role = new Role(rs.getInt(USER_ROLE_ID),rs.getString(USER_ROLE_NAME));
-                roleList.add(role);
+                roleList.add(buildRole(rs));
             }
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
         } catch (SQLException ex) {
             logger.warn("Database query error",ex);
-        }  catch (Exception ex){
-            logger.warn("Database query error",ex);
-        }
-        finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            throw new DAOException();
+        } finally {
+            closeAll(rs, cstmt, con);
         }
         return roleList;
     }
 
     @Override
-    public boolean changeRole(Integer userId, String roleName) {
+    public boolean changeRole(Integer userId, String roleName) throws DAOException{
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         boolean result = false;
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(CHANGE_USER_ROLE);
             cstmt.setInt(USER_ID, userId);
             cstmt.setString(USER_ROLE_NAME, roleName);
-            rs = cstmt.executeQuery();
+            cstmt.executeQuery();
+
             result = true;
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
         } catch (SQLException ex) {
             logger.warn("Database query error",ex);
-        }  catch (Exception ex){
-            logger.warn("Database query error",ex);
-        }
-        finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            throw new DAOException();
+        } finally {
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }
 
     @Override
-    public boolean deleteUser(Integer userId) {
+    public boolean deleteUser(Integer userId) throws DAOException{
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         boolean result = false;
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(DELETE_USER);
             cstmt.setInt(USER_ID, userId);
-            rs = cstmt.executeQuery();
+            cstmt.executeQuery();
+
             result = true;
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
         } catch (SQLException ex) {
             logger.warn("Database query error",ex);
-        }  catch (Exception ex){
-            logger.warn("Database query error",ex);
-        }
-        finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            throw new DAOException();
+        } finally {
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }

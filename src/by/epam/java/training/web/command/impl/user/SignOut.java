@@ -28,7 +28,7 @@ public class SignOut extends AbstractCommand {
         try{
             HttpSession session = request.getSession();
 
-            session.setAttribute(USER, null);
+            session.removeAttribute(USER);
 
             executeLastAction(request, response);
         } catch (IOException ex){

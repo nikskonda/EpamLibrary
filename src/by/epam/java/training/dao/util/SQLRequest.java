@@ -75,14 +75,17 @@ public class SQLRequest {
     public final static String PAGE_NUMBER = "page_number";
     public final static String COUNT_BOOKMARKS_ON_PAGE = "count_bookmarks_on_page";
 
+
     //GENRES
     public final static String GET_BOOK_GENRES = "{call get_book_genres(?,?)}";
     public final static String GET_LIST_OF_GENRES = "{call get_list_of_genres(?)}";
     public final static String ADD_BOOK_GENRES = "{call add_book_genre(?,?)}";
     public final static String DELETE_BOOK_GENRES = "{call delete_book_genre(?)}";
+
     //Column labels
     public final static String GENRE_ID = "genre_id";
     public final static String GENRE_NAME = "genre_name";
+
 
     //NEWS
     public final static String GET_NEWS = "{call get_news(?,?)}";

@@ -7,7 +7,6 @@ public class LoginValidator implements Validator {
     private static final int LOGIN_MIN_LENGTH = 3;
     private static final int LOGIN_MAX_LENGTH = 20;
 
-
     private static final String REGEXP_LOGIN = "^[a-zA-Z][a-zA-Z0-9_-]+[a-zA-Z0-9]$";
 
     @Override

@@ -1,6 +1,5 @@
 package by.epam.java.training.model.user;
 
-import by.epam.java.training.model.user.constituents.Address;
 import by.epam.java.training.model.user.constituents.Role;
 
 import java.io.Serializable;
@@ -14,21 +13,25 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private Address address;
     private Role role;
     private Date registrationDate;
 
     public User() {
     }
 
+    public User(ActiveUser activeUser){
+        this.id = activeUser.getId();
+        this.login = activeUser.getLogin();
+        this.role = activeUser.getRole();
+    }
 
-    public User(Integer id, String login, String firstName, String lastName, String email, Address address, Role role, Date registrationDate) {
+
+    public User(Integer id, String login, String firstName, String lastName, String email, Role role, Date registrationDate) {
         this.id = id;
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.address = address;
         this.role = role;
         this.registrationDate = registrationDate;
     }
@@ -71,14 +74,6 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public Role getRole() {

@@ -40,19 +40,18 @@ public class BookmarkServiceImpl implements BookmarkService{
 
     @Override
     public List<Book> getListOfBooksWithBookmark(Integer userId, PageAttributes pageAttributes) throws DAOException{
-        if (!ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, userId)
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId)
                 || !ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageAttributes)){
             return null;
         }
-
         BookService service = ServiceFactory.getBookService();
-
         List<Bookmark> bookmarks = bookmarkDAO.getBookmarksOfUser(userId, pageAttributes);
-
         List<Book> books = new ArrayList<>();
+
         for (Bookmark bookmark : bookmarks){
             books.add(service.getBook(bookmark.getBookId(), bookmark.getLocale()));
         }
+
         return books;
      }
 
@@ -67,8 +66,8 @@ public class BookmarkServiceImpl implements BookmarkService{
     @Override
     public Integer calcTotalPages(Integer userId, String locale, Integer countBookmarksOnOnePage) throws DAOException {
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
-                || !ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, countBookmarksOnOnePage)
-                || !ValidatorManager.isValid(ValidatorType.ID_VALIDATOR, userId)){
+                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countBookmarksOnOnePage)
+                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId)){
             return null;
         }
 

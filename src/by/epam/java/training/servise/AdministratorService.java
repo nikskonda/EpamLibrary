@@ -11,7 +11,7 @@ public interface AdministratorService {
 
     boolean isAdministrator(String login) throws DAOException;
 
-    List<User> getUsersByPages(PageAttributes pageData);
+    List<User> getUsersByPages(PageAttributes pageData) throws DAOException;
 
     Integer calcTotalPagesWithUsers(Integer countUsersOnOnePage) throws DAOException;
 

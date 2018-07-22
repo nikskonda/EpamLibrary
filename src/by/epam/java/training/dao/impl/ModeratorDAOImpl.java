@@ -31,27 +31,27 @@ public class ModeratorDAOImpl extends AbstractDAO implements ModeratorDAO {
     private static final ModeratorTransaction transaction = TransactionFactory.getModeratorTransaction();
 
     @Override
-    public boolean addNews(News defNews, News translatedNews, String lang) throws ConnectionPoolException, TransactionException {
+    public boolean addNews(News defNews, News translatedNews, String lang) throws DAOException {
         return transaction.addNews(defNews, translatedNews, lang);
     }
 
     @Override
-    public boolean editNews(News defNews, News translatedNews, String lang) throws ConnectionPoolException, TransactionException {
+    public boolean editNews(News defNews, News translatedNews, String lang) throws DAOException {
         return transaction.editNews(defNews, translatedNews, lang);
     }
 
     @Override
-    public boolean delNews(Integer newsId) throws DAOException {
+    public boolean delNews(Integer newsId) throws DAOException{
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         boolean result = false;
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(DELETE_NEWS);
             cstmt.setInt(NEWS_ID, newsId);
-            rs = cstmt.executeQuery();
+            cstmt.executeQuery();
+
             result = true;
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
@@ -60,20 +60,18 @@ public class ModeratorDAOImpl extends AbstractDAO implements ModeratorDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }
 
     @Override
-    public boolean addBook(Book defBook, Book translatedBook, String lang) throws ConnectionPoolException, TransactionException {
+    public boolean addBook(Book defBook, Book translatedBook, String lang) throws DAOException {
         return transaction.addBook(defBook, translatedBook, lang);
     }
 
     @Override
-    public boolean editBook(Book defBook, Book translatedBook, String lang) throws ConnectionPoolException, TransactionException {
+    public boolean editBook(Book defBook, Book translatedBook, String lang) throws DAOException {
         return transaction.editBook(defBook, translatedBook, lang);
     }
 
@@ -81,14 +79,14 @@ public class ModeratorDAOImpl extends AbstractDAO implements ModeratorDAO {
     public boolean delBook(Integer bookId) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         boolean result = false;
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(DELETE_BOOK);
             cstmt.setInt(BOOK_ID, bookId);
-            rs = cstmt.executeQuery();
+            cstmt.executeQuery();
+
             result = true;
         } catch (ConnectionPoolException ex){
             logger.warn("Database connection failed.",ex);
@@ -97,9 +95,7 @@ public class ModeratorDAOImpl extends AbstractDAO implements ModeratorDAO {
             logger.warn("Database query error",ex);
             throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }
@@ -108,24 +104,24 @@ public class ModeratorDAOImpl extends AbstractDAO implements ModeratorDAO {
     public boolean isModerator(String login) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
-        ResultSet rs = null;
         boolean result = false;
-
-        ConnectionPool conPool = DAOFactory.getConnectionPool();
         try {
-            con = conPool.retrieve();
+            con = retrieveConnection();
+
             cstmt = con.prepareCall(IS_MODERATOR);
             cstmt.setString(USER_LOGIN, login);
             cstmt.registerOutParameter(RESULT, Types.BOOLEAN);
             cstmt.executeQuery();
 
             result = cstmt.getBoolean(RESULT);
-        } catch (SQLException ex) {
-            logger.warn("Вatabase query error",ex);
+        } catch (ConnectionPoolException ex){
+            logger.warn("Database connection failed.",ex);
+            throw new DAOException();
+        }catch (SQLException ex) {
+            logger.warn("Database query error",ex);
+            throw new DAOException();
         } finally {
-            closeResultSet(rs);
-            closeCallableStatement(cstmt);
-            putbackConnection(con, conPool);
+            closeStatementAndConnection(cstmt, con);
         }
         return result;
     }

@@ -1,4 +1,6 @@
-package by.epam.java.training.web.filter;
+package by.epam.java.training.web.filter.impl;
+
+import by.epam.java.training.web.filter.AbstractFilter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

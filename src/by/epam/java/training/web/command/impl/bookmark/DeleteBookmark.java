@@ -23,15 +23,13 @@ public class DeleteBookmark extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(DeleteBookmark.class);
 
-    private static final int INIT_NUMBER_OF_PAGE = 1;
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
             BookmarkService service = ServiceFactory.getBookmarkService();
             HttpSession session = request.getSession(true);
             ActiveUser activeUser = (ActiveUser)session.getAttribute(USER);
-            Integer numberOfPage = getCurrentPage(request, NUMBER_OF_PAGE, INIT_NUMBER_OF_PAGE);
+            Integer numberOfPage = getCurrentPage(request);
 
             Bookmark bookmark = new Bookmark();
             bookmark.setBookId(getInt(request.getParameter(BOOK_ID)));
