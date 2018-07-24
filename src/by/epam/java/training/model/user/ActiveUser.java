@@ -21,6 +21,12 @@ public class ActiveUser implements Serializable {
         this.login = login;
     }
 
+    public ActiveUser(Integer id, String login, Role role) {
+        this.id = id;
+        this.login = login;
+        this.role = role;
+    }
+
     public Integer getId() {
         return id;
     }

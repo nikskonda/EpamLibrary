@@ -5,7 +5,7 @@ import by.epam.java.training.dao.NewsDAO;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.news.News;
-import by.epam.java.training.model.news.NewsCover;
+import by.epam.java.training.model.news.NewsPreview;
 import by.epam.java.training.servise.NewsService;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
@@ -19,11 +19,11 @@ public class NewsServiceImpl implements NewsService {
     private final NewsDAO newsDAO = DAOFactory.getNewsDAO();
 
     @Override
-    public List<NewsCover> getNewsByPage(PageAttributes pageData) throws DAOException {
-        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageData)){
+    public List<NewsPreview> getNewsPerPage(PageAttributes pageAttributes) throws DAOException {
+        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageAttributes)){
             return null;
         }
-        return newsDAO.getNewsByPage(pageData);
+        return newsDAO.getNewsByPage(pageAttributes);
     }
 
     @Override
@@ -36,12 +36,12 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public Integer calcPagesCountNews(String locale, Integer countNewsOnOnePage) throws DAOException{
+    public Integer calcPagesCountNews(String locale, Integer countNewsOnPage) throws DAOException{
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
-                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countNewsOnOnePage)){
+                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countNewsOnPage)){
             return null;
         }
-        return  newsDAO.calcTotalPagesWithBooks(locale, countNewsOnOnePage);
+        return  newsDAO.calcTotalPagesWithBooks(locale, countNewsOnPage);
     }
 
 }

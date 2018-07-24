@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Page.READING_ROOM;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.PageConstants.READING_ROOM;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 public class ReadBook extends AbstractCommand {
 
@@ -33,6 +33,7 @@ public class ReadBook extends AbstractCommand {
 
             request.setAttribute(BOOK_ID, bookId);
             request.setAttribute(NUMBER_OF_PAGE, currentPage);
+            request.setAttribute(TOTAL_PAGES, service.calcPagesCountText(bookId,locale, path));
             request.setAttribute(BOOK_TEXT, service.getTextOfBook(bookId, locale, path, currentPage));
 
             forward(request, response, READING_ROOM);

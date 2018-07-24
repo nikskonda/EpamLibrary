@@ -1,10 +1,8 @@
 package by.epam.java.training.web.command.impl.l10n;
 
 import by.epam.java.training.web.command.AbstractCommand;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
-import by.epam.java.training.web.command.CommandFactory;
-import by.epam.java.training.web.command.CommandName;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;

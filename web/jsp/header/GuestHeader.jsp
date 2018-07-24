@@ -23,8 +23,8 @@
         <ul class="header__nav">
             <li class="current"><a href="/news?command=open_news_list" title="">Home</a></li>
             <li><a href="/catalog?command=open_book_catalog">${catalog}</a></li>
-            <li><a href="/openSignIn">${signin}</a></li>
-            <li><a href="/openSignUp">${signup}</a></li>
+            <li><a href="/signIn">${signin}</a></li>
+            <li><a href="/signUp">${signup}</a></li>
 
         </ul> <!-- end header__nav -->
 

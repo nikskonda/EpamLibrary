@@ -21,9 +21,9 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.CommandName.TAKE_ADD_BOOK_FORM;
-import static by.epam.java.training.web.command.CommandName.TAKE_BOOK_CATALOG;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.CommandConstants.GO_TO_ADD_BOOK_FORM;
+import static by.epam.java.training.web.command.CommandConstants.TAKE_BOOK_CATALOG;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 public class AddBook extends AbstractCommand {
 
@@ -67,13 +67,13 @@ public class AddBook extends AbstractCommand {
             if (!userService.isUserExist(new SignInForm(user.getLogin(), password))){
                 clearData(request, defBook, tBook);
                 request.setAttribute(ERROR_EXIST, true);
-                CommandFactory.getCommand(TAKE_ADD_BOOK_FORM).execute(request, response);
+                CommandFactory.getCommand(GO_TO_ADD_BOOK_FORM).execute(request, response);
                 return;
             }
 
             if (!service.addBook(defBook, tBook, lang)){
                 clearData(request, defBook, tBook);
-                CommandFactory.getCommand(TAKE_ADD_BOOK_FORM).execute(request, response);
+                CommandFactory.getCommand(GO_TO_ADD_BOOK_FORM).execute(request, response);
                 return;
             }
 

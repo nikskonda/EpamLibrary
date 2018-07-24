@@ -33,25 +33,6 @@
         <url-pattern>/moderator</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>AddNews</servlet-name>
-        <jsp-file>/jsp/moder/AddNews.jsp</jsp-file>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>AddNews</servlet-name>
-        <url-pattern>/moderator/openAddNews</url-pattern>
-    </servlet-mapping>
-
-    <!--<servlet>-->
-        <!--<servlet-name>AddBook</servlet-name>-->
-        <!--<servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>AddBook</servlet-name>-->
-        <!--<url-pattern>/moderator/openAddBook</url-pattern>-->
-    <!--</servlet-mapping>-->
 
     <!--USER-->
     <servlet>
@@ -61,7 +42,7 @@
 
     <servlet-mapping>
         <servlet-name>SignIn</servlet-name>
-        <url-pattern>/signIn</url-pattern>
+        <url-pattern>/authorization</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -71,7 +52,7 @@
 
     <servlet-mapping>
         <servlet-name>OpenSignIn</servlet-name>
-        <url-pattern>/openSignIn</url-pattern>
+        <url-pattern>/signIn</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -81,7 +62,7 @@
 
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
-        <url-pattern>/signUp</url-pattern>
+        <url-pattern>/registration</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -91,7 +72,7 @@
 
     <servlet-mapping>
         <servlet-name>OpenSignUp</servlet-name>
-        <url-pattern>/openSignUp</url-pattern>
+        <url-pattern>/signUp</url-pattern>
     </servlet-mapping>
 
     <servlet>

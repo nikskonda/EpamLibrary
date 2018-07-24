@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Page.ERROR;
+import static by.epam.java.training.web.command.util.PageConstants.ERROR;
 
 public class TakeErrorPage extends AbstractCommand {
 

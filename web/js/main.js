@@ -627,3 +627,14 @@
     })();
         
 })(jQuery);
+
+
+function lightOff() {
+    var field = document.getElementById("readingRoom");
+    field.style.backgroundColor = "#151515";
+}
+
+function lightOn() {
+    var field = document.getElementById("readingRoom");
+    field.style.backgroundColor = "#f2f2f2";
+}

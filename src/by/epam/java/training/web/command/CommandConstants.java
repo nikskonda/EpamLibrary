@@ -1,6 +1,6 @@
 package by.epam.java.training.web.command;
 
-public class CommandName {
+public class CommandConstants {
     //admin
     public static final String TAKE_LIST_OF_USERS = ("show_user_list");
     public static final String TAKE_USER = ("open_user");
@@ -9,15 +9,15 @@ public class CommandName {
     public static final String FIND_LIST_OF_USERS = "find_users";
 
     //moder
-    public static final String TAKE_ADD_NEWS_FORM = ("open_add_news");
+    public static final String GO_TO_ADD_NEWS_FORM = ("open_add_news");
     public static final String ADD_NEWS = ("add_news");
-    public static final String TAKE_EDIT_NEWS_FORM = ("open_editing_news");
+    public static final String GO_TO_EDIT_NEWS_FORM = ("open_editing_news");
     public static final String EDIT_NEWS = ("edit_news");
     public static final String DELETE_NEWS = ("delete_news");
 
-    public static final String TAKE_ADD_BOOK_FORM = ("open_add_book");
+    public static final String GO_TO_ADD_BOOK_FORM = ("open_add_book");
     public static final String ADD_BOOK = ("add_book");
-    public static final String TAKE_EDIT_BOOK_FORM = ("open_editing_book");
+    public static final String GO_TO_EDIT_BOOK_FORM = ("open_editing_book");
     public static final String EDIT_BOOK = ("edit_book");
     public static final String DELETE_BOOK = ("delete_book");
 
@@ -25,7 +25,7 @@ public class CommandName {
     public static final String SIGN_IN = ("sign_in");
     public static final String SIGN_UP = ("sign_up");
     public static final String SIGN_OUT = ("sign_out");
-    public static final String TAKE_PROFILE_FORM = ("open_profile");
+    public static final String GO_TO_PROFILE_FORM = ("open_profile");
     public static final String UPDATE_PROFILE = ("update_profile");
 
     //book
@@ -37,7 +37,7 @@ public class CommandName {
     public static final String DELETE_BOOKMARK = ("delete_bookmark");
 
     //bookmark
-    public static final String TAKE_BOOKMARK = ("open_bookmark");
+    public static final String GO_TO_BOOKMARK = ("open_bookmark");
     public static final String SET_BOOKMARK = ("set_bookmark");
 
     //news

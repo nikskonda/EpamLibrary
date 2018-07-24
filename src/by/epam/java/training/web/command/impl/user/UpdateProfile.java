@@ -6,7 +6,7 @@ import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
-import by.epam.java.training.web.command.CommandName;
+import by.epam.java.training.web.command.CommandConstants;
 import by.epam.java.training.web.util.EncriptionMD5;
 import org.apache.log4j.Logger;
 
@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.CommandName.ERROR;
-import static by.epam.java.training.web.command.Page.*;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.CommandConstants.ERROR;
+import static by.epam.java.training.web.command.util.PageConstants.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 public class UpdateProfile extends AbstractCommand {
 
@@ -68,7 +68,7 @@ public class UpdateProfile extends AbstractCommand {
                 return;
             }
 
-            CommandFactory.getCommand(CommandName.TAKE_PROFILE_FORM).execute(request, response);
+            CommandFactory.getCommand(CommandConstants.GO_TO_PROFILE_FORM).execute(request, response);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

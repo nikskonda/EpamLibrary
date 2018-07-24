@@ -4,10 +4,10 @@ import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
-import by.epam.java.training.web.command.Page;
+import by.epam.java.training.web.command.util.PageConstants;
 import by.epam.java.training.web.filter.AbstractFilter;
 
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ public class AdminFilter extends AbstractFilter {
             ActiveUser user = (ActiveUser) session.getAttribute(USER);
 
             if (user == null) {
-                redirect(response, Page.SIGN_IN);
+                redirect(response, PageConstants.SIGN_IN);
                 return;
             }
             if (!service.isAdministrator(user.getLogin())) {

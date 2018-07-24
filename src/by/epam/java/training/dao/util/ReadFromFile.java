@@ -1,29 +1,33 @@
 package by.epam.java.training.dao.util;
 
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 import java.io.*;
 
 public class ReadFromFile {
+
+    private static final int EOF = -1;
 
     public static String readText(String fileName, Integer page){
         StringBuilder sb = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"))){
             int c;
             int count = 0;
+            int currentPage = 0;
             boolean flag = (page==1) ? true : false;
 
-            while ((c = reader.read()) != -1) {
-                if (count > (page-1)*TOTAL_LETTER_ON_PAGE && (char)c == NEW_LINE) {
-                    flag = true;
+            while ((c = reader.read()) != EOF) {
+                count++;
+                if (count>TOTAL_LETTER_ON_PAGE && (char)c == NEW_LINE){
+                    count = 0;
+                    currentPage++;
                 }
-                if (count >= (page-1)*TOTAL_LETTER_ON_PAGE && flag) {
+                if (currentPage == page-1){
                     sb.append((char)c);
                 }
-                if (count > (page)*TOTAL_LETTER_ON_PAGE && (char)c == NEW_LINE) {
+                if (currentPage >= page){
                     break;
                 }
-                count++;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,16 +36,22 @@ public class ReadFromFile {
         return sb.toString();
     }
 
-    public static int calcCountOfPagesWithText(String fileName){
+    public static int calcPagesCountText(String fileName){
         int count = 0;
+        int pages = 0;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"))){
-            while ((reader.read()) != -1) {
+            int c;
+            while ((c = reader.read()) != EOF) {
                 count++;
+                if (count>TOTAL_LETTER_ON_PAGE && (char)c == NEW_LINE){
+                    count = 0;
+                    pages++;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return (int)Math.ceil(count/TOTAL_LETTER_ON_PAGE);
+        return ++pages;
     }
 
 }

@@ -39,7 +39,7 @@ public class BookmarkServiceImpl implements BookmarkService{
     }
 
     @Override
-    public List<Book> getListOfBooksWithBookmark(Integer userId, PageAttributes pageAttributes) throws DAOException{
+    public List<Book> getBooksWithBookmark(Integer userId, PageAttributes pageAttributes) throws DAOException{
         if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId)
                 || !ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageAttributes)){
             return null;
@@ -64,13 +64,13 @@ public class BookmarkServiceImpl implements BookmarkService{
     }
 
     @Override
-    public Integer calcPagesCountBookmarks(Integer userId, String locale, Integer countBookmarksOnOnePage) throws DAOException {
+    public Integer calcPagesCountBookmarks(Integer userId, String locale, Integer countBookmarksOnPage) throws DAOException {
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
-                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countBookmarksOnOnePage)
+                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countBookmarksOnPage)
                 || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId)){
             return null;
         }
 
-        return bookmarkDAO.calcTotalPages(userId, locale, countBookmarksOnOnePage);
+        return bookmarkDAO.calcTotalPages(userId, locale, countBookmarksOnPage);
     }
 }

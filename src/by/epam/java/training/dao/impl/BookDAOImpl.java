@@ -2,10 +2,8 @@ package by.epam.java.training.dao.impl;
 
 import by.epam.java.training.dao.AbstractDAO;
 import by.epam.java.training.dao.BookDAO;
-import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.dao.util.ConnectionPool;
 import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.book.*;
 import by.epam.java.training.model.book.constituents.Genre;
@@ -61,8 +59,8 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
         return genre;
     }
 
-    private BookCover buildBookCover(ResultSet rs) throws SQLException{
-        BookCover book = new BookCover();
+    private BookPreview buildBookCover(ResultSet rs) throws SQLException{
+        BookPreview book = new BookPreview();
 
         book.setId(rs.getInt(BOOK_ID));
         book.setName(rs.getString(BOOK_NAME));
@@ -146,11 +144,11 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
     }
 
     @Override
-    public List<BookCover> getBooksPerPage(PageAttributes pageAttributes) throws DAOException {
+    public List<BookPreview> getBooksPerPage(PageAttributes pageAttributes) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        List<BookCover> booksList = new ArrayList<>();
+        List<BookPreview> booksList = new ArrayList<>();
         try {
             con = retrieveConnection();
 
@@ -203,7 +201,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO {
     }
 
     @Override
-    public List<Genre> getListOfGenre(String lang) throws DAOException {
+    public List<Genre> getGenres(String lang) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;

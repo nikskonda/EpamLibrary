@@ -17,6 +17,8 @@ public class DAOFactory {
     private static final ConnectionPool connectionPool = new ConnectionPool();
 
     private final AdministratorDAO administratorDAO = new AdministratorDAOImpl();
+    private final UserSearchDAO userSearchDAO = new UserSearchDAOImpl();
+
     private final ModeratorDAO moderatorDAO = new ModeratorDAOImpl();
     private final UserDAO userDAO = new UserDAOImpl();
 
@@ -31,6 +33,7 @@ public class DAOFactory {
 
 
     public static AdministratorDAO getAdministratorDAO(){ return getInstance().administratorDAO;}
+    public static UserSearchDAO getUserSearchDAO(){ return getInstance().userSearchDAO;}
     public static ModeratorDAO getModeratorDAO() {return getInstance().moderatorDAO;}
     public static UserDAO getUserDAO() {
         return getInstance().userDAO;

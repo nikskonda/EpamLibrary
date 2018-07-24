@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.CommandName.*;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.CommandConstants.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 public class DeleteBook extends AbstractCommand {
 
@@ -39,12 +39,12 @@ public class DeleteBook extends AbstractCommand {
 
             if (!userService.isUserExist(new SignInForm(user.getLogin(), password))){
                 request.setAttribute(ERROR_EXIST, true);
-                CommandFactory.getCommand(TAKE_ADD_BOOK_FORM).execute(request, response);
+                CommandFactory.getCommand(GO_TO_ADD_BOOK_FORM).execute(request, response);
                 return;
             }
 
             if (!service.delBook(bookId)){
-                CommandFactory.getCommand(TAKE_EDIT_BOOK_FORM).execute(request, response);
+                CommandFactory.getCommand(GO_TO_EDIT_BOOK_FORM).execute(request, response);
                 return;
             }
 

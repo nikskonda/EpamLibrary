@@ -5,13 +5,13 @@ import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.book.Book;
-import by.epam.java.training.model.book.BookCover;
+import by.epam.java.training.model.book.BookPreview;
 import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.servise.BookService;
 import by.epam.java.training.dao.util.ReadFromFile;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 import org.apache.log4j.Logger;
 
 import java.util.Arrays;
@@ -33,16 +33,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<String> getTextOfBook(Integer bookId, String locale, String path, Integer page) throws DAOException{
+    public List<String> getTextOfBook(Integer bookId, String locale, String path, Integer numberOfPage) throws DAOException{
         if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, bookId)
                 || !ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
                 || !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, path)
-                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, page)){
+                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, numberOfPage)){
             return null;
         }
-
-        String fileName = bookDAO.getUrlToTextOfBook(bookId, locale);
-        String bookText = ReadFromFile.readText(path+fileName, page);
+        String fileName = path+bookDAO.getUrlToTextOfBook(bookId, locale);
+        String bookText = ReadFromFile.readText(fileName, numberOfPage);
         if (bookText.isEmpty()){
             return null;
         }
@@ -51,27 +50,38 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookCover> getBooksByPage(PageAttributes pageData) throws DAOException{
-        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageData)){
+    public Integer calcPagesCountText(Integer bookId, String locale, String path) throws DAOException {
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, bookId)
+                || !ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
+                || !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, path)){
             return null;
         }
-        return bookDAO.getBooksPerPage(pageData);
+        String fileName = path+bookDAO.getUrlToTextOfBook(bookId, locale);
+        return ReadFromFile.calcPagesCountText(fileName);
     }
 
     @Override
-    public Integer calcPagesCountBooks(String locale, Integer countBooksOnOnePage) throws DAOException{
-        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countBooksOnOnePage)
+    public List<BookPreview> getBooksPerPage(PageAttributes pageAttributes) throws DAOException{
+        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageAttributes)){
+            return null;
+        }
+        return bookDAO.getBooksPerPage(pageAttributes);
+    }
+
+    @Override
+    public Integer calcPagesCountBooks(String locale, Integer countBooksOnPage) throws DAOException{
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countBooksOnPage)
                 || !ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)){
             return null;
         }
-        return  bookDAO.calcPagesCountBooks(locale, countBooksOnOnePage);
+        return  bookDAO.calcPagesCountBooks(locale, countBooksOnPage);
     }
 
     @Override
-    public List<Genre> getListOfGenre(String lang) throws DAOException {
+    public List<Genre> getGenres(String lang) throws DAOException {
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, lang)){
             return null;
         }
-        return bookDAO.getListOfGenre(lang);
+        return bookDAO.getGenres(lang);
     }
 }

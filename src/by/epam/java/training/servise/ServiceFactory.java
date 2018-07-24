@@ -15,6 +15,8 @@ public class ServiceFactory {
     private static Lock lock = new ReentrantLock();
 
     private final AdministratorService administratorService = new AdministratorServiceImpl();
+    private final UserSearchService userSearchService = new UserSearchServiceImpl();
+
     private final ModeratorService moderatorService = new ModeratorServiceImpl();
     private final UserService userService = new UserServiceImpl();
 
@@ -30,6 +32,10 @@ public class ServiceFactory {
     public static AdministratorService getAdministratorService(){
         return getInstance().administratorService;
     }
+    public static UserSearchService getUserSearchService(){
+        return getInstance().userSearchService;
+    }
+
     public static ModeratorService getModeratorService(){
         return getInstance().moderatorService;
     }

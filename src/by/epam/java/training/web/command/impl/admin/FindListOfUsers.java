@@ -4,8 +4,9 @@ import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
+import by.epam.java.training.servise.UserSearchService;
 import by.epam.java.training.web.command.AbstractCommand;
-import by.epam.java.training.web.command.util.FieldNames;
+import by.epam.java.training.web.command.util.FieldNameConstants;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -14,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Page.USER_LIST;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.PageConstants.USER_LIST;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 public class FindListOfUsers extends AbstractCommand {
 
@@ -24,7 +25,7 @@ public class FindListOfUsers extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            AdministratorService service = ServiceFactory.getAdministratorService();
+            UserSearchService service = ServiceFactory.getUserSearchService();
             rememberLastAction(request);
             String search = request.getParameter(SEARCH);
             Integer countUsers = getCount(request, COUNT_USERS_ON_PAGE, INIT_COUNT_USERS);
@@ -39,7 +40,7 @@ public class FindListOfUsers extends AbstractCommand {
             request.setAttribute(NUMBER_OF_PAGE, currentPage);
             request.setAttribute(TOTAL_PAGES, service.calcPagesCountUserSearchResult(search, countUsers));
             request.setAttribute(SEARCH, search);
-            request.setAttribute(FieldNames.USER_LIST, service.FindUsersByPages(search, pageData));
+            request.setAttribute(FieldNameConstants.USER_LIST, service.findUsersPerPages(search, pageData));
 
             forward(request, response, USER_LIST);
         } catch (DAOException ex){

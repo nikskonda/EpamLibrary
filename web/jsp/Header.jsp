@@ -23,16 +23,16 @@
                 <div class="col-md-3">
                     <ul class="header__social">
                         <li>
-                            <a href="#0"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="https://www.facebook.com/belallibrary/"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="#0"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="https://twitter.com/csgpb_mogilev"><i class="fa fa-twitter" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="#0"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a href="https://www.instagram.com/biblioteka_gudermes/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="#0"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                            <a href="https://www.pinterest.ru/pin/555561304005705094/"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
                         </li>
                     </ul>
                 </div>

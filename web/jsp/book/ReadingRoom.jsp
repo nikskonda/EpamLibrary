@@ -29,6 +29,7 @@
     <!-- script
     ================================================== -->
     <script src="../../js/modernizr.js"></script>
+
     <script src="../../js/pace.min.js"></script>
 
     <!-- favicons
@@ -41,7 +42,10 @@
 
     <jsp:include page="../Header.jsp"/>
 
-    <section class="s-content">
+    <button type="button" onclick="lightOff()">Off</button>
+    <button type="button" onclick="lightOn()">On</button>
+
+    <section id="readingRoom" class="s-content">
         <div class="container">
             <form method="post" action="/book">
                 <input type="hidden" name="command" value="set_bookmark">
@@ -83,14 +87,19 @@
                 <div class="col-full">
                     <nav class="pgn">
                         <ul>
-                            <c:if test="${requestScope.numberOfPage>1}">
+                            <c:if test="${requestScope.numberOfPage != 1}">
+                                <li><a class="pgn__num" href="/book?command=read_book&book_id=${requestScope.book_id}&numberOfPage=1">First: 1</a></li>
+                            </c:if>
+                            <c:if test="${requestScope.numberOfPage > 1}">
                                 <li><a class="pgn__prev" href="/book?command=read_book&book_id=${requestScope.book_id}&numberOfPage=${requestScope.numberOfPage-1}">Prev</a></li>
                             </c:if>
                             <li><a class="pgn__num current"><c:out value="${requestScope.numberOfPage}"/></a></li>
                             <c:if test="${requestScope.text.size() > 0}">
                                 <li><a class="pgn__next" href="/book?command=read_book&book_id=${requestScope.book_id}&numberOfPage=${requestScope.numberOfPage+1}">Next</a></li>
                             </c:if>
-
+                            <c:if test="${requestScope.numberOfPage<requestScope.totalPages}">
+                                <li><a class="pgn__num" href="/news?command=read_book&book_id=${requestScope.book_id}&numberOfPage=${requestScope.totalPages}">Last: <c:out value="${requestScope.totalPages}"/></a></li>
+                            </c:if>
                         </ul>
                     </nav>
                 </div>
@@ -101,5 +110,6 @@
 
     </section> <!-- s-content -->
     <jsp:include page="../Footer.jsp"/>
+    <script src="../../js/main.js"></script>
     </body>
 </html>

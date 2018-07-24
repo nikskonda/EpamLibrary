@@ -7,7 +7,7 @@ import by.epam.java.training.servise.BookmarkService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
-import by.epam.java.training.web.command.CommandName;
+import by.epam.java.training.web.command.CommandConstants;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -16,8 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Page.SIGN_IN;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 public class DeleteBookmark extends AbstractCommand {
 
@@ -41,7 +40,7 @@ public class DeleteBookmark extends AbstractCommand {
             }
 
             request.setAttribute(NUMBER_OF_PAGE, numberOfPage);
-            CommandFactory.getCommand(CommandName.TAKE_LIST_OF_BOOKMARKS).execute(request, response);
+            CommandFactory.getCommand(CommandConstants.TAKE_LIST_OF_BOOKMARKS).execute(request, response);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

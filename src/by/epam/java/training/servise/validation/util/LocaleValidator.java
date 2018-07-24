@@ -1,7 +1,7 @@
 package by.epam.java.training.servise.validation.util;
 
 import by.epam.java.training.servise.validation.Validator;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 public class LocaleValidator implements Validator {
 

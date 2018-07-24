@@ -2,12 +2,13 @@ package by.epam.java.training.model.book;
 
 import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.model.book.constituents.PublishingHouse;
+import by.epam.java.training.web.command.util.FieldNameConstants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Book extends BookCover implements Serializable {
+public class Book extends BookPreview implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final String COMMA_AND_SPACE = ", ";
@@ -28,16 +29,14 @@ public class Book extends BookCover implements Serializable {
         genres = new ArrayList<>();
     }
 
-    public Book(BookCover bookCover) {
-        super.setId(bookCover.getId());
-        super.setName(bookCover.getName());
-        super.setCoverUrl(bookCover.getCoverUrl());
-        super.setPrice(bookCover.getPrice());
-        super.setPublishYear(bookCover.getPublishYear());
+    public Book(BookPreview bookPreview) {
+        super.setId(bookPreview.getId());
+        super.setName(bookPreview.getName());
+        super.setCoverUrl(bookPreview.getCoverUrl());
+        super.setPrice(bookPreview.getPrice());
+        super.setPublishYear(bookPreview.getPublishYear());
         genres = new ArrayList<>();
     }
-
-
 
 
     public String getDescription() {
@@ -104,7 +103,7 @@ public class Book extends BookCover implements Serializable {
     }
 
     public String getAuthors() {
-        return authors==null?"":authors;
+        return authors==null ? FieldNameConstants.EMPTY_STRING : authors;
     }
 
     public void setAuthors(String authors) {

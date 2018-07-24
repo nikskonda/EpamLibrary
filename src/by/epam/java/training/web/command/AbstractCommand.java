@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.CommandName.TAKE_LIST_OF_NEWS;
+import static by.epam.java.training.web.command.CommandConstants.TAKE_LIST_OF_NEWS;
 
 public abstract class AbstractCommand extends Pagination implements Command{
 

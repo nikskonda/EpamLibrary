@@ -30,38 +30,21 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public List<User> getUsersByPages(PageAttributes pageData) throws DAOException{
-        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageData)){
+    public List<User> getUsersPerPage(PageAttributes pageAttributes) throws DAOException{
+        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageAttributes)){
             return null;
         }
-        return administratorDAO.getUsersPerPage(pageData);
+        return administratorDAO.getUsersPerPage(pageAttributes);
     }
 
     @Override
-    public Integer calcPagesCountUsers(Integer countUsersOnOnePage) throws DAOException {
-        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countUsersOnOnePage)){
+    public Integer calcPagesCountUsers(Integer countUsersOnPage) throws DAOException {
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countUsersOnPage)){
             return null;
         }
-        return administratorDAO.calcPagesCountUsers(countUsersOnOnePage);
+        return administratorDAO.calcPagesCountUsers(countUsersOnPage);
     }
 
-    @Override
-    public List<User> FindUsersByPages(String search, PageAttributes pageData) throws DAOException{
-        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageData)
-                || !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, search)){
-            return null;
-        }
-        return administratorDAO.findUsersByPages(search, pageData);
-    }
-
-    @Override
-    public Integer calcPagesCountUserSearchResult(String search, Integer countUsersOnOnePage) throws DAOException {
-        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countUsersOnOnePage)
-                || !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, search)){
-            return null;
-        }
-        return administratorDAO.calcPagesCountUserSearchResults(search, countUsersOnOnePage);
-    }
 
     @Override
     public List<Role> getRoles() throws DAOException {

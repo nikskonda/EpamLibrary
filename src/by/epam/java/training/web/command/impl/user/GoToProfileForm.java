@@ -1,12 +1,12 @@
-package by.epam.java.training.web.command.impl.news;
+package by.epam.java.training.web.command.impl.user;
 
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.news.News;
-import by.epam.java.training.servise.NewsService;
+import by.epam.java.training.model.user.ActiveUser;
+import by.epam.java.training.model.user.form.ProfileForm;
+import by.epam.java.training.model.user.User;
 import by.epam.java.training.servise.ServiceFactory;
+import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
-import by.epam.java.training.web.command.util.PageConstants;
-import by.epam.java.training.web.command.util.FieldNameConstants;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -15,27 +15,33 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static by.epam.java.training.web.command.util.PageConstants.*;
 import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
-public class TakeNews extends AbstractCommand {
+public class GoToProfileForm extends AbstractCommand {
 
-    private static final Logger logger = Logger.getLogger(TakeNews.class);
+    private static final Logger logger = Logger.getLogger(GoToProfileForm.class);
+
+
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
             rememberLastAction(request);
-            NewsService service = ServiceFactory.getNewsService();
+
+            UserService userService = ServiceFactory.getUserService();
             HttpSession session = request.getSession(true);
-            String locale = (String)session.getAttribute(LOCALE);
-            Integer newsId = Integer.parseInt(request.getParameter(NEWS_ID));
+            ActiveUser activeUser = (ActiveUser) session.getAttribute(USER);
 
-            News news = service.getNews(newsId, locale);
+            User user = userService.getUser(activeUser.getId());
 
-            request.setAttribute(FieldNameConstants.NEWS, news);
-            request.setAttribute(FieldNameConstants.NEWS_TEXT, news.getText().split(NEW_LINE.toString()));
+            ProfileForm profile = new ProfileForm(user.getLogin(),
+                    user.getFirstName(), user.getLastName(), user.getEmail());
 
-            forward(request, response, PageConstants.NEWS);
+            request.setAttribute(USER_PROFILE, profile);
+
+            forward(request, response, PROFILE);
 
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
@@ -47,6 +53,8 @@ public class TakeNews extends AbstractCommand {
             logger.warn(ex);
             request.setAttribute(ERROR_UNKNOWN, true);
         }
+
+
 
     }
 }

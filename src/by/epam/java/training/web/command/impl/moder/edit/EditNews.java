@@ -9,7 +9,7 @@ import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
-import by.epam.java.training.web.command.util.FieldNames;
+import by.epam.java.training.web.command.util.FieldNameConstants;
 import by.epam.java.training.web.util.EncriptionMD5;
 import org.apache.log4j.Logger;
 
@@ -20,9 +20,9 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.CommandName.TAKE_EDIT_NEWS_FORM;
-import static by.epam.java.training.web.command.CommandName.TAKE_LIST_OF_NEWS;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.CommandConstants.GO_TO_EDIT_NEWS_FORM;
+import static by.epam.java.training.web.command.CommandConstants.TAKE_LIST_OF_NEWS;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 public class EditNews extends AbstractCommand {
 
@@ -58,13 +58,13 @@ public class EditNews extends AbstractCommand {
             if (!userService.isUserExist(new SignInForm(user.getLogin(), password))){
                 clearData(request, defNews, tNews);
                 request.setAttribute(ERROR_EXIST, true);
-                CommandFactory.getCommand(TAKE_EDIT_NEWS_FORM).execute(request, response);
+                CommandFactory.getCommand(GO_TO_EDIT_NEWS_FORM).execute(request, response);
                 return;
             }
 
             if (!service.editNews(defNews, tNews, lang)){
                 clearData(request, defNews, tNews);
-                CommandFactory.getCommand(TAKE_EDIT_NEWS_FORM).execute(request, response);
+                CommandFactory.getCommand(GO_TO_EDIT_NEWS_FORM).execute(request, response);
                 return;
             }
 
@@ -92,7 +92,7 @@ public class EditNews extends AbstractCommand {
     private void clearData(HttpServletRequest request, News defNews, News tNews){
         delete(request.getServletContext().getRealPath(defNews.getPhotoUrl()));
         delete(request.getServletContext().getRealPath(defNews.getThumbsUrl()));
-        request.setAttribute(FieldNames.NEWS, defNews);
+        request.setAttribute(FieldNameConstants.NEWS, defNews);
         request.setAttribute(NEWS_RU, tNews);
     }
 

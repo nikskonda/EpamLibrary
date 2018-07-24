@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.Page.*;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.PageConstants.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 public class TakeBookCatalog extends AbstractCommand {
 
@@ -39,7 +39,7 @@ public class TakeBookCatalog extends AbstractCommand {
             session.setAttribute(COUNT_BOOKS_ON_PAGE, countBooks);
             request.setAttribute(NUMBER_OF_PAGE, currentPage);
             request.setAttribute(TOTAL_PAGES, service.calcPagesCountBooks(locale, countBooks));
-            request.setAttribute(BOOKS, service.getBooksByPage(pageData));
+            request.setAttribute(BOOKS, service.getBooksPerPage(pageData));
 
             forward(request, response, BOOK_CATALOG);
         } catch (DAOException ex){

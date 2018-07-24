@@ -1,6 +1,6 @@
 package by.epam.java.training.web.filter.impl;
 
-import by.epam.java.training.web.command.util.FieldNames;
+import by.epam.java.training.web.command.util.FieldNameConstants;
 import by.epam.java.training.web.filter.AbstractFilter;
 
 import javax.servlet.FilterChain;
@@ -18,8 +18,8 @@ public class LocalizationFilter extends AbstractFilter {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpSession session = request.getSession(true);
 
-        if (session.getAttribute(FieldNames.LOCALE) == null){
-            session.setAttribute(FieldNames.LOCALE, FieldNames.ENGLISH);
+        if (session.getAttribute(FieldNameConstants.LOCALE) == null){
+            session.setAttribute(FieldNameConstants.LOCALE, FieldNameConstants.ENGLISH);
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

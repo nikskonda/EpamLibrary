@@ -1,6 +1,6 @@
 package by.epam.java.training.web.filter.util;
 
-public class Path {
+public class PathConstants {
 
     public static final String NEWS_THUMBS_PARAMETER = "news_thumbs_url";
     public static final String NEWS_PHOTO_PARAMETER = "news_photo_url";
@@ -21,7 +21,5 @@ public class Path {
     public static final String BOOK_RU_TEXT_PATH = "/WEB-INF/classes/text/ru/";
     public static final String BOOK_PDF_PATH = "/pdf/";
     public static final String BOOK_RU_PDF_PATH = "/pdf/ru/";
-
-
 
 }

@@ -2,7 +2,7 @@ package by.epam.java.training.model.book;
 
 import java.io.Serializable;
 
-public class BookCover implements Serializable {
+public class BookPreview implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
@@ -12,10 +12,10 @@ public class BookCover implements Serializable {
     private String coverUrl;
 
 
-    public BookCover() {
+    public BookPreview() {
     }
 
-    public BookCover(Integer id, String name, Integer publishYear, Double price, String coverUrl) {
+    public BookPreview(Integer id, String name, Integer publishYear, Double price, String coverUrl) {
         this.id = id;
         this.name = name;
         this.publishYear = publishYear;

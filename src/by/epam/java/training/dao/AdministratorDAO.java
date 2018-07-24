@@ -17,10 +17,6 @@ public interface AdministratorDAO {
 
     Integer calcPagesCountUsers(Integer countUsersOnOnePage) throws DAOException;
 
-    List<User> findUsersByPages(String search, PageAttributes pageAttributes);
-
-    Integer calcPagesCountUserSearchResults(String search, Integer countUsersOnPage) throws DAOException;
-
     List<Role> getRoles() throws DAOException;
 
     boolean changeRole(Integer userId, String roleName) throws DAOException;

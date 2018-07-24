@@ -127,61 +127,6 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
         return result;
     }
 
-    @Override
-    public List<User> findUsersByPages(String search, PageAttributes pageAttributes) {
-        Connection con = null;
-        CallableStatement cstmt = null;
-        ResultSet rs = null;
-        List<User> userList = new ArrayList<>();
-        try {
-            con = retrieveConnection();
-
-            cstmt = con.prepareCall(FIND_LIST_OF_USERS);
-            cstmt.setInt(COUNT_USERS_ON_PAGE, pageAttributes.getCountOnPage());
-            cstmt.setInt(NUMBER_OF_PAGE, pageAttributes.getNumberOfPage());
-            cstmt.setString(SEARCH, search);
-            rs = cstmt.executeQuery();
-
-            while (rs.next()) {
-                userList.add(buildUser(rs));
-            }
-        } catch (ConnectionPoolException ex){
-            logger.warn("Database query error",ex);
-        } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-        }
-        finally {
-            closeAll(rs, cstmt, con);
-        }
-        return userList;
-    }
-
-    @Override
-    public Integer calcPagesCountUserSearchResults(String search, Integer countUsersOnPage) throws DAOException {
-        Connection con = null;
-        CallableStatement cstmt = null;
-        Integer result = null;
-        try {
-            con = retrieveConnection();
-
-            cstmt = con.prepareCall(CALC_TOTAL_PAGES_IN_USERS_SEARCH);
-            cstmt.setString(SEARCH, search);
-            cstmt.setInt(COUNT_USERS_ON_PAGE, countUsersOnPage);
-            cstmt.registerOutParameter(RESULT, Types.SMALLINT);
-            cstmt.executeQuery();
-
-            result = cstmt.getInt(RESULT);
-        } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
-        } finally {
-            closeStatementAndConnection(cstmt, con);
-        }
-        return result;
-    }
 
     @Override
     public User getUser(Integer userId) throws DAOException{

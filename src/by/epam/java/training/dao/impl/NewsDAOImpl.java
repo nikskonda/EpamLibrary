@@ -1,14 +1,12 @@
 package by.epam.java.training.dao.impl;
 
 import by.epam.java.training.dao.AbstractDAO;
-import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.NewsDAO;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.dao.util.ConnectionPool;
 import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.news.News;
-import by.epam.java.training.model.news.NewsCover;
+import by.epam.java.training.model.news.NewsPreview;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -23,11 +21,11 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
     private static final Logger logger = Logger.getLogger(NewsDAOImpl.class);
 
     @Override
-    public List<NewsCover> getNewsByPage(PageAttributes pageData) throws DAOException {
+    public List<NewsPreview> getNewsByPage(PageAttributes pageData) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        List<NewsCover> newsList = new ArrayList<>();
+        List<NewsPreview> newsList = new ArrayList<>();
         try {
             con = retrieveConnection();
 
@@ -81,8 +79,8 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
         return news;
     }
 
-    private NewsCover buildNewsCover(ResultSet rs) throws SQLException{
-        NewsCover news = new NewsCover();
+    private NewsPreview buildNewsCover(ResultSet rs) throws SQLException{
+        NewsPreview news = new NewsPreview();
 
         news.setId(rs.getInt(NEWS_ID));
         news.setTitle(rs.getString(NEWS_TITLE));

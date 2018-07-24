@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import static by.epam.java.training.web.filter.util.Path.*;
+import static by.epam.java.training.web.filter.util.PathConstants.*;
 
 public class PathManager {
 

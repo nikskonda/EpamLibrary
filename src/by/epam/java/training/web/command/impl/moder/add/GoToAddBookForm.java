@@ -4,7 +4,7 @@ import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.servise.BookService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
-import by.epam.java.training.web.command.Page;
+import by.epam.java.training.web.command.util.PageConstants;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -13,11 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
-public class TakeAddBookForm extends AbstractCommand {
+public class GoToAddBookForm extends AbstractCommand {
 
-    private static final Logger logger = Logger.getLogger(TakeAddBookForm.class);
+    private static final Logger logger = Logger.getLogger(GoToAddBookForm.class);
 
 
     @Override
@@ -27,9 +27,9 @@ public class TakeAddBookForm extends AbstractCommand {
             HttpSession session = request.getSession(true);
             String locale = (String)session.getAttribute(LOCALE);
 
-            request.setAttribute(GENRES, service.getListOfGenre(locale));
+            request.setAttribute(GENRES, service.getGenres(locale));
 
-            forward(request, response, Page.ADD_BOOK);
+            forward(request, response, PageConstants.ADD_BOOK);
         } catch (DAOException ex){
             logger.warn("Problem with database", ex);
             request.setAttribute(ERROR_DATABASE, true);

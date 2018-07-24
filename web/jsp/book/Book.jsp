@@ -73,7 +73,7 @@
 
             <div class="row">
                 <div class="row">
-                    ${info}
+                    <h1>${info}:</h1>
                 </div>
                 <div class="row">
                     <table>

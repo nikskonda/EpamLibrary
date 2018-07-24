@@ -3,10 +3,9 @@ package by.epam.java.training.web.command.util;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 public class Pagination {
     private  static final Logger logger = Logger.getLogger(Pagination.class);

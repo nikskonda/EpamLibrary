@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.CommandName.TAKE_EDIT_NEWS_FORM;
-import static by.epam.java.training.web.command.CommandName.TAKE_LIST_OF_NEWS;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.CommandConstants.GO_TO_EDIT_NEWS_FORM;
+import static by.epam.java.training.web.command.CommandConstants.TAKE_LIST_OF_NEWS;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 public class DeleteNews extends AbstractCommand {
 
@@ -38,12 +38,12 @@ public class DeleteNews extends AbstractCommand {
 
             if (!userService.isUserExist(new SignInForm(user.getLogin(), password))){
                 request.setAttribute(ERROR_EXIST, true);
-                CommandFactory.getCommand(TAKE_EDIT_NEWS_FORM).execute(request, response);
+                CommandFactory.getCommand(GO_TO_EDIT_NEWS_FORM).execute(request, response);
                 return;
             }
 
             if (!service.delNews(newsId)){
-                CommandFactory.getCommand(TAKE_EDIT_NEWS_FORM).execute(request, response);
+                CommandFactory.getCommand(GO_TO_EDIT_NEWS_FORM).execute(request, response);
                 return;
             }
 

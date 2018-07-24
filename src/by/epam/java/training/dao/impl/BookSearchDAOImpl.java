@@ -2,10 +2,8 @@ package by.epam.java.training.dao.impl;
 
 import by.epam.java.training.dao.AbstractDAO;
 import by.epam.java.training.dao.BookSearchDAO;
-import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.dao.util.ConnectionPool;
 import by.epam.java.training.model.PageAttributes;
 import by.epam.java.training.model.book.*;
 import org.apache.log4j.Logger;
@@ -21,11 +19,11 @@ public class BookSearchDAOImpl extends AbstractDAO implements BookSearchDAO {
     private static final Logger logger = Logger.getLogger(BookSearchDAOImpl.class);
 
     @Override
-    public List<BookCover> getBooksByPage(String search, PageAttributes pageData) throws DAOException {
+    public List<BookPreview> getBooksByPage(String search, PageAttributes pageData) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        List<BookCover> booksList = new ArrayList<>();
+        List<BookPreview> booksList = new ArrayList<>();
         try {
             con = retrieveConnection();
 
@@ -37,7 +35,7 @@ public class BookSearchDAOImpl extends AbstractDAO implements BookSearchDAO {
             rs = cstmt.executeQuery();
 
             while (rs.next()) {
-                BookCover book = new BookCover();
+                BookPreview book = new BookPreview();
                 book.setId(rs.getInt(BOOK_ID));
                 book.setName(rs.getString(BOOK_NAME));
                 book.setPublishYear(rs.getInt(BOOK_PUBLISH_YEAR));

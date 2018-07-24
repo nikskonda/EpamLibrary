@@ -8,10 +8,10 @@ import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
-import static by.epam.java.training.web.command.CommandName.*;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.CommandConstants.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
-import by.epam.java.training.web.command.util.FieldNames;
+import by.epam.java.training.web.command.util.FieldNameConstants;
 import by.epam.java.training.web.util.EncriptionMD5;
 import org.apache.log4j.Logger;
 
@@ -41,7 +41,7 @@ public class ChangeUserRole extends AbstractCommand {
                     CommandFactory.getCommand(TAKE_USER).execute(request, response);
                     return;
                 }
-                request.setAttribute(FieldNames.ERROR, true);
+                request.setAttribute(FieldNameConstants.ERROR, true);
                 CommandFactory.getCommand(TAKE_USER).execute(request, response);
                 return;
             }else{

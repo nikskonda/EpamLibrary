@@ -3,7 +3,7 @@ package by.epam.java.training.model.news;
 import java.io.Serializable;
 import java.util.Date;
 
-public class NewsCover implements Serializable {
+public class NewsPreview implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
@@ -13,10 +13,10 @@ public class NewsCover implements Serializable {
     private String userLastName;
     private Date publishDate;
 
-    public NewsCover() {
+    public NewsPreview() {
     }
 
-    public NewsCover(Integer id, String title, String thumbsUrl, String userFirstName, String userLastName, Date publishDate) {
+    public NewsPreview(Integer id, String title, String thumbsUrl, String userFirstName, String userLastName, Date publishDate) {
         this.id = id;
         this.title = title;
         this.thumbsUrl = thumbsUrl;

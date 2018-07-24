@@ -9,9 +9,9 @@ import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
-import by.epam.java.training.web.command.CommandName;
+import by.epam.java.training.web.command.CommandConstants;
 import by.epam.java.training.web.util.EncriptionMD5;
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -36,11 +36,11 @@ public class DeleteUser extends AbstractCommand {
 
             if (userService.isUserExist(new SignInForm(user.getLogin(), password))){
                 adminService.deleteUser(userId);
-                CommandFactory.getCommand(CommandName.TAKE_LIST_OF_USERS).execute(request, response);
+                CommandFactory.getCommand(CommandConstants.TAKE_LIST_OF_USERS).execute(request, response);
                 return;
             }else{
                 request.setAttribute(ERROR_DEL_EXIST, true);
-                CommandFactory.getCommand(CommandName.TAKE_USER).execute(request, response);
+                CommandFactory.getCommand(CommandConstants.TAKE_USER).execute(request, response);
                 return;
             }
 

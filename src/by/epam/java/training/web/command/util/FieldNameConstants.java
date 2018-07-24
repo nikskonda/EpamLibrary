@@ -1,6 +1,6 @@
 package by.epam.java.training.web.command.util;
 
-public class FieldNames {
+public class FieldNameConstants {
 
     public static final String LOCALE = "local";
     public static final String LANG = "lang";
@@ -76,7 +76,7 @@ public class FieldNames {
 
     public static final String COUNT_NEWS_ON_PAGE = "countNews";
 
-    public static final String CURRENT_PAGE = "currentPage";
+
     public static final Character NEW_LINE = '\n';
     public static final String EMPTY_STRING = "";
 
@@ -99,7 +99,7 @@ public class FieldNames {
     public static final int INIT_COUNT_NEWS = 8;
     public static final int INIT_COUNT_BOOKMARKS = 8;
     public static final int INIT_COUNT_USERS = 8;
-    public static final int INIT_COUNT_BOOKS = 6;
-    public static final Integer TOTAL_LETTER_ON_PAGE = 5000;
+    public static final int INIT_COUNT_BOOKS = 8;
+    public static final int TOTAL_LETTER_ON_PAGE = 5000;
     public static final int INIT_NUMBER_OF_PAGE = 1;
 }

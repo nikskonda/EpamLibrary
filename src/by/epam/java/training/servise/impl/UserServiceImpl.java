@@ -59,11 +59,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUser(ProfileForm profile) throws DAOException{
-        if (!ValidatorManager.isValid(ValidatorType.LOGIN_VALIDATOR, profile.getLogin())){
+    public boolean updateUser(ProfileForm profileForm) throws DAOException{
+        if (!ValidatorManager.isValid(ValidatorType.LOGIN_VALIDATOR, profileForm.getLogin())){
             return false;
         }
-        return userDAO.updateUser(profile);
+        return userDAO.updateUser(profileForm);
     }
 
 

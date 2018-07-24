@@ -4,7 +4,7 @@ import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.servise.ModeratorService;
 import by.epam.java.training.servise.ServiceFactory;
-import by.epam.java.training.web.command.CommandName;
+import by.epam.java.training.web.command.CommandConstants;
 import by.epam.java.training.web.filter.AbstractFilter;
 
 import javax.servlet.FilterChain;
@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.util.FieldNames.INSUFFICIENT_RIGHTS;
-import static by.epam.java.training.web.command.util.FieldNames.USER;
+import static by.epam.java.training.web.command.util.FieldNameConstants.INSUFFICIENT_RIGHTS;
+import static by.epam.java.training.web.command.util.FieldNameConstants.USER;
 
 public class ModerFilter extends AbstractFilter {
 
@@ -37,7 +37,7 @@ public class ModerFilter extends AbstractFilter {
             }
             if (!service.isModerator(user.getLogin())) {
                 request.setAttribute(INSUFFICIENT_RIGHTS, true);
-                forward(request, response, CommandName.TAKE_LIST_OF_NEWS);
+                forward(request, response, CommandConstants.TAKE_LIST_OF_NEWS);
                 return;
             } else {
                 filterChain.doFilter(request, response);

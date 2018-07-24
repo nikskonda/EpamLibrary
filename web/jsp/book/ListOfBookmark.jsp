@@ -49,16 +49,19 @@
                     <c:when test="${requestScope.books.size()>0}">
                         <c:forEach var="book" items="${requestScope.books}">
                             <div class="row">
-                                <div class="col-lg-3 offset-lg-1">
-                                    <img class="entry__thumb" src="../<c:out value="${book.getCoverUrl()}"/>" alt="" style="height: 300px">
-                                </div>
-
-                                <div class="col-lg-7 offset-lg-1">
-                                    <div >
-                                        <h3><c:out value="${book.getName()}"/></h3>
-                                        <p><c:out value="${book.getPublishYear()}"/></p>
-                                        <p><c:out value="${book.getAuthors()}"/></p>
+                                <a href="/book?command=open_book&book_id=${book.id}">
+                                    <div class="col-lg-3 offset-lg-1">
+                                        <img class="entry__thumb" src="../<c:out value="${book.getCoverUrl()}"/>" alt="" style="height: 300px">
                                     </div>
+                                </a>
+                                <div class="col-lg-7 offset-lg-1">
+                                    <a href="/book?command=open_book&book_id=${book.id}">
+                                        <div >
+                                            <h3><c:out value="${book.getName()}"/></h3>
+                                            <p><c:out value="${book.getPublishYear()}"/></p>
+                                            <p><c:out value="${book.getAuthors()}"/></p>
+                                        </div>
+                                    </a>
                                     <div class="row">
                                         <div style="float: right">
                                             <form method="post" action="/book">
@@ -115,7 +118,7 @@
                         <ul>
                             <c:forEach var="i" begin="8" end="32" step="4">
                                 <c:choose>
-                                    <c:when test="${i == sessionScope.countBooks}">
+                                    <c:when test="${i == sessionScope.countBookmarks}">
                                         <li><a class="pgn__num current" href="/news?command=take_list_of_bookmarks&countBookmarks=${i}">${i}</a></li>
                                     </c:when>
                                     <c:otherwise>

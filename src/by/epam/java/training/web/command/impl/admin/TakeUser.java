@@ -5,7 +5,7 @@ import by.epam.java.training.model.user.User;
 import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.web.command.AbstractCommand;
-import static by.epam.java.training.web.command.Page.*;
+import static by.epam.java.training.web.command.util.PageConstants.*;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.util.FieldNames.*;
+import static by.epam.java.training.web.command.util.FieldNameConstants.*;
 
 public class TakeUser extends AbstractCommand {
 
