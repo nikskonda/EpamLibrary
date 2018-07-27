@@ -1,13 +1,8 @@
 package by.epam.java.training.servise;
 
-import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.dao.exception.TransactionException;
 import by.epam.java.training.model.book.Book;
-import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.model.news.News;
-
-import java.sql.SQLException;
-import java.util.List;
+import by.epam.java.training.servise.exception.ServiceException;
 
 /**
  * The interface defines methods that allow you to moderate information on the service.
@@ -25,13 +20,13 @@ public interface ModeratorService {
      *
      * @return <tt>true<tt/> if added was successful.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see News
      *
      */
-    boolean addNews(News defNews, News translatedNews, String lang) throws DAOException;
+    boolean addNews(News defNews, News translatedNews, String lang) throws ServiceException;
 
     /**
      * Edits existing news.
@@ -42,13 +37,13 @@ public interface ModeratorService {
      *
      * @return <tt>true<tt/> if edited was successful.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see News
      *
      */
-    boolean editNews(News defNews, News translatedNews, String lang) throws DAOException;
+    boolean editNews(News defNews, News translatedNews, String lang) throws ServiceException;
 
     /**
      * Delete the news by id.
@@ -57,13 +52,13 @@ public interface ModeratorService {
      *
      * @return <tt>true<tt/> if deleted was successful.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see News
      *
      */
-    boolean delNews(Integer newsId) throws DAOException;
+    boolean delNews(Integer newsId) throws ServiceException;
 
     /**
      * Add new book in system.
@@ -74,13 +69,13 @@ public interface ModeratorService {
      *
      * @return <tt>true<tt/> if added was successful.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see Book
      *
      */
-    boolean addBook(Book defBook, Book translatedBook, String lang) throws DAOException;
+    boolean addBook(Book defBook, Book translatedBook, String lang) throws ServiceException;
 
     /**
      * Edits existing news.
@@ -91,13 +86,13 @@ public interface ModeratorService {
      *
      * @return <tt>true<tt/> if edited was successful.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see Book
      *
      */
-    boolean editBook(Book defBook, Book translatedBook, String lang) throws DAOException;
+    boolean editBook(Book defBook, Book translatedBook, String lang) throws ServiceException;
 
     /**
      * Delete the book by id.
@@ -106,13 +101,13 @@ public interface ModeratorService {
      *
      * @return <tt>true<tt/> if deleted was successful.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see News
      *
      */
-    boolean delBook(Integer bookId) throws DAOException;
+    boolean delBook(Integer bookId) throws ServiceException;
 
     /**
      * Return true if the login belongs to the moderator.
@@ -121,9 +116,9 @@ public interface ModeratorService {
      *
      * @return <tt>true</tt> if the login belongs to the moderator.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      */
-    boolean isModerator(String login) throws DAOException;
+    boolean isModerator(String login) throws ServiceException;
 }

@@ -1,5 +1,6 @@
 package by.epam.java.training.web.command.impl;
 
+import by.epam.java.training.servise.exception.ServiceException;
 import by.epam.java.training.web.command.AbstractCommand;
 import org.apache.log4j.Logger;
 
@@ -8,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.util.PageConstants.ERROR;
+import static by.epam.java.training.web.command.util.PageConstant.ERROR;
 
 public class TakeErrorPage extends AbstractCommand {
 
@@ -20,9 +21,10 @@ public class TakeErrorPage extends AbstractCommand {
         try{
 
             forward(request, response, ERROR);
-
         } catch (IOException ex){
-            logger.warn("Error in page path");
+            logger.warn("Error in pages path", ex);
+        } catch (Exception ex){
+            logger.warn(ex);
         }
     }
 }

@@ -1,6 +1,8 @@
 package by.epam.java.training.dao.util;
 
-import static by.epam.java.training.web.command.util.FieldNameConstants.*;
+import by.epam.java.training.dao.exception.DAOException;
+
+import static by.epam.java.training.web.command.util.FieldNameConstant.*;
 
 import java.io.*;
 
@@ -8,7 +10,7 @@ public class ReadFromFile {
 
     private static final int EOF = -1;
 
-    public static String readText(String fileName, Integer page){
+    public static String readText(String fileName, Integer page) throws DAOException {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"))){
             int c;
@@ -29,14 +31,13 @@ public class ReadFromFile {
                     break;
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            throw new DAOException("Error reading text from file.", ex);
         }
-
         return sb.toString();
     }
 
-    public static int calcPagesCountText(String fileName){
+    public static int calcPagesCountText(String fileName) throws DAOException{
         int count = 0;
         int pages = 0;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"))){
@@ -48,8 +49,8 @@ public class ReadFromFile {
                     pages++;
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            throw new DAOException("Error calculating pages with text.", ex);
         }
         return ++pages;
     }

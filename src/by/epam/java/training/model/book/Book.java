@@ -2,7 +2,7 @@ package by.epam.java.training.model.book;
 
 import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.model.book.constituents.PublishingHouse;
-import by.epam.java.training.web.command.util.FieldNameConstants;
+import by.epam.java.training.web.command.util.FieldNameConstant;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -103,7 +103,7 @@ public class Book extends BookPreview implements Serializable {
     }
 
     public String getAuthors() {
-        return authors==null ? FieldNameConstants.EMPTY_STRING : authors;
+        return authors==null ? FieldNameConstant.EMPTY_STRING : authors;
     }
 
     public void setAuthors(String authors) {

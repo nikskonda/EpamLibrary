@@ -9,6 +9,7 @@ public class TransactionException extends DAOException {
         super(s);
     }
 
+
     public TransactionException(String s, Throwable throwable) {
         super(s, throwable);
     }

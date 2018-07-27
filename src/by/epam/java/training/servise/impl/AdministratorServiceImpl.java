@@ -3,10 +3,11 @@ package by.epam.java.training.servise.impl;
 import by.epam.java.training.dao.AdministratorDAO;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.model.user.*;
 import by.epam.java.training.model.user.constituents.Role;
 import by.epam.java.training.servise.AdministratorService;
+import by.epam.java.training.servise.exception.ServiceException;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
 
@@ -21,58 +22,87 @@ public class AdministratorServiceImpl implements AdministratorService {
     private final AdministratorDAO administratorDAO = DAOFactory.getAdministratorDAO();
 
     @Override
-    public boolean isAdministrator(String login) throws DAOException {
+    public boolean isAdministrator(String login) throws ServiceException {
         if (!ValidatorManager.isValid(ValidatorType.LOGIN_VALIDATOR, login)){
             return false;
         }
-        return administratorDAO.isAdministrator(login);
-
+        try {
+            return administratorDAO.isAdministrator(login);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 
     @Override
-    public List<User> getUsersPerPage(PageAttributes pageAttributes) throws DAOException{
-        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageAttributes)){
+    public List<User> getUsersPerPage(PageAttribute pageAttribute) throws ServiceException{
+        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageAttribute)){
             return null;
         }
-        return administratorDAO.getUsersPerPage(pageAttributes);
+        try{
+            return administratorDAO.getUsersPerPage(pageAttribute);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
+
     }
 
     @Override
-    public Integer calcPagesCountUsers(Integer countUsersOnPage) throws DAOException {
-        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countUsersOnPage)){
+    public Integer calcPagesCountUsers(Integer countUsersOnOnePage) throws ServiceException {
+        if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countUsersOnOnePage)){
             return null;
         }
-        return administratorDAO.calcPagesCountUsers(countUsersOnPage);
+        try{
+            return administratorDAO.calcPagesCountUsers(countUsersOnOnePage);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 
 
     @Override
-    public List<Role> getRoles() throws DAOException {
-        return administratorDAO.getRoles();
+    public List<Role> getRoles() throws ServiceException {
+        try{
+            return administratorDAO.getRoles();
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 
     @Override
-    public boolean changeRole(Integer userId, String roleName) throws DAOException{
+    public boolean changeRole(Integer userId, String roleName) throws ServiceException{
         if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId) ||
                 !ValidatorManager.isValid(ValidatorType.STRING_VALIDATOR, roleName)){
             return false;
         }
-        return administratorDAO.changeRole(userId, roleName);
+        try {
+            return administratorDAO.changeRole(userId, roleName);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 
     @Override
-    public boolean deleteUser(Integer userId) throws DAOException{
+    public boolean deleteUser(Integer userId) throws ServiceException{
         if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId)){
             return false;
         }
-        return administratorDAO.deleteUser(userId);
+        try {
+            return administratorDAO.deleteUser(userId);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
+
     }
 
     @Override
-    public User getUser(Integer userId) throws DAOException {
+    public User getUser(Integer userId) throws ServiceException {
         if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId)){
             return null;
         }
-        return administratorDAO.getUser(userId);
+        try {
+            return administratorDAO.getUser(userId);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 }

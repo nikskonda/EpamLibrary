@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static by.epam.java.training.web.command.util.FieldNameConstants.*;
+import static by.epam.java.training.web.command.util.FieldNameConstant.*;
 
 public class Pagination {
     private  static final Logger logger = Logger.getLogger(Pagination.class);

@@ -1,9 +1,10 @@
 package by.epam.java.training.web.command.impl.news;
 
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.servise.NewsService;
 import by.epam.java.training.servise.ServiceFactory;
+import by.epam.java.training.servise.exception.ServiceException;
 import by.epam.java.training.web.command.AbstractCommand;
 import org.apache.log4j.Logger;
 
@@ -13,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.util.PageConstants.NEWS_LIST;
-import static by.epam.java.training.web.command.util.FieldNameConstants.*;
+import static by.epam.java.training.web.command.util.PageConstant.NEWS_LIST;
+import static by.epam.java.training.web.command.util.FieldNameConstant.*;
 
 public class TakeListOfNews extends AbstractCommand {
 
@@ -32,7 +33,7 @@ public class TakeListOfNews extends AbstractCommand {
             Integer countNews = getCount(request, COUNT_NEWS_ON_PAGE, INIT_COUNT_NEWS);
             Integer currentPage = getCurrentPage(request);
 
-            PageAttributes pageData = new PageAttributes();
+            PageAttribute pageData = new PageAttribute();
             pageData.setCountOnPage(countNews);
             pageData.setNumberOfPage(currentPage);
             pageData.setLocale(locale);
@@ -44,15 +45,12 @@ public class TakeListOfNews extends AbstractCommand {
 
             forward(request, response, NEWS_LIST);
 
-        } catch (DAOException ex){
-            logger.warn("Problem with database", ex);
-            request.setAttribute(ERROR_DATABASE, true);
+        } catch (ServiceException ex){
+            logger.warn("Problem with service", ex);
         } catch (IOException ex){
             logger.warn("Error in pages path", ex);
-            request.setAttribute(ERROR_PATH, true);
         } catch (Exception ex){
             logger.warn(ex);
-            request.setAttribute(ERROR_UNKNOWN, true);
         }
 
     }

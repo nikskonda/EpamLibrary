@@ -1,5 +1,6 @@
 package by.epam.java.training.web.command.impl.user;
 
+import by.epam.java.training.servise.exception.ServiceException;
 import by.epam.java.training.web.command.AbstractCommand;
 import org.apache.log4j.Logger;
 
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.util.FieldNameConstants.*;
+import static by.epam.java.training.web.command.util.FieldNameConstant.*;
 
 public class SignOut extends AbstractCommand {
 
@@ -26,10 +27,8 @@ public class SignOut extends AbstractCommand {
             executeLastAction(request, response);
         } catch (IOException ex){
             logger.warn("Error in pages path", ex);
-            request.setAttribute(ERROR_PATH, true);
         } catch (Exception ex){
             logger.warn(ex);
-            request.setAttribute(ERROR_UNKNOWN, true);
         }
 
 

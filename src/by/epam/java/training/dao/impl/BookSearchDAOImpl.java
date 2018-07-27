@@ -4,7 +4,7 @@ import by.epam.java.training.dao.AbstractDAO;
 import by.epam.java.training.dao.BookSearchDAO;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.model.book.*;
 import org.apache.log4j.Logger;
 
@@ -19,7 +19,7 @@ public class BookSearchDAOImpl extends AbstractDAO implements BookSearchDAO {
     private static final Logger logger = Logger.getLogger(BookSearchDAOImpl.class);
 
     @Override
-    public List<BookPreview> getBooksByPage(String search, PageAttributes pageData) throws DAOException {
+    public List<BookPreview> findBooksPerPage(String search, PageAttribute pageAttribute) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -28,9 +28,9 @@ public class BookSearchDAOImpl extends AbstractDAO implements BookSearchDAO {
             con = retrieveConnection();
 
             cstmt = con.prepareCall(FIND_BOOKS);
-            cstmt.setInt(COUNT_BOOKS_ON_PAGE, pageData.getCountOnPage());
-            cstmt.setInt(NUMBER_OF_PAGE, pageData.getNumberOfPage());
-            cstmt.setString(LOCALE, pageData.getLocale());
+            cstmt.setInt(COUNT_BOOKS_ON_PAGE, pageAttribute.getCountOnPage());
+            cstmt.setInt(NUMBER_OF_PAGE, pageAttribute.getNumberOfPage());
+            cstmt.setString(LOCALE, pageAttribute.getLocale());
             cstmt.setString(SEARCH, search);
             rs = cstmt.executeQuery();
 
@@ -44,20 +44,18 @@ public class BookSearchDAOImpl extends AbstractDAO implements BookSearchDAO {
 
                 booksList.add(book);
             }
-        }catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        }catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
-        }  finally {
+        } catch (ConnectionPoolException ex){
+            throw new DAOException(ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Database query error", ex);
+        } finally {
             closeAll(rs, cstmt, con);
         }
         return booksList;
     }
 
     @Override
-    public Integer calcTotalPages(String locale, String search, Integer countBooksOnOnePage) throws DAOException {
+    public Integer calcPagesCountBookSearchResults(String locale, String search, Integer countBooksOnOnePage) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         Integer result = null;
@@ -73,11 +71,9 @@ public class BookSearchDAOImpl extends AbstractDAO implements BookSearchDAO {
 
             result = cstmt.getInt(RESULT);
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        }catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Database query error", ex);
         } finally {
             closeStatementAndConnection(cstmt, con);
         }

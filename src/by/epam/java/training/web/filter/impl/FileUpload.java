@@ -33,7 +33,7 @@ public class FileUpload extends AbstractFilter {
 
 //            boolean isMultipart = ServletFileUpload.isMultipartContent(httpRequest);
 //            if (!isMultipart) {
-//                forward(httpRequest, (HttpServletResponse)response, PageConstants.ERROR);
+//                forward(httpRequest, (HttpServletResponse)response, PageConstant.ERROR);
 //                return;
 //            }
 
@@ -67,7 +67,7 @@ public class FileUpload extends AbstractFilter {
 
             httpRequest = wrapRequest(httpRequest, parameterMap);
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.warn("Upload file failed", ex);
         }
         filterChain.doFilter(httpRequest, response);
     }

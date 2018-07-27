@@ -3,10 +3,11 @@ package by.epam.java.training.servise.impl;
 import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.NewsDAO;
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.model.news.News;
 import by.epam.java.training.model.news.NewsPreview;
 import by.epam.java.training.servise.NewsService;
+import by.epam.java.training.servise.exception.ServiceException;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
 import org.apache.log4j.Logger;
@@ -19,29 +20,43 @@ public class NewsServiceImpl implements NewsService {
     private final NewsDAO newsDAO = DAOFactory.getNewsDAO();
 
     @Override
-    public List<NewsPreview> getNewsPerPage(PageAttributes pageAttributes) throws DAOException {
-        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageAttributes)){
+    public List<NewsPreview> getNewsPerPage(PageAttribute pageAttribute) throws ServiceException {
+        if (!ValidatorManager.isValid(ValidatorType.PAGES_VALIDATOR, pageAttribute)){
             return null;
         }
-        return newsDAO.getNewsByPage(pageAttributes);
+        try{
+            return newsDAO.getNewsPerPage(pageAttribute);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 
     @Override
-    public News getNews(Integer newsId, String locale) throws DAOException{
+    public News getNews(Integer newsId, String locale) throws ServiceException{
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
                 || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, newsId)){
             return null;
         }
-        return newsDAO.getNews(newsId, locale);
+
+        try{
+            return newsDAO.getNews(newsId, locale);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 
     @Override
-    public Integer calcPagesCountNews(String locale, Integer countNewsOnPage) throws DAOException{
+    public Integer calcPagesCountNews(String locale, Integer countNewsOnOnePage) throws ServiceException{
         if (!ValidatorManager.isValid(ValidatorType.LOCALE_VALIDATOR, locale)
-                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countNewsOnPage)){
+                || !ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, countNewsOnOnePage)){
             return null;
         }
-        return  newsDAO.calcTotalPagesWithBooks(locale, countNewsOnPage);
+
+        try{
+            return  newsDAO.calcPagesCountNews(locale, countNewsOnOnePage);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 
 }

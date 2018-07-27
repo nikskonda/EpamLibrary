@@ -1,6 +1,6 @@
 package by.epam.java.training.servise.validation.util;
 
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.servise.validation.Validator;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
@@ -12,11 +12,11 @@ public class PagesValidator implements Validator {
         if (obj == null){
             return false;
         }
-        if (!(obj instanceof PageAttributes)){
+        if (!(obj instanceof PageAttribute)){
             return false;
         }
 
-        PageAttributes pageData = (PageAttributes) obj;
+        PageAttribute pageData = (PageAttribute) obj;
 
         Validator idValidator = ValidatorManager.getValidator(ValidatorType.NATURAL_NUMBER_VALIDATOR);
 

@@ -6,7 +6,7 @@ import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.dao.util.ConnectionPool;
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.model.user.User;
 import by.epam.java.training.model.user.constituents.Role;
 import org.apache.log4j.Logger;
@@ -37,11 +37,9 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
 
             result = cstmt.getBoolean(RESULT);
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
         } catch (SQLException ex) {
-            logger.warn("Database query error", ex);
-            throw new DAOException();
+            throw new DAOException("Database query error", ex);
         } finally {
             closeStatementAndConnection(cstmt, con);
         }
@@ -49,7 +47,7 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
     }
 
     @Override
-    public List<User> getUsersPerPage(PageAttributes pageAttributes) throws DAOException{
+    public List<User> getUsersPerPage(PageAttribute pageAttribute) throws DAOException{
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -58,19 +56,17 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
             con = retrieveConnection();
 
             cstmt = con.prepareCall(GET_LIST_OF_USERS);
-            cstmt.setInt(COUNT_USERS_ON_PAGE, pageAttributes.getCountOnPage());
-            cstmt.setInt(NUMBER_OF_PAGE, pageAttributes.getNumberOfPage());
+            cstmt.setInt(COUNT_USERS_ON_PAGE, pageAttribute.getCountOnPage());
+            cstmt.setInt(NUMBER_OF_PAGE, pageAttribute.getNumberOfPage());
             rs = cstmt.executeQuery();
 
             while (rs.next()) {
                 userList.add(buildUser(rs));
             }
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
         } catch (SQLException ex) {
-            logger.warn("Database query error", ex);
-            throw new DAOException();
+            throw new DAOException("Database query error", ex);
         } finally {
             closeAll(rs, cstmt, con);
         }
@@ -116,11 +112,9 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
 
             result = cstmt.getInt(RESULT);
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
         } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
+            throw new DAOException("Database query error", ex);
         } finally {
             closeStatementAndConnection(cstmt, con);
         }
@@ -145,11 +139,9 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
                 user = buildUser(rs);
             }
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
         } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
+            throw new DAOException("Database query error", ex);
         } finally {
             closeAll(rs, cstmt, con);
         }
@@ -172,11 +164,9 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
                 roleList.add(buildRole(rs));
             }
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
         } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
+            throw new DAOException("Database query error", ex);
         } finally {
             closeAll(rs, cstmt, con);
         }
@@ -198,11 +188,9 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
 
             result = true;
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
         } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
+            throw new DAOException("Database query error", ex);
         } finally {
             closeStatementAndConnection(cstmt, con);
         }
@@ -223,11 +211,9 @@ public class AdministratorDAOImpl extends AbstractDAO implements AdministratorDA
 
             result = true;
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
         } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
+            throw new DAOException("Database query error", ex);
         } finally {
             closeStatementAndConnection(cstmt, con);
         }

@@ -1,9 +1,9 @@
 package by.epam.java.training.servise;
 
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.model.user.User;
-import by.epam.java.training.model.user.constituents.Role;
+import by.epam.java.training.servise.exception.ServiceException;
 
 import java.util.List;
 
@@ -20,18 +20,18 @@ public interface UserSearchService {
      * Find list of users in which match the search query.
      *
      * @param search - Search word.
-     * @param pageAttributes - Information about page.
+     * @param pageAttribute - Information about page.
      *
      * @return list of users for specified page.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see User
-     * @see PageAttributes
+     * @see PageAttribute
      *
      */
-    List<User> findUsersPerPages(String search, PageAttributes pageAttributes) throws DAOException;
+    List<User> findUsersPerPage(String search, PageAttribute pageAttribute) throws ServiceException;
 
     /**
      * Return total count of pages with users in which match the search query.
@@ -41,10 +41,10 @@ public interface UserSearchService {
      *
      * @return Total count of pages with users in which match the search query.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      */
-    Integer calcPagesCountUserSearchResult(String search, Integer countUsersOnPage) throws DAOException;
+    Integer calcPagesCountUserSearchResults(String search, Integer countUsersOnPage) throws ServiceException;
 
 }

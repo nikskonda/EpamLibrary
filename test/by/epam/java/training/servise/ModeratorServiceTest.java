@@ -1,14 +1,14 @@
 package by.epam.java.training.servise;
 
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.model.book.Book;
-import by.epam.java.training.model.book.BookCover;
+import by.epam.java.training.model.book.BookPreview;
 import by.epam.java.training.model.book.constituents.Genre;
 import by.epam.java.training.model.book.constituents.PublishingHouse;
 import by.epam.java.training.model.news.News;
-import by.epam.java.training.model.news.NewsCover;
-import org.junit.BeforeClass;
+import by.epam.java.training.model.news.NewsPreview;
+import by.epam.java.training.servise.exception.ServiceException;
 import org.junit.Test;
 
 import java.util.List;
@@ -40,15 +40,15 @@ public class ModeratorServiceTest {
         return news;
     }
 
-    private int getNewsId() throws DAOException{
+    private int getNewsId() throws ServiceException {
         NewsService service = ServiceFactory.getNewsService();
-        PageAttributes pa = new PageAttributes();
+        PageAttribute pa = new PageAttribute();
         pa.setLocale("en");
         pa.setNumberOfPage(1);
         pa.setCountOnPage(100);
 
-        List<NewsCover> list = service.getNewsByPage(pa);
-        for (NewsCover nc : list){
+        List<NewsPreview> list = service.getNewsPerPage(pa);
+        for (NewsPreview nc : list){
             if (nc.getTitle().equals(newsTitle)){
                 return nc.getId();
             }
@@ -56,14 +56,14 @@ public class ModeratorServiceTest {
         return 0;
     }
 
-    private int getCountNews() throws DAOException{
+    private int getCountNews() throws ServiceException{
         NewsService service = ServiceFactory.getNewsService();
-        PageAttributes pa = new PageAttributes();
+        PageAttribute pa = new PageAttribute();
         pa.setLocale("en");
         pa.setNumberOfPage(1);
         pa.setCountOnPage(100);
 
-        List<NewsCover> list = service.getNewsByPage(pa);
+        List<NewsPreview> list = service.getNewsPerPage(pa);
         return list.size();
     }
 
@@ -93,15 +93,15 @@ public class ModeratorServiceTest {
         return tBook;
     }
 
-    private int getBookId() throws DAOException{
+    private int getBookId() throws ServiceException{
         BookService service = ServiceFactory.getBookService();
-        PageAttributes pa = new PageAttributes();
+        PageAttribute pa = new PageAttribute();
         pa.setLocale("en");
         pa.setNumberOfPage(1);
         pa.setCountOnPage(100);
 
-        List<BookCover> list = service.getBooksByPage(pa);
-        for (BookCover bc : list){
+        List<BookPreview> list = service.getBooksPerPage(pa);
+        for (BookPreview bc : list){
             if (bc.getName().equals(bookName)){
                 return bc.getId();
             }
@@ -109,19 +109,19 @@ public class ModeratorServiceTest {
         return 0;
     }
 
-    private Integer getCountBook() throws DAOException{
+    private Integer getCountBook() throws ServiceException{
         BookService service = ServiceFactory.getBookService();
-        PageAttributes pa = new PageAttributes();
+        PageAttribute pa = new PageAttribute();
         pa.setLocale("en");
         pa.setNumberOfPage(1);
         pa.setCountOnPage(100);
 
-        List<BookCover> list = service.getBooksByPage(pa);
+        List<BookPreview> list = service.getBooksPerPage(pa);
         return list.size();
     }
 
     @Test
-    public void addNews_badNews_returnFalse() throws DAOException {
+    public void addNews_badNews_returnFalse() throws ServiceException {
         News news = initNews();
         news.setTitle(null);
         News tNews = initTNews();
@@ -133,7 +133,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void addNews_badTNews_returnFalse() throws DAOException {
+    public void addNews_badTNews_returnFalse() throws ServiceException {
         News news = initNews();
         News tNews = initTNews();
         tNews.setTitle(null);
@@ -145,7 +145,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void addNews_badLocale_returnFalse() throws DAOException {
+    public void addNews_badLocale_returnFalse() throws ServiceException {
         News news = initNews();
         News tNews = initTNews();
         tNews.setTitle(null);
@@ -157,7 +157,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void addNews_goodValue_returnTrue() throws DAOException {
+    public void addNews_goodValue_returnTrue() throws ServiceException {
         News news = initNews();
         News tNews = initTNews();
         String locale = "ru";
@@ -170,7 +170,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void editNews_badNews_returnFalse() throws DAOException {
+    public void editNews_badNews_returnFalse() throws ServiceException {
         News news = initNews();
         News tNews = initTNews();
         String locale = "ru";
@@ -184,7 +184,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void editNews_badTNews_returnFalse() throws DAOException {
+    public void editNews_badTNews_returnFalse() throws ServiceException {
         News news = initNews();
         News tNews = initTNews();
         tNews.setTitle(null);
@@ -196,7 +196,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void editNews_badLocale_returnFalse() throws DAOException {
+    public void editNews_badLocale_returnFalse() throws ServiceException {
         News news = initNews();
         News tNews = initTNews();
         tNews.setTitle(null);
@@ -208,7 +208,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void editNews_goodValue_returnTrue() throws DAOException{
+    public void editNews_goodValue_returnTrue() throws ServiceException{
         NewsService newsService = ServiceFactory.getNewsService();
         News news = initNews();
         News tNews = initTNews();
@@ -230,14 +230,14 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void delNews_badId_returnFalse() throws DAOException{
+    public void delNews_badId_returnFalse() throws ServiceException{
         int id = -100;
         boolean result = service.delNews(id);
         assertFalse(result);
     }
 
     @Test
-    public void delNews_goodId_returnTrue() throws DAOException{
+    public void delNews_goodId_returnTrue() throws ServiceException{
         News news = initNews();
         News tNews = initTNews();
         String locale = "ru";
@@ -256,7 +256,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void addBook_badBook_returnFalse() throws DAOException{
+    public void addBook_badBook_returnFalse() throws ServiceException{
         Book book = initBook();
         Book tBook = initTBook();
         book.setName(null);
@@ -267,7 +267,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void addBook_badTBook_returnFalse() throws DAOException{
+    public void addBook_badTBook_returnFalse() throws ServiceException{
         Book book = initBook();
         Book tBook = initTBook();
         tBook.setName(null);
@@ -278,7 +278,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void addBook_badLang_returnFalse() throws DAOException{
+    public void addBook_badLang_returnFalse() throws ServiceException{
         Book book = initBook();
         Book tBook = initTBook();
         String lang = "ruqwe";
@@ -288,7 +288,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void addBook_goodValue_returnTrue() throws DAOException{
+    public void addBook_goodValue_returnTrue() throws ServiceException{
         Book book = initBook();
         Book tBook = initTBook();
         String lang = "ru";
@@ -304,7 +304,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void editBook_badBook_returnFalse() throws DAOException{
+    public void editBook_badBook_returnFalse() throws ServiceException{
         Book book = initBook();
         Book tBook = initTBook();
         book.setName(null);
@@ -315,7 +315,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void editBook_badTBook_returnFalse() throws DAOException{
+    public void editBook_badTBook_returnFalse() throws ServiceException{
         Book book = initBook();
         Book tBook = initTBook();
         tBook.setName(null);
@@ -326,7 +326,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void editBook_badLang_returnFalse() throws DAOException{
+    public void editBook_badLang_returnFalse() throws ServiceException{
         Book book = initBook();
         Book tBook = initTBook();
         String lang = "ruqwe";
@@ -336,7 +336,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void editBook_goodValue_returnTrue() throws DAOException{
+    public void editBook_goodValue_returnTrue() throws ServiceException{
         BookService bookService = ServiceFactory.getBookService();
         Book book = initBook();
         Book tBook = initTBook();
@@ -357,14 +357,14 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void delBook_badId_returnFalse() throws DAOException{
+    public void delBook_badId_returnFalse() throws ServiceException{
         int id = -100;
         boolean result = service.delBook(id);
         assertFalse(result);
     }
 
     @Test
-    public void delBook_GoodId_returnTrue() throws DAOException{
+    public void delBook_GoodId_returnTrue() throws ServiceException{
         Book book = initBook();
         Book tBook = initTBook();
         String lang = "ru";
@@ -383,7 +383,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void isModerator_badLogin_returnFalse() throws DAOException{
+    public void isModerator_badLogin_returnFalse() throws ServiceException{
         String login = "";
 
         boolean result = service.isModerator(login);
@@ -392,7 +392,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void isModerator_userLogin_returnFalse() throws DAOException{
+    public void isModerator_userLogin_returnFalse() throws ServiceException{
         String login = "123";
 
         boolean result = service.isModerator(login);
@@ -401,7 +401,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void isModerator_moderLogin_returnTrue() throws DAOException{
+    public void isModerator_moderLogin_returnTrue() throws ServiceException{
         String login = "qwerty";
 
         boolean result = service.isModerator(login);
@@ -410,7 +410,7 @@ public class ModeratorServiceTest {
     }
 
     @Test
-    public void isModerator_adminLogin_returnTrue() throws DAOException{
+    public void isModerator_adminLogin_returnTrue() throws ServiceException{
         String login = "admin";
 
         boolean result = service.isModerator(login);

@@ -4,7 +4,7 @@ import by.epam.java.training.dao.AbstractDAO;
 import by.epam.java.training.dao.NewsDAO;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.model.news.News;
 import by.epam.java.training.model.news.NewsPreview;
 import org.apache.log4j.Logger;
@@ -21,7 +21,7 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
     private static final Logger logger = Logger.getLogger(NewsDAOImpl.class);
 
     @Override
-    public List<NewsPreview> getNewsByPage(PageAttributes pageData) throws DAOException {
+    public List<NewsPreview> getNewsPerPage(PageAttribute pageAttribute) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -30,21 +30,19 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
             con = retrieveConnection();
 
             cstmt = con.prepareCall(GET_LIST_OF_NEWS);
-            cstmt.setString(LOCALE, pageData.getLocale());
-            cstmt.setInt(COUNT_NEWS_ON_PAGE, pageData.getCountOnPage());
-            cstmt.setInt(NUMBER_OF_PAGE, pageData.getNumberOfPage());
+            cstmt.setString(LOCALE, pageAttribute.getLocale());
+            cstmt.setInt(COUNT_NEWS_ON_PAGE, pageAttribute.getCountOnPage());
+            cstmt.setInt(NUMBER_OF_PAGE, pageAttribute.getNumberOfPage());
             rs = cstmt.executeQuery();
 
             while (rs.next()) {
                 newsList.add(buildNewsCover(rs));
             }
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
         } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
-        }  finally {
+            throw new DAOException("Database query error", ex);
+        } finally {
             closeAll(rs, cstmt, con);
         }
         return newsList;
@@ -68,15 +66,40 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
                 news = buildNews(rs);
             }
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        }catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Database query error", ex);
         } finally {
             closeAll(rs, cstmt, con);
         }
         return news;
+    }
+
+
+    @Override
+    public Integer calcPagesCountNews(String locale, Integer countNewsOnOnePage) throws DAOException {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        Integer result = null;
+        try {
+            con = retrieveConnection();
+
+            cstmt = con.prepareCall(CALC_TOTAL_PAGES_IN_NEWS);
+            cstmt.setInt(COUNT_NEWS_ON_PAGE, countNewsOnOnePage);
+            cstmt.setString(LOCALE, locale);
+            cstmt.registerOutParameter(RESULT, Types.SMALLINT);
+            cstmt.executeQuery();
+
+            result = cstmt.getInt(RESULT);
+        } catch (ConnectionPoolException ex){
+            throw new DAOException(ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Database query error", ex);
+        } finally {
+            closeAll(rs, cstmt, con);
+        }
+        return result;
     }
 
     private NewsPreview buildNewsCover(ResultSet rs) throws SQLException{
@@ -99,33 +122,5 @@ public class NewsDAOImpl extends AbstractDAO implements NewsDAO {
         news.setText(rs.getString(NEWS_TEXT));
 
         return news;
-    }
-
-    @Override
-    public Integer calcTotalPagesWithBooks(String locale, Integer countNewsOnOnePage) throws DAOException {
-        Connection con = null;
-        CallableStatement cstmt = null;
-        ResultSet rs = null;
-        Integer result = null;
-        try {
-            con = retrieveConnection();
-
-            cstmt = con.prepareCall(CALC_TOTAL_PAGES_IN_NEWS);
-            cstmt.setInt(COUNT_NEWS_ON_PAGE, countNewsOnOnePage);
-            cstmt.setString(LOCALE, locale);
-            cstmt.registerOutParameter(RESULT, Types.SMALLINT);
-            cstmt.executeQuery();
-
-            result = cstmt.getInt(RESULT);
-        } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        }catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
-        } finally {
-            closeAll(rs, cstmt, con);
-        }
-        return result;
     }
 }

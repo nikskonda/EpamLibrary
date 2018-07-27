@@ -5,7 +5,7 @@ import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.model.user.User;
 import by.epam.java.training.model.user.form.SignInForm;
 import by.epam.java.training.model.user.form.SignUpForm;
-import by.epam.java.training.web.command.impl.user.SignUp;
+import by.epam.java.training.servise.exception.ServiceException;
 import by.epam.java.training.web.util.EncriptionMD5;
 import org.junit.Test;
 
@@ -16,28 +16,28 @@ public class UserServiceTest {
     private static final UserService service = ServiceFactory.getUserService();
 
     @Test
-    public void isExistUser_badValue_returnFalse() throws DAOException {
+    public void isExistUser_badValue_returnFalse() throws ServiceException {
         SignInForm signin = new SignInForm();
 
 
-        boolean result = service.isExistUser(signin);
+        boolean result = service.isUserExist(signin);
 
         assertFalse(result);
     }
 
     @Test
-    public void isExistUser_goodValue_returnTrue() throws DAOException {
+    public void isExistUser_goodValue_returnTrue() throws ServiceException {
         SignInForm signin = new SignInForm();
         signin.setLogin("admin");
         signin.setPassword(EncriptionMD5.encrypt("admin1"));
 
-        boolean result = service.isExistUser(signin);
+        boolean result = service.isUserExist(signin);
 
         assertTrue(result);
     }
 
     @Test
-    public void getUser_badId_returnNull() throws DAOException{
+    public void getUser_badId_returnNull() throws ServiceException{
         Integer id = -10;
 
         User user = service.getUser(id);
@@ -46,7 +46,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUser_goodValue_returnUser() throws DAOException{
+    public void getUser_goodValue_returnUser() throws ServiceException{
         Integer id = 1;
         String expected = "admin";
 
@@ -56,7 +56,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void addUser_badValue_returnNull() throws DAOException {
+    public void addUser_badValue_returnNull() throws ServiceException {
         SignUpForm signUpForm = initUser();
         signUpForm.setLogin(null);
 
@@ -67,7 +67,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void addUser_goodValue_returnUser() throws DAOException {
+    public void addUser_goodValue_returnUser() throws ServiceException {
         SignUpForm signUpForm = initUser();
         String expected = "qwe123qwe";
         signUpForm.setLogin(expected);
@@ -81,7 +81,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getActiveUser_badLogin_returnNull() throws DAOException{
+    public void getActiveUser_badLogin_returnNull() throws ServiceException{
         String login = "";
 
         ActiveUser user = service.getActiveUser(login);
@@ -90,7 +90,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getActiveUser_goodLogin_returnUser() throws DAOException{
+    public void getActiveUser_goodLogin_returnUser() throws ServiceException{
         String login = "admin";
         Integer expected = 1;
 
@@ -100,7 +100,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void isFreeLogin_badLogin_returnFalse() throws DAOException{
+    public void isFreeLogin_badLogin_returnFalse() throws ServiceException{
         String login = "";
 
         boolean result = service.isFreeLogin(login);
@@ -109,7 +109,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void isFreeLogin_busyLogin_returnFalse() throws DAOException{
+    public void isFreeLogin_busyLogin_returnFalse() throws ServiceException{
         String login = "admin";
 
         boolean result = service.isFreeLogin(login);
@@ -118,7 +118,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void isFreeLogin_freeLogin_returnTrue() throws DAOException{
+    public void isFreeLogin_freeLogin_returnTrue() throws ServiceException{
         String login = "qwe123qwe";
 
         boolean result = service.isFreeLogin(login);

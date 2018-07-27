@@ -1,9 +1,9 @@
 package by.epam.java.training.servise;
 
-import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.model.user.*;
 import by.epam.java.training.model.user.constituents.Role;
+import by.epam.java.training.servise.exception.ServiceException;
 
 import java.util.List;
 
@@ -22,41 +22,41 @@ public interface AdministratorService {
      *
      * @return <tt>true</tt> if the login belongs to the administrator.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service
      *
      */
-    boolean isAdministrator(String login) throws DAOException;
+    boolean isAdministrator(String login) throws ServiceException;
 
     /**
      * List of users for a specific page.
      * The page is indicated in @Param
      *
-     * @param pageAttributes - information about page.
+     * @param pageAttribute - information about page.
      *
      * @return List of users for a specific page
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service
      *
-     * @see PageAttributes
+     * @see PageAttribute
      *
      */
-    List<User> getUsersPerPage(PageAttributes pageAttributes) throws DAOException;
+    List<User> getUsersPerPage(PageAttribute pageAttribute) throws ServiceException;
 
     /**
      * Return total number of pages with users.
      *
      *
-     * @param countUsersOnPage - Count of users displayed on one page
+     * @param countUsersOnOnePage - Count of users displayed on one page
      *
      * @return Total number of pages with users.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service
      *
      */
-    Integer calcPagesCountUsers(Integer countUsersOnPage) throws DAOException;
+    Integer calcPagesCountUsers(Integer countUsersOnOnePage) throws ServiceException;
 
     /**
      * Return list of roles.
@@ -64,11 +64,11 @@ public interface AdministratorService {
      *
      * @return List of roles.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service
      *
      */
-    List<Role> getRoles() throws DAOException;
+    List<Role> getRoles() throws ServiceException;
 
     /**
      * Change the user role by id.
@@ -78,11 +78,11 @@ public interface AdministratorService {
      *
      * @return <tt>true</tt> if the change was successful.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service
      *
      */
-    boolean changeRole(Integer userId, String roleName) throws DAOException;
+    boolean changeRole(Integer userId, String roleName) throws ServiceException;
 
     /**
      * Delete the user by id.
@@ -91,11 +91,11 @@ public interface AdministratorService {
      *
      * @return <tt>true</tt> if the delete was successful.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service
      *
      */
-    boolean deleteUser(Integer userId) throws DAOException;
+    boolean deleteUser(Integer userId) throws ServiceException;
 
     /**
      * Return information about user by id.
@@ -104,13 +104,13 @@ public interface AdministratorService {
      *
      * @return User if the query was successful.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service
      *
      * @see User
      *
      */
-    User getUser(Integer userId) throws DAOException;
+    User getUser(Integer userId) throws ServiceException;
 
 
 }

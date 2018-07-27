@@ -1,7 +1,8 @@
 package by.epam.java.training.web.command.impl.l10n;
 
+import by.epam.java.training.servise.exception.ServiceException;
 import by.epam.java.training.web.command.AbstractCommand;
-import static by.epam.java.training.web.command.util.FieldNameConstants.*;
+import static by.epam.java.training.web.command.util.FieldNameConstant.*;
 
 import org.apache.log4j.Logger;
 
@@ -25,10 +26,8 @@ public class Localization extends AbstractCommand {
             executeLastAction(request, response);
         } catch (IOException ex){
             logger.warn("Error in pages path", ex);
-            request.setAttribute(ERROR_PATH, true);
         } catch (Exception ex){
             logger.warn(ex);
-            request.setAttribute(ERROR_UNKNOWN, true);
         }
 
     }

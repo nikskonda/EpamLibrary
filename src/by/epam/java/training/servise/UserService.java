@@ -6,6 +6,7 @@ import by.epam.java.training.model.user.constituents.Role;
 import by.epam.java.training.model.user.form.ProfileForm;
 import by.epam.java.training.model.user.form.SignInForm;
 import by.epam.java.training.model.user.form.SignUpForm;
+import by.epam.java.training.servise.exception.ServiceException;
 
 import java.util.List;
 
@@ -24,13 +25,13 @@ public interface UserService {
      *
      * @return <tt>true</tt> if the user is exist.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see SignInForm
      *
      */
-    boolean isUserExist(SignInForm signInForm) throws DAOException;
+    boolean isUserExist(SignInForm signInForm) throws ServiceException;
 
     /**
      * Return information about user by id.
@@ -39,13 +40,13 @@ public interface UserService {
      *
      * @return User if the query was successful.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see User
      *
      */
-    User getUser(Integer userId) throws DAOException;
+    User getUser(Integer userId) throws ServiceException;
 
     /**
      * This method add new user in system and return active user.
@@ -54,14 +55,14 @@ public interface UserService {
      *
      * @return active user.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see SignUpForm
      * @see ActiveUser
      *
      */
-    ActiveUser addUser(SignUpForm signUpForm) throws DAOException;
+    ActiveUser addUser(SignUpForm signUpForm) throws ServiceException;
 
     /**
      * Return active user with specified login.
@@ -70,13 +71,13 @@ public interface UserService {
      *
      * @return active user.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see ActiveUser
      *
      */
-    ActiveUser getActiveUser(String login) throws DAOException;
+    ActiveUser getActiveUser(String login) throws ServiceException;
 
     /**
      * Return true if the login is free.
@@ -85,11 +86,11 @@ public interface UserService {
      *
      * @return <tt>true</tt> if the login is free.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      */
-    boolean isFreeLogin(String login) throws DAOException;
+    boolean isFreeLogin(String login) throws ServiceException;
 
     /**
      * This method update information about user in system.
@@ -98,12 +99,12 @@ public interface UserService {
      *
      * @return <tt>true</tt> if updated was successful.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see ProfileForm
      *
      */
-    boolean updateUser(ProfileForm profileForm) throws DAOException;
+    boolean updateUser(ProfileForm profileForm) throws ServiceException;
 
 }

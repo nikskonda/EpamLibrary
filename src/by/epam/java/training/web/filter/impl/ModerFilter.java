@@ -4,8 +4,10 @@ import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.user.ActiveUser;
 import by.epam.java.training.servise.ModeratorService;
 import by.epam.java.training.servise.ServiceFactory;
+import by.epam.java.training.servise.exception.ServiceException;
 import by.epam.java.training.web.command.CommandConstants;
 import by.epam.java.training.web.filter.AbstractFilter;
+import org.apache.log4j.Logger;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -16,10 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.util.FieldNameConstants.INSUFFICIENT_RIGHTS;
-import static by.epam.java.training.web.command.util.FieldNameConstants.USER;
+import static by.epam.java.training.web.command.util.FieldNameConstant.INSUFFICIENT_RIGHTS;
+import static by.epam.java.training.web.command.util.FieldNameConstant.USER;
 
 public class ModerFilter extends AbstractFilter {
+    private static final Logger logger = Logger.getLogger(ModerFilter.class);
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -42,9 +45,13 @@ public class ModerFilter extends AbstractFilter {
             } else {
                 filterChain.doFilter(request, response);
             }
-            
-        } catch (DAOException ex){
 
+        } catch (ServiceException ex){
+            logger.warn("Problem with service", ex);
+        } catch (IOException ex){
+            logger.warn("Error in pages path", ex);
+        } catch (Exception ex){
+            logger.warn(ex);
         }
     }
 

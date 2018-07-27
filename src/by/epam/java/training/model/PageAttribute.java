@@ -2,17 +2,17 @@ package by.epam.java.training.model;
 
 import java.io.Serializable;
 
-public class PageAttributes implements Serializable {
+public class PageAttribute implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer numberOfPage;
     private Integer countOnPage;
     private String locale;
 
-    public PageAttributes() {
+    public PageAttribute() {
     }
 
-    public PageAttributes(Integer numberOfPage, Integer countOnPage, String locale) {
+    public PageAttribute(Integer numberOfPage, Integer countOnPage, String locale) {
         this.numberOfPage = numberOfPage;
         this.countOnPage = countOnPage;
         this.locale = locale;

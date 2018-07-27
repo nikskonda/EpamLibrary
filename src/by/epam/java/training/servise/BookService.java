@@ -1,10 +1,10 @@
 package by.epam.java.training.servise;
 
-import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.model.book.Book;
 import by.epam.java.training.model.book.BookPreview;
 import by.epam.java.training.model.book.constituents.Genre;
+import by.epam.java.training.servise.exception.ServiceException;
 
 import java.util.List;
 
@@ -24,13 +24,13 @@ public interface BookService {
      *
      * @return information about book.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see Book
      *
      */
-    Book getBook(Integer bookId, String locale) throws DAOException;
+    Book getBook(Integer bookId, String locale) throws ServiceException;
 
     /**
      * Return text of the book for specific page and language.
@@ -42,13 +42,13 @@ public interface BookService {
      *
      * @return list of paragraphs of text.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see Book
      *
      */
-    List<String> getTextOfBook(Integer bookId, String locale, String path, Integer numberOfPage) throws DAOException;
+    List<String> getTextOfBook(Integer bookId, String locale, String path, Integer numberOfPage) throws ServiceException;
 
     /**
      * Return total count of page with text.
@@ -59,41 +59,41 @@ public interface BookService {
      *
      * @return Total count of page with text.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      */
-    Integer calcPagesCountText(Integer bookId, String locale, String path) throws DAOException;
+    Integer calcPagesCountText(Integer bookId, String locale, String path) throws ServiceException;
 
     /**
      * Return list of book previews for specified page.
      *
-     * @param pageAttributes - Information about page.
+     * @param pageAttribute - Information about page.
      *
      * @return list of book previews for specified page.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      * @see BookPreview
-     * @see PageAttributes
+     * @see PageAttribute
      *
      */
-    List<BookPreview> getBooksPerPage(PageAttributes pageAttributes) throws DAOException;
+    List<BookPreview> getBooksPerPage(PageAttribute pageAttribute) throws ServiceException;
 
     /**
      * Return total count of page with books.
      *
      * @param locale - Language.
-     * @param countBooksOnPage - Count books on one page.
+     * @param countBooksOnOnePage - Count books on one page.
      *
      * @return Total count of page with book.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      */
-    Integer calcPagesCountBooks(String locale, Integer countBooksOnPage) throws DAOException;
+    Integer calcPagesCountBooks(String locale, Integer countBooksOnOnePage) throws ServiceException;
 
     /**
      * Return list of genres for specified language.
@@ -102,10 +102,10 @@ public interface BookService {
      *
      * @return List of genres.
      *
-     * @throws DAOException  if there was an error executing the query
-     * in the database
+     * @throws ServiceException  if there was an error executing the query
+     * in the service.
      *
      */
-    List<Genre> getGenres(String lang) throws DAOException;
+    List<Genre> getGenres(String lang) throws ServiceException;
 }
 

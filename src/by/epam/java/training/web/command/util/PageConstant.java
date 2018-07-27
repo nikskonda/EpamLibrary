@@ -1,6 +1,6 @@
 package by.epam.java.training.web.command.util;
 
-public class PageConstants {
+public class PageConstant {
 
     //admin
     public static final String ADMINISTRATION_USER = ("jsp/admin/AdministrationUser.jsp");

@@ -1,27 +1,106 @@
 package by.epam.java.training.dao;
 
-import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.user.*;
-import by.epam.java.training.model.user.constituents.Role;
 import by.epam.java.training.model.user.form.ProfileForm;
 import by.epam.java.training.model.user.form.SignInForm;
 import by.epam.java.training.model.user.form.SignUpForm;
 
-import java.util.List;
-
+/**
+ * The interface defines methods for implementing different
+ * activities with user in database.
+ *
+ * @author  Nikita Shkonda
+ */
 public interface UserDAO {
 
-    boolean isExistUser(SignInForm signInForm) throws ConnectionPoolException, DAOException;
+    /**
+     * Return true if the user is exist.
+     *
+     * @param signInForm - Information of the user.
+     *
+     * @return <tt>true</tt> if the user is exist.
+     *
+     * @throws DAOException  if there was an error executing the query
+     * in the database
+     *
+     * @see SignInForm
+     *
+     */
+    boolean isUserExist(SignInForm signInForm) throws DAOException;
 
+    /**
+     * Return information about user by id.
+     *
+     * @param userId - Id of the user.
+     *
+     * @return User if the query was successful.
+     *
+     * @throws DAOException  if there was an error executing the query
+     * in the database
+     *
+     * @see User
+     *
+     */
     User getUser(Integer userId) throws DAOException;
 
-    ActiveUser addUser(SignUpForm signUpForm) throws ConnectionPoolException, DAOException;
+    /**
+     * This method add new user in system and return active user.
+     *
+     * @param signUpForm - Information of the user.
+     *
+     * @return active user.
+     *
+     * @throws DAOException  if there was an error executing the query
+     * in the database
+     *
+     * @see SignUpForm
+     * @see ActiveUser
+     *
+     */
+    ActiveUser addUser(SignUpForm signUpForm) throws DAOException;
 
-    ActiveUser getActiveUser(String login) throws ConnectionPoolException, DAOException;
+    /**
+     * Return active user with specified login.
+     *
+     * @param login - Login of the user.
+     *
+     * @return active user.
+     *
+     * @throws DAOException  if there was an error executing the query
+     * in the database
+     *
+     * @see ActiveUser
+     *
+     */
+    ActiveUser getActiveUser(String login) throws DAOException;
 
-    boolean isFreeLogin(String login) throws ConnectionPoolException, DAOException;
+    /**
+     * Return true if the login is free.
+     *
+     * @param login - Login of the user.
+     *
+     * @return <tt>true</tt> if the login is free.
+     *
+     * @throws DAOException  if there was an error executing the query
+     * in the database
+     *
+     */
+    boolean isFreeLogin(String login) throws DAOException;
 
-    boolean updateUser(ProfileForm profile) throws ConnectionPoolException, DAOException;
+    /**
+     * This method update information about user in system.
+     *
+     * @param profileForm - Information of the user.
+     *
+     * @return <tt>true</tt> if updated was successful.
+     *
+     * @throws DAOException  if there was an error executing the query
+     * in the database
+     *
+     * @see ProfileForm
+     *
+     */
+    boolean updateUser(ProfileForm profileForm) throws DAOException;
 
 }

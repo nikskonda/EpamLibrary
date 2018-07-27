@@ -24,18 +24,23 @@ public class ConnectionPool {
     private List<Connection> usedConnections = new LinkedList<>();
 
 
-    public ConnectionPool() {
-        ResourceBundle rb = ResourceBundle.getBundle(DB_RESOURCE_BUNDLE);
-        int initCount = Integer.parseInt(rb.getString(INIT_COUNT_CONNECTIONS));
-        for (int i = 0; i < initCount; i++){
-            Connection con = getConnection();
-            if (con != null){
-                freeConnections.offer(con);
+    public ConnectionPool(){
+        try{
+            ResourceBundle rb = ResourceBundle.getBundle(DB_RESOURCE_BUNDLE);
+            int initCount = Integer.parseInt(rb.getString(INIT_COUNT_CONNECTIONS));
+            for (int i = 0; i < initCount; i++){
+                Connection con = getConnection();
+                if (con != null){
+                    freeConnections.offer(con);
+                }
             }
+        } catch (ConnectionPoolException ex){
+            logger.warn(ex);
         }
+
     }
 
-    private Connection getConnection() {
+    private Connection getConnection() throws ConnectionPoolException{
         ResourceBundle rb = ResourceBundle.getBundle(DB_RESOURCE_BUNDLE);
         Connection connection = null;
         try {
@@ -43,10 +48,10 @@ public class ConnectionPool {
             connection = DriverManager.getConnection(rb.getString(URL),
                     rb.getString(SQL_LOGIN), rb.getString(SQL_PASSWORD));
         } catch (ClassNotFoundException ex){
-            logger.warn("Driver Class not found", ex);
+            throw new ConnectionPoolException("Driver Class not found", ex);
         }
         catch (SQLException ex) {
-            logger.warn("Error get Connection", ex);
+            throw new ConnectionPoolException("Error get Connection", ex);
         }
         return connection;
     }
@@ -60,17 +65,17 @@ public class ConnectionPool {
         }
         usedConnections.add(newConn);
         if (newConn == null){
-            throw new ConnectionPoolException();
+            throw new ConnectionPoolException("Error retrieve Connection");
         }
         return newConn;
     }
 
-    public synchronized void putback(Connection connection) throws NullPointerException{
+    public synchronized void putback(Connection connection) throws ConnectionPoolException{
         if (connection!=null){
             if (usedConnections.remove(connection)){
                 freeConnections.offer(connection);
             } else {
-                throw new NullPointerException();
+                throw new ConnectionPoolException("Error putback Connection");
             }
         }
     }

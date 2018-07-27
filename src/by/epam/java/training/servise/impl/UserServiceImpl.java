@@ -8,6 +8,7 @@ import by.epam.java.training.model.user.form.ProfileForm;
 import by.epam.java.training.model.user.form.SignInForm;
 import by.epam.java.training.model.user.form.SignUpForm;
 import by.epam.java.training.servise.UserService;
+import by.epam.java.training.servise.exception.ServiceException;
 import by.epam.java.training.servise.validation.ValidatorManager;
 import by.epam.java.training.servise.validation.ValidatorType;
 import org.apache.log4j.Logger;
@@ -18,52 +19,81 @@ public class UserServiceImpl implements UserService {
     private final UserDAO userDAO = DAOFactory.getUserDAO();
 
     @Override
-    public boolean isUserExist(SignInForm signInForm) throws DAOException {
+    public boolean isUserExist(SignInForm signInForm) throws ServiceException {
         if (!ValidatorManager.isValid(ValidatorType.SIGN_IN_FORM_VALIDATOR, signInForm)){
             return false;
         }
-        return userDAO.isExistUser(signInForm);
+        try{
+            return userDAO.isUserExist(signInForm);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
 
     }
 
     @Override
-    public User getUser(Integer userId) throws DAOException{
+    public User getUser(Integer userId) throws ServiceException{
         if (!ValidatorManager.isValid(ValidatorType.NATURAL_NUMBER_VALIDATOR, userId)){
             return null;
         }
-        return userDAO.getUser(userId);
+
+        try{
+            return userDAO.getUser(userId);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 
     @Override
-    public ActiveUser addUser(SignUpForm signUpForm) throws DAOException{
+    public ActiveUser addUser(SignUpForm signUpForm) throws ServiceException{
         if (!ValidatorManager.isValid(ValidatorType.SIGN_UP_FORM_VALIDATOR, signUpForm)){
             return null;
         }
-        return userDAO.addUser(signUpForm);
+
+        try{
+            return userDAO.addUser(signUpForm);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 
     @Override
-    public boolean isFreeLogin(String login) throws DAOException{
+    public boolean isFreeLogin(String login) throws ServiceException{
         if (!ValidatorManager.isValid(ValidatorType.LOGIN_VALIDATOR, login)){
             return false;
         }
-        return userDAO.isFreeLogin(login);
+
+        try{
+            return userDAO.isFreeLogin(login);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 
     @Override
-    public ActiveUser getActiveUser(String login) throws DAOException{
+    public ActiveUser getActiveUser(String login) throws ServiceException{
         if (!ValidatorManager.isValid(ValidatorType.LOGIN_VALIDATOR, login)){
             return null;
         }
-        return userDAO.getActiveUser(login);
+
+        try{
+            return userDAO.getActiveUser(login);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 
     @Override
-    public boolean updateUser(ProfileForm profileForm) throws DAOException{
+    public boolean updateUser(ProfileForm profileForm) throws ServiceException{
         if (!ValidatorManager.isValid(ValidatorType.LOGIN_VALIDATOR, profileForm.getLogin())){
             return false;
         }
-        return userDAO.updateUser(profileForm);
+
+        try{
+            return userDAO.updateUser(profileForm);
+        } catch (DAOException ex){
+            throw new ServiceException(ex);
+        }
     }
 
 

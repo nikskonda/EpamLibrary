@@ -23,7 +23,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
 
     @Override
-    public boolean updateUser(ProfileForm profile) throws DAOException {
+    public boolean updateUser(ProfileForm profileForm) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         boolean result = false;
@@ -31,20 +31,18 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             con = retrieveConnection();
 
             cstmt = con.prepareCall(UPDATE_USER);
-            cstmt.setString(USER_LOGIN, profile.getLogin());
-            cstmt.setString(USER_PASSWORD, profile.getPassword());
-            cstmt.setString(USER_FIRST_NAME, profile.getFirstName());
-            cstmt.setString(USER_LAST_NAME, profile.getLastName());
-            cstmt.setString(USER_EMAIL, profile.getEmail());
+            cstmt.setString(USER_LOGIN, profileForm.getLogin());
+            cstmt.setString(USER_PASSWORD, profileForm.getPassword());
+            cstmt.setString(USER_FIRST_NAME, profileForm.getFirstName());
+            cstmt.setString(USER_LAST_NAME, profileForm.getLastName());
+            cstmt.setString(USER_EMAIL, profileForm.getEmail());
             cstmt.executeQuery();
 
             result = true;
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
         } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
+            throw new DAOException("Database query error", ex);
         } finally {
             closeStatementAndConnection(cstmt, con);
         }
@@ -52,7 +50,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     }
 
     @Override
-    public boolean isExistUser(SignInForm signInForm) throws DAOException {
+    public boolean isUserExist(SignInForm signInForm) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         boolean result = false;
@@ -67,11 +65,9 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
             result = cstmt.getBoolean(RESULT);
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
         } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
+            throw new DAOException("Database query error", ex);
         } finally {
             closeStatementAndConnection(cstmt, con);
         }
@@ -96,15 +92,90 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
                 user = buildUser(rs);
             }
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
         } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
+            throw new DAOException("Database query error", ex);
         } finally {
             closeAll(rs, cstmt, con);
         }
         return user;
+    }
+
+    @Override
+    public ActiveUser getActiveUser(String login) throws DAOException {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        ActiveUser activeUser = null;
+        try {
+            con = retrieveConnection();
+            cstmt = con.prepareCall(GET_USER_BY_LOGIN);
+            cstmt.setString(USER_LOGIN, login);
+            rs = cstmt.executeQuery();
+
+            while (rs.next()) {
+                activeUser = buildActiveUser(rs);
+            }
+        } catch (ConnectionPoolException ex){
+            throw new DAOException(ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Database query error", ex);
+        } finally {
+            closeAll(rs, cstmt, con);
+        }
+        return activeUser;
+    }
+
+    @Override
+    public ActiveUser addUser(SignUpForm signUpForm) throws DAOException {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        ActiveUser activeUser = null;
+        try {
+            con = retrieveConnection();
+
+            cstmt = con.prepareCall(ADD_USER);
+            cstmt.setString(USER_LOGIN, signUpForm.getLogin());
+            cstmt.setString(USER_PASSWORD, signUpForm.getLogin());
+            cstmt.setString(USER_FIRST_NAME, signUpForm.getFirstName());
+            cstmt.setString(USER_LAST_NAME, signUpForm.getLastName());
+            cstmt.setString(USER_EMAIL, signUpForm.getEmail());
+            cstmt.setString(USER_ROLE_NAME, signUpForm.getRole().getName());
+            cstmt.execute();
+
+            activeUser = getActiveUser(signUpForm.getLogin());
+        } catch (ConnectionPoolException ex){
+            throw new DAOException(ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Database query error", ex);
+        } finally {
+            closeStatementAndConnection(cstmt, con);
+        }
+        return activeUser;
+    }
+
+    @Override
+    public boolean isFreeLogin(String login) throws DAOException {
+        Connection con = null;
+        CallableStatement cstmt = null;
+        boolean result = false;
+        try {
+            con = retrieveConnection();
+
+            cstmt = con.prepareCall(IS_FREE_LOGIN);
+            cstmt.setString(USER_LOGIN, login);
+            cstmt.registerOutParameter(RESULT, Types.BOOLEAN);
+            cstmt.executeQuery();
+
+            result = cstmt.getBoolean(RESULT);
+        } catch (ConnectionPoolException ex){
+            throw new DAOException(ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Database query error", ex);
+        } finally {
+            closeStatementAndConnection(cstmt, con);
+        }
+        return result;
     }
 
     private ActiveUser buildActiveUser(ResultSet rs) throws SQLException{
@@ -135,88 +206,5 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         role.setName(rs.getString(USER_ROLE_NAME));
 
         return role;
-    }
-
-    @Override
-    public ActiveUser getActiveUser(String login) throws DAOException {
-        Connection con = null;
-        CallableStatement cstmt = null;
-        ResultSet rs = null;
-        ActiveUser activeUser = null;
-        try {
-            con = retrieveConnection();
-            cstmt = con.prepareCall(GET_USER_BY_LOGIN);
-            cstmt.setString(USER_LOGIN, login);
-            rs = cstmt.executeQuery();
-
-            while (rs.next()) {
-                activeUser = buildActiveUser(rs);
-            }
-        } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
-        } finally {
-            closeAll(rs, cstmt, con);
-        }
-        return activeUser;
-    }
-
-    @Override
-    public ActiveUser addUser(SignUpForm signUpForm) throws DAOException {
-        Connection con = null;
-        CallableStatement cstmt = null;
-        ActiveUser activeUser = null;
-        try {
-            con = retrieveConnection();
-
-            cstmt = con.prepareCall(ADD_USER);
-            cstmt.setString(USER_LOGIN, signUpForm.getLogin());
-            cstmt.setString(USER_PASSWORD, signUpForm.getLogin());
-            cstmt.setString(USER_FIRST_NAME, signUpForm.getFirstName());
-            cstmt.setString(USER_LAST_NAME, signUpForm.getLastName());
-            cstmt.setString(USER_EMAIL, signUpForm.getEmail());
-            cstmt.setString(USER_ROLE_NAME, signUpForm.getRole().getName());
-            cstmt.execute();
-
-            activeUser = getActiveUser(signUpForm.getLogin());
-        } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
-        } finally {
-            closeStatementAndConnection(cstmt, con);
-        }
-        return activeUser;
-    }
-
-    @Override
-    public boolean isFreeLogin(String login) throws DAOException {
-        Connection con = null;
-        CallableStatement cstmt = null;
-        boolean result = false;
-        try {
-            con = retrieveConnection();
-
-            cstmt = con.prepareCall(IS_FREE_LOGIN);
-            cstmt.setString(USER_LOGIN, login);
-            cstmt.registerOutParameter(RESULT, Types.BOOLEAN);
-            cstmt.executeQuery();
-
-            result = cstmt.getBoolean(RESULT);
-        } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        } catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
-        } finally {
-            closeStatementAndConnection(cstmt, con);
-        }
-        return result;
     }
 }

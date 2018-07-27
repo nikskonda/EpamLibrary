@@ -6,12 +6,13 @@ import by.epam.java.training.model.user.form.SignInForm;
 import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
 import by.epam.java.training.servise.UserService;
+import by.epam.java.training.servise.exception.ServiceException;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
 import static by.epam.java.training.web.command.CommandConstants.*;
-import static by.epam.java.training.web.command.util.FieldNameConstants.*;
+import static by.epam.java.training.web.command.util.FieldNameConstant.*;
 
-import by.epam.java.training.web.command.util.FieldNameConstants;
+import by.epam.java.training.web.command.util.FieldNameConstant;
 import by.epam.java.training.web.util.EncriptionMD5;
 import org.apache.log4j.Logger;
 
@@ -41,7 +42,7 @@ public class ChangeUserRole extends AbstractCommand {
                     CommandFactory.getCommand(TAKE_USER).execute(request, response);
                     return;
                 }
-                request.setAttribute(FieldNameConstants.ERROR, true);
+                request.setAttribute(FieldNameConstant.ERROR, true);
                 CommandFactory.getCommand(TAKE_USER).execute(request, response);
                 return;
             }else{
@@ -49,15 +50,12 @@ public class ChangeUserRole extends AbstractCommand {
                 CommandFactory.getCommand(TAKE_USER).execute(request, response);
                 return;
             }
-        } catch (DAOException ex){
-            logger.warn("Problem with database", ex);
-            request.setAttribute(ERROR_DATABASE, true);
+        } catch (ServiceException ex){
+            logger.warn("Problem with service", ex);
         } catch (IOException ex){
             logger.warn("Error in pages path", ex);
-            request.setAttribute(ERROR_PATH, true);
         } catch (Exception ex){
             logger.warn(ex);
-            request.setAttribute(ERROR_UNKNOWN, true);
         }
 
 

@@ -4,8 +4,9 @@ import by.epam.java.training.dao.exception.DAOException;
 import by.epam.java.training.model.user.User;
 import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
+import by.epam.java.training.servise.exception.ServiceException;
 import by.epam.java.training.web.command.AbstractCommand;
-import static by.epam.java.training.web.command.util.PageConstants.*;
+import static by.epam.java.training.web.command.util.PageConstant.*;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.java.training.web.command.util.FieldNameConstants.*;
+import static by.epam.java.training.web.command.util.FieldNameConstant.*;
 
 public class TakeUser extends AbstractCommand {
 
@@ -31,15 +32,12 @@ public class TakeUser extends AbstractCommand {
             request.setAttribute(ROLE_LIST, userService.getRoles());
 
             forward(request, response, ADMINISTRATION_USER);
-        } catch (DAOException ex){
-            logger.warn("Problem with database", ex);
-            request.setAttribute(ERROR_DATABASE, true);
+        } catch (ServiceException ex){
+            logger.warn("Problem with service", ex);
         } catch (IOException ex){
             logger.warn("Error in pages path", ex);
-            request.setAttribute(ERROR_PATH, true);
         } catch (Exception ex){
             logger.warn(ex);
-            request.setAttribute(ERROR_UNKNOWN, true);
         }
     }
 }

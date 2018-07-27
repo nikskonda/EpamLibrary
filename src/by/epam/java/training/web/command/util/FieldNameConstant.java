@@ -1,6 +1,6 @@
 package by.epam.java.training.web.command.util;
 
-public class FieldNameConstants {
+public class FieldNameConstant {
 
     public static final String LOCALE = "local";
     public static final String LANG = "lang";

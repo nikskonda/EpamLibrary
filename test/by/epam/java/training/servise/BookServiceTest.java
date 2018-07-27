@@ -1,10 +1,11 @@
 package by.epam.java.training.servise;
 
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.model.book.Book;
-import by.epam.java.training.model.book.BookCover;
+import by.epam.java.training.model.book.BookPreview;
 import by.epam.java.training.model.book.constituents.Genre;
+import by.epam.java.training.servise.exception.ServiceException;
 import org.junit.Test;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class BookServiceTest {
 
 
     @Test
-    public void getBook_badId_returnNull() throws DAOException {
+    public void getBook_badId_returnNull() throws ServiceException {
         Integer id = 0;
         String locale = "en";
 
@@ -27,7 +28,7 @@ public class BookServiceTest {
     }
 
     @Test
-    public void getBook_badLocale_returnNull()throws DAOException  {
+    public void getBook_badLocale_returnNull()throws ServiceException  {
         Integer id = 20;
         String locale = "qw";
 
@@ -37,7 +38,7 @@ public class BookServiceTest {
     }
 
     @Test
-    public void getBook_GoodValue_returnBook() throws DAOException {
+    public void getBook_GoodValue_returnBook() throws ServiceException {
         Integer id = 38;
         String locale = "en";
         String expected = "MyBook1";
@@ -49,75 +50,75 @@ public class BookServiceTest {
 
 
     @Test
-    public void getBooksByPage_badAttributes_returnNull() throws DAOException {
-        PageAttributes pa = new PageAttributes();
+    public void getBooksByPage_badAttributes_returnNull() throws ServiceException {
+        PageAttribute pa = new PageAttribute();
         pa.setCountOnPage(-1);
         pa.setNumberOfPage(-10);
 
-        List<BookCover> list = service.getBooksByPage(pa);
+        List<BookPreview> list = service.getBooksPerPage(pa);
 
         assertNull(list);
     }
 
     @Test
-    public void getBooksByPage_goodAttributes_returnListOfNews() throws DAOException {
-        PageAttributes pa = new PageAttributes();
+    public void getBooksByPage_goodAttributes_returnListOfNews() throws ServiceException {
+        PageAttribute pa = new PageAttribute();
         pa.setCountOnPage(10);
         pa.setNumberOfPage(1);
         pa.setLocale("en");
         int expected = 10;
 
-        List<BookCover> list = service.getBooksByPage(pa);
+        List<BookPreview> list = service.getBooksPerPage(pa);
 
         assertEquals(expected, list.size());
     }
 
     @Test
-    public void calcTotalPages_badCount_returnNull() throws DAOException {
+    public void calcTotalPages_badCount_returnNull() throws ServiceException {
         Integer countOnOnePage = -10;
         String locale = "en";
 
-        Integer totalPages = service.calcTotalPages(locale, countOnOnePage);
+        Integer totalPages = service.calcPagesCountBooks(locale, countOnOnePage);
 
         assertNull(totalPages);
     }
 
     @Test
-    public void calcTotalPages_badLocale_returnNull() throws DAOException {
+    public void calcTotalPages_badLocale_returnNull() throws ServiceException {
         Integer countOnOnePage = 10;
         String locale = "qw";
 
-        Integer totalPages = service.calcTotalPages(locale, countOnOnePage);
+        Integer totalPages = service.calcPagesCountBooks(locale, countOnOnePage);
 
         assertNull(totalPages);
     }
 
     @Test
-    public void calcTotalPages_goodValue_returnTotalPages() throws DAOException {
+    public void calcTotalPages_goodValue_returnTotalPages() throws ServiceException {
         Integer countOnOnePage = 10;
         String locale = "en";
         Integer expected = 2;
 
-        Integer totalPages = service.calcTotalPages(locale, countOnOnePage);
+        Integer totalPages = service.calcPagesCountBooks(locale, countOnOnePage);
 
         assertEquals(expected, totalPages);
     }
 
     @Test
-    public void getListOfGenre_badLang_returnNull() throws DAOException{
+    public void getListOfGenre_badLang_returnNull() throws ServiceException{
         String lang = "qw";
 
-        List<Genre> genres = service.getListOfGenre(lang);
+        List<Genre> genres = service.getGenres(lang);
 
         assertNull(genres);
     }
 
     @Test
-    public void getListOfGenre_goodResult_returnListOfGenres() throws DAOException{
+    public void getListOfGenre_goodResult_returnListOfGenres() throws ServiceException{
         String lang = "en";
         int expected = 12;
 
-        List<Genre> genres = service.getListOfGenre(lang);
+        List<Genre> genres = service.getGenres(lang);
 
         assertEquals(expected, genres.size());
     }

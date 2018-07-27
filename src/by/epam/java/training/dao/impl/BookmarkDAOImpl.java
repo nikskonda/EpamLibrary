@@ -1,13 +1,10 @@
 package by.epam.java.training.dao.impl;
 
 import by.epam.java.training.dao.AbstractDAO;
-import by.epam.java.training.dao.BookDAO;
 import by.epam.java.training.dao.BookmarkDAO;
-import by.epam.java.training.dao.DAOFactory;
 import by.epam.java.training.dao.exception.ConnectionPoolException;
 import by.epam.java.training.dao.exception.DAOException;
-import by.epam.java.training.dao.util.ConnectionPool;
-import by.epam.java.training.model.PageAttributes;
+import by.epam.java.training.model.PageAttribute;
 import by.epam.java.training.model.book.*;
 import org.apache.log4j.Logger;
 
@@ -42,11 +39,9 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
                 page = rs.getInt(PAGE_NUMBER);
             }
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        }catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Database query error", ex);
         } finally {
             closeAll(rs, cstmt, con);
         }
@@ -71,19 +66,17 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
 
             result = true;
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        }catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
-        }  finally {
+            throw new DAOException(ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Database query error", ex);
+        } finally {
             closeAll(rs, cstmt, con);
         }
         return result;
     }
 
     @Override
-    public List<Bookmark> getBookmarksOfUser(Integer userId, PageAttributes pageAttributes) throws DAOException {
+    public List<Bookmark> getBookmarksOfUser(Integer userId, PageAttribute pageAttribute) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
@@ -93,9 +86,9 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
 
             cstmt = con.prepareCall(GET_LIST_OF_BOOKMARKS);
             cstmt.setInt(USER_ID, userId);
-            cstmt.setString(LOCALE, pageAttributes.getLocale());
-            cstmt.setInt(COUNT_BOOKMARKS_ON_PAGE, pageAttributes.getCountOnPage());
-            cstmt.setInt(NUMBER_OF_PAGE, pageAttributes.getNumberOfPage());
+            cstmt.setString(LOCALE, pageAttribute.getLocale());
+            cstmt.setInt(COUNT_BOOKMARKS_ON_PAGE, pageAttribute.getCountOnPage());
+            cstmt.setInt(NUMBER_OF_PAGE, pageAttribute.getNumberOfPage());
             rs = cstmt.executeQuery();
 
             while (rs.next()){
@@ -103,17 +96,15 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
                 bookmark.setBookId(rs.getInt(BOOK_ID));
                 bookmark.setPageNumber(rs.getInt(PAGE_NUMBER));
                 bookmark.setUserId(userId);
-                bookmark.setLocale(pageAttributes.getLocale());
+                bookmark.setLocale(pageAttribute.getLocale());
 
                 bookmarks.add(bookmark);
             }
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        }catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
-        }  finally {
+            throw new DAOException(ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Database query error", ex);
+        } finally {
             closeAll(rs, cstmt, con);
         }
         return bookmarks;
@@ -136,19 +127,17 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
 
             result = true;
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        }catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
-        }  finally {
+            throw new DAOException(ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Database query error", ex);
+        } finally {
             closeAll(rs, cstmt, con);
         }
         return result;
     }
 
     @Override
-    public Integer calcTotalPages(Integer userId, String locale, Integer countBookmarksOnOnePage) throws DAOException {
+    public Integer calcPagesCountBookmarks(Integer userId, String locale, Integer countBookmarksOnOnePage) throws DAOException {
         Connection con = null;
         CallableStatement cstmt = null;
         Integer result = null;
@@ -164,11 +153,9 @@ public class BookmarkDAOImpl extends AbstractDAO implements BookmarkDAO {
 
             result = cstmt.getInt(RESULT);
         } catch (ConnectionPoolException ex){
-            logger.warn("Database connection failed.",ex);
-            throw new DAOException();
-        }catch (SQLException ex) {
-            logger.warn("Database query error",ex);
-            throw new DAOException();
+            throw new DAOException(ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Database query error", ex);
         } finally {
             closeStatementAndConnection(cstmt, con);
         }

@@ -7,11 +7,12 @@ import by.epam.java.training.servise.AdministratorService;
 import by.epam.java.training.servise.ServiceFactory;
 
 import by.epam.java.training.servise.UserService;
+import by.epam.java.training.servise.exception.ServiceException;
 import by.epam.java.training.web.command.AbstractCommand;
 import by.epam.java.training.web.command.CommandFactory;
 import by.epam.java.training.web.command.CommandConstants;
 import by.epam.java.training.web.util.EncriptionMD5;
-import static by.epam.java.training.web.command.util.FieldNameConstants.*;
+import static by.epam.java.training.web.command.util.FieldNameConstant.*;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -44,15 +45,12 @@ public class DeleteUser extends AbstractCommand {
                 return;
             }
 
-        } catch (DAOException ex){
-            logger.warn("Problem with database", ex);
-            request.setAttribute(ERROR_DATABASE, true);
+        } catch (ServiceException ex){
+            logger.warn("Problem with service", ex);
         } catch (IOException ex){
             logger.warn("Error in pages path", ex);
-            request.setAttribute(ERROR_PATH, true);
         } catch (Exception ex){
             logger.warn(ex);
-            request.setAttribute(ERROR_UNKNOWN, true);
         }
 
 
