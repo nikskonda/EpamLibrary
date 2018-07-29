@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+           version="2.5">
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!--ADMIN-->
+
+    <servlet>
+        <servlet-name>Admin</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Admin</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
+
+    <!--MODER-->
+    <servlet>
+        <servlet-name>Moderator</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Moderator</servlet-name>
+        <url-pattern>/moderator</url-pattern>
+    </servlet-mapping>
+
+
+    <!--USER-->
+    <servlet>
+        <servlet-name>SignIn</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SignIn</servlet-name>
+        <url-pattern>/authorization</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OpenSignIn</servlet-name>
+        <jsp-file>/jsp/user/SignIn.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OpenSignIn</servlet-name>
+        <url-pattern>/signIn</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SignUp</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SignUp</servlet-name>
+        <url-pattern>/registration</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OpenSignUp</servlet-name>
+        <jsp-file>/jsp/user/SignUp.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OpenSignUp</servlet-name>
+        <url-pattern>/signUp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SignOut</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SignOut</servlet-name>
+        <url-pattern>/signOut</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Profile</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Profile</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+
+    <!--BOOK-->
+    <servlet>
+        <servlet-name>Book</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Book</servlet-name>
+        <url-pattern>/book</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Catalog</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Catalog</servlet-name>
+        <url-pattern>/catalog</url-pattern>
+    </servlet-mapping>
+
+    <!--NEWS-->
+
+    <servlet>
+        <servlet-name>News</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>News</servlet-name>
+        <url-pattern>/news</url-pattern>
+    </servlet-mapping>
+
+    <!--L10N-->
+
+    <servlet>
+        <servlet-name>RU</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RU</servlet-name>
+        <url-pattern>/ru</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EN</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EN</servlet-name>
+        <url-pattern>/en</url-pattern>
+    </servlet-mapping>
+
+    <!--FILTER-->
+    <filter>
+        <filter-name>Administrator</filter-name>
+        <filter-class>by.epam.java.training.web.filter.impl.AdminFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>Administrator</filter-name>
+        <url-pattern>/admin</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>Moderator</filter-name>
+        <filter-class>by.epam.java.training.web.filter.impl.ModerFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>Moderator</filter-name>
+        <url-pattern>/moderator/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>UploadFilter</filter-name>
+        <filter-class>by.epam.java.training.web.filter.impl.FileUpload</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>UploadFilter</filter-name>
+        <url-pattern>/moderator</url-pattern>
+    </filter-mapping>
+
+
+    <filter>
+        <filter-name>SetEncoding</filter-name>
+        <filter-class>by.epam.java.training.web.filter.impl.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>characterEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>SetEncoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>SetLocale</filter-name>
+        <filter-class>by.epam.java.training.web.filter.impl.LocalizationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>SetLocale</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>MainFilter</filter-name>
+        <filter-class>by.epam.java.training.web.filter.impl.MainFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>MainFilter</filter-name>
+        <url-pattern>/jsp/*</url-pattern>
+    </filter-mapping>
+
+    <!--ERROR-->
+
+
+    <!--
+    <error-page>-->
+    <!--<exception-type>java.lang.Exception</exception-type>-->
+    <!--<location>/jsp/Error.jsp</location>-->
+    <!--</error-page>-->
+
+    <!--<error-page>-->
+    <!--<error-code>404</error-code>-->
+    <!--<location>/jsp/Error.jsp</location>-->
+    <!--</error-page>-->
+
+
+
+
+
+
+    <servlet>
+        <servlet-name>Library</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Library</servlet-name>
+        <url-pattern>/library</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/controller</url-pattern>
+    </servlet-mapping>
+
+
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <jsp-config>
+        <taglib>
+            <taglib-uri>pagination</taglib-uri>
+            <taglib-location>/WEB-INF/tld/Pagination.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>itemsPerPage</taglib-uri>
+            <taglib-location>/WEB-INF/tld/ItemsPerPage.tld</taglib-location>
+        </taglib>
+    </jsp-config>
+
+</web-app>
