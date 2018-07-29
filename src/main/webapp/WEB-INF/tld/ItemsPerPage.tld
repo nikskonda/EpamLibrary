@@ -10,7 +10,7 @@
 
     <tag>
         <name>itemPerPage</name>
-        <tag-class>by.epam.java.training.web.tag.ItemsPerPage</tag-class>
+        <tag-class>by.epam.training.web.tag.ItemsPerPage</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>url</name>

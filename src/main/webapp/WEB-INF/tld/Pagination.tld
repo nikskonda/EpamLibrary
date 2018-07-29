@@ -10,7 +10,7 @@
 
     <tag>
         <name>pagination</name>
-        <tag-class>by.epam.java.training.web.tag.Pagination</tag-class>
+        <tag-class>by.epam.training.web.tag.Pagination</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>url</name>

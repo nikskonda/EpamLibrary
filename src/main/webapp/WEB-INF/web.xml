@@ -13,7 +13,7 @@
 
     <servlet>
         <servlet-name>Admin</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -25,7 +25,7 @@
     <!--MODER-->
     <servlet>
         <servlet-name>Moderator</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -37,7 +37,7 @@
     <!--USER-->
     <servlet>
         <servlet-name>SignIn</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -57,7 +57,7 @@
 
     <servlet>
         <servlet-name>SignUp</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -77,7 +77,7 @@
 
     <servlet>
         <servlet-name>SignOut</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -87,7 +87,7 @@
 
     <servlet>
         <servlet-name>Profile</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -98,7 +98,7 @@
     <!--BOOK-->
     <servlet>
         <servlet-name>Book</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -108,7 +108,7 @@
 
     <servlet>
         <servlet-name>Catalog</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -120,7 +120,7 @@
 
     <servlet>
         <servlet-name>News</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -132,7 +132,7 @@
 
     <servlet>
         <servlet-name>RU</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -142,7 +142,7 @@
 
     <servlet>
         <servlet-name>EN</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -153,7 +153,7 @@
     <!--FILTER-->
     <filter>
         <filter-name>Administrator</filter-name>
-        <filter-class>by.epam.java.training.web.filter.impl.AdminFilter</filter-class>
+        <filter-class>by.epam.training.web.filter.impl.AdminFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -163,7 +163,7 @@
 
     <filter>
         <filter-name>Moderator</filter-name>
-        <filter-class>by.epam.java.training.web.filter.impl.ModerFilter</filter-class>
+        <filter-class>by.epam.training.web.filter.impl.ModerFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -173,7 +173,7 @@
 
     <filter>
         <filter-name>UploadFilter</filter-name>
-        <filter-class>by.epam.java.training.web.filter.impl.FileUpload</filter-class>
+        <filter-class>by.epam.training.web.filter.impl.FileUpload</filter-class>
     </filter>
 
     <filter-mapping>
@@ -184,7 +184,7 @@
 
     <filter>
         <filter-name>SetEncoding</filter-name>
-        <filter-class>by.epam.java.training.web.filter.impl.EncodingFilter</filter-class>
+        <filter-class>by.epam.training.web.filter.impl.EncodingFilter</filter-class>
         <init-param>
             <param-name>characterEncoding</param-name>
             <param-value>UTF-8</param-value>
@@ -198,7 +198,7 @@
 
     <filter>
         <filter-name>SetLocale</filter-name>
-        <filter-class>by.epam.java.training.web.filter.impl.LocalizationFilter</filter-class>
+        <filter-class>by.epam.training.web.filter.impl.LocalizationFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -208,7 +208,7 @@
 
     <filter>
         <filter-name>MainFilter</filter-name>
-        <filter-class>by.epam.java.training.web.filter.impl.MainFilter</filter-class>
+        <filter-class>by.epam.training.web.filter.impl.MainFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -237,7 +237,7 @@
 
     <servlet>
         <servlet-name>Library</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -247,7 +247,7 @@
 
     <servlet>
         <servlet-name>Controller</servlet-name>
-        <servlet-class>by.epam.java.training.web.servlet.FrontController</servlet-class>
+        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
     </servlet>
 
     <servlet-mapping>
