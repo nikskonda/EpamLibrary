@@ -94,9 +94,9 @@ public class Book extends BookPreview implements Serializable {
     }
 
     /**
-     * Set new description to Book
+     * Set new pages to Book
      *
-     * @param description new description
+     * @param pages new pages
      */
     public void setPages(Integer pages) {
         this.pages = pages;
@@ -171,7 +171,7 @@ public class Book extends BookPreview implements Serializable {
      * @return string genres of Book
      */
     public String getGenresAsString(){
-        StringBuilder sb = new StringBuilder();
+        StringBuffer sb = new StringBuffer();
         for (Genre genre : genres){
             sb.append(genre.getName()).append(COMMA_AND_SPACE);
         }

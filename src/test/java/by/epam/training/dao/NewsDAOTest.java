@@ -15,15 +15,11 @@ public class NewsDAOTest {
 
     private static final NewsDAO dao = DAOFactory.getNewsDAO();
 
-    @Test
-    public void getNewsByPage_badAttributes_returnNull() throws DAOException {
-        PageAttribute pa = new PageAttribute();
-        pa.setCountOnPage(-1);
-        pa.setNumberOfPage(-10);
+    @Test (expected = NullPointerException.class)
+    public void getNewsByPage_badAttributes_returnEx() throws DAOException {
+        PageAttribute pa = null;
 
         List<NewsPreview> list = dao.getNewsPerPage(pa);
-
-        assertNull(list);
     }
 
     @Test
@@ -39,24 +35,21 @@ public class NewsDAOTest {
         assertEquals(extended, list.size());
     }
 
-    @Test
-    public void getNews_badId_returnNull() throws DAOException {
-        Integer id = 0;
+    @Test (expected = NullPointerException.class)
+    public void getNews_badId_returnEx() throws DAOException {
+        Integer id = null;
         String locale = "en";
 
         News news = dao.getNews(id, locale);
 
-        assertNull(news);
     }
 
-    @Test
-    public void getNews_badLocale_returnNull()throws DAOException  {
-        Integer id = 20;
-        String locale = "qw";
+    @Test (expected = NullPointerException.class)
+    public void getNews_badLocale_returnEx()throws DAOException  {
+        Integer id = null;
+        String locale = null;
 
         News news = dao.getNews(id, locale);
-
-        assertNull(news);
     }
 
     @Test
@@ -71,24 +64,20 @@ public class NewsDAOTest {
     }
 
 
-    @Test
-    public void calcTotalPages_badCount_returnNull() throws DAOException {
-        Integer countOnOnePage = -10;
-        String locale = "en";
+    @Test (expected = NullPointerException.class)
+    public void calcTotalPages_badCount_returnEx() throws DAOException {
+        Integer countOnOnePage = null;
+        String locale = null;
 
         Integer totalPages = dao.calcPagesCountNews(locale, countOnOnePage);
-
-        assertNull(totalPages);
     }
 
-    @Test
-    public void calcTotalPages_badLocale_returnNull() throws DAOException {
-        Integer countOnOnePage = 10;
-        String locale = "qw";
+    @Test (expected = NullPointerException.class)
+    public void calcTotalPages_badLocale_returnEx() throws DAOException {
+        Integer countOnOnePage = null;
+        String locale = null;
 
         Integer totalPages = dao.calcPagesCountNews(locale, countOnOnePage);
-
-        assertNull(totalPages);
     }
 
     @Test

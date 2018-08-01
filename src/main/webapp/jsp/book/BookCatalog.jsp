@@ -15,7 +15,10 @@
 <fmt:setBundle basename="l10n.local" var="loc" />
 <fmt:message bundle="${loc}" key="local.message.catalog.title" var="title" />
 <fmt:message bundle="${loc}" key="local.message.catalog.header" var="headerP" />
-
+<fmt:message bundle="${loc}" key="local.button.find.name" var="find" />
+<fmt:message bundle="${loc}" key="local.button.more.name" var="more" />
+<fmt:message bundle="${loc}" key="local.book.error.notFound" var="bookNotFound" />
+<fmt:message bundle="${loc}" key="local.search.error.length" var="searchError" />
 
 <html>
 <head>
@@ -58,7 +61,7 @@
                 <input type="hidden" name="command" value="find_book" >
                 <input type="text" id="search" name="search" value="<c:out value="${requestScope.search}"/>" required>
                 <p class="error-input" id="searchError"></p>
-                <button type="submit">Find me plz</button>
+                <button type="submit">${find}</button>
             </form>
         </div>
 
@@ -82,7 +85,7 @@
                                             <form action="/book" method="post">
                                                 <input type="hidden" name="command" value="open_book">
                                                 <input type="hidden" name="book_id" value="<c:out value="${book.id}"/>">
-                                                <input class="btn btn--stroke full-width" type="submit" value="More" />
+                                                <input class="btn btn--stroke full-width" type="submit" value="${more}" />
                                             </form>
                                         </div>
                                     </div>
@@ -92,7 +95,7 @@
                     </c:when>
 
                     <c:otherwise>
-                        <p>книг нет, сорян</p>
+                        <p>${bookNotFound}</p>
                     </c:otherwise>
                 </c:choose>
 
@@ -108,7 +111,7 @@
     <script type="text/javascript">
         var validationErrorMessages =
             {
-                "searchLengthError":"searchLenghtError yess yeys"
+                "searchLengthError":"${searchError}"
             }
         ;
     </script>

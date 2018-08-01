@@ -10,16 +10,11 @@ public class BookmarkDAOTest {
 
     private static final BookmarkDAO dao = DAOFactory.getBookmarkDAO();
 
-    @Test
-    public void getBookmark_badBookmark_returnNull() throws DAOException {
-        Bookmark bookmark = new Bookmark();
-        bookmark.setLocale("en");
-        bookmark.setUserId(0);
-        bookmark.setBookId(-10);
+    @Test (expected = NullPointerException.class)
+    public void getBookmark_badBookmark_returnEx() throws DAOException {
+        Bookmark bookmark = null;
 
         Integer page = dao.getBookmark(bookmark);
-
-        assertNull(page);
     }
 
     @Test
@@ -35,18 +30,13 @@ public class BookmarkDAOTest {
         assertEquals(expected, page);
     }
 
-    @Test
-    public void setBookmark_badBookmark_returnFalse() throws DAOException {
-        Bookmark bookmark = new Bookmark();
-        bookmark.setLocale("en");
-        bookmark.setUserId(0);
-        bookmark.setBookId(-10);
-        bookmark.setPageNumber(-100);
+    @Test (expected = NullPointerException.class)
+    public void setBookmark_badBookmark_returnEx() throws DAOException {
+        Bookmark bookmark = null;
 
         boolean result = dao.setBookmark(bookmark);
-
-        assertFalse(result);
     }
+
 
     @Test
     public void setBookmark_goodBookmark_returnTrue() throws DAOException {
@@ -58,23 +48,20 @@ public class BookmarkDAOTest {
 
         boolean result = dao.setBookmark(bookmark);
 
-        assertTrue(result);
-
         dao.deleteBookmark(bookmark);
     }
 
 
 
-    @Test
-    public void deleteBookmark_badBookMark_returnFalse() throws DAOException{
+    @Test (expected = NullPointerException.class)
+    public void deleteBookmark_badBookMark_returnEx() throws DAOException{
         Bookmark bookmark = new Bookmark();
-        bookmark.setLocale("en");
-        bookmark.setUserId(0);
-        bookmark.setBookId(-17);
+        bookmark.setLocale(null);
+        bookmark.setUserId(null);
+        bookmark.setBookId(null);
         bookmark.setPageNumber(-100);
 
         boolean result = dao.deleteBookmark(bookmark);
 
-        assertFalse(result);
     }
 }

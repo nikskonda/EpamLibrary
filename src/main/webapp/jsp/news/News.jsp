@@ -9,6 +9,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="l10n.local" var="loc" />
+<fmt:message bundle="${loc}" key="local.news.lable.by" var="by" />
+<fmt:message bundle="${loc}" key="local.button.edit.name" var="edit" />
 <html>
 <head>
     <title>Title</title>
@@ -43,7 +47,7 @@
         <form method="post" action="/moderator">
             <input type="hidden" name="command" value="open_editing_news">
             <input type="hidden" name="news_id" value="<c:out value="${requestScope.news.id}"/>">
-            <button type="submit">Edit</button>
+            <button type="submit">${edit}</button>
         </form>
     </div>
         <div class="s-content__header col-full">
@@ -53,7 +57,7 @@
             <ul class="s-content__header-meta">
                 <li class="date"><fmt:formatDate type="both" pattern="HH:mm dd-MMM-yy" value="${requestScope.news.publishDate}"/></li>
                 <li class="cat">
-                    By <c:out value="${requestScope.news.getUserFirstName()}"/> <c:out value="${requestScope.news.getUserLastName()}"/>
+                    ${by} <c:out value="${requestScope.news.getUserFirstName()}"/> <c:out value="${requestScope.news.getUserLastName()}"/>
                 </li>
             </ul>
         </div> <!-- end s-content__header -->

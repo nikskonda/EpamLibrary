@@ -20,6 +20,9 @@
 <fmt:message bundle="${loc}" key="local.book.lable.genre" var="genres" />
 <fmt:message bundle="${loc}" key="local.book.lable.pdfFile" var="pdfFile" />
 <fmt:message bundle="${loc}" key="local.book.message.info" var="info" />
+<fmt:message bundle="${loc}" key="local.button.edit.name" var="edit" />
+<fmt:message bundle="${loc}" key="local.button.read.name" var="read" />
+<fmt:message bundle="${loc}" key="local.button.goToBookmark.name" var="goToBookmark" />
 
 <html>
 <head>
@@ -52,7 +55,7 @@
             <form method="post" action="/moderator">
                 <input type="hidden" name="command" value="open_editing_book">
                 <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
-                <button type="submit">Edit</button>
+                <button type="submit">${edit}</button>
             </form>
 
             <div class="row">
@@ -115,12 +118,12 @@
                 <form method="post" action="/book">
                     <input type="hidden" name="command" value="read_book">
                     <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
-                    <button type="submit">Read</button>
+                    <button type="submit">${read}</button>
                 </form>
                 <form method="post" action="/book">
                     <input type="hidden" name="command" value="open_bookmark">
                     <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
-                    <button type="submit">Go to Bookmark</button>
+                    <button type="submit">${goToBookmark}</button>
                 </form>
             </div>
 

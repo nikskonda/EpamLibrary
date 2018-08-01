@@ -172,7 +172,7 @@
 <script type="text/javascript">
     var validationErrorMessages =
         {
-            "searchLengthError":"searchLenghtError yess yeys"
+            "searchLengthError":"${searchError}"
         }
     ;
 </script>

@@ -12,12 +12,13 @@
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="l10n.local" var="loc" />
 <fmt:message bundle="${loc}" key="local.message.catalog.title" var="title" />
-<fmt:message bundle="${loc}" key="local.message.catalog.header" var="headerP" />
+<fmt:message bundle="${loc}" key="local.button.backToBook.name" var="backToBook" />
+<fmt:message bundle="${loc}" key="local.button.setBookmark.name" var="setBookmark" />
 
 
 <html>
 <head>
-    <title>Catalog</title>
+    <title>Reading room</title>
 
     <!-- CSS
     ================================================== -->
@@ -51,7 +52,7 @@
                 <input type="hidden" name="command" value="set_bookmark">
                 <input type="hidden" name="book_id" value="<c:out value="${requestScope.book_id}"/>">
                 <input type="hidden" name="numberOfPage" value="<c:out value="${requestScope.numberOfPage}"/>">
-                <button type="submit">Bookmark on current page</button>
+                <button type="submit">${setBookmark}</button>
             </form>
             <c:if test="${requestScope.set_bookmark_result != null}">
                 <c:choose>
@@ -67,7 +68,7 @@
             <form method="post" action="/book">
                 <input type="hidden" name="command" value="open_book">
                 <input type="hidden" name="book_id" value="<c:out value="${book_id}"/>">
-                <button type="submit">Back to book</button>
+                <button type="submit">${backToBook}</button>
             </form>
             <div class="row">
                 <c:choose>

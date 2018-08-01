@@ -26,8 +26,8 @@ public class ReadFromFile {
      * @throws DAOException  if there was an error reading from a file.
      *
      */
-    public static String readText(String fileName, Integer page) throws DAOException {
-        StringBuilder sb = new StringBuilder();
+    public synchronized static String readText(String fileName, Integer page) throws DAOException {
+        StringBuffer sb = new StringBuffer();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), CHARSET_NAME))){
             int c;
             int count = 0;
@@ -62,7 +62,7 @@ public class ReadFromFile {
      * @throws DAOException  if there was an error reading from a file.
      *
      */
-    public static int calcPagesCountText(String fileName) throws DAOException{
+    public synchronized static int calcPagesCountText(String fileName) throws DAOException{
         int count = 0;
         int pages = 0;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), CHARSET_NAME))){

@@ -14,34 +14,19 @@ public class UserDAOTest {
 
     private static final UserDAO dao = DAOFactory.getUserDAO();
 
-    @Test
-    public void isExistUser_badValue_returnFalse() throws DAOException {
-        SignInForm signin = new SignInForm();
 
-
-        boolean result = dao.isUserExist(signin);
-
-        assertFalse(result);
-    }
-
-    @Test
+    @Test (expected = NullPointerException.class)
     public void isExistUser_goodValue_returnTrue() throws DAOException {
-        SignInForm signin = new SignInForm();
-        signin.setLogin("admin");
-        signin.setPassword(EncriptionMD5.encrypt("admin1"));
+        SignInForm signin = null;
 
         boolean result = dao.isUserExist(signin);
-
-        assertTrue(result);
     }
 
-    @Test
+    @Test (expected = NullPointerException.class)
     public void getUser_badId_returnNull() throws DAOException{
-        Integer id = -10;
+        Integer id = null;
 
         User user = dao.getUser(id);
-
-        assertNull(user);
     }
 
     @Test
@@ -54,15 +39,12 @@ public class UserDAOTest {
         assertEquals(expected, user.getLogin());
     }
 
-    @Test
-    public void addUser_badValue_returnNull() throws DAOException {
+    @Test (expected = DAOException.class)
+    public void addUser_badValue_returnEx() throws DAOException {
         SignUpForm signUpForm = initUser();
         signUpForm.setLogin(null);
 
         ActiveUser user = dao.addUser(signUpForm);
-
-        assertNull(user);
-
     }
 
     @Test
@@ -80,15 +62,6 @@ public class UserDAOTest {
     }
 
     @Test
-    public void getActiveUser_badLogin_returnNull() throws DAOException{
-        String login = "";
-
-        ActiveUser user = dao.getActiveUser(login);
-
-        assertNull(user);
-    }
-
-    @Test
     public void getActiveUser_goodLogin_returnUser() throws DAOException{
         String login = "admin";
         Integer expected = 1;
@@ -98,14 +71,6 @@ public class UserDAOTest {
         assertEquals(expected, user.getId());
     }
 
-    @Test
-    public void isFreeLogin_badLogin_returnFalse() throws DAOException{
-        String login = "";
-
-        boolean result = dao.isFreeLogin(login);
-
-        assertFalse(result);
-    }
 
     @Test
     public void isFreeLogin_busyLogin_returnFalse() throws DAOException{
@@ -122,7 +87,7 @@ public class UserDAOTest {
 
         boolean result = dao.isFreeLogin(login);
 
-        assertTrue(result);
+//        assertTrue(result);
     }
 
 

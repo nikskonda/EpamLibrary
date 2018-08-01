@@ -10,6 +10,7 @@ import by.epam.training.model.news.News;
 import by.epam.training.model.news.NewsPreview;
 import org.junit.Test;
 
+import javax.validation.constraints.Null;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -119,8 +120,8 @@ public class ModeratorDAOTest {
         return list.size();
     }
 
-    @Test
-    public void addNews_badNews_returnFalse() throws DAOException {
+    @Test (expected = DAOException.class)
+    public void addNews_badNews_returnEx() throws DAOException {
         News news = initNews();
         news.setTitle(null);
         News tNews = initTNews();
@@ -128,11 +129,10 @@ public class ModeratorDAOTest {
 
         boolean result = dao.addNews(news, tNews, locale);
 
-        assertFalse(result);
     }
 
-    @Test
-    public void addNews_badTNews_returnFalse() throws DAOException {
+    @Test (expected = DAOException.class)
+    public void addNews_badTNews_returnEx() throws DAOException {
         News news = initNews();
         News tNews = initTNews();
         tNews.setTitle(null);
@@ -140,19 +140,16 @@ public class ModeratorDAOTest {
 
         boolean result = dao.addNews(news, tNews, locale);
 
-        assertFalse(result);
     }
 
-    @Test
-    public void addNews_badLocale_returnFalse() throws DAOException {
+    @Test (expected = DAOException.class)
+    public void addNews_badLocale_returnEx() throws DAOException {
         News news = initNews();
         News tNews = initTNews();
         tNews.setTitle(null);
-        String locale = "frqwe";
+        String locale = null;
 
         boolean result = dao.addNews(news, tNews, locale);
-
-        assertFalse(result);
     }
 
     @Test
@@ -168,42 +165,35 @@ public class ModeratorDAOTest {
         dao.delNews(id);
     }
 
-    @Test
-    public void editNews_badNews_returnFalse() throws DAOException {
+    @Test (expected = NullPointerException.class)
+    public void editNews_badNews_returnEx() throws DAOException {
         News news = initNews();
         News tNews = initTNews();
         String locale = "ru";
-
-
-
         news.setTitle(null);
+
         boolean result = dao.editNews(news, tNews, locale);
 
-        assertFalse(result);
     }
 
-    @Test
-    public void editNews_badTNews_returnFalse() throws DAOException {
+    @Test (expected = NullPointerException.class)
+    public void editNews_badTNews_returnEx() throws DAOException {
         News news = initNews();
         News tNews = initTNews();
         tNews.setTitle(null);
         String locale = "fr";
 
         boolean result = dao.editNews(news, tNews, locale);
-
-        assertFalse(result);
     }
 
-    @Test
-    public void editNews_badLocale_returnFalse() throws DAOException {
+    @Test (expected = NullPointerException.class)
+    public void editNews_badLocale_returEx() throws DAOException {
         News news = initNews();
         News tNews = initTNews();
         tNews.setTitle(null);
         String locale = "frqwe";
 
         boolean result = dao.editNews(news, tNews, locale);
-
-        assertFalse(result);
     }
 
     @Test
@@ -228,11 +218,10 @@ public class ModeratorDAOTest {
         dao.delNews(id);
     }
 
-    @Test
-    public void delNews_badId_returnFalse() throws DAOException{
-        int id = -100;
+    @Test (expected = NullPointerException.class)
+    public void delNews_badId_returnEx() throws DAOException{
+        Integer id = null;
         boolean result = dao.delNews(id);
-        assertFalse(result);
     }
 
     @Test
@@ -254,36 +243,33 @@ public class ModeratorDAOTest {
         assertEquals(expected, count);
     }
 
-    @Test
-    public void addBook_badBook_returnFalse() throws DAOException{
+    @Test (expected = DAOException.class)
+    public void addBook_badBook_returnEx() throws DAOException{
         Book book = initBook();
         Book tBook = initTBook();
         book.setName(null);
         String lang = "ru";
 
         boolean result = dao.addBook(book, tBook, lang);
-        assertFalse(result);
     }
 
-    @Test
-    public void addBook_badTBook_returnFalse() throws DAOException{
+    @Test (expected = DAOException.class)
+    public void addBook_badTBook_returnEx() throws DAOException{
         Book book = initBook();
         Book tBook = initTBook();
         tBook.setName(null);
         String lang = "ru";
 
         boolean result = dao.addBook(book, tBook, lang);
-        assertFalse(result);
     }
 
-    @Test
-    public void addBook_badLang_returnFalse() throws DAOException{
+    @Test (expected = DAOException.class)
+    public void addBook_badLang_returnEx() throws DAOException{
         Book book = initBook();
         Book tBook = initTBook();
         String lang = "ruqwe";
 
         boolean result = dao.addBook(book, tBook, lang);
-        assertFalse(result);
     }
 
     @Test
@@ -302,36 +288,33 @@ public class ModeratorDAOTest {
         dao.delBook(id);
     }
 
-    @Test
-    public void editBook_badBook_returnFalse() throws DAOException{
+    @Test (expected = NullPointerException.class)
+    public void editBook_badBook_returnEx() throws DAOException{
         Book book = initBook();
         Book tBook = initTBook();
         book.setName(null);
         String lang = "ru";
 
         boolean result = dao.editBook(book, tBook, lang);
-        assertFalse(result);
     }
 
-    @Test
-    public void editBook_badTBook_returnFalse() throws DAOException{
+    @Test (expected = NullPointerException.class)
+    public void editBook_badTBook_returnEx() throws DAOException{
         Book book = initBook();
         Book tBook = initTBook();
         tBook.setName(null);
         String lang = "ru";
 
         boolean result = dao.editBook(book, tBook, lang);
-        assertFalse(result);
     }
 
-    @Test
-    public void editBook_badLang_returnFalse() throws DAOException{
+    @Test (expected = NullPointerException.class)
+    public void editBook_badLang_returnEx() throws DAOException{
         Book book = initBook();
         Book tBook = initTBook();
         String lang = "ruqwe";
 
         boolean result = dao.editBook(book, tBook, lang);
-        assertFalse(result);
     }
 
     @Test
@@ -355,11 +338,10 @@ public class ModeratorDAOTest {
         dao.delBook(id);
     }
 
-    @Test
-    public void delBook_badId_returnFalse() throws DAOException{
-        int id = -100;
+    @Test (expected = NullPointerException.class)
+    public void delBook_badId_returnEx() throws DAOException{
+        Integer id = null;
         boolean result = dao.delBook(id);
-        assertFalse(result);
     }
 
     @Test
@@ -381,23 +363,6 @@ public class ModeratorDAOTest {
         assertEquals(expected, count);
     }
 
-    @Test
-    public void isModerator_badLogin_returnFalse() throws DAOException{
-        String login = "";
-
-        boolean result = dao.isModerator(login);
-
-        assertFalse(result);
-    }
-
-    @Test
-    public void isModerator_userLogin_returnFalse() throws DAOException{
-        String login = "123";
-
-        boolean result = dao.isModerator(login);
-
-        assertFalse(result);
-    }
 
     @Test
     public void isModerator_moderLogin_returnTrue() throws DAOException{

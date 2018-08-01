@@ -14,24 +14,6 @@ public class AdministratorDAOTest {
     private static final AdministratorDAO dao = DAOFactory.getAdministratorDAO();
 
     @Test
-    public void isAdministrator_badLogin_returnFalse() throws DAOException {
-        String login = "";
-
-        boolean result = dao.isAdministrator(login);
-
-        assertFalse(result);
-    }
-
-    @Test
-    public void isAdministrator_moderLogin_returnFalse() throws DAOException {
-        String login = "qwerty";
-
-        boolean result = dao.isAdministrator(login);
-
-        assertFalse(result);
-    }
-
-    @Test
     public void isAdministrator_adminLogin_returnTrue() throws DAOException {
         String login = "admin";
 
@@ -40,13 +22,11 @@ public class AdministratorDAOTest {
         assertTrue(result);
     }
 
-    @Test
-    public void getUser_badId_returnNull() throws DAOException{
-        Integer id = -10;
+    @Test (expected = NullPointerException.class)
+    public void getUser_badId_returnEx() throws DAOException{
+        Integer id = null;
 
         User user = dao.getUser(id);
-
-        assertNull(user);
     }
 
     @Test
@@ -59,16 +39,14 @@ public class AdministratorDAOTest {
         assertEquals(expected, user.getLogin());
     }
 
-    @Test
-    public void getUsersByPages_badValue_returnNull() throws DAOException{
+    @Test (expected = NullPointerException.class)
+    public void getUsersByPages_badValue_returnEx() throws DAOException{
         PageAttribute pa = new PageAttribute();
-        pa.setLocale("en");
-        pa.setNumberOfPage(-10);
-        pa.setCountOnPage(-100);
+        pa.setLocale(null);
+        pa.setNumberOfPage(null);
+        pa.setCountOnPage(10);
 
         List<User> list = dao.getUsersPerPage(pa);
-
-        assertNull(list);
     }
 
     @Test
@@ -84,13 +62,11 @@ public class AdministratorDAOTest {
         assertEquals(expected, list.size());
     }
 
-    @Test
-    public void calcTotalPagesWithUsers_badValue_returnNull() throws DAOException{
-        Integer count = -10;
+    @Test (expected = NullPointerException.class)
+    public void calcTotalPagesWithUsers_badValue_returnEx() throws DAOException{
+        Integer count = null;
 
         Integer pages = dao.calcPagesCountUsers(count);
-
-        assertNull(pages);
     }
 
     @Test
@@ -112,25 +88,6 @@ public class AdministratorDAOTest {
         assertEquals(expected, roles.size());
     }
 
-    @Test
-    public void changeRole_badId_returnFalse() throws DAOException {
-        String role = "Administrator";
-        Integer id = -20;
-
-        boolean result = dao.changeRole(id, role);
-
-        assertFalse(result);
-    }
-
-    @Test
-    public void changeRole_badRole_returnFalse() throws DAOException {
-        String role = "";
-        Integer id = -20;
-
-        boolean result = dao.changeRole(id, role);
-
-        assertFalse(result);
-    }
 
     @Test
     public void changeRole_goodValue_returnTrue() throws DAOException {
@@ -145,11 +102,10 @@ public class AdministratorDAOTest {
         assertTrue(result);
     }
 
-    @Test
-    public void deleteUser_badId_returnFalse() throws DAOException {
-        Integer id = -100;
+    @Test (expected = NullPointerException.class)
+    public void deleteUser_badId_returnEx() throws DAOException {
+        Integer id = null;
 
         boolean result = dao.deleteUser(id);
-        assertFalse(result);
     }
 }

@@ -15,30 +15,26 @@ public class UserSearchDAOTest {
     private static final UserSearchDAO dao = DAOFactory.getUserSearchDAO();
 
 
-    @Test
-    public void findUsersByPages_badSearch_returnNull() throws DAOException {
+    @Test (expected = NullPointerException.class)
+    public void findUsersByPages_badSearch_returnEx() throws DAOException {
         PageAttribute pa = new PageAttribute();
-        pa.setLocale("en");
-        pa.setNumberOfPage(10);
-        pa.setCountOnPage(100);
-        String search = "";
+        pa.setLocale(null);
+        pa.setNumberOfPage(null);
+        pa.setCountOnPage(null);
+        String search = null;
 
         List<User> list = dao.findUsersPerPage(search, pa);
-
-        assertNull(list);
     }
 
-    @Test
-    public void findUsersByPages_badValue_returnNull() throws DAOException{
+    @Test (expected = NullPointerException.class)
+    public void findUsersByPages_badValue_returnEx() throws DAOException{
         PageAttribute pa = new PageAttribute();
         pa.setLocale("en");
-        pa.setNumberOfPage(-10);
-        pa.setCountOnPage(-100);
+        pa.setNumberOfPage(null);
+        pa.setCountOnPage(null);
         String search = "admin";
 
         List<User> list = dao.findUsersPerPage(search, pa);
-
-        assertNull(list);
     }
 
     @Test
@@ -55,24 +51,20 @@ public class UserSearchDAOTest {
         assertEquals(expected, list.size());
     }
 
-    @Test
-    public void calcTotalPagesWithUsersSearch_badSearch_returnNull() throws DAOException{
-        Integer count = 10;
-        String search = "";
+    @Test (expected = NullPointerException.class)
+    public void calcTotalPagesWithUsersSearch_badSearch_returnEx() throws DAOException{
+        Integer count = null;
+        String search = null;
 
         Integer pages = dao.calcPagesCountUserSearchResults(search, count);
-
-        assertNull(pages);
     }
 
-    @Test
-    public void calcTotalPagesWithUsersSearch_badValue_returnNull() throws DAOException{
-        Integer count = -10;
+    @Test (expected = NullPointerException.class)
+    public void calcTotalPagesWithUsersSearch_badValue_returnEx() throws DAOException{
+        Integer count = null;
         String search = "admin";
 
         Integer pages = dao.calcPagesCountUserSearchResults(search, count);
-
-        assertNull(pages);
     }
 
     @Test

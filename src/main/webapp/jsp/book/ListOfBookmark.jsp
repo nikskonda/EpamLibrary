@@ -8,12 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tld/Pagination.tld" prefix="pag" %>
+<%@ taglib uri="/WEB-INF/tld/ItemsPerPage.tld" prefix="ipp" %>
 
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="l10n.local" var="loc" />
-<fmt:message bundle="${loc}" key="local.message.catalog.title" var="title" />
-<fmt:message bundle="${loc}" key="local.message.catalog.header" var="headerP" />
-
+<fmt:message bundle="${loc}" key="local.button.goToBookmark.name" var="goToBookmark" />
+<fmt:message bundle="${loc}" key="local.button.delBookmark.name" var="delBookmark" />
+<fmt:message bundle="${loc}" key="local.news.error.notFound" var="newsNotFound" />
 
 <html>
 <head>
@@ -67,7 +69,7 @@
                                             <form method="post" action="/book">
                                                 <input type="hidden" name="command" value="open_bookmark">
                                                 <input type="hidden" name="book_id" value="<c:out value="${book.id}"/>">
-                                                <button type="submit">Open Bookmark</button>
+                                                <button type="submit">${goToBookmark}</button>
                                             </form>
                                         </div>
                                         <div>
@@ -75,7 +77,7 @@
                                                 <input type="hidden" name="command" value="delete_bookmark">
                                                 <input type="hidden" name="book_id" value="<c:out value="${book.id}"/>">
                                                 <input type="hidden" name="numberOfPage" value="${requestScope.numberOfPage}">
-                                                <button type="submit">Delete Bookmark</button>
+                                                <button type="submit">${delBookmark}</button>
                                             </form>
                                         </div>
                                     </div>
@@ -85,52 +87,13 @@
                     </c:when>
 
                     <c:otherwise>
-                        <p>закладок нет, сорян</p>
+                        <p>${newsNotFound}</p>
                     </c:otherwise>
                 </c:choose>
             </div>
-            <div class="row">
-                <div class="col-full">
-                    <nav class="pgn">
-                        <ul>
-                            <c:if test="${requestScope.numberOfPage!=1}">
-                                <li><a class="pgn__num" href="/news?command=take_list_of_bookmarks&numberOfPage=1">First: 1</a></li>
-                            </c:if>
-                            <c:if test="${requestScope.numberOfPage>1}">
-                                <li><a class="pgn__prev" href="/news?command=take_list_of_bookmarks&numberOfPage=${requestScope.numberOfPage-1}">Prev</a></li>
-                            </c:if>
-                            <%--<c:if test="${requestScope.numberOfPage>1}">--%>
-                            <li><a class="pgn__num current"><c:out value="${requestScope.numberOfPage}"/></a></li>
-                            <%--</c:if>--%>
-                            <c:if test="${requestScope.numberOfPage<requestScope.totalPages}">
-                                <li><a class="pgn__next" href="/news?command=take_list_of_bookmarks&numberOfPage=${requestScope.numberOfPage+1}">Next</a></li>
-                            </c:if>
-                            <c:if test="${requestScope.numberOfPage<requestScope.totalPages}">
-                                <li><a class="pgn__num" href="/news?command=take_list_of_bookmarks&numberOfPage=${requestScope.totalPages}">Last: <c:out value="${requestScope.totalPages}"/></a></li>
-                            </c:if>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-full">
-                    <nav class="pgn">
-                        <ul>
-                            <c:forEach var="i" begin="8" end="32" step="4">
-                                <c:choose>
-                                    <c:when test="${i == sessionScope.countBookmarks}">
-                                        <li><a class="pgn__num current" href="/news?command=take_list_of_bookmarks&countBookmarks=${i}">${i}</a></li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li><a class="pgn__num" href="/news?command=take_list_of_bookmarks&countBookmarks=${i}">${i}</a></li>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
+
+            <pag:pagination url="book" command="take_list_of_bookmarks" currentPage="${requestScope.numberOfPage}" totalPages="${requestScope.totalPages}"/>
+            <ipp:itemPerPage url="book" command="take_list_of_bookmarks" items="countBookmarks" currentCount="${sessionScope.countBookmarks}"/>
 
     </section> <!-- s-content -->
     <jsp:include page="../Footer.jsp"/>

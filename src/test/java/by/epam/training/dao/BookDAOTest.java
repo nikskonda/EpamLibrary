@@ -17,24 +17,12 @@ public class BookDAOTest {
     private static final BookDAO dao = DAOFactory.getBookDAO();
 
 
-    @Test
-    public void getBook_badId_returnNull() throws DAOException {
-        Integer id = 0;
-        String locale = "en";
+    @Test (expected = NullPointerException.class)
+    public void getBook_badId_returnEx() throws DAOException {
+        Integer id = null;
+        String locale = null;
 
         Book book = dao.getBook(id, locale);
-
-        assertNull(book);
-    }
-
-    @Test
-    public void getBook_badLocale_returnNull()throws DAOException  {
-        Integer id = 20;
-        String locale = "qw";
-
-        Book book = dao.getBook(id, locale);
-
-        assertNull(book);
     }
 
     @Test
@@ -49,15 +37,13 @@ public class BookDAOTest {
     }
 
 
-    @Test
-    public void getBooksByPage_badAttributes_returnNull() throws DAOException {
+    @Test (expected = NullPointerException.class)
+    public void getBooksByPage_badAttributes_returnEx() throws DAOException {
         PageAttribute pa = new PageAttribute();
-        pa.setCountOnPage(-1);
-        pa.setNumberOfPage(-10);
+        pa.setCountOnPage(null);
+        pa.setNumberOfPage(null);
 
         List<BookPreview> list = dao.getBooksPerPage(pa);
-
-        assertNull(list);
     }
 
     @Test
@@ -73,25 +59,14 @@ public class BookDAOTest {
         assertEquals(expected, list.size());
     }
 
-    @Test
-    public void calcTotalPages_badCount_returnNull() throws DAOException {
-        Integer countOnOnePage = -10;
-        String locale = "en";
+    @Test (expected = NullPointerException.class)
+    public void calcTotalPages_badCount_returnEx() throws DAOException {
+        Integer countOnOnePage = null;
+        String locale = null;
 
         Integer totalPages = dao.calcPagesCountBooks(locale, countOnOnePage);
-
-        assertNull(totalPages);
     }
 
-    @Test
-    public void calcTotalPages_badLocale_returnNull() throws DAOException {
-        Integer countOnOnePage = 10;
-        String locale = "qw";
-
-        Integer totalPages = dao.calcPagesCountBooks(locale, countOnOnePage);
-
-        assertNull(totalPages);
-    }
 
     @Test
     public void calcTotalPages_goodValue_returnTotalPages() throws DAOException {
@@ -102,15 +77,6 @@ public class BookDAOTest {
         Integer totalPages = dao.calcPagesCountBooks(locale, countOnOnePage);
 
         assertEquals(expected, totalPages);
-    }
-
-    @Test
-    public void getListOfGenre_badLang_returnNull() throws DAOException{
-        String lang = "qw";
-
-        List<Genre> genres = dao.getGenres(lang);
-
-        assertNull(genres);
     }
 
     @Test

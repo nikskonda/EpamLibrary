@@ -13,6 +13,8 @@
     <fmt:setBundle basename="l10n.local" var="loc" />
     <fmt:message bundle="${loc}" key="local.header.sign" var="headerTitle" />
     <fmt:message bundle="${loc}" key="local.button.signup.name" var="signup" />
+    <fmt:message bundle="${loc}" key="local.button.signin.name" var="signin" />
+    <fmt:message bundle="${loc}" key="local.link.goToHome" var="goToHome" />
 
     <fmt:message bundle="${loc}" key="local.lable.login.value" var="login" />
     <fmt:message bundle="${loc}" key="local.lable.password.value" var="password" />
@@ -154,10 +156,10 @@
                                 <button type="submit" class="btn btn-primary btn-lg btn-block login-button">${signup}</button>
                             </div>
                             <div class="form-group ">
-                                <a class="btn btn-primary btn-lg btn-block login-button" href="/signIn">Sign In</a>
+                                <a class="btn btn-primary btn-lg btn-block login-button" href="/signIn">${signin}</a>
                             </div>
                             <div class="form-group ">
-                                <a href="/news?command=open_news_list">Go to Main page</a>
+                                <a href="/news?command=open_news_list">${goToHome}</a>
                             </div>
                         </form>
                     </div>

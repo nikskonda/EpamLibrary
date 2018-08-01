@@ -14,30 +14,26 @@ public class BookSearchDAOTest {
 
     private static final BookSearchDAO dao = DAOFactory.getBookSearchDAO();
 
-    @Test
-    public void findBooksByPage_badPageAttribute_returnNull() throws DAOException {
+    @Test (expected = NullPointerException.class)
+    public void findBooksByPage_badPageAttribute_returnEx() throws DAOException {
         PageAttribute pa = new PageAttribute();
-        pa.setCountOnPage(-10);
+        pa.setCountOnPage(null);
         pa.setNumberOfPage(1);
         pa.setLocale("en");
         String search = "collector";
 
         List<BookPreview> list = dao.findBooksPerPage(search, pa);
-
-        assertNull(list);
     }
 
-    @Test
+    @Test (expected = NullPointerException.class)
     public void findBooksByPage_badSearch_returnNull() throws DAOException {
         PageAttribute pa = new PageAttribute();
-        pa.setCountOnPage(10);
-        pa.setNumberOfPage(1);
-        pa.setLocale("en");
-        String search = "";
+        pa.setCountOnPage(null);
+        pa.setNumberOfPage(null);
+        pa.setLocale(null);
+        String search = null;
 
         List<BookPreview> list = dao.findBooksPerPage(search, pa);
-
-        assertNull(list);
     }
 
     @Test
@@ -69,37 +65,31 @@ public class BookSearchDAOTest {
     }
 
 
-    @Test
-    public void calcTotalPages_badCount_returnNull() throws DAOException {
-        Integer countOnOnePage = -10;
-        String locale = "en";
-        String search = "collector";
+    @Test (expected = NullPointerException.class)
+    public void calcTotalPages_badCount_returnEx() throws DAOException {
+        Integer countOnOnePage = null;
+        String locale = null;
+        String search = null;
 
         Integer totalPages = dao.calcPagesCountBookSearchResults(locale, search, countOnOnePage);
-
-        assertNull(totalPages);
     }
 
-    @Test
-    public void calcTotalPages_badSearch_returnNull() throws DAOException {
-        Integer countOnOnePage = -10;
-        String locale = "en";
-        String search = "";
+    @Test (expected = NullPointerException.class)
+    public void calcTotalPages_badSearch_returnEx() throws DAOException {
+        Integer countOnOnePage = null;
+        String locale = null;
+        String search = null;
 
         Integer totalPages = dao.calcPagesCountBookSearchResults(locale, search, countOnOnePage);
-
-        assertNull(totalPages);
     }
 
-    @Test
-    public void calcTotalPages_badLocale_returnNull() throws DAOException {
-        Integer countOnOnePage = 10;
-        String locale = "qw";
-        String search = "collector";
+    @Test (expected = NullPointerException.class)
+    public void calcTotalPages_badLocale_returnEx() throws DAOException {
+        Integer countOnOnePage = null;
+        String locale = null;
+        String search = null;
 
         Integer totalPages = dao.calcPagesCountBookSearchResults(locale, search, countOnOnePage);
-
-        assertNull(totalPages);
     }
 
     @Test

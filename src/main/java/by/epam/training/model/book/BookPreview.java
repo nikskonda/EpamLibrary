@@ -36,7 +36,7 @@ public class BookPreview implements Serializable {
      */
     private String coverUrl;
 
-    /
+
     public BookPreview() {
     }
 

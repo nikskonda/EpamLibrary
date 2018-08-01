@@ -9,11 +9,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-    <fmt:setLocale value="${sessionScope.local}" />
-    <fmt:setBundle basename="l10n.local" var="loc" />
-    <fmt:message bundle="${loc}" key="local.button.signin.name" var="signin" />
-    <fmt:message bundle="${loc}" key="local.button.signup.name" var="signup" />
-    <fmt:message bundle="${loc}" key="local.button.catalog.name" var="catalog" />
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="l10n.local" var="loc" />
+<fmt:message bundle="${loc}" key="local.button.signin.name" var="signin" />
+<fmt:message bundle="${loc}" key="local.button.signup.name" var="signup" />
+<fmt:message bundle="${loc}" key="local.button.catalog.name" var="catalog" />
+<fmt:message bundle="${loc}" key="local.button.home.name" var="home" />
+<fmt:message bundle="${loc}" key="local.button.profile.name" var="profile" />
+<fmt:message bundle="${loc}" key="local.button.bookmarks.name" var="bookmarks" />
+<fmt:message bundle="${loc}" key="local.button.signout.name" var="signout" />
+
 
 <div class="row">
     <nav class="header__nav-wrap">
@@ -23,9 +28,9 @@
         <ul class="header__nav">
             <li class="current"><a href="/news?command=open_news_list" title="">Home</a></li>
             <li><a href="/catalog?command=open_book_catalog">${catalog}</a></li>
-            <li><a href="/profile?command=open_profile">Profile</a></li>
-            <li><a href="/profile?command=take_list_of_bookmarks">Bookmarks</a></li>
-            <li><a href="/signOut?command=sign_out">Sign Out</a></li>
+            <li><a href="/profile?command=open_profile">${profile}</a></li>
+            <li><a href="/profile?command=take_list_of_bookmarks">${bookmarks}</a></li>
+            <li><a href="/signOut?command=sign_out">${signout}</a></li>
         </ul> <!-- end header__nav -->
 
         <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>

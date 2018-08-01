@@ -9,30 +9,38 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-    <fmt:setLocale value="${sessionScope.local}" />
-    <fmt:setBundle basename="l10n.local" var="loc" />
-    <fmt:message bundle="${loc}" key="local.button.signin.name" var="signin" />
-    <fmt:message bundle="${loc}" key="local.button.signup.name" var="signup" />
-    <fmt:message bundle="${loc}" key="local.button.catalog.name" var="catalog" />
-
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="l10n.local" var="loc" />
+<fmt:message bundle="${loc}" key="local.button.signin.name" var="signin" />
+<fmt:message bundle="${loc}" key="local.button.signup.name" var="signup" />
+<fmt:message bundle="${loc}" key="local.button.catalog.name" var="catalog" />
+<fmt:message bundle="${loc}" key="local.button.home.name" var="home" />
+<fmt:message bundle="${loc}" key="local.button.profile.name" var="profile" />
+<fmt:message bundle="${loc}" key="local.button.bookmarks.name" var="bookmarks" />
+<fmt:message bundle="${loc}" key="local.button.moder.name" var="moder" />
+<fmt:message bundle="${loc}" key="local.button.admin.name" var="admin" />
+<fmt:message bundle="${loc}" key="local.button.signout.name" var="signout" />
+<fmt:message bundle="${loc}" key="local.button.users.name" var="users" />
+<fmt:message bundle="${loc}" key="local.book.button.addBook" var="addBook" />
+<fmt:message bundle="${loc}" key="local.news.button.addNews" var="addNews" />
 <div class="row">
     <nav class="header__nav-wrap">
 
         <h2 class="header__nav-heading h6">Site Navigation</h2>
 
         <ul class="header__nav">
-            <li class="current"><a href="/news?command=open_news_list" title="">Home</a></li>
+            <li class="current"><a href="/news?command=open_news_list" title="">${home}</a></li>
             <li><a href="/catalog?command=open_book_catalog">${catalog}</a></li>
-            <li><a href="/profile?command=open_profile">Profile</a></li>
-            <li><a href="/profile?command=take_list_of_bookmarks">Bookmarks</a></li>
+            <li><a href="/profile?command=open_profile">${profile}</a></li>
+            <li><a href="/profile?command=take_list_of_bookmarks">${bookmarks}</a></li>
             <li class="has-children">
-                <a href="#0" title="">Moder</a>
+                <a href="#0" title="">${moder}</a>
                 <ul class="sub-menu">
-                    <li><a href="/news?command=open_add_news">Add news</a></li>
-                    <li><a href="/book?command=open_add_book">Add book</a></li>
+                    <li><a href="/news?command=open_add_news">${addNews}</a></li>
+                    <li><a href="/book?command=open_add_book">${addBook}</a></li>
                 </ul>
             </li>
-            <li><a href="/signOut?command=sign_out">Sign Out</a></li>
+            <li><a href="/signOut?command=sign_out">${signout}</a></li>
         </ul> <!-- end header__nav -->
 
         <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
