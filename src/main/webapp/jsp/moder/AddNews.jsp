@@ -31,6 +31,10 @@
 <fmt:message bundle="${loc}" key="local.news.error.text.lenght" var="textLengthError" />
 <fmt:message bundle="${loc}" key="local.news.error.photo.content" var="photoError" />
 <fmt:message bundle="${loc}" key="local.news.error.thumbs.content" var="thumbsError" />
+<fmt:message bundle="${loc}" key="local.message.error.login.not_found" var="notFound" />
+<fmt:message bundle="${loc}" key="local.message.error.password.length" var="pwLen" />
+<fmt:message bundle="${loc}" key="local.profile.oldPassword.value" var="ioldPassword" />
+<fmt:message bundle="${loc}" key="local.message.error.add" var="addError" />
 
 <html>
 <head>
@@ -62,6 +66,13 @@
 <section class="s-content">
     <div class="content">
         <div class="row">
+
+            <p style="color: red">
+                <c:if test="${error_add == true}">
+                    ${addError}
+                </c:if>
+            </p>
+
             <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidNewsForm()">
                 <input type="hidden" name="command" value="add_news">
                 <div>
@@ -120,9 +131,14 @@
 
                     <div>
                         <label for="password">${password}</label>
-                        <input type="password" id="password" name="password" class="full-width" required>
-                        <p class="error-input" ></p>
+                        <input type="password" id="password" name="password" class="full-width" placeholder="${ioldPassword}" required>
+                        <p class="error-input" id="pwError">
+                            <c:if test="${error_exist == true}">
+                                ${notFound}
+                            </c:if>
+                        </p>
                     </div>
+
 
                     <input class="add_book_button full-width" type="submit" value="${addNews}">
                 </div>
@@ -138,7 +154,8 @@
             "titleLengthError":"${titleLengthError}",
             "textLengthError":"${textLengthError}",
             "photoError":"${photoError}",
-            "thumbsError":"${thumbsError}"
+            "thumbsError":"${thumbsError}",
+            "passwordLengthError":"${pwLen}"
         }
     ;
 </script>

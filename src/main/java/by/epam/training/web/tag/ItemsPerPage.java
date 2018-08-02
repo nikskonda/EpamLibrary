@@ -2,7 +2,6 @@ package by.epam.training.web.tag;
 
 import by.epam.training.web.command.util.FieldNameConstant;
 import org.apache.log4j.Logger;
-
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;

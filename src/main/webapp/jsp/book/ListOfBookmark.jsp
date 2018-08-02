@@ -51,13 +51,13 @@
                     <c:when test="${requestScope.books.size()>0}">
                         <c:forEach var="book" items="${requestScope.books}">
                             <div class="row">
-                                <a href="/book?command=open_book&book_id=${book.id}">
+                                <a href="/book?command=take_book&book_id=${book.id}">
                                     <div class="col-lg-3 offset-lg-1">
                                         <img class="entry__thumb" src="../<c:out value="${book.getCoverUrl()}"/>" alt="" style="height: 300px">
                                     </div>
                                 </a>
                                 <div class="col-lg-7 offset-lg-1">
-                                    <a href="/book?command=open_book&book_id=${book.id}">
+                                    <a href="/book?command=take_book&book_id=${book.id}">
                                         <div >
                                             <h3><c:out value="${book.getName()}"/></h3>
                                             <p><c:out value="${book.getPublishYear()}"/></p>
@@ -67,7 +67,7 @@
                                     <div class="row">
                                         <div style="float: right">
                                             <form method="post" action="/book">
-                                                <input type="hidden" name="command" value="open_bookmark">
+                                                <input type="hidden" name="command" value="go_to_bookmark">
                                                 <input type="hidden" name="book_id" value="<c:out value="${book.id}"/>">
                                                 <button type="submit">${goToBookmark}</button>
                                             </form>

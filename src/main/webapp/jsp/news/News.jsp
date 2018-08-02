@@ -43,13 +43,6 @@
 <jsp:include page="../Header.jsp"/>
 
 <section class="s-content" style="padding: 35px 30px 10px 30px; display: flex; flex-direction: column;">
-    <div style="margin: 0 auto">
-        <form method="post" action="/moderator">
-            <input type="hidden" name="command" value="open_editing_news">
-            <input type="hidden" name="news_id" value="<c:out value="${requestScope.news.id}"/>">
-            <button type="submit">${edit}</button>
-        </form>
-    </div>
         <div class="s-content__header col-full">
             <h1 class="s-content__header-title">
                 <c:out value="${requestScope.news.getTitle()}"/>
@@ -73,6 +66,16 @@
 
         </div>
     </article>
+    <c:if test="${(sessionScope.user.role.name eq 'Moderator') or (sessionScope.user.role.name eq 'Administrator')}">
+        <div style="margin-right: 0px">
+            <form action="/news">
+                <input type="hidden" name="command" value="go_to_edit_news_form">
+                <input type="hidden" name="news_id" value="<c:out value="${requestScope.news.id}"/>">
+                <button type="submit">${edit}</button>
+            </form>
+        </div>
+    </c:if>
+
 
 </section>
 <jsp:include page="../Footer.jsp"/>

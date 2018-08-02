@@ -22,9 +22,8 @@
 
     <fmt:setLocale value="${sessionScope.local}" />
     <fmt:setBundle basename="l10n.local" var="loc" />
-    <fmt:message bundle="${loc}" key="local.message.error.database" var="database" />
-    <fmt:message bundle="${loc}" key="local.message.error.path" var="path" />
-    <fmt:message bundle="${loc}" key="local.message.error.unknown" var="unknown" />
+    <fmt:message bundle="${loc}" key="local.message.error.unknown" var="error" />
+    <fmt:message bundle="${loc}" key="local.link.goToHome" var="goToHome" />
 
         <!-- CSS
         ================================================== -->
@@ -50,26 +49,14 @@
 
     <section class="s-content">
         <div class="container">
-            <c:choose>
-                <c:when test="${requestScope.error_database != null && requestScope.error_database==true}">
-                    <p>${database}</p>
-                </c:when>
-                <c:when test="${requestScope.error_path != null && requestScope.error_path==true}">
-                    <p>${path}</p>
-                </c:when>
-                <c:when test="${requestScope.error_unknown != null && requestScope.error_unknown==true}">
-                    <p>${unknown}</p>
-                </c:when>
-                <c:otherwise>
-                    <p>${unknown}</p>
-                </c:otherwise>
-            </c:choose>
+            <p>${error}</p>
         </div>
+        <a href="/news?command=take_list_of_news">${goToHome}</a>
 
 
 
     </section>
-    <jsp:include page="../Footer.jsp"/>
+    <jsp:include page="Footer.jsp"/>
 </body>
 </html>
 

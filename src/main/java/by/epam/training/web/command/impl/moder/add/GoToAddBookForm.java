@@ -35,6 +35,7 @@ public class GoToAddBookForm extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
+            rememberLastAction(request);
             BookService service = ServiceFactory.getBookService();
             HttpSession session = request.getSession(true);
             String locale = (String)session.getAttribute(FieldNameConstant.LOCALE);

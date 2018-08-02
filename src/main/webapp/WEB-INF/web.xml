@@ -219,41 +219,16 @@
     <!--ERROR-->
 
 
-    <!--
-    <error-page>-->
-    <!--<exception-type>java.lang.Exception</exception-type>-->
-    <!--<location>/jsp/Error.jsp</location>-->
-    <!--</error-page>-->
 
-    <!--<error-page>-->
-    <!--<error-code>404</error-code>-->
-    <!--<location>/jsp/Error.jsp</location>-->
-    <!--</error-page>-->
+    <error-page>
+    <exception-type>java.lang.Exception</exception-type>
+    <location>/jsp/Error.jsp</location>
+    </error-page>
 
-
-
-
-
-
-    <servlet>
-        <servlet-name>Library</servlet-name>
-        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Library</servlet-name>
-        <url-pattern>/library</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Controller</servlet-name>
-        <servlet-class>by.epam.training.web.servlet.FrontController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Controller</servlet-name>
-        <url-pattern>/controller</url-pattern>
-    </servlet-mapping>
+    <error-page>
+    <error-code>404</error-code>
+    <location>/jsp/Error.jsp</location>
+    </error-page>
 
 
 

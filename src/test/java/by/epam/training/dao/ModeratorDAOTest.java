@@ -9,8 +9,6 @@ import by.epam.training.model.book.constituents.PublishingHouse;
 import by.epam.training.model.news.News;
 import by.epam.training.model.news.NewsPreview;
 import org.junit.Test;
-
-import javax.validation.constraints.Null;
 import java.util.List;
 
 import static org.junit.Assert.*;

@@ -29,15 +29,15 @@
         <h2 class="header__nav-heading h6">Site Navigation</h2>
 
         <ul class="header__nav">
-            <li class="current"><a href="/news?command=open_news_list" title="">${home}</a></li>
-            <li><a href="/catalog?command=open_book_catalog">${catalog}</a></li>
-            <li><a href="/profile?command=open_profile">${profile}</a></li>
+            <li class="current"><a href="/news?command=take_list_of_news" title="">${home}</a></li>
+            <li><a href="/catalog?command=take_book_catalog">${catalog}</a></li>
+            <li><a href="/profile?command=go_to_profile_form">${profile}</a></li>
             <li><a href="/profile?command=take_list_of_bookmarks">${bookmarks}</a></li>
             <li class="has-children">
                 <a href="#0" title="">${moder}</a>
                 <ul class="sub-menu">
-                    <li><a href="/news?command=open_add_news">${addNews}</a></li>
-                    <li><a href="/book?command=open_add_book">${addBook}</a></li>
+                    <li><a href="/news?command=go_to_add_news_form">${addNews}</a></li>
+                    <li><a href="/book?command=go_to_add_book_form">${addBook}</a></li>
                 </ul>
             </li>
             <li><a href="/signOut?command=sign_out">${signout}</a></li>

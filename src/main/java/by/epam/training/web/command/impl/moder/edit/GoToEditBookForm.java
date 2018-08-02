@@ -36,6 +36,7 @@ public class GoToEditBookForm extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
+            rememberLastAction(request);
             BookService service = ServiceFactory.getBookService();
             Integer bookId = Integer.parseInt(request.getParameter(FieldNameConstant.BOOK_ID));
             HttpSession session = request.getSession(true);

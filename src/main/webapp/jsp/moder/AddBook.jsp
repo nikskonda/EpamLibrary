@@ -48,6 +48,10 @@
 <fmt:message bundle="${loc}" key="local.book.message.en" var="headerEN" />
 <fmt:message bundle="${loc}" key="local.book.message.ru" var="headerRU" />
 
+<fmt:message bundle="${loc}" key="local.message.error.password.length" var="pwLen" />
+<fmt:message bundle="${loc}" key="local.profile.oldPassword.value" var="ioldPassword" />
+<fmt:message bundle="${loc}" key="local.message.error.add" var="addError" />
+
 
 
 <html>
@@ -79,6 +83,13 @@
 
 <section class="s-content">
     <div class="row">
+
+        <p style="color: red">
+            <c:if test="${error_add == true}">
+                ${addError}
+            </c:if>
+        </p>
+
         <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidBookForm()">
             <input type="hidden" name="command" value="add_book" >
             <div>
@@ -207,8 +218,12 @@
 
                 <div>
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" class="full-width" required>
-                    <p class="error-input"></p>
+                    <input type="password" id="password" name="password" class="full-width" placeholder="${ioldPassword}" required>
+                    <p class="error-input" id="pwError">
+                        <c:if test="${error_exist == true}">
+                            ${notFound}
+                        </c:if>
+                    </p>
                 </div>
 
                 <input class="add_book_button full-width" type="submit" value="${addBook}">
@@ -230,7 +245,8 @@
             "priceError":"${priceError}",
             "pagesError":"${pagesError}",
             "phLengthError":"${phLengthError}",
-            "coverError":"${coverError}"
+            "coverError":"${coverError}",
+            "passwordLengthError":"${pwLen}"
         }
     ;
 </script>

@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import static by.epam.training.web.command.CommandConstants.GO_TO_EDIT_NEWS_FORM;
 import static by.epam.training.web.command.CommandConstants.TAKE_LIST_OF_NEWS;
+import static by.epam.training.web.command.CommandConstants.TAKE_NEWS;
 
 /**
  * Used to edit a news.
@@ -76,11 +77,13 @@ public class EditNews extends AbstractCommand {
 
             if (!service.editNews(defNews, tNews, lang)){
                 clearData(request, defNews, tNews);
+                request.setAttribute(FieldNameConstant.ERROR_EDIT, true);
                 CommandFactory.getCommand(GO_TO_EDIT_NEWS_FORM).execute(request, response);
                 return;
             }
 
-            CommandFactory.getCommand(TAKE_LIST_OF_NEWS).execute(request, response);
+            request.setAttribute(FieldNameConstant.NEWS_ID, defNews.getId());
+            CommandFactory.getCommand(TAKE_NEWS).execute(request, response);
         } catch (ServiceException ex){
             logger.warn("Problem with service", ex);
         } catch (IOException ex){

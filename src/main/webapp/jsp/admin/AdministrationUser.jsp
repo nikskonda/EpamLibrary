@@ -36,6 +36,7 @@
     <fmt:message bundle="${loc}" key="local.message.error.last_name.length" var="lnLen" />
     <fmt:message bundle="${loc}" key="local.message.error.email.content" var="emailCont" />
     <fmt:message bundle="${loc}" key="local.message.error.login.not_found" var="notFound" />
+<fmt:message bundle="${loc}" key="local.message.error.password.length" var="pwLen" />
 <html>
 <head>
     <title>Profile</title>
@@ -100,7 +101,7 @@
         </div>
         <div class="row">
             <div class="col-lg-6">
-                <form method="post" action="/admin">
+                <form method="post" action="/admin" >
                     <input type="hidden" name="command" value="change_user_role"/>
                     <input type="hidden" name="user_id" value="<c:out value="${requestScope.profile.id}"/>"/>
                     <c:forEach var="role" items="${requestScope.roles}">
@@ -110,7 +111,7 @@
                         </c:if> > ${role.name} </p>
                     </c:forEach>
                     <label for="password">${password}</label>
-                    <input type="password" name="password" id="password" placeholder="${ioldPassword}">
+                    <input type="password" name="password" id="password" placeholder="${ioldPassword}" required>
                     <p class="error-input">
                         <c:if test="${requestScope.error_exist == true}">
                             ${notFound}
@@ -120,13 +121,13 @@
                 </form>
             </div>
                  <div class="col-lg-6">
-                        <form method="post" action="/admin">
+                        <form method="post" action="/admin" onsubmit="return isValidPasswordForm()">
                             <input type="hidden" name="command" value="delete_user"/>
                             <input type="hidden" name="user_id" value="<c:out value="${requestScope.profile.id}"/>"/>
-                            <label for="password2">${password}</label>
-                            <input type="password" name="password" id="password2" placeholder="${ioldPassword}">
-                            <p class="error-input">
-                                <c:if test="${requestScope.del_error_exist == true}">
+                            <label for="passwordField">${password}</label>
+                            <input type="password" id="passwordField" name="password" class="full-width" placeholder="${ioldPassword}" required>
+                            <p class="error-input" id="passwordError">
+                                <c:if test="${error_exist == true}">
                                     ${notFound}
                                 </c:if>
                             </p>
@@ -141,5 +142,14 @@
 
 </section>
 <jsp:include page="../Footer.jsp"/>
+
+<script type="text/javascript">
+    var validationErrorMessages =
+        {
+            "passwordLengthError":"${pwLen}"
+        }
+    ;
+</script>
+<script src="../../js/validator.js"></script>
 </body>
 </html>

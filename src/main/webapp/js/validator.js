@@ -227,78 +227,6 @@ function isValidProfileForm() {
     return result;
 }
 
-// function isValidProfileForm() {
-//     var result = true;
-//
-//     var oldPasswordField = document.getElementById("oldPassword");
-//     var newPasswordField = document.getElementById("newPassword");
-//     var confirmPasswordField = document.getElementById("confirmPassword");
-//     var firstNameField = document.getElementById("firstName");
-//     var lastNameField = document.getElementById("lastName");
-//     var emailField = document.getElementById("email");
-//
-//     var passwordMinLength = 6, passwordMaxLength = 20;
-//     var firstNameMinLength = 3, firstNameMaxLength = 20;
-//     var lastNameMinLength = 3, lastNameMaxLength = 20;
-//
-//     var REGEXP_NAME = "^[a-zA-Z][A-Za-z\\s]+[A-Za-z]$";
-//     var REGEXP_EMAIL = "^[\\w]+@[a-zA-Z]+\\.[a-z]+$";
-//     var borderColorRed = "#F54D4D";
-//
-//     if(oldPasswordField.value.length < passwordMinLength || oldPasswordField.value.length > passwordMaxLength) {
-//         result = false;
-//         oldPasswordField.borderColor = borderColorRed;
-//         oldPasswordError.innerText = validationErrorMessages.passwordLengthError;
-//     }
-//
-//     if (!(isEmpty(newPasswordField.value) && isEmpty(confirmPasswordField.value))) {
-//
-//         if (newPasswordField.value.length < passwordMinLength || newPasswordField.value.length > passwordMaxLength) {
-//             result = false;
-//             newPasswordField.borderColor = borderColorRed;
-//             newPasswordError.innerText = validationErrorMessages.passwordLengthError;
-//         }
-//
-//         if (newPasswordField.value !== confirmPasswordField.value) {
-//             result = false;
-//             confirmPasswordField.borderColor = borderColorRed;
-//             confirmPasswordError.innerText = validationErrorMessages.confirmPasswordError;
-//         }
-//     }
-//
-//     if(firstNameField.value.length >= firstNameMinLength && firstNameField.value.length <= firstNameMaxLength){
-//         if (firstNameField.value.search(REGEXP_NAME) === -1){
-//             result=false;
-//             firstNameField.borderColor = borderColorRed;
-//             firstNameError.innerText = validationErrorMessages.firstNameContentError;
-//         }
-//     } else {
-//         result = false;
-//         firstNameField.borderColor = borderColorRed;
-//         firstNameError.innerText = validationErrorMessages.firstNameLengthError;
-//     }
-//
-//     if(lastNameField.value.length >= lastNameMinLength && lastNameField.value.length <= lastNameMaxLength){
-//         if (lastNameField.value.search(REGEXP_NAME) === -1){
-//             result=false;
-//             lastNameField.borderColor = borderColorRed;
-//             lastNameError.innerText = validationErrorMessages.lastNameContentError;
-//         }
-//     } else {
-//         result = false;
-//         lastNameField.borderColor = borderColorRed;
-//         lastNameError.innerText = validationErrorMessages.lastNameLengthError;
-//     }
-//
-//     if (emailField.value.search(REGEXP_EMAIL) === -1){
-//         result = false;
-//         emailField.borderColor = borderColorRed;
-//         emailError.innerText = validationErrorMessages.emailError;
-//     }
-//
-//     return result;
-// }
-
 function isValidNewsForm() {
     var result = true;
 
@@ -308,6 +236,7 @@ function isValidNewsForm() {
     var textRu = document.getElementById("news_text_ru");
     var photo = document.getElementById("news_photo_url");
     var thumbs = document.getElementById("news_thumbs_url");
+    var password = document.getElementById("password");
 
     var titleError = document.getElementById("titleError");
     var titleRuError = document.getElementById("titleRuError");
@@ -315,7 +244,9 @@ function isValidNewsForm() {
     var textRuError = document.getElementById("textRuError");
     var photoError = document.getElementById("photoError");
     var thumbsError = document.getElementById("thumbsError");
+    var pwError = document.getElementById("pwError");
 
+    var passwordMinLength = 6, passwordMaxLength = 20;
     var titleMinLength = 6, titleMaxLength = 100;
     var textMinLength = 10;
 
@@ -325,6 +256,15 @@ function isValidNewsForm() {
     var DEFAULT_TEXT_RU2 = "Enter russian text here ...";
     var REGEXP_JPG = "^.+\\.jpg$";
     var borderColorRed = "#F54D4D";
+
+
+    if(password.value.length < passwordMinLength || password.value.length > passwordMaxLength) {
+        result = false;
+        pwError.borderColor = borderColorRed;
+        pwError.innerText = validationErrorMessages.passwordLengthError;
+    }else{
+        clear(pwError);
+    }
 
     if(title.value.length < titleMinLength || title.value.length > titleMaxLength) {
         result = false;
@@ -398,6 +338,7 @@ function isValidBookForm() {
     var publishingHouse = document.getElementById("publishingHouse");
     var coverUrl = document.getElementById("coverUrl");
 
+    var password = document.getElementById("password");
 
     var nameError = document.getElementById("nameError");
     var descriptionError = document.getElementById("descriptionError");
@@ -417,11 +358,14 @@ function isValidBookForm() {
     var publishingHouseError = document.getElementById("publishingHouseError");
     var coverError = document.getElementById("coverError");
     var genresError = document.getElementById("genresError");
+    var pwError = document.getElementById("pwError");
+
 
     var nameMinLength = 6, nameMaxLength = 100;
     var authorsMinLength = 3, authorsMaxLength = 100;
     var descMinLength = 10;
     var phMinLength = 3, phMaxLength = 50;
+    var passwordMinLength = 6, passwordMaxLength = 20;
 
     var DEFAULT_DESC = "Enter english description here ...";
     var DEFAULT_DESC2 = "Введите описание на английском здесь ...";
@@ -431,6 +375,15 @@ function isValidBookForm() {
     var REGEXP_PDF = "^.+\\.pdf$";
     var REGEXP_JPG = "^.+\\.jpg$";
     var borderColorRed = "#F54D4D";
+
+
+    if(password.value.length < passwordMinLength || password.value.length > passwordMaxLength) {
+        result = false;
+        pwError.borderColor = borderColorRed;
+        pwError.innerText = validationErrorMessages.passwordLengthError;
+    }else{
+        clear(pwError);
+    }
 
     if(name.value.length < nameMinLength || name.value.length > nameMaxLength) {
         result = false;
@@ -548,6 +501,29 @@ function isValidBookForm() {
         coverError.innerText = validationErrorMessages.coverError;
     }else{
         clear(coverError);
+    }
+
+    return result;
+}
+
+function isValidPasswordForm() {
+    var result = true;
+
+    var password = document.getElementById("passwordField");
+
+    var pwError = document.getElementById("passwordError");
+
+    var passwordMinLength = 6, passwordMaxLength = 20;
+
+    var borderColorRed = "#F54D4D";
+
+
+    if(password.value.length < passwordMinLength || password.value.length > passwordMaxLength) {
+        result = false;
+        pwError.borderColor = borderColorRed;
+        pwError.innerText = validationErrorMessages.passwordLengthError;
+    }else{
+        clear(pwError);
     }
 
     return result;

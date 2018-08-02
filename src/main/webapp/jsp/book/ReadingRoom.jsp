@@ -8,13 +8,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tld/Pagination.tld" prefix="pag" %>
 
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="l10n.local" var="loc" />
 <fmt:message bundle="${loc}" key="local.message.catalog.title" var="title" />
 <fmt:message bundle="${loc}" key="local.button.backToBook.name" var="backToBook" />
 <fmt:message bundle="${loc}" key="local.button.setBookmark.name" var="setBookmark" />
-
+<fmt:message bundle="${loc}" key="local.bookmark.message.success" var="success" />
+<fmt:message bundle="${loc}" key="local.bookmark.message.error" var="error" />
+<fmt:message bundle="${loc}" key="local.book.message.end" var="end" />
+<fmt:message bundle="${loc}" key="local.book.message.thanks" var="thanks" />
+<fmt:message bundle="${loc}" key="local.book.message.gookLuck" var="gookLuck" />
 
 <html>
 <head>
@@ -48,28 +53,31 @@
 
     <section id="readingRoom" class="s-content">
         <div class="container">
-            <form method="post" action="/book">
-                <input type="hidden" name="command" value="set_bookmark">
-                <input type="hidden" name="book_id" value="<c:out value="${requestScope.book_id}"/>">
-                <input type="hidden" name="numberOfPage" value="<c:out value="${requestScope.numberOfPage}"/>">
-                <button type="submit">${setBookmark}</button>
-            </form>
-            <c:if test="${requestScope.set_bookmark_result != null}">
-                <c:choose>
-                    <c:when test="${requestScope.set_bookmark_result}">
-                        Sucsess!
-                    </c:when>
-                    <c:otherwise>
-                        Ou =( error
-                    </c:otherwise>
-                </c:choose>
+            <c:if test="${sessionScope.user != null}">
+                <form method="post" action="/book">
+                    <input type="hidden" name="command" value="set_bookmark">
+                    <input type="hidden" name="book_id" value="<c:out value="${requestScope.book_id}"/>">
+                    <input type="hidden" name="numberOfPage" value="<c:out value="${requestScope.numberOfPage}"/>">
+                    <button type="submit">${setBookmark}</button>
+                </form>
+                <c:if test="${requestScope.set_bookmark_result != null}">
+                    <c:choose>
+                        <c:when test="${requestScope.set_bookmark_result}">
+                            ${success}
+                        </c:when>
+                        <c:otherwise>
+                            ${error}
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
             </c:if>
 
-            <form method="post" action="/book">
-                <input type="hidden" name="command" value="open_book">
-                <input type="hidden" name="book_id" value="<c:out value="${book_id}"/>">
-                <button type="submit">${backToBook}</button>
+            <form action="/book">
+                <input type="hidden" name="command" value="take_book">
+                <input type="hidden" name="book_id" value="<c:out value="${requestScope.book_id}"/>">
+                <input type="submit" value="${backToBook}">
             </form>
+
             <div class="row">
                 <c:choose>
                     <c:when test="${requestScope.text.size()>0}">
@@ -78,33 +86,34 @@
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        <p>Happy end!</p>
-                        <p>Thank you for using our service!</p>
-                        <p>Good Luck</p>
+                        <p>${end}</p>
+                        <p>${thanks}</p>
+                        <p>${gookLuck}</p>
                     </c:otherwise>
                 </c:choose>
             </div>
-            <div class="row">
-                <div class="col-full">
-                    <nav class="pgn">
-                        <ul>
-                            <c:if test="${requestScope.numberOfPage != 1}">
-                                <li><a class="pgn__num" href="/book?command=read_book&book_id=${requestScope.book_id}&numberOfPage=1">First: 1</a></li>
-                            </c:if>
-                            <c:if test="${requestScope.numberOfPage > 1}">
-                                <li><a class="pgn__prev" href="/book?command=read_book&book_id=${requestScope.book_id}&numberOfPage=${requestScope.numberOfPage-1}">Prev</a></li>
-                            </c:if>
-                            <li><a class="pgn__num current"><c:out value="${requestScope.numberOfPage}"/></a></li>
-                            <c:if test="${requestScope.text.size() > 0}">
-                                <li><a class="pgn__next" href="/book?command=read_book&book_id=${requestScope.book_id}&numberOfPage=${requestScope.numberOfPage+1}">Next</a></li>
-                            </c:if>
-                            <c:if test="${requestScope.numberOfPage<requestScope.totalPages}">
-                                <li><a class="pgn__num" href="/news?command=read_book&book_id=${requestScope.book_id}&numberOfPage=${requestScope.totalPages}">Last: <c:out value="${requestScope.totalPages}"/></a></li>
-                            </c:if>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+            <pag:pagination url="book" command="read_book&book_id=${requestScope.book_id}&" currentPage="${requestScope.numberOfPage}" totalPages="${requestScope.totalPages}"/>
+            <%--<div class="row">--%>
+                <%--<div class="col-full">--%>
+                    <%--<nav class="pgn">--%>
+                        <%--<ul>--%>
+                            <%--<c:if test="${requestScope.numberOfPage != 1}">--%>
+                                <%--<li><a class="pgn__num" href="/book?command=read_book&book_id=${requestScope.book_id}&numberOfPage=1">First: 1</a></li>--%>
+                            <%--</c:if>--%>
+                            <%--<c:if test="${requestScope.numberOfPage > 1}">--%>
+                                <%--<li><a class="pgn__prev" href="/book?command=read_book&book_id=${requestScope.book_id}&numberOfPage=${requestScope.numberOfPage-1}">Prev</a></li>--%>
+                            <%--</c:if>--%>
+                            <%--<li><a class="pgn__num current"><c:out value="${requestScope.numberOfPage}"/></a></li>--%>
+                            <%--<c:if test="${requestScope.text.size() > 0}">--%>
+                                <%--<li><a class="pgn__next" href="/book?command=read_book&book_id=${requestScope.book_id}&numberOfPage=${requestScope.numberOfPage+1}">Next</a></li>--%>
+                            <%--</c:if>--%>
+                            <%--<c:if test="${requestScope.numberOfPage<requestScope.totalPages}">--%>
+                                <%--<li><a class="pgn__num" href="/news?command=read_book&book_id=${requestScope.book_id}&numberOfPage=${requestScope.totalPages}">Last: <c:out value="${requestScope.totalPages}"/></a></li>--%>
+                            <%--</c:if>--%>
+                        <%--</ul>--%>
+                    <%--</nav>--%>
+                <%--</div>--%>
+            <%--</div>--%>
         </div>
 
 

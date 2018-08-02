@@ -35,7 +35,7 @@ public class SignOut extends AbstractCommand {
 
             session.removeAttribute(FieldNameConstant.USER);
 
-            executeLastAction(request, response);
+            redirect(response, FieldNameConstant.GO_TO_HOME_PAGE);
         } catch (IOException ex){
             logger.warn("Error in pages path", ex);
         } catch (Exception ex){

@@ -1,5 +1,6 @@
 package by.epam.training.web.command;
 
+import by.epam.training.web.command.util.PageConstant;
 import by.epam.training.web.command.util.Pagination;
 
 import javax.servlet.RequestDispatcher;
@@ -91,7 +92,7 @@ public abstract class AbstractCommand extends Pagination implements Command{
         HttpSession session = request.getSession(true);
         String url = (String)session.getAttribute(LAST_ACTION);
         if (url == null || url.isEmpty()){
-            CommandFactory.getCommand(TAKE_LIST_OF_NEWS).execute(request, response);
+            redirect(response, PageConstant.START_PAGE);
         } else {
             this.redirect(response, url);
         }

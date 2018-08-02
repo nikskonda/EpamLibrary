@@ -96,7 +96,7 @@
                                 <a class="btn btn-primary btn-lg btn-block login-button" href="/signUp">${signup}</a>
                             </div>
                             <div class="form-group ">
-                                <a href="/news?command=open_news_list">${goToHome}</a>
+                                <a href="/news?command=take_list_of_news">${goToHome}</a>
                             </div>
                         </form>
 

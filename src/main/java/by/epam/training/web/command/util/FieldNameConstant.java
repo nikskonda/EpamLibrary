@@ -95,8 +95,10 @@ public class FieldNameConstant {
     public static final String ERROR_DEL_EXIST = "del_error_exist";
     public static final String ERROR_MATCH = "error_match";
     public static final String ERROR_CONFIRM = "error_confirm";
+    public static final String ERROR_EDIT = "error_edit";
     public static final String INSUFFICIENT_RIGHTS = "insufficient_rights";
 
+    public final static String GO_TO_HOME_PAGE = "/news?command=take_list_of_news";
 
     public static final int INIT_COUNT_NEWS = 8;
     public static final int INIT_COUNT_BOOKMARKS = 8;

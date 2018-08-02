@@ -30,7 +30,7 @@ public class GoToAddNewsForm extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-
+            rememberLastAction(request);
             forward(request, response, PageConstant.ADD_NEWS);
 
         } catch (IOException ex){

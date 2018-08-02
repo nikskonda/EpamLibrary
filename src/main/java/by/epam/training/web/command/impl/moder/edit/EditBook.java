@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static by.epam.training.web.command.CommandConstants.GO_TO_ADD_BOOK_FORM;
+import static by.epam.training.web.command.CommandConstants.TAKE_BOOK;
 import static by.epam.training.web.command.CommandConstants.TAKE_BOOK_CATALOG;
 
 /**
@@ -89,11 +90,13 @@ public class EditBook extends AbstractCommand {
 
             if (!service.editBook(defBook, tBook, lang)){
                 clearData(request, defBook, tBook);
+                request.setAttribute(FieldNameConstant.ERROR_EDIT, true);
                 CommandFactory.getCommand(GO_TO_ADD_BOOK_FORM).execute(request, response);
                 return;
             }
 
-            CommandFactory.getCommand(TAKE_BOOK_CATALOG).execute(request, response);
+            request.setAttribute(FieldNameConstant.BOOK_ID, defBook.getId());
+            CommandFactory.getCommand(TAKE_BOOK).execute(request, response);
         } catch (ServiceException ex){
             logger.warn("Problem with service", ex);
         } catch (IOException ex){

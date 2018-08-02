@@ -7,6 +7,6 @@
 
   </head>
   <body>
-      <c:redirect url="/news?command=open_news_list"/>
+      <c:redirect url="/news?command=take_list_of_news"/>
   </body>
 </html>

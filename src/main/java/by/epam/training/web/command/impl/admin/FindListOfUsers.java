@@ -5,7 +5,7 @@ import by.epam.training.servise.ServiceFactory;
 import by.epam.training.servise.UserSearchService;
 import by.epam.training.servise.exception.ServiceException;
 import by.epam.training.web.command.AbstractCommand;
-import by.epam.training.web.command.util.FieldNameConstant;
+import static by.epam.training.web.command.util.FieldNameConstant.*;
 import by.epam.training.web.command.util.PageConstant;
 import org.apache.log4j.Logger;
 
@@ -36,22 +36,23 @@ public class FindListOfUsers extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
-            UserSearchService service = ServiceFactory.getUserSearchService();
             rememberLastAction(request);
-            String search = request.getParameter(FieldNameConstant.SEARCH);
-            Integer countUsers = getCount(request, FieldNameConstant.COUNT_USERS_ON_PAGE, FieldNameConstant.INIT_COUNT_USERS);
+            UserSearchService service = ServiceFactory.getUserSearchService();
+            String search = request.getParameter(SEARCH);
+            Integer countUsers = getCount(request, COUNT_USERS_ON_PAGE, INIT_COUNT_USERS);
             Integer currentPage = getCurrentPage(request);
             HttpSession session = request.getSession(true);
 
             PageAttribute pageData = new PageAttribute();
             pageData.setCountOnPage(countUsers);
             pageData.setNumberOfPage(currentPage);
+            pageData.setLocale((String)session.getAttribute(LOCALE));
 
-            session.setAttribute(FieldNameConstant.COUNT_USERS_ON_PAGE, countUsers);
-            request.setAttribute(FieldNameConstant.NUMBER_OF_PAGE, currentPage);
-            request.setAttribute(FieldNameConstant.TOTAL_PAGES, service.calcPagesCountUserSearchResults(search, countUsers));
-            request.setAttribute(FieldNameConstant.SEARCH, search);
-            request.setAttribute(FieldNameConstant.USER_LIST, service.findUsersPerPage(search, pageData));
+            session.setAttribute(COUNT_USERS_ON_PAGE, countUsers);
+            request.setAttribute(NUMBER_OF_PAGE, currentPage);
+            request.setAttribute(TOTAL_PAGES, service.calcPagesCountUserSearchResults(search, countUsers));
+            request.setAttribute(SEARCH, search);
+            request.setAttribute(USER_LIST, service.findUsersPerPage(search, pageData));
 
             forward(request, response, PageConstant.USER_LIST);
         } catch (ServiceException ex){

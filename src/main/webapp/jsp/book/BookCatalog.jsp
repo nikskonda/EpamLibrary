@@ -51,8 +51,6 @@
         <div class="row">
             <div class="col-full s-content__header">
                 <h1>${title}</h1>
-
-                <p class="lead">${headerP}</p>
             </div>
         </div>
 
@@ -82,10 +80,10 @@
                                             <p><c:out value="${book.getPublishYear()}"/></p>
                                         </div>
                                         <div class="entry__meta">
-                                            <form action="/book" method="post">
-                                                <input type="hidden" name="command" value="open_book">
+                                            <form action="/book">
+                                                <input type="hidden" name="command" value="take_book">
                                                 <input type="hidden" name="book_id" value="<c:out value="${book.id}"/>">
-                                                <input class="btn btn--stroke full-width" type="submit" value="${more}" />
+                                                <input class="btn btn--stroke full-width" type="submit" value="${more}">
                                             </form>
                                         </div>
                                     </div>
@@ -102,8 +100,16 @@
             </div> <!-- end masonry -->
         </div> <!-- end masonry-wrap -->
 
-        <pag:pagination url="book" command="open_book_catalog" currentPage="${requestScope.numberOfPage}" totalPages="${requestScope.totalPages}"/>
-        <ipp:itemPerPage url="book" command="open_book_catalog" items="countBooks" currentCount="${sessionScope.countBooks}"/>
+        <c:choose>
+            <c:when test="${not empty requestScope.search}">
+                <pag:pagination url="book" command="find_book&search=${requestScope.search}&" currentPage="${requestScope.numberOfPage}" totalPages="${requestScope.totalPages}"/>
+                <ipp:itemPerPage url="book" command="find_book&search=${requestScope.search}&" items="countBooks" currentCount="${sessionScope.countBooks}"/>
+            </c:when>
+            <c:otherwise>
+                <pag:pagination url="book" command="take_book_catalog" currentPage="${requestScope.numberOfPage}" totalPages="${requestScope.totalPages}"/>
+                <ipp:itemPerPage url="book" command="take_book_catalog" items="countBooks" currentCount="${sessionScope.countBooks}"/>
+            </c:otherwise>
+        </c:choose>
     </section> <!-- s-content -->
     <jsp:include page="../Footer.jsp"/>
 

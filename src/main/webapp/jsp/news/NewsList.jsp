@@ -10,8 +10,10 @@
 <fmt:message bundle="${loc}" key="local.message" var="message" />
 <fmt:message bundle="${loc}" key="local.button.signin.name" var="signin" />
 <fmt:message bundle="${loc}" key="local.button.signup.name" var="signup" />
-<fmt:message bundle="${loc}" key="local.button.catalog.name" var="catalog" />
+<fmt:message bundle="${loc}" key="local.button.read.name" var="read" />
 <fmt:message bundle="${loc}" key="local.news.error.notFound" var="newsNotFound" />
+
+
 <html>
   <head>
     <title>Index</title>
@@ -73,7 +75,7 @@
                       <h1 class="entry__title"><c:out value="${news.getTitle()}"/></h1>
                     </div>
 
-                    <a class="btn btn--stroke full-width" href="/news?command=open_news&news_id=<c:out value="${news.getId()}"/>">Read</a>
+                    <a class="btn btn--stroke full-width" href="/news?command=take_news&news_id=<c:out value="${news.getId()}"/>">${read}</a>
 
                   </div>
               </article> <!-- end article -->
@@ -88,8 +90,8 @@
 
       </div> <!-- end masonry -->
     </div> <!-- end masonry-wrap -->
-    <pag:pagination url="news" command="open_news_list" currentPage="${requestScope.numberOfPage}" totalPages="${requestScope.totalPages}"/>
-    <ipp:itemPerPage url="news" command="open_news_list" items="countNews" currentCount="${sessionScope.countNews}"/>
+    <pag:pagination url="news" command="take_list_of_news" currentPage="${requestScope.numberOfPage}" totalPages="${requestScope.totalPages}"/>
+    <ipp:itemPerPage url="news" command="take_list_of_news" items="countNews" currentCount="${sessionScope.countNews}"/>
 
 
 

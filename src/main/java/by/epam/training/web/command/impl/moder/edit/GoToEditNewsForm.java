@@ -35,6 +35,7 @@ public class GoToEditNewsForm extends AbstractCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try{
+            rememberLastAction(request);
             NewsService service = ServiceFactory.getNewsService();
             Integer newsId = Integer.parseInt(request.getParameter(FieldNameConstant.NEWS_ID));
 

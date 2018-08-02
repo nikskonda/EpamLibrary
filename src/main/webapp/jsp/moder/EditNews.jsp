@@ -31,6 +31,10 @@
 <fmt:message bundle="${loc}" key="local.news.error.text.lenght" var="textLengthError" />
 <fmt:message bundle="${loc}" key="local.news.error.photo.content" var="photoError" />
 <fmt:message bundle="${loc}" key="local.news.error.thumbs.content" var="thumbsError" />
+<fmt:message bundle="${loc}" key="local.message.error.login.not_found" var="notFound" />
+<fmt:message bundle="${loc}" key="local.message.error.password.length" var="pwLen" />
+<fmt:message bundle="${loc}" key="local.profile.oldPassword.value" var="ioldPassword" />
+<fmt:message bundle="${loc}" key="local.message.error.edit" var="editError" />
 <html>
 <head>
     <title>Error</title>
@@ -59,6 +63,13 @@
 <section class="s-content">
     <div class="content">
         <div class="row">
+
+            <p style="color: red">
+                <c:if test="${error_edit == true}">
+                    ${editError}
+                </c:if>
+            </p>
+
             <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidNewsForm()">
                 <input type="hidden" name="command" value="edit_news">
                 <input type="hidden" name="news_id" value="<c:out value="${requestScope.news.getId()}"/>" >
@@ -107,7 +118,7 @@
                 <div style="width: 50%; margin: 0 auto;">
                     <div>
                         <label for="news_photo_url">${photo}</label>
-                        <input type="file" id="news_photo_url" name="news_photo_url" class="full-width" multiple="false" required>
+                        <input type="file" id="news_photo_url" name="news_photo_url" class="full-width" multiple="false" content="1234"  required>
                         <p class="error-input" id="photoError"></p>
                     </div>
 
@@ -119,8 +130,12 @@
 
                     <div>
                         <label for="password">${password}</label>
-                        <input type="password" id="password" name="password" class="full-width" required>
-                        <p class="error-input" ></p>
+                        <input type="password" id="password" name="password" class="full-width" placeholder="${ioldPassword}" required>
+                        <p class="error-input" id="pwError">
+                            <c:if test="${error_exist == true}">
+                                ${notFound}
+                            </c:if>
+                        </p>
                     </div>
 
                     <input class="add_book_button full-width" type="submit" value="${editNews}">
@@ -129,14 +144,18 @@
             </form>
         </div>
         <div class="row">
-            <form action="/moderator" method="POST">
+            <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidPasswordForm()">
                 <input type="hidden" name="command" value="delete_news">
                 <input type="hidden" name="news_id" value="<c:out value="${requestScope.news.getId()}"/>" >
 
                 <div>
-                    <label for="password2">${password}</label>
-                    <input type="password" id="password2" name="password" class="full-width" required>
-                    <p class="error-input" ></p>
+                    <label for="passwordField">${password}</label>
+                    <input type="password" id="passwordField" name="password" class="full-width" placeholder="${ioldPassword}" required>
+                    <p class="error-input" id="passwordError">
+                        <c:if test="${error_exist == true}">
+                            ${notFound}
+                        </c:if>
+                    </p>
                 </div>
 
                 <input class="add_book_button full-width" type="submit" value="${deleteNews}">
@@ -154,7 +173,8 @@
             "titleLengthError":"${titleLengthError}",
             "textLengthError":"${textLengthError}",
             "photoError":"${photoError}",
-            "thumbsError":"${thumbsError}"
+            "thumbsError":"${thumbsError}",
+            "passwordLengthError":"${pwLen}"
         }
     ;
 </script>

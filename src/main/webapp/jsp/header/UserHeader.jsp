@@ -26,9 +26,9 @@
         <h2 class="header__nav-heading h6">Site Navigation</h2>
 
         <ul class="header__nav">
-            <li class="current"><a href="/news?command=open_news_list" title="">Home</a></li>
-            <li><a href="/catalog?command=open_book_catalog">${catalog}</a></li>
-            <li><a href="/profile?command=open_profile">${profile}</a></li>
+            <li class="current"><a href="/news?command=take_list_of_news" title="">${home}</a></li>
+            <li><a href="/catalog?command=take_book_catalog">${catalog}</a></li>
+            <li><a href="/profile?command=go_to_profile_form">${profile}</a></li>
             <li><a href="/profile?command=take_list_of_bookmarks">${bookmarks}</a></li>
             <li><a href="/signOut?command=sign_out">${signout}</a></li>
         </ul> <!-- end header__nav -->

@@ -52,11 +52,7 @@
 
     <section class="s-content">
         <div class="container">
-            <form method="post" action="/moderator">
-                <input type="hidden" name="command" value="open_editing_book">
-                <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
-                <button type="submit">${edit}</button>
-            </form>
+
 
             <div class="row">
                 <div class="col-lg-6">
@@ -94,7 +90,7 @@
 
                         <tr>
                             <td>${authors}</td>
-                            <td><c:out value="${requestScope.book.getAuthors()}"/></td>
+                            <td><c:out value="${requestScope.book.authors}"/></td>
                         </tr>
 
                         <tr>
@@ -115,17 +111,28 @@
             </div>
 
             <div class="book_sets">
-                <form method="post" action="/book">
+                <form action="/book">
                     <input type="hidden" name="command" value="read_book">
                     <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
                     <button type="submit">${read}</button>
                 </form>
-                <form method="post" action="/book">
-                    <input type="hidden" name="command" value="open_bookmark">
-                    <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
-                    <button type="submit">${goToBookmark}</button>
-                </form>
+                <c:if test="${sessionScope.user != null}">
+                    <form method="post" action="/book">
+                        <input type="hidden" name="command" value="go_to_bookmark">
+                        <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
+                        <button type="submit">${goToBookmark}</button>
+                    </form>
+                </c:if>
+
             </div>
+            <c:if test="${(sessionScope.user.role.name eq 'Moderator') or (sessionScope.user.role.name eq 'Administrator')}">
+                <form method="post" action="/book">
+                    <input type="hidden" name="command" value="go_to_edit_book_form">
+                    <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
+                    <button type="submit">${edit}</button>
+                </form>
+            </c:if>
+
 
         </div>
 

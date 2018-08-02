@@ -37,7 +37,7 @@
                     </ul>
                 </div>
                 <div class="col-md-6 offset-md-2">
-                    <a class="header__logo" href="/news?command=open_news_list">
+                    <a class="header__logo" href="/news?command=take_list_of_news">
                         <img src="../images/logo.png" alt="Homepage">
                     </a>
                 </div>

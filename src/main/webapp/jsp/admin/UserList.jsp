@@ -15,12 +15,15 @@
     <fmt:setBundle basename="l10n.local" var="loc" />
 
     <fmt:message bundle="${loc}" key="local.lable.login.value" var="login" />
-    <fmt:message bundle="${loc}" key="local.lable.password.value" var="password" />
-    <fmt:message bundle="${loc}" key="local.lable.newPassword.value" var="newPassword" />
-    <fmt:message bundle="${loc}" key="local.lable.confirmPassword.value" var="confirmPassword" />
     <fmt:message bundle="${loc}" key="local.lable.firstName.value" var="firstName" />
     <fmt:message bundle="${loc}" key="local.lable.lastName.value" var="lastName" />
     <fmt:message bundle="${loc}" key="local.lable.email.value" var="email" />
+    <fmt:message bundle="${loc}" key="local.lable.role.value" var="role" />
+    <fmt:message bundle="${loc}" key="local.user.error.notFound" var="usersNotFound" />
+    <fmt:message bundle="${loc}" key="local.button.profile.name" var="profile" />
+    <fmt:message bundle="${loc}" key="local.button.admin.name" var="admin" />
+    <fmt:message bundle="${loc}" key="local.button.find.name" var="find" />
+    <fmt:message bundle="${loc}" key="local.search.error.length" var="searchError" />
 
 <html>
 <head>
@@ -55,10 +58,10 @@
 
         <div class="row narrow">
             <form method="post" action="/admin" onsubmit="return isValidSearchForm()">
-                <input type="hidden" name="command" value="find_users">
+                <input type="hidden" name="command" value="find_list_of_users">
                 <input type="text" name="search" value="<c:out value="${requestScope.search}"/>" required>
                 <p class="error-input" id="searchError"></p>
-                <button type="submit">Find me plz</button>
+                <button type="submit">${find}</button>
             </form>
         </div>
 
@@ -74,11 +77,11 @@
                     <table>
                         <thead>
                         <tr>
-                            <th>Login</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
+                            <th>${login}</th>
+                            <th>${firstName}</th>
+                            <th>${lastName}</th>
+                            <th>${email}</th>
+                            <th>${role}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -93,17 +96,17 @@
                                         <td><c:out value="${user.getRole().getName()}"/></td>
                                         <c:choose>
                                             <c:when test="${user.id == sessionScope.user.id}">
-                                                <td><a style="color: limegreen" href="/profile?command=open_profile">Profile</a></td>
+                                                <td><a style="color: limegreen" href="/profile?command=go_to_profile_form">${profile}</a></td>
                                             </c:when>
                                             <c:otherwise>
-                                                <td><a style="color: red" href="/admin?command=open_user&user_id=<c:out value="${user.id}"/>">Administration</a></td>
+                                                <td><a style="color: red" href="/admin?command=take_user&user_id=<c:out value="${user.id}"/>">${admin}</a></td>
                                             </c:otherwise>
                                         </c:choose>
                                     </tr>
                                 </c:forEach>
                             </c:when>
                             <c:otherwise>
-                                <p>users нет, сорян</p>
+                                <p>${usersNotFound}</p>
                             </c:otherwise>
                         </c:choose>
 
@@ -118,49 +121,12 @@
 
         <c:choose>
             <c:when test="${not empty requestScope.search}">
-                <div class="row">
-                    <div class="col-full">
-                        <nav class="pgn">
-                            <ul>
-                                <c:if test="${requestScope.numberOfPage!=1}">
-                                    <li><a class="pgn__num" href="/admin?command=find_users&search=${requestScope.search}&numberOfPage=1">First: 1</a></li>
-                                </c:if>
-                                <c:if test="${requestScope.numberOfPage>1}">
-                                    <li><a class="pgn__prev" href="/admin?command=find_users&search=${requestScope.search}&numberOfPage=${requestScope.numberOfPage-1}">Prev</a></li>
-                                </c:if>
-                                <li><a class="pgn__num current"><c:out value="${requestScope.numberOfPage}"/></a></li>
-                                <c:if test="${requestScope.numberOfPage<requestScope.totalPages}">
-                                    <li><a class="pgn__next" href="/admin?command=find_users&search=${requestScope.search}&numberOfPage=${requestScope.numberOfPage+1}">Next</a></li>
-                                </c:if>
-                                <c:if test="${requestScope.numberOfPage<requestScope.totalPages}">
-                                    <li><a class="pgn__num" href="/admin?command=find_users&search=${requestScope.search}&numberOfPage=${requestScope.totalPages}">Last: <c:out value="${requestScope.totalPages}"/></a></li>
-                                </c:if>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-full">
-                        <nav class="pgn">
-                            <ul>
-                                <c:forEach var="i" begin="8" end="32" step="4">
-                                    <c:choose>
-                                        <c:when test="${i == sessionScope.countUsers}">
-                                            <li><a class="pgn__num current" href="/admin?command=find_users&search=${requestScope.search}&countUsers=${i}">${i}</a></li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <li><a class="pgn__num" href="/admin?command=find_users&search=${requestScope.search}&countUsers=${i}">${i}</a></li>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
+                <pag:pagination url="admin" command="find_list_of_users&search=${requestScope.search}&" currentPage="${requestScope.numberOfPage}" totalPages="${requestScope.totalPages}"/>
+                <ipp:itemPerPage url="admin" command="find_list_of_users&search=${requestScope.search}&" items="countUsers" currentCount="${sessionScope.countUsers}"/>
             </c:when>
             <c:otherwise>
-                <pag:pagination url="admin" command="show_user_list" currentPage="${requestScope.numberOfPage}" totalPages="${requestScope.totalPages}"/>
-                <ipp:itemPerPage url="admin" command="show_user_list" items="countUsers" currentCount="${sessionScope.countUsers}"/>
+                <pag:pagination url="admin" command="take_list_of_users" currentPage="${requestScope.numberOfPage}" totalPages="${requestScope.totalPages}"/>
+                <ipp:itemPerPage url="admin" command="take_list_of_users" items="countUsers" currentCount="${sessionScope.countUsers}"/>
             </c:otherwise>
         </c:choose>
     </div>
