@@ -24,10 +24,11 @@
     <fmt:message bundle="${loc}" key="local.button.admin.name" var="admin" />
     <fmt:message bundle="${loc}" key="local.button.find.name" var="find" />
     <fmt:message bundle="${loc}" key="local.search.error.length" var="searchError" />
-
+    <fmt:message bundle="${loc}" key="local.page.title.userList" var="users" />
+    <fmt:message bundle="${loc}" key="local.placeholder.search" var="search" />
 <html>
 <head>
-    <title>Profile</title>
+    <title>${users}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -59,9 +60,11 @@
         <div class="row narrow">
             <form method="post" action="/admin" onsubmit="return isValidSearchForm()">
                 <input type="hidden" name="command" value="find_list_of_users">
-                <input type="text" name="search" value="<c:out value="${requestScope.search}"/>" required>
+                <div class="book_sets">
+                    <input type="text" name="search" value="<c:out value="${requestScope.search}"/>" placeholder="${search}" required style="width: 500px;">
+                    <button type="submit">${find}</button>
+                </div>
                 <p class="error-input" id="searchError"></p>
-                <button type="submit">${find}</button>
             </form>
         </div>
 

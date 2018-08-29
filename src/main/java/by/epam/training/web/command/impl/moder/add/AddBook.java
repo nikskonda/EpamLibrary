@@ -60,6 +60,7 @@ public class AddBook extends AbstractCommand {
             defBook.setPrice(Double.parseDouble(request.getParameter(FieldNameConstant.BOOK_PRICE)));
             defBook.setPages(Integer.parseInt(request.getParameter(FieldNameConstant.BOOK_PAGES)));
             defBook.setCoverUrl(request.getParameter(FieldNameConstant.BOOK_COVER_URL));
+            defBook.setAuthors(request.getParameter(FieldNameConstant.BOOK_AUTHORS));
             defBook.setPublishingHouse(
                     new PublishingHouse(request.getParameter(FieldNameConstant.BOOK_PUBLISHING_HOUSE)));
             for (String genreId : genres){
@@ -72,6 +73,7 @@ public class AddBook extends AbstractCommand {
             tBook.setDescription(request.getParameter(FieldNameConstant.BOOK_DESCRIPTION_RU));
             tBook.setPdfFileUrl(request.getParameter(FieldNameConstant.BOOK_PDF_URL_RU));
             tBook.setTextFileUrl(request.getParameter(FieldNameConstant.BOOK_TEXT_URL_RU));
+            tBook.setAuthors(request.getParameter(FieldNameConstant.BOOK_AUTHORS_RU));
             String lang = request.getParameter(FieldNameConstant.LANG);
 
             String password = EncriptionMD5.encrypt(request.getParameter(FieldNameConstant.PASSWORD));

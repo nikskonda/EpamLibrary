@@ -76,14 +76,13 @@ public class Pagination extends SimpleTagSupport {
     @Override
     public void doTag() throws IOException {
         JspWriter out = getJspContext().getOut();
-
         out.print("<div class=\"row\">");
         out.print(" <div class=\"col-full\">");
         out.print("<nav class=\"pgn\">");
         out.print("<ul>");
 
         if (currentPage != 1){
-            out.print("<li><a class=\"pgn__num\" href=\"/"+url+"?command="+command+"&numberOfPage=1\">First: 1</a></li>");
+            out.print("<li><a class=\"pgn__num\" href=\"/"+url+"?command="+command+"&numberOfPage=1\">1</a></li>");
         }
         if (currentPage > 1){
             out.print("<li><a class=\"pgn__prev\" href=\"/"+url+"?command="+command+"&numberOfPage="+(currentPage-1)+"\">Prev</a></li>");
@@ -91,7 +90,7 @@ public class Pagination extends SimpleTagSupport {
         out.print("<li><a class=\"pgn__num current\">"+currentPage+"</a></li>");
         if (currentPage < totalPages){
             out.print("<li><a class=\"pgn__next\" href=\"/"+url+"?command="+command+"&numberOfPage="+(currentPage+1)+"\">Next</a></li>");
-            out.print("<li><a class=\"pgn__num\" href=\"/"+url+"?command="+command+"&numberOfPage="+totalPages+"\">Last: "+totalPages+"</a></li>");
+            out.print("<li><a class=\"pgn__num\" href=\"/"+url+"?command="+command+"&numberOfPage="+totalPages+"\">"+totalPages+"</a></li>");
         }
         out.print("</ul>");
         out.print("</nav>");

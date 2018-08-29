@@ -35,10 +35,10 @@
 <fmt:message bundle="${loc}" key="local.message.error.password.length" var="pwLen" />
 <fmt:message bundle="${loc}" key="local.profile.oldPassword.value" var="ioldPassword" />
 <fmt:message bundle="${loc}" key="local.message.error.add" var="addError" />
-
+<fmt:message bundle="${loc}" key="local.page.title.addNews" var="addNews" />
 <html>
 <head>
-    <title>Error</title>
+    <title>${addNews}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" charset="utf-8">
 

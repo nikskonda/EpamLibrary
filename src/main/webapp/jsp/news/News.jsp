@@ -13,9 +13,10 @@
 <fmt:setBundle basename="l10n.local" var="loc" />
 <fmt:message bundle="${loc}" key="local.news.lable.by" var="by" />
 <fmt:message bundle="${loc}" key="local.button.edit.name" var="edit" />
+<fmt:message bundle="${loc}" key="local.page.title.news" var="news" />
 <html>
 <head>
-    <title>Title</title>
+    <title>${news}</title>
 
     <!-- mobile specific metas
     ================================================== -->

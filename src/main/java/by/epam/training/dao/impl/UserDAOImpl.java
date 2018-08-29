@@ -204,7 +204,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
             cstmt = con.prepareCall(SQLRequestConstant.ADD_USER);
             cstmt.setString(SQLRequestConstant.USER_LOGIN, signUpForm.getLogin());
-            cstmt.setString(SQLRequestConstant.USER_PASSWORD, signUpForm.getLogin());
+            cstmt.setString(SQLRequestConstant.USER_PASSWORD, signUpForm.getPassword());
             cstmt.setString(SQLRequestConstant.USER_FIRST_NAME, signUpForm.getFirstName());
             cstmt.setString(SQLRequestConstant.USER_LAST_NAME, signUpForm.getLastName());
             cstmt.setString(SQLRequestConstant.USER_EMAIL, signUpForm.getEmail());

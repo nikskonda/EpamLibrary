@@ -35,9 +35,10 @@
 <fmt:message bundle="${loc}" key="local.message.error.password.length" var="pwLen" />
 <fmt:message bundle="${loc}" key="local.profile.oldPassword.value" var="ioldPassword" />
 <fmt:message bundle="${loc}" key="local.message.error.edit" var="editError" />
+<fmt:message bundle="${loc}" key="local.page.title.editNews" var="editNews" />
 <html>
 <head>
-    <title>Error</title>
+    <title>${editNews}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" charset="utf-8">
 
@@ -145,6 +146,7 @@
         </div>
         <div class="row">
             <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidPasswordForm()">
+                <h1>${deleteNews}</h1>
                 <input type="hidden" name="command" value="delete_news">
                 <input type="hidden" name="news_id" value="<c:out value="${requestScope.news.getId()}"/>" >
 

@@ -11,17 +11,18 @@
 
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="l10n.local" var="loc" />
-<fmt:message bundle="${loc}" key="local.message.error.book.name.length" var="nameLengthError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.description.length" var="descriptionContentError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.authors.length" var="authorsLengthError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.text.content" var="textUrlError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.pdf.content" var="pdfUrlError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.year.content" var="yearError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.price.content" var="priceError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.pages.content" var="pagesError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.publishingHouse.length" var="phLengthError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.cover.content" var="coverError" />
+<fmt:message bundle="${loc}" key="local.book.error.name.length" var="nameLengthError" />
+<fmt:message bundle="${loc}" key="local.book.error.description.length" var="descriptionContentError" />
+<fmt:message bundle="${loc}" key="local.book.error.authors.length" var="authorsLengthError" />
+<fmt:message bundle="${loc}" key="local.book.error.text.content" var="textUrlError" />
+<fmt:message bundle="${loc}" key="local.book.error.pdf.content" var="pdfUrlError" />
+<fmt:message bundle="${loc}" key="local.book.error.year.content" var="yearError" />
+<fmt:message bundle="${loc}" key="local.book.error.price.content" var="priceError" />
+<fmt:message bundle="${loc}" key="local.book.error.pages.content" var="pagesError" />
+<fmt:message bundle="${loc}" key="local.book.error.publishingHouse.length" var="phLengthError" />
+<fmt:message bundle="${loc}" key="local.book.error.cover.content" var="coverError" />
 <fmt:message bundle="${loc}" key="local.book.error.genres.notFound" var="genresNotFound" />
+<fmt:message bundle="${loc}" key="local.lable.password.value" var="password" />
 
 <fmt:message bundle="${loc}" key="local.book.lable.name" var="name" />
 <fmt:message bundle="${loc}" key="local.book.lable.description" var="description" />
@@ -51,12 +52,12 @@
 <fmt:message bundle="${loc}" key="local.message.error.password.length" var="pwLen" />
 <fmt:message bundle="${loc}" key="local.profile.oldPassword.value" var="ioldPassword" />
 <fmt:message bundle="${loc}" key="local.message.error.add" var="addError" />
-
+<fmt:message bundle="${loc}" key="local.page.title.addBook" var="addBook" />
 
 
 <html>
 <head>
-    <title>Error</title>
+    <title>${addBook}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -217,7 +218,7 @@
                 </div>
 
                 <div>
-                    <label for="password">Password</label>
+                    <label for="password">${password}</label>
                     <input type="password" id="password" name="password" class="full-width" placeholder="${ioldPassword}" required>
                     <p class="error-input" id="pwError">
                         <c:if test="${error_exist == true}">

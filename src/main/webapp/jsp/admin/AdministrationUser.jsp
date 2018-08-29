@@ -19,6 +19,10 @@
     <fmt:message bundle="${loc}" key="local.lable.firstName.value" var="firstName" />
     <fmt:message bundle="${loc}" key="local.lable.lastName.value" var="lastName" />
     <fmt:message bundle="${loc}" key="local.lable.email.value" var="email" />
+    <fmt:message bundle="${loc}" key="local.lable.date.value" var="date" />
+
+    <fmt:message bundle="${loc}" key="local.header.changeRole" var="changeRole" />
+    <fmt:message bundle="${loc}" key="local.header.deleteUser" var="deleteUser" />
 
     <fmt:message bundle="${loc}" key="local.profile.oldPassword.value" var="ioldPassword" />
     <fmt:message bundle="${loc}" key="local.profile.newPassword.value" var="inewPassword" />
@@ -37,9 +41,10 @@
     <fmt:message bundle="${loc}" key="local.message.error.email.content" var="emailCont" />
     <fmt:message bundle="${loc}" key="local.message.error.login.not_found" var="notFound" />
 <fmt:message bundle="${loc}" key="local.message.error.password.length" var="pwLen" />
+<fmt:message bundle="${loc}" key="local.page.title.administrationUser" var="user" />
 <html>
 <head>
-    <title>Profile</title>
+    <title>${user}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -67,8 +72,9 @@
 
 <section class="s-content">
     <div class="container">
-        <div class="row">
 
+        <div class="row" >
+            <div style="width: 50%; margin: 0 auto;">
 
                 <div>
                     <label for="login">${login}</label>
@@ -91,16 +97,20 @@
                            value="<c:out value="${requestScope.profile.email}"/>"/>
 
                 </div>
-            <div>
-                <label for="date">${email}</label>
-                <input type="date" class="full-width" name="date" id="date" readonly="true"
-                       value="<c:out value="${requestScope.profile.registrationDate}"/>"/>
+                <div>
+                    <label for="date">${date}</label>
+                    <input type="date" class="full-width" name="date" id="date" readonly="true"
+                           value="<c:out value="${requestScope.profile.registrationDate}"/>"/>
+
+                </div>
+
 
             </div>
 
         </div>
         <div class="row">
             <div class="col-lg-6">
+                <h1>${changeRole}</h1>
                 <form method="post" action="/admin" >
                     <input type="hidden" name="command" value="change_user_role"/>
                     <input type="hidden" name="user_id" value="<c:out value="${requestScope.profile.id}"/>"/>
@@ -111,16 +121,17 @@
                         </c:if> > ${role.name} </p>
                     </c:forEach>
                     <label for="password">${password}</label>
-                    <input type="password" name="password" id="password" placeholder="${ioldPassword}" required>
+                    <input type="password" name="password" id="password" class="full-width" placeholder="${ioldPassword}" required>
                     <p class="error-input">
                         <c:if test="${requestScope.error_exist == true}">
                             ${notFound}
                         </c:if>
                     </p>
-                    <input type="submit" value="Apply">
+                    <input type="submit" value="Apply" >
                 </form>
             </div>
                  <div class="col-lg-6">
+                     <h1>${deleteUser}</h1>
                         <form method="post" action="/admin" onsubmit="return isValidPasswordForm()">
                             <input type="hidden" name="command" value="delete_user"/>
                             <input type="hidden" name="user_id" value="<c:out value="${requestScope.profile.id}"/>"/>

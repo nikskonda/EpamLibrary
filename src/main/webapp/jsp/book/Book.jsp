@@ -23,10 +23,11 @@
 <fmt:message bundle="${loc}" key="local.button.edit.name" var="edit" />
 <fmt:message bundle="${loc}" key="local.button.read.name" var="read" />
 <fmt:message bundle="${loc}" key="local.button.goToBookmark.name" var="goToBookmark" />
+<fmt:message bundle="${loc}" key="local.page.title.book" var="book" />
 
 <html>
 <head>
-    <title>Catalog</title>
+    <title>${book}</title>
 
     <!-- CSS
     ================================================== -->
@@ -123,15 +124,15 @@
                         <button type="submit">${goToBookmark}</button>
                     </form>
                 </c:if>
-
+                <c:if test="${(sessionScope.user.role.name eq 'Moderator') or (sessionScope.user.role.name eq 'Administrator')}">
+                    <form method="post" action="/book">
+                        <input type="hidden" name="command" value="go_to_edit_book_form">
+                        <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
+                        <button type="submit">${edit}</button>
+                    </form>
+                </c:if>
             </div>
-            <c:if test="${(sessionScope.user.role.name eq 'Moderator') or (sessionScope.user.role.name eq 'Administrator')}">
-                <form method="post" action="/book">
-                    <input type="hidden" name="command" value="go_to_edit_book_form">
-                    <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.id}"/>">
-                    <button type="submit">${edit}</button>
-                </form>
-            </c:if>
+
 
 
         </div>

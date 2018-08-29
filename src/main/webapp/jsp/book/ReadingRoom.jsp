@@ -20,10 +20,11 @@
 <fmt:message bundle="${loc}" key="local.book.message.end" var="end" />
 <fmt:message bundle="${loc}" key="local.book.message.thanks" var="thanks" />
 <fmt:message bundle="${loc}" key="local.book.message.gookLuck" var="gookLuck" />
+<fmt:message bundle="${loc}" key="local.page.title.readingRoom" var="rr" />
 
 <html>
 <head>
-    <title>Reading room</title>
+    <title>${rr}</title>
 
     <!-- CSS
     ================================================== -->
@@ -48,35 +49,38 @@
 
     <jsp:include page="../Header.jsp"/>
 
-    <button type="button" onclick="lightOff()">Off</button>
-    <button type="button" onclick="lightOn()">On</button>
+    <%--<button type="button" onclick="lightOff()">Off</button>--%>
+    <%--<button type="button" onclick="lightOn()">On</button>--%>
 
     <section id="readingRoom" class="s-content">
         <div class="container">
-            <c:if test="${sessionScope.user != null}">
-                <form method="post" action="/book">
-                    <input type="hidden" name="command" value="set_bookmark">
-                    <input type="hidden" name="book_id" value="<c:out value="${requestScope.book_id}"/>">
-                    <input type="hidden" name="numberOfPage" value="<c:out value="${requestScope.numberOfPage}"/>">
-                    <button type="submit">${setBookmark}</button>
-                </form>
-                <c:if test="${requestScope.set_bookmark_result != null}">
-                    <c:choose>
-                        <c:when test="${requestScope.set_bookmark_result}">
-                            ${success}
-                        </c:when>
-                        <c:otherwise>
-                            ${error}
-                        </c:otherwise>
-                    </c:choose>
+            <div class="book_sets">
+                <c:if test="${sessionScope.user != null}">
+                    <form method="post" action="/book">
+                        <input type="hidden" name="command" value="set_bookmark">
+                        <input type="hidden" name="book_id" value="<c:out value="${requestScope.book_id}"/>">
+                        <input type="hidden" name="numberOfPage" value="<c:out value="${requestScope.numberOfPage}"/>">
+                        <button type="submit">${setBookmark}</button>
+                    </form>
+                    <c:if test="${requestScope.set_bookmark_result != null}">
+                        <c:choose>
+                            <c:when test="${requestScope.set_bookmark_result}">
+                                ${success}
+                            </c:when>
+                            <c:otherwise>
+                                ${error}
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
                 </c:if>
-            </c:if>
 
-            <form action="/book">
-                <input type="hidden" name="command" value="take_book">
-                <input type="hidden" name="book_id" value="<c:out value="${requestScope.book_id}"/>">
-                <input type="submit" value="${backToBook}">
-            </form>
+                <form action="/book">
+                    <input type="hidden" name="command" value="take_book">
+                    <input type="hidden" name="book_id" value="<c:out value="${requestScope.book_id}"/>">
+                    <input type="submit" value="${backToBook}">
+                </form>
+            </div>
+
 
             <div class="row">
                 <c:choose>

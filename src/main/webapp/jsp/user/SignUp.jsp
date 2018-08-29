@@ -41,10 +41,11 @@
     <fmt:message bundle="${loc}" key="local.message.error.last_name.length" var="lnLen" />
     <fmt:message bundle="${loc}" key="local.message.error.email.content" var="emailCont" />
 
+    <fmt:message bundle="${loc}" key="local.page.title.singup" var="signup" />
 <html>
 <html>
 <head>
-    <title>Sign Up</title>
+    <title>${signup}</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/sign.css">

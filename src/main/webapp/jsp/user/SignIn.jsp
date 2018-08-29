@@ -25,10 +25,12 @@
 <fmt:message bundle="${loc}" key="local.message.error.login.length" var="loginLen" />
 <fmt:message bundle="${loc}" key="local.message.error.password.length" var="pwLen" />
 
+<fmt:message bundle="${loc}" key="local.page.title.signin" var="signin" />
+
 
 <html>
 <head>
-    <title>SignIn</title>
+    <title>${signin}</title>
 
     <!-- CSS -->
 

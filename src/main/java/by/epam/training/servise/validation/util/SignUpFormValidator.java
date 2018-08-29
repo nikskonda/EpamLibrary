@@ -20,7 +20,7 @@ public class SignUpFormValidator implements Validator {
     private static final int LAST_NAME_MAX_LENGTH = 20;
 
 
-    private static final String REGEXP_NAME = "^[a-zA-Z][A-Za-z\\s]+[A-Za-z]$";
+    private static final String REGEXP_NAME = "^[a-zA-ZА-Яа-я][A-Za-zА-Яа-я\\s]+[A-Za-zА-Яа-я]$";
     private static final String REGEXP_EMAIL = "^[\\w]+@[a-zA-Z]+\\.[a-z]+$";
 
 

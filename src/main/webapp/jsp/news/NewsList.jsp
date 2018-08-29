@@ -7,16 +7,16 @@
 
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="l10n.local" var="loc" />
-<fmt:message bundle="${loc}" key="local.message" var="message" />
 <fmt:message bundle="${loc}" key="local.button.signin.name" var="signin" />
 <fmt:message bundle="${loc}" key="local.button.signup.name" var="signup" />
 <fmt:message bundle="${loc}" key="local.button.read.name" var="read" />
 <fmt:message bundle="${loc}" key="local.news.error.notFound" var="newsNotFound" />
+<fmt:message bundle="${loc}" key="local.page.title.newsList" var="news" />
 
 
 <html>
   <head>
-    <title>Index</title>
+    <title>${news}</title>
 
 
     <!-- mobile specific metas

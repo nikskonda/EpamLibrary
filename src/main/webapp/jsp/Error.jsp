@@ -1,29 +1,17 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: niksk
-  Date: 12-Jun-18
-  Time: 22:55
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="l10n.local" var="loc" />
+<fmt:message bundle="${loc}" key="local.message.error.unknown" var="errorMsg" />
+<fmt:message bundle="${loc}" key="local.link.goToHome" var="goToHome" />
+<fmt:message bundle="${loc}" key="local.page.title.error" var="error" />
 <html>
 <head>
-    <title>Error</title>
-    <%--
-      Created by IntelliJ IDEA.
-      User: niksk
-      Date: 12-Jun-18
-      Time: 22:42
-      To change this template use File | Settings | File Templates.
-    --%>
-    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-    <fmt:setLocale value="${sessionScope.local}" />
-    <fmt:setBundle basename="l10n.local" var="loc" />
-    <fmt:message bundle="${loc}" key="local.message.error.unknown" var="error" />
-    <fmt:message bundle="${loc}" key="local.link.goToHome" var="goToHome" />
+    <title>${error}</title>
 
         <!-- CSS
         ================================================== -->
@@ -49,7 +37,7 @@
 
     <section class="s-content">
         <div class="container">
-            <p>${error}</p>
+            <p>${errorMsg}</p>
         </div>
         <a href="/news?command=take_list_of_news">${goToHome}</a>
 

@@ -16,13 +16,15 @@
 <fmt:message bundle="${loc}" key="local.message.catalog.title" var="title" />
 <fmt:message bundle="${loc}" key="local.message.catalog.header" var="headerP" />
 <fmt:message bundle="${loc}" key="local.button.find.name" var="find" />
+<fmt:message bundle="${loc}" key="local.placeholder.search" var="search" />
 <fmt:message bundle="${loc}" key="local.button.more.name" var="more" />
 <fmt:message bundle="${loc}" key="local.book.error.notFound" var="bookNotFound" />
 <fmt:message bundle="${loc}" key="local.search.error.length" var="searchError" />
+<fmt:message bundle="${loc}" key="local.page.title.bookCatalog" var="catalog" />
 
 <html>
 <head>
-    <title>Catalog</title>
+    <title>${catalog}</title>
 
     <!-- CSS
     ================================================== -->
@@ -55,12 +57,16 @@
         </div>
 
         <div class="row narrow">
-            <form method="post" action="/book" onsubmit="return isValidSearchForm()">
-                <input type="hidden" name="command" value="find_book" >
-                <input type="text" id="search" name="search" value="<c:out value="${requestScope.search}"/>" required>
-                <p class="error-input" id="searchError"></p>
-                <button type="submit">${find}</button>
-            </form>
+                <form method="post" action="/book" onsubmit="return isValidSearchForm()">
+                    <input type="hidden" name="command" value="find_book" >
+                    <div class="book_sets">
+                        <input type="text" id="search" name="search" value="<c:out value="${requestScope.search}"/>"
+                               placeholder="${search}" required style="width: 500px;">
+                        <button type="submit">${find}</button>
+                    </div>
+                    <p class="error-input" id="searchError"></p>
+                </form>
+
         </div>
 
         <div class="masonry-wrap row">

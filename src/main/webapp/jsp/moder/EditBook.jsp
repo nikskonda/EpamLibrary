@@ -11,16 +11,16 @@
 
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="l10n.local" var="loc" />
-<fmt:message bundle="${loc}" key="local.message.error.book.name.length" var="nameLengthError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.description.length" var="descriptionContentError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.authors.length" var="authorsLengthError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.text.content" var="textUrlError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.pdf.content" var="pdfUrlError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.year.content" var="yearError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.price.content" var="priceError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.pages.content" var="pagesError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.publishingHouse.length" var="phLengthError" />
-<fmt:message bundle="${loc}" key="local.message.error.book.cover.content" var="coverError" />
+<fmt:message bundle="${loc}" key="local.book.error.name.length" var="nameLengthError" />
+<fmt:message bundle="${loc}" key="local.book.error.description.length" var="descriptionContentError" />
+<fmt:message bundle="${loc}" key="local.book.error.authors.length" var="authorsLengthError" />
+<fmt:message bundle="${loc}" key="local.book.error.text.content" var="textUrlError" />
+<fmt:message bundle="${loc}" key="local.book.error.pdf.content" var="pdfUrlError" />
+<fmt:message bundle="${loc}" key="local.book.error.year.content" var="yearError" />
+<fmt:message bundle="${loc}" key="local.book.error.price.content" var="priceError" />
+<fmt:message bundle="${loc}" key="local.book.error.pages.content" var="pagesError" />
+<fmt:message bundle="${loc}" key="local.book.error.publishingHouse.length" var="phLengthError" />
+<fmt:message bundle="${loc}" key="local.book.error.cover.content" var="coverError" />
 <fmt:message bundle="${loc}" key="local.book.error.genres.notFound" var="genresNotFound" />
 
 <fmt:message bundle="${loc}" key="local.book.lable.name" var="name" />
@@ -33,6 +33,7 @@
 <fmt:message bundle="${loc}" key="local.book.lable.pages" var="pages" />
 <fmt:message bundle="${loc}" key="local.book.lable.publishingHouse" var="publishingHouse" />
 <fmt:message bundle="${loc}" key="local.book.lable.cover" var="coverFile" />
+<fmt:message bundle="${loc}" key="local.lable.password.value" var="password" />
 
 <fmt:message bundle="${loc}" key="local.book.placeholder.name" var="iname" />
 <fmt:message bundle="${loc}" key="local.book.placeholder.description" var="idescription" />
@@ -55,9 +56,11 @@
 <fmt:message bundle="${loc}" key="local.message.error.login.not_found" var="notFound" />
 <fmt:message bundle="${loc}" key="local.message.error.edit" var="editError" />
 
+<fmt:message bundle="${loc}" key="local.page.title.editBook" var="editBook" />
+
 <html>
 <head>
-    <title>Error</title>
+    <title>${editBook}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -88,25 +91,7 @@
                 ${editError}
             </c:if>
         </p>
-
-
-        <%--тута я пытался что-то сделать со вкладками--%>
-        <%--<nav>--%>
-            <%--<div class="nav nav-tabs" id="nav-tab" role="tablist">--%>
-                <%--<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>--%>
-                <%--<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>--%>
-            <%--</div>--%>
-        <%--</nav>--%>
-        <%--<div class="tab-content" id="nav-tabContent">--%>
-            <%--<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">--%>
-                <%--<p>123</p>--%>
-            <%--</div>--%>
-            <%--<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">--%>
-                <%--1234--%>
-            <%--</div>--%>
-        <%--</div>--%>
-
-                <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidBookForm()">
+        <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidBookForm()">
                     <input type="hidden" name="command" value="edit_book" >
                     <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.getId()}"/>" >
 
@@ -242,7 +227,7 @@
                         </div>
 
                         <div>
-                            <label for="password">Password</label>
+                            <label for="password">${password}</label>
                             <input type="password" id="password" name="password" class="full-width" placeholder="${ioldPassword}" required>
                             <p class="error-input" id="pwError">
                                 <c:if test="${error_exist == true}">
@@ -254,13 +239,15 @@
                         <input class="add_book_button full-width" type="submit" value="${editBook}">
                     </div>
                 </form>
-            </div>
-            <div id="panel2" class="tab-pane fade">
+            <div>
+                <h1>
+                    ${deleteBook}
+                </h1>
                 <form action="/moderator" method="POST" enctype="multipart/form-data" onsubmit="return isValidPasswordForm()">
                     <input type="hidden" name="command" value="delete_book">
                     <input type="hidden" name="book_id" value="<c:out value="${requestScope.book.getId()}"/>" >
                     <div>
-                        <label for="passwordField">Password</label>
+                        <label for="passwordField">${password}</label>
                         <input type="password" id="passwordField" name="password" class="full-width" placeholder="${ioldPassword}" required>
                         <p class="error-input" id="passwordError">
                             <c:if test="${error_exist == true}">

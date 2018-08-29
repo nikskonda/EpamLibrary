@@ -15,11 +15,11 @@
 <fmt:setBundle basename="l10n.local" var="loc" />
 <fmt:message bundle="${loc}" key="local.button.goToBookmark.name" var="goToBookmark" />
 <fmt:message bundle="${loc}" key="local.button.delBookmark.name" var="delBookmark" />
-<fmt:message bundle="${loc}" key="local.news.error.notFound" var="newsNotFound" />
-
+<fmt:message bundle="${loc}" key="local.bookmark.error.notFound" var="newsNotFound" />
+<fmt:message bundle="${loc}" key="local.page.title.listOfBookmarks" var="bookmarks" />
 <html>
 <head>
-    <title>Catalog</title>
+    <title>${bookmarks}</title>
 
     <!-- CSS
     ================================================== -->
@@ -53,11 +53,11 @@
                             <div class="row">
                                 <a href="/book?command=take_book&book_id=${book.id}">
                                     <div class="col-lg-3 offset-lg-1">
-                                        <img class="entry__thumb" src="../<c:out value="${book.getCoverUrl()}"/>" alt="" style="height: 300px">
+                                        <img class="entry__thumb" src="../<c:out value="${book.getCoverUrl()}"/>" alt="" style="height: 300px; width: 200px;">
                                     </div>
                                 </a>
                                 <div class="col-lg-7 offset-lg-1">
-                                    <a href="/book?command=take_book&book_id=${book.id}">
+                                    <a href="/book?command=take_book&book_id=${book.id}" style="text-decoration: none;">
                                         <div >
                                             <h3><c:out value="${book.getName()}"/></h3>
                                             <p><c:out value="${book.getPublishYear()}"/></p>
@@ -67,17 +67,17 @@
                                     <div class="row">
                                         <div style="float: right">
                                             <form method="post" action="/book">
-                                                <input type="hidden" name="command" value="go_to_bookmark">
-                                                <input type="hidden" name="book_id" value="<c:out value="${book.id}"/>">
-                                                <button type="submit">${goToBookmark}</button>
-                                            </form>
-                                        </div>
-                                        <div>
-                                            <form method="post" action="/book">
                                                 <input type="hidden" name="command" value="delete_bookmark">
                                                 <input type="hidden" name="book_id" value="<c:out value="${book.id}"/>">
                                                 <input type="hidden" name="numberOfPage" value="${requestScope.numberOfPage}">
                                                 <button type="submit">${delBookmark}</button>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            <form method="post" action="/book">
+                                                <input type="hidden" name="command" value="go_to_bookmark">
+                                                <input type="hidden" name="book_id" value="<c:out value="${book.id}"/>">
+                                                <button type="submit">${goToBookmark}</button>
                                             </form>
                                         </div>
                                     </div>

@@ -55,6 +55,8 @@ public class FieldNameConstant {
     public static final String BOOK_TEXT_URL_RU = "textUrlRU";
     public static final String BOOK_PDF_URL_RU = "pdfUrlRU";
     public static final String BOOK_TEXT = "text";
+    public static final String BOOK_AUTHORS = "authors";
+    public static final String BOOK_AUTHORS_RU = "authorsRU";
 
     public static final String SEARCH = "search";
     public static final String GENRES = "genres";

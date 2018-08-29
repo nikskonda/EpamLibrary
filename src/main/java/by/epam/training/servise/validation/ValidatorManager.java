@@ -86,7 +86,7 @@ public class ValidatorManager {
                 instance = new ValidatorManager();
             }
         } catch (UnsupportedOperationException ex) {
-            logger.warn("", ex);
+            logger.warn("Error return instance", ex);
         } finally {
             lock.unlock();
         }

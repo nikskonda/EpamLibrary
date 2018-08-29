@@ -22,7 +22,7 @@ function isValidSignUpForm() {
     var lastNameMinLength = 3, lastNameMaxLength = 20;
 
     var REGEXP_LOGIN = "^[a-zA-Z][a-zA-Z0-9_-]+[a-zA-Z0-9]$";
-    var REGEXP_NAME = "^[a-zA-Z][A-Za-z\\s]+[A-Za-z]$";
+    var REGEXP_NAME = "^[a-zA-ZА-Яа-я][A-Za-zА-Яа-я\\s]+[A-Za-zА-Яа-я]$";
     var REGEXP_EMAIL = "^[\\w]+@[a-zA-Z]+\\.[a-z]+$";
     var borderColorRed = "#F54D4D";
 
@@ -157,7 +157,7 @@ function isValidProfileForm() {
     var firstNameMinLength = 3, firstNameMaxLength = 20;
     var lastNameMinLength = 3, lastNameMaxLength = 20;
 
-    var REGEXP_NAME = "^[a-zA-Z][A-Za-z\\s]+[A-Za-z]$";
+    var REGEXP_NAME = "^[a-zA-ZА-Яа-я][A-Za-zА-Яа-я\\s]+[A-Za-zА-Яа-я]$";
     var REGEXP_EMAIL = "^[\\w]+@[a-zA-Z]+\\.[a-z]+$";
     var borderColorRed = "#F54D4D";
 

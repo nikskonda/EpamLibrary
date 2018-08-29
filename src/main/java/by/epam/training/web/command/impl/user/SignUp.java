@@ -5,6 +5,7 @@ import by.epam.training.model.user.form.SignUpForm;
 import by.epam.training.servise.ServiceFactory;
 import by.epam.training.servise.UserService;
 import by.epam.training.web.command.AbstractCommand;
+import by.epam.training.web.command.util.PageConstant;
 import by.epam.training.web.util.EncriptionMD5;
 import by.epam.training.web.command.util.FieldNameConstant;
 import org.apache.log4j.Logger;
@@ -42,12 +43,17 @@ public class SignUp extends AbstractCommand {
             SignUpForm signUpForm = new SignUpForm();
             signUpForm.setLogin(request.getParameter(FieldNameConstant.LOGIN));
             signUpForm.setPassword(EncriptionMD5.encrypt(request.getParameter(FieldNameConstant.PASSWORD)));
-            signUpForm.setConfirmPassword(request.getParameter(FieldNameConstant.CONFIRM_PASSWORD));
+            signUpForm.setConfirmPassword(EncriptionMD5.encrypt(request.getParameter(FieldNameConstant.CONFIRM_PASSWORD)));
             signUpForm.setEmail(request.getParameter(FieldNameConstant.EMAIL));
             signUpForm.setFirstName(request.getParameter(FieldNameConstant.FIRST_NAME));
             signUpForm.setLastName(request.getParameter(FieldNameConstant.LAST_NAME));
 
             ActiveUser user = userService.addUser(signUpForm);
+
+            if (user == null){
+                forward(request, response, PageConstant.ERROR);
+                return;
+            }
 
             session.setAttribute(FieldNameConstant.USER, user);
 

@@ -35,9 +35,11 @@
     <fmt:message bundle="${loc}" key="local.message.error.last_name.content" var="lnCont" />
     <fmt:message bundle="${loc}" key="local.message.error.last_name.length" var="lnLen" />
     <fmt:message bundle="${loc}" key="local.message.error.email.content" var="emailCont" />
+
+    <fmt:message bundle="${loc}" key="local.page.title.profile" var="profile" />
 <html>
 <head>
-    <title>Profile</title>
+    <title>${profile}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
